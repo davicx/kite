@@ -7,55 +7,35 @@ app.use(morgan('short'))
 //app.use(morgan('combined'))
 app.use(bodyParser.json());
 
-//Router
+//User Router
 const router = require('./routes/user.js');
 app.use(router);
 
+//Posts Router
+const postRouter = require('./routes/posts.js');
+app.use(postRouter);
 
 
-//Connection Pool
-const pool = mysql.createPool({
-    connectionLimit: 10,
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'shareshare'
+
+
+
+
+
+//CLEAN BELOW
+app.get("/", (req, res) => {
+  console.log("Responding to root route");
+  res.send("Hello!!")
+    res.end()
+})
+
+app.listen(3003, () => {
+  console.log("Server is up and listening on 3003...")
 })
 
 
-function getConnection() {
-    return pool;
-    //Can do pool.query
-}
 
+/*
 
-//USER FUNCTIONS:
-//Method A1: Get User Info
-app.get('/user/:id', (req, res) => {
-  console.log("Fetching user with id: " + req.params.id)
-
-  const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'shareshare'
-  })
-
-  const userId = req.params.id
-  console.log(userId);
-  const queryString = "SELECT * FROM user_profile WHERE user_id = ?"
-  connection.query(queryString, [userId], (err, rows, fields) => {
-      if (err) {
-        console.log("Failed to query for users: " + err)
-        res.sendStatus(500)
-        return
-        // throw err
-      }
-  
-      console.log("I think we fetched users successfully");
-      res.json(rows);
-  })  
-  
-})
 
 //Method A2: Get User Friends
 
@@ -122,6 +102,7 @@ app.get('/getfriends/:id', (req, res) => {
 
 
 
+*/
 
 /*
 app.get('/getfriends/:id', (req, res) => {
@@ -145,7 +126,7 @@ app.get('/getfriends/:id', (req, res) => {
 
 
 */
-
+/*
 //Method D1: Register User
 app.post('/register_user', (req, res) => { 
   console.log("Trying to create a new user...");
@@ -201,7 +182,7 @@ app.post('/update_user', (req, res) => {
   
 })
 
-
+*/
 
 
 
@@ -257,21 +238,11 @@ app.post('/register_user', (req, res) => {
 
 //DATABASE
 
-//CLEAN
-app.get("/", (req, res) => {
-    console.log("Responding to root route");
-    res.send("Hello!!")
-      res.end()
-  })
-
-app.listen(3003, () => {
-    console.log("Server is up and listening on 3003...")
-})
-
 
 
  
 //USERS
+/*
 app.get('/users', (req, res) => {
   console.log("Responding to database route");
   const connection = mysql.createConnection({
@@ -297,7 +268,10 @@ app.get('/users', (req, res) => {
   })
 })
 
+*/
 
+
+/*
 //POSTS 
 app.get('/posts', (req, res) => {
   //console.log("Fetching user with id: " + req.params.id)
@@ -335,7 +309,7 @@ function getConnection() {
   })
 }
 
-
+*/
 /*
 app.get("/users", (req, res) => {
   var user1 = {firstName: "David", lastName: "V"}

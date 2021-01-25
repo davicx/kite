@@ -1,3 +1,23 @@
+/*
+public $userID = "";
+public $userName = "";
+public $firstName = "";
+public $lastName = "";
+public $gender = "";
+public $fullUserName = "";
+public $email = "";
+public $biography = "";
+public $userImage = "";
+public $totalFriends = 0;
+public $totalFollowers = 0;
+public $totalFollowing = 0;
+public $totalGroups = 0;	
+public $totalPosts = 0;	
+public $totalLists = 0;
+*/
+
+/*
+
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
@@ -69,6 +89,7 @@ app.post('/register_user', (req, res) => {
 
   res.end();
 })
+*/
 
 /*
 app.post('/register_user', (req, res) => {
@@ -100,6 +121,7 @@ app.post('/register_user', (req, res) => {
 //DATABASE
 
 //CLEAN
+/*
 app.get("/", (req, res) => {
     console.log("Responding to root route");
     res.send("Hello!!")
@@ -177,7 +199,7 @@ function getConnection() {
   })
 }
 
-
+*/
 /*
 app.get("/users", (req, res) => {
   var user1 = {firstName: "David", lastName: "V"}
