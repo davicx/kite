@@ -28,6 +28,34 @@ postsRouter.get('/allPosts', (req, res) => {
 })
 
 
+postsRouter.get('/groupPosts/:groupID', (req, res) => {
+  console.log("Responding to database route");
+
+  console.log(req.params.groupID);
+  var groupID = req.params.groupID;
+
+  const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      database: 'shareshare'
+    })
+ 
+    
+    const queryString = "SELECT * FROM posts WHERE post_to = ?"
+    connection.query(queryString, [groupID], (err, rows, fields) => {
+        if (err) {
+          console.log("Failed to query for users: " + err)
+          res.sendStatus(500)
+          return
+          // throw err
+        }
+    
+        console.log("I think we fetched users successfully");
+        res.json(rows);
+    })  
+  
+})
+
 
 postsRouter.get('/posts/:userName', (req, res) => {
     console.log("Responding to database route");
@@ -73,22 +101,3 @@ module.exports = postsRouter;
   
 
  
-/*
-
-//localhost:8080/api/story
-router.get('/story', function(req, res){
-  res.send('welcome to our story');
-})
-
-//localhost:8080/api
-app.use('/api', router); 
-
-//localhost:8080/user/02213
-var anotherRouter = express.Router();
-anotherRouter.get('/user/:id', function(req , res){ 
-  console.log(req.params.id);
-  res.end();
-});
-app.use('/', anotherRouter);
-
-*/
