@@ -118,7 +118,22 @@ router.get('/getUserfriends/:userName', (req, res) => {
 
 //Get All Users
 router.get('/users', (req, res) => {
-
+  const connection = getConnection();
+  const queryString = "SELECT * FROM temp";
+  connection.query(queryString, (err, rows, fields) => {    
+      console.log("Fetched")
+      const users = rows.map((row) => {
+        return { 
+          firstName: row.first_name,
+          lastName: row.last_name,
+          email: row.email,          
+          country: row.country,          
+          dates: row.dates
+         }
+      })
+      console.log(users);
+      res.json(users);
+  /*
   const connection = getConnection();
   const queryString = "SELECT * FROM user_profile";
   connection.query(queryString, (err, rows, fields) => {    
@@ -132,10 +147,60 @@ router.get('/users', (req, res) => {
          }
       })
       res.json(users);
-
+*/
   })
 
+
+//Post to TEMP
+
+/*
+router.post('/update_user', (req, res) => {
+  console.log("Update User");
+  console.log(req.body);
+
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'shareshare'
+  })
+
+  connection.connect(function(err) {
+    if (err) throw err;
+    var sql = "UPDATE user_profile SET user_name = 'Updated' WHERE user_profile_id = '61'";
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log(result.affectedRows + " record(s) updated");
+    });
+  });
+  res.end();
+
+
+})
+*/
+
   /*
+router.get('/allusers', (req, res) => {
+
+  const connection = getConnection();
+  const queryString = "SELECT * FROM temp";
+  connection.query(queryString, (err, rows, fields) => {    
+      console.log("Fetched")
+      const users = rows.map((row) => {
+        return { 
+          firstName: row.first_name,
+          lastName: row.last_name,
+          email: row.email,          
+          country: row.country,          
+          dates: row.dates
+         }
+      })
+      console.log(users);
+      res.json(users);
+
+  })
+})
+
+
   console.log("Responding to database route");
   const connection = mysql.createConnection({
       host: 'localhost',

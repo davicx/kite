@@ -17,10 +17,6 @@ app.use(postRouter);
 
 
 
-
-
-
-
 //CLEAN BELOW
 app.get("/", (req, res) => {
   console.log("Responding to root route");
@@ -32,6 +28,60 @@ app.listen(3003, () => {
   console.log("Server is up and listening on 3003...")
 })
 
+
+app.post('/post_user', (req, res) => {
+  console.log("POST User");
+  console.log(req.body);
+  var country = req.body.country;
+  var firstName = "temp";
+  var lastName = "lastName";
+  const queryString = "INSERT INTO temp (first_name, last_name, country) VALUES (?, ?, ?)"
+  getConnection().query(queryString, [firstName, lastName, country], (err, results, fields) => {
+    if (err) {
+      console.log("Failed to insert new user: " + err)
+      res.sendStatus(500)
+      return
+    }
+
+    console.log("Inserted a new user with id: ", results.insertId);
+    res.end()
+  })
+  
+
+ 
+  /*
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'shareshare'
+  })
+
+  connection.connect(function(err) {
+    if (err) throw err;
+    var sql = "UPDATE user_profile SET user_name = 'Updated' WHERE user_profile_id = '61'";
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log(result.affectedRows + " record(s) updated");
+    });
+  });
+  */
+  res.end();
+
+})
+
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'shareshare'
+})
+
+
+function getConnection() {
+  return pool;
+  //Can do pool.query
+}
 
 
 /*
@@ -179,7 +229,6 @@ app.post('/update_user', (req, res) => {
   res.end();
 
 
-  
 })
 
 */
