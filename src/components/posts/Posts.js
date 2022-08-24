@@ -1,22 +1,42 @@
 import React from 'react';
+import { useQuery } from "react-query";
+import axios from 'axios'
 import IndividualPost from './IndividualPost';
-import fetchPosts from './../../functions/useFetchPosts';
+
+async function getPosts(groupID) {
+  const postErrorURL = "/posts/group/error";
+  const postURL = 'http://localhost:3003/posts/group/' + groupID;  
+  const { data } = await axios.get(postURL)
+  return data
+} 
 
 const Posts = (props) => {
-    const groupID = props.groupID;
-    const postURL = 'http://localhost:3003/posts/group/' + groupID;
-
-    const { data, isPending, error } = fetchPosts(postURL)
-    const currentPosts = data;
-
-    return (
-    <div className="posts">
-        { error && <div> { error } </div>}
-        { isPending && <div> loading... </div>}
-        { currentPosts && <IndividualPost posts = { currentPosts } title="The posts!" />}
-    </div>
-    );
-    }
+  const groupID = props.groupID;
   
+  const { isLoading, isError, data, error  } = useQuery(['group-posts', groupID], () => getPosts(groupID))
+  const currentPosts = data;
+  console.log(isLoading)
+  console.log(isError)
+  //console.log(data)
+  console.log(error)
+
+  return (
+  <div className="posts">
+       <p> Posts </p>
+      { isError && <div> There was an error fetching the posts </div>}
+      { isLoading && <div> loading... </div>}
+      { data && <IndividualPost posts = { currentPosts } title="The posts!" />}
+      {console.log(data)}
+  </div>
+  );
+  }
 export default Posts;
 
+/*
+const getPostsAnon = async (groupID) => {
+  const postErrorURL = "/posts/group/error";
+  const postURL = 'http://localhost:3003/posts/group/' + groupID;  
+  const { data } = await axios.get(postURL)
+  return data
+}
+*/

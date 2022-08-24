@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
+import { QueryClientProvider, QueryClient } from 'react-query';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -11,39 +12,42 @@ import UserProfile from './pages/UserProfile';
 import './index.css';
 import './style/style.css';
 
+const queryClient = new QueryClient()
+
 function App() {
   const [userLoggedIn] = useState(false) 
 
   return (
       <div className="App">
-        <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
 
-          <nav>
-            <Link className="link" to="/" >Home </Link>
-            <Link className="link" to="/login">Login </Link>
-            <Link className="link" to="/register">Register </Link>
-            <Link className="link" to="/groups"> Groups </Link>
-            <Link className="link" to="/users"> Users </Link>
-          </nav>
+            <nav>
+              <Link className="link" to="/" >Home </Link>
+              <Link className="link" to="/login">Login </Link>
+              <Link className="link" to="/register">Register </Link>
+              <Link className="link" to="/groups"> Groups </Link>
+              <Link className="link" to="/users"> Users </Link>
+            </nav>
 
-          <Routes>
-            <Route path = "/" element = {<Groups />} /> 
-            <Route path = "/login" element = {<Login />} /> 
-            <Route path = "/register" element = {<Register />} /> 
+            <Routes>
+              <Route path = "/" element = {<Groups />} /> 
+              <Route path = "/login" element = {<Login />} /> 
+              <Route path = "/register" element = {<Register />} /> 
 
-            <Route path = "/groups" element = {<Groups />} /> 
-            <Route path = "/group/:groupID" element = {<IndividualGroup />} /> 
-            <Route path = "/user/:userID" element = {<UserProfile />} /> 
-            <Route path = "/users" element = {<Users />} /> 
+              <Route path = "/groups" element = {<Groups />} /> 
+              <Route path = "/group/:groupID" element = {<IndividualGroup />} /> 
+              <Route path = "/user/:userID" element = {<UserProfile />} /> 
+              <Route path = "/users" element = {<Users />} /> 
 
-            <Route path = "/redirect" element = {<Navigate to= "/Login" />} /> 
+              <Route path = "/redirect" element = {<Navigate to= "/Login" />} /> 
+              
+              <Route path = "/status" element = { userLoggedIn ? <Navigate to= "/Groups" /> : <Navigate to= "/Login"/> } />  
             
-            <Route path = "/status" element = { userLoggedIn ? <Navigate to= "/Groups" /> : <Navigate to= "/Login"/> } />  
-          
-          </Routes>
+            </Routes>
 
-        </BrowserRouter>
-
+          </BrowserRouter>
+        </QueryClientProvider>
       </div>
   );
 }

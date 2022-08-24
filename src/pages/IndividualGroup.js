@@ -1,18 +1,17 @@
-//import { useState } from "react";
-//import { Link } from "react-router-dom";
-//import fetchGroups from './../functions/useFetchGroups';
 import { useParams } from "react-router";
 
-const IndividualGroup = () => {
-  const { groupID } = useParams()
+import Posts from './../components/posts/Posts';
 
-  return (
-      <div>
-          <p> Your on a group! </p>
-          <p> Group ID { groupID } </p>
-          <p> Posts </p>
-      </div>
-  )
+const IndividualGroup = () => {
+    const { groupID } = useParams()
+
+    return (
+        <div>
+            <p> Your on a group! </p>
+            <p> Group ID { groupID } </p>
+            <Posts groupID = { groupID }/>
+        </div>
+    )
 }
 
 export default IndividualGroup;
