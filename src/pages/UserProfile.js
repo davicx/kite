@@ -1,9 +1,12 @@
-//import { useParams } from "react-router";
+import { useParams } from "react-router";
 
 const UserProfile = () => {
+    const { userID } = useParams()
+
     return (
         <div>
             <p> Davey! </p>
+            <p> { userID } </p>
         </div>
     )
 }

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import axios from 'axios'
 import IndividualPost from './IndividualPost';
 
+//STOP 10 
 async function getPosts(groupID) {
   const postErrorURL = "/posts/group/error";
   const postURL = 'http://localhost:3003/posts/group/' + groupID;  
@@ -20,12 +21,19 @@ const Posts = (props) => {
   //console.log(data)
   console.log(error)
 
+  const handleDelete = (postID) => {
+    console.log("you liked! " + postID);
+    const newPosts = currentPosts.filter(post => post.postID !== postID)
+    console.log(newPosts)
+  }
+
+
   return (
   <div className="posts">
        <p> Posts </p>
       { isError && <div> There was an error fetching the posts </div>}
       { isLoading && <div> loading... </div>}
-      { data && <IndividualPost posts = { currentPosts } title="The posts!" />}
+      { data && <IndividualPost posts = { currentPosts } title="The posts!" handleDelete = { handleDelete } />}
       {console.log(data)}
   </div>
   );
