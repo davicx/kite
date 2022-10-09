@@ -7,7 +7,7 @@ const IndividualPost = (props) => {
     const handleDelete = props.handleDelete
 
     const likePost = (postID) => {
-      console.log("you liked! " + postID);
+      console.log("likePost you liked! " + postID);
     }
 
     return (

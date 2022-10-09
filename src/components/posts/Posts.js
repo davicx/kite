@@ -22,11 +22,10 @@ const Posts = (props) => {
   console.log(error)
 
   const handleDelete = (postID) => {
-    console.log("you liked! " + postID);
+    console.log("handleDelete: you liked! " + postID);
     const newPosts = currentPosts.filter(post => post.postID !== postID)
     console.log(newPosts)
   }
-
 
   return (
   <div className="posts">

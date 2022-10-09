@@ -11,6 +11,7 @@ function Login() {
     const [loggedInStatus, setLoginStatus] = React.useState('');
     const loginURL = "http://localhost:3003/login"
     const loginStatusURL = "http://localhost:3003/login/status"
+    const logoutURL = "http://localhost:3003/logout"
   
     const loginUser = () => {
       var userInputName = userName
@@ -58,8 +59,33 @@ function Login() {
     }
 
     const logoutUser = () => {
+      //FIX: This is whatever is currently typed 
       var userInputName = userName
-      console.log(userInputName)
+      var refreshToken = "refreshToken"
+
+      axiosRequest.post(logoutURL, {
+        userName: userInputName,
+        refreshToken: refreshToken
+      })
+      .then(function (response) {
+        console.log(response.data)
+        setLoginStatus("nobody logged in!");
+        /*
+        if(response.data.userLoggedIn != "notLoggedIn"){
+          let loginStatusMessage = response.data.userName + " is currently logged in!"
+          console.log(loginStatusMessage)
+          setLoginStatus(loginStatusMessage);
+
+        } else {
+          let loginStatusMessage = "nobody logged in!"
+          console.log(loginStatusMessage)
+          setLoginStatus(loginStatusMessage);
+        }
+        */
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
     
 
