@@ -12,6 +12,7 @@ function Login() {
     const loginURL = "http://localhost:3003/login"
     const loginStatusURL = "http://localhost:3003/login/status"
     const logoutURL = "http://localhost:3003/logout"
+    const logoutVerifyURL = "http://localhost:3003/verify"
   
     const loginUser = () => {
       var userInputName = userName
@@ -89,6 +90,19 @@ function Login() {
     }
     
 
+    const loginVerify = () => {
+      axiosRequest.post(logoutVerifyURL, {
+        userName: "davey",
+      })
+      .then(function (response) {
+        console.log(response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      
+    }
+
     return (
       <div className="login">
         <input type="text" className="loginInput" placeholder="userName" onChange={e => setUsername(e.target.value)} />
@@ -105,6 +119,11 @@ function Login() {
           <div className = "simplerHolder"> 
           <p>{ loggedInStatus }</p>
         </div>
+
+        <div>
+          <button className = "loginButton" onClick={ loginVerify }> Get a Post </button>
+        </div>
+
         </div>
         <div>
           <button className = "loginButton" onClick={ logoutUser }> Logout </button>

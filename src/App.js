@@ -9,12 +9,24 @@ import IndividualGroup from './pages/IndividualGroup';
 import Users from './pages/Users';
 import UserProfile from './pages/UserProfile';
 
+//Temp
+import Signup from './pages/Signup';
+import UserLogin from './pages/UserLogin';
+import Home from './pages/Home';
+/*
+const initialState = {
+  isAuthenticated: false,
+  user: null,
+  token: null,
+};
+*/
+//Temp
+
 import './index.css';
 import './style/style.css';
 
 const queryClient = new QueryClient()
-//STOP Video 8 start 9
-//https://www.youtube.com/watch?v=VfReCe0nWOo&list=PL4cUxeGkcC9g8OhpOZxNdhXggFz2lOuCT&index=9
+
 function App() {
   const [userLoggedIn] = useState(false) 
 
@@ -36,7 +48,12 @@ function App() {
               <Route path = "/login" element = {<Login />} /> 
               <Route path = "/register" element = {<Register />} /> 
 
-              <Route path = "/groups" element = {<Groups />} /> 
+              <Route path = "/signup" element = {<Signup />} /> 
+              <Route path = "/loginuser" element = {<UserLogin />} /> 
+              <Route path = "/home" element = {<Home />} /> 
+
+              <Route path = "/groups/works" element = {<Groups />} />
+              <Route path = "/groups" element = { userLoggedIn ? <Navigate to= "/Groups" /> : <Navigate to= "/Login"/> } />  
               <Route path = "/group/:groupID" element = {<IndividualGroup />} /> 
               <Route path = "/user/:userID" element = {<UserProfile />} /> 
               <Route path = "/users" element = {<Users />} /> 

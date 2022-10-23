@@ -4,10 +4,25 @@ import axios from 'axios'
 import IndividualPost from './IndividualPost';
 
 //STOP 10 
+//https://stackoverflow.com/questions/43002444/make-axios-send-cookies-in-its-requests-automatically
+/*
+axios.get(BASE_URL + '/todos', { withCredentials: true });
+
+Also its possible to force credentials to every Axios requests
+
+axios.defaults.withCredentials = true
+
+Or using credentials for some of the Axios requests as the following code
+
+const instance = axios.create({
+   withCredentials: true,
+   baseURL: BASE_URL
+})
+*/
 async function getPosts(groupID) {
   const postErrorURL = "/posts/group/error";
   const postURL = 'http://localhost:3003/posts/group/' + groupID;  
-  const { data } = await axios.get(postURL)
+  const { data } = await axios.get(postURL, { withCredentials: true })
   return data
 } 
 

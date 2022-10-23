@@ -11,12 +11,10 @@ function LoginStatus() {
 
     const getLoginStatus = () => {
       var userInputName = 'davey'
-      var userInputPassword = 'password'
-      console.log("you are logging in " + userInputName + " with the password " + userInputPassword)
+      console.log("you are checking on " + userInputName )
       
       axiosRequest.post(loginStatusURL, {
-        userName: userInputName,
-        password: userInputPassword
+        userName: userInputName
       })
       .then(function (response) {
         console.log(response);
