@@ -1,108 +1,23 @@
-import React, { Component, useState} from 'react'
+import React, { useState} from 'react'
 import Axios from "axios";
 
-const axiosRequest = Axios.create({
-  withCredentials: true
-})
+//import LoginHeader from '../components/headers/LoginHeader';
+import LoginUser from '../components/login/LoginUser';
 
 function Login() {
-    const [userName, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [loggedInStatus, setLoginStatus] = React.useState('');
-    const loginURL = "http://localhost:3003/login"
-    const loginStatusURL = "http://localhost:3003/login/status"
-    const logoutURL = "http://localhost:3003/logout"
-    const logoutVerifyURL = "http://localhost:3003/verify"
-  
-    const loginUser = () => {
-      var userInputName = userName
-      var userInputPassword = password
-      console.log("you are logging in " + userInputName + " with the password " + userInputPassword)
-  
-      axiosRequest.post(loginURL, {
-        userName: userInputName,
-        password: userInputPassword
-      })
-      .then(function (response) {
-        console.log(response);
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
+    return (
+      <div className="login">
+        <LoginUser />
+      </div>
+    );
+  }
 
-    const loginStatus = () => {
-      //FIX: This is whatever is currently typed 
-      var userInputName = userName
+export default Login;
 
-      axiosRequest.post(loginStatusURL, {
-        userName: userInputName
-      })
-      .then(function (response) {
-        //console.log(response.data);
-        // userName: "", userLoggedIn: "notLoggedIn", accessToken: "accessToken", refreshToken: "refreshToken"
-        if(response.data.userLoggedIn != "notLoggedIn"){
-          let loginStatusMessage = response.data.userName + " is currently logged in!"
-          console.log(loginStatusMessage)
-          setLoginStatus(loginStatusMessage);
 
-        } else {
-          let loginStatusMessage = "nobody logged in!"
-          console.log(loginStatusMessage)
-          setLoginStatus(loginStatusMessage);
-        }
-        
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
+/*
 
-    const logoutUser = () => {
-      //FIX: This is whatever is currently typed 
-      var userInputName = userName
-      var refreshToken = "refreshToken"
-
-      axiosRequest.post(logoutURL, {
-        userName: userInputName,
-        refreshToken: refreshToken
-      })
-      .then(function (response) {
-        console.log(response.data)
-        setLoginStatus("nobody logged in!");
-        /*
-        if(response.data.userLoggedIn != "notLoggedIn"){
-          let loginStatusMessage = response.data.userName + " is currently logged in!"
-          console.log(loginStatusMessage)
-          setLoginStatus(loginStatusMessage);
-
-        } else {
-          let loginStatusMessage = "nobody logged in!"
-          console.log(loginStatusMessage)
-          setLoginStatus(loginStatusMessage);
-        }
-        */
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
-    
-
-    const loginVerify = () => {
-      axiosRequest.post(logoutVerifyURL, {
-        userName: "davey",
-      })
-      .then(function (response) {
-        console.log(response.data)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      
-    }
-
+function Login() {
     return (
       <div className="login">
         <input type="text" className="loginInput" placeholder="userName" onChange={e => setUsername(e.target.value)} />
@@ -131,8 +46,5 @@ function Login() {
       </div>
     );
   }
-
-  export default Login;
-
-
+*/
 

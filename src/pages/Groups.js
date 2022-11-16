@@ -1,32 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { BrowserRouter, useNavigate, Link  } from "react-router-dom"
+import LogoutUser from '../components/login/LogoutUser';
+import { LoginContext } from "../functions/context/LoginContext";
 
+import Axios from "axios";
+
+const axiosRequest = Axios.create({
+  withCredentials: true
+})
 
 function Groups() {
-  let navigate = useNavigate();
-  const [groups, setGroups] = useState([
-    { groupName: 'Music!', groupID: 70 },
-    { groupName: 'Hike', groupID: 77 },
-    { groupName: 'Games', groupID: 78 }
-  ])
+  const { currentUser, setLoginState} = useContext(LoginContext);
 
   return (
     <div className="user">
-
-      <div className='holder'>
         <p> Groups </p>
-        {groups.map(group => (
-          <div className="group" key={ group.groupID } >
-            <Link to={`/group/${group.groupID}`}>{ group.groupName } </Link>
-            <p>{ group.groupID }</p>
-          </div>
-        ))}
-      </div>
-
-      <div className='holder'>
-        <button onClick={ () => navigate('/users') } > Users </button>
-      </div>
-    
+        <p> Current User: { currentUser } </p>
+        <Link to={`/group/1`}>{ "Music 1" } </Link>
+        <Link to={`/group/2`}>{ "Music 2" } </Link>
+        <Link className="" to="/group/5"> Games 5 </Link>
+        <LogoutUser />
     </div>
   );
 }
