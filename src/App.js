@@ -15,6 +15,8 @@ import { LoginContext } from "./functions/context/LoginContext";
 import RequireAuth from './components/login/RequireAuth';
 //import Layout from './components/Layout';
 
+
+//CURRENT
 //import { sayHello } from './functions/functions';
 //STOP: 20
 
