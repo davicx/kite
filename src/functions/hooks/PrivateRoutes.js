@@ -25,6 +25,8 @@ const PrivateRoutes = () => {
 export default PrivateRoutes
 
 
+
+
 /*
  if (!auth) {
                 // not logged in so redirect to login page with the return url

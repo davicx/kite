@@ -2,30 +2,25 @@ import React, { useState, useContext } from 'react'
 import { Link, useLocation, useNavigate, useResolvedPath } from "react-router-dom";
 //import { loginUser } from '../../functions/functions';
 import { LoginContext } from "../../functions/context/LoginContext";
-//import useAuth from '../../functions/hooks/useAuth';
+import { LoggedInContext } from "../../functions/context/LoggedInContext";
 
 
 function LoginUser() {  
+    const navigate = useNavigate();
     const { currentUser, setLoginState} = useContext(LoginContext);
+    const { userLoggedIn, setUserLoggedIn} = useContext(LoggedInContext);
+          
     const [userName, setUserName] = useState('david')
     const [password, setPassword] = useState('password')
 
-    const navigate = useNavigate();
-    //const from = location.state?.from?.pathname || "/login";
-
     const handleChange = (event) => {
       const { name, value } = event.target
-
-      //This is new may not work
-      //const {setAuth } = useAuth();
 
       if(name == "username") {
         setUserName(value)
       } else {
         setPassword(value)
       }
-      console.log(name)
-      console.log(value)
     }
 
     const handleSubmit = (event) => {
@@ -35,10 +30,11 @@ function LoginUser() {
 
         //STEP 2: Success
         //Step 2A: Set local storage  
-        localStorage.setItem('currentUserLoggedIn', JSON.stringify(userName));
+        localStorage.setItem('localStorageCurrentUser', JSON.stringify(userName));
 
         //Step 2B: Set context
         setLoginState(userName)
+        setUserLoggedIn(true)
 
         //Step 2C: Redirect to Groups
         //navigate(from, {replace: true});
@@ -60,6 +56,14 @@ function LoginUser() {
   }
 
 export default LoginUser;
+
+
+
+
+
+
+
+
 
 /*
 

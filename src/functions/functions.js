@@ -8,12 +8,18 @@ export function sayHello(userName) {
 }
 
 export function loginStatus(userName) {
-    const initialState = {
+    let userStatus = {
         isAuthenticated: false,
-        user: null,
-        token: null,
+        user: userName,
     };
-    console.log("hello")
+
+    if(userName == 'null') {
+        userStatus.isAuthenticated = false;
+      } else {
+        userStatus.isAuthenticated = true;
+      }
+
+      return userStatus;
 }
 
 export function loginUser(userName) {
