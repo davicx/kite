@@ -6,6 +6,7 @@ import LoginUser from '../components/login/LoginUser';
 
 function Login() {  
   const navigate = useNavigate();
+  /*
   useEffect(() => {
     const data = localStorage.getItem("currentUserLoggedIn");
     const currentUserLoggedIn = JSON.parse(data);
@@ -21,6 +22,8 @@ function Login() {
       
     }
   }, []);
+
+  */
     return (
       <div className="login">
         <LoginUser />
@@ -29,6 +32,14 @@ function Login() {
   }
 
 export default Login;
+
+
+
+
+
+
+
+
 
 
 

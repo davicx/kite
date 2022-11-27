@@ -1,3 +1,108 @@
+/*TOC*/
+/*
+Global
+SECTION 1: Main Body, Global Styles 
+SECTION 2: Site Structure
+
+Header and Navigation 
+SECTION 3A: Header and Navigation Bar 
+
+Page Specific 
+SECTION 4A: Login Page
+SECTION 4B: Register Page
+SECTION 4C: Groups Page
+SECTION 4D: Individual Group Page
+SECTION 4D: Profile Page
+
+Component Specific
+SECTION 5A: Login
+
+Site Defaults
+SECTION 6A: CSS defaults  
+SECTION 6A: Buttons
+SECTION 6B: Warning and Error Text	
+SECTION 6C: Fonts				
+*/
+
+/****************************************************
+SECTION 1: Main Body, Global Styles
+*****************************************************/
+html {	
+	height: 100%;
+	background-color: white;	    		
+}
+
+
+/****************************************************
+SECTION 2: Site Structure
+*****************************************************/
+#site-wrapper {
+	width: 98%;
+	max-width: 1440px;
+	overflow: auto;	
+	margin: 68px auto 0px auto;
+  min-height: 400px;
+}
+
+
+
+/****************************************************
+SECTION 3: Header and Navigation Bar 
+*****************************************************/
+header {
+  position:fixed;
+  top: 0px;
+  background-color: #343A40;		
+  background-color: #FFFFFF;	
+  width: 100%;	
+  height: 68px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);	
+  z-index: 10;
+}
+
+
+/****************************************************
+SECTION 4A: Login Page
+*****************************************************/
+
+
+/****************************************************
+SECTION 5A: Login
+*****************************************************/
+
+
+
+
+
+
+/****************************************************
+SECTION 6A: CSS defaults  
+*****************************************************/
+
+
+
+/****************************************************
+SECTION 6A: Buttons
+*****************************************************/
+
+/****************************************************
+SECTION 6B: Warning and Error Text
+*****************************************************/
+.error-text {
+  color: #b30000;
+  margin: 2px;
+  padding: 2px;
+}
+
+
+/****************************************************
+SECTION 6C: Text and Fonts	
+*****************************************************/
+
+
+/* SORT */
+
+
 body {
   margin: 40;
   padding: 40;

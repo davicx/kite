@@ -1,15 +1,28 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation, useNavigate, useResolvedPath } from "react-router-dom";
 //import { loginUser } from '../../functions/functions';
 import { LoginContext } from "../../functions/context/LoginContext";
-import { LoggedInContext } from "../../functions/context/LoggedInContext";
+//import { LoggedInContext } from "../../functions/context/LoggedInContext";
 
 
 function LoginUser() {  
     const navigate = useNavigate();
     const { currentUser, setLoginState} = useContext(LoginContext);
-    const { userLoggedIn, setUserLoggedIn} = useContext(LoggedInContext);
-          
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+    useEffect(() => {
+      const data = localStorage.getItem("localStorageCurrentUser");
+      const currentUserLoggedIn = JSON.parse(data);
+      setLoginState(currentUserLoggedIn);
+      if(currentUserLoggedIn == 'null') {
+        setUserLoggedIn(false);
+        console.log("Login Page: OK STAY HERE");
+      } else {
+        setUserLoggedIn(true);
+        console.log("Login Page: DONT BE HERE");
+      }
+  }, []);
+
     const [userName, setUserName] = useState('david')
     const [password, setPassword] = useState('password')
 
@@ -26,6 +39,8 @@ function LoginUser() {
     const handleSubmit = (event) => {
         event.preventDefault();
         
+        //Call Function Login User 
+        
         //STEP 1: Call Login API
 
         //STEP 2: Success
@@ -34,7 +49,7 @@ function LoginUser() {
 
         //Step 2B: Set context
         setLoginState(userName)
-        setUserLoggedIn(true)
+        //setUserLoggedIn(true)
 
         //Step 2C: Redirect to Groups
         //navigate(from, {replace: true});
@@ -47,6 +62,8 @@ function LoginUser() {
       <div className = "login">
           <form onSubmit={ handleSubmit }>
               <label>Current User: { currentUser } </label> 
+              <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
+
               <input name= "username" className="loginInput" type="text" value={ userName } onChange={handleChange} />
               <input name= "password" className="loginInput" type="text" value={ password } onChange={handleChange} />
               <button type="submit" className="loginButton" > Login </button>
