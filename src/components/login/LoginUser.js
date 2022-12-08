@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation, useNavigate, useResolvedPath } from "react-router-dom";
 //import { loginUser } from '../../functions/functions';
 import { LoginContext } from "../../functions/context/LoginContext";
-//import { LoggedInContext } from "../../functions/context/LoggedInContext";
-
 
 function LoginUser() {  
     const navigate = useNavigate();

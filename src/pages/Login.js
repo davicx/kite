@@ -1,29 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { BrowserRouter,Navigate,  Route, Routes, Link, NavLink, useLocation, useNavigate} from 'react-router-dom'
-
+import { BrowserRouter, useNavigate, Navigate, Link  } from "react-router-dom"
 import LoginUser from '../components/login/LoginUser';
+import { LoginContext } from "../functions/context/LoginContext";
 
 
 function Login() {  
-  const navigate = useNavigate();
-  /*
-  useEffect(() => {
-    const data = localStorage.getItem("currentUserLoggedIn");
-    const currentUserLoggedIn = JSON.parse(data);
-    //console.log("APP LOGIN PAGE " + currentUserLoggedIn)
-    console.log(currentUserLoggedIn)
-    if(currentUserLoggedIn == 'null') {
-      console.log("OK STAY HERE")
-      console.log("userLoggedIn = false")
-    } else {
-      console.log("DONT BE HERE");
-      navigate("/groups");
-      console.log("userLoggedIn = true")
-      
-    }
-  }, []);
+  const { currentUser, setLoginState} = useContext(LoginContext);
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
 
-  */
     return (
       <div className="login">
         <LoginUser />

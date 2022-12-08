@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { BrowserRouter, useNavigate, Link  } from "react-router-dom"
+import { useNavigate  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
+import LogoutUser from '../components/login/LogoutUser';
 
 function Profile() {
 
-  //Login
+  //Login Status 
   const navigate = useNavigate();
   const { currentUser, setLoginState} = useContext(LoginContext);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -16,6 +17,7 @@ function Profile() {
     if(currentUserLoggedIn == 'null') {
       setUserLoggedIn(false);
       console.log("Profile Page: DONT BE HERE");
+      navigate("/login");
     } else {
       setUserLoggedIn(true);
       console.log("Profile Page: OK STAY HERE")
@@ -27,6 +29,7 @@ function Profile() {
         <p><b> Profile </b></p>
         <p> Current User: { currentUser } </p>
         <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
+        <LogoutUser />
     </div>
   );
 }
