@@ -10,8 +10,8 @@ import './style/style.css';
 import './style/external/normalize.css';
 
 //Pages
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Login from './pages/LoginPage';
+import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, Link  } from "react-router-dom"
+import { useNavigate  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
+
 //import { LoggedInContext } from "../functions/context/LoggedInContext";
 
 import Groups from '../components/groups/Groups';

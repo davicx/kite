@@ -1,21 +1,40 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { BrowserRouter, useNavigate, Navigate, Link  } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import LoginUser from '../components/login/LoginUser';
+import LoginStatus from '../components/login/LoginStatus';
 import { LoginContext } from "../functions/context/LoginContext";
 
 
-function Login() {  
+function LoginPage() {  
+
+  //Check Login Status 
   const { currentUser, setLoginState} = useContext(LoginContext);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const data = localStorage.getItem("localStorageCurrentUser");
+    const currentUserLoggedIn = JSON.parse(data);
+    setLoginState(currentUserLoggedIn);
+    if(currentUserLoggedIn == 'null') {
+      setUserLoggedIn(false);
+      console.log("Login Page: OK STAY HERE");
+    } else {
+      setUserLoggedIn(true);
+      console.log("Login Page: DONT BE HERE");
+    }
+}, []);
     return (
       <div className="login">
+        <label>Current User: { currentUser } </label> 
+        <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
         <LoginUser />
+        <LoginStatus />
       </div>
     );
   }
 
-export default Login;
+export default LoginPage;
 
 
 

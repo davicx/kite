@@ -2,7 +2,7 @@ import React, { useState} from 'react'
 import RegisterUser from '../components/login/RegisterUser';
 
 
-function Register() {  
+function RegisterPage() {  
     return (
       <div className="login">
        <p>Register</p>
@@ -11,5 +11,5 @@ function Register() {
     );
   }
 
-  export default Register;
+  export default RegisterPage;
   
