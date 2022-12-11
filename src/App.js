@@ -10,6 +10,7 @@ import './style/style.css';
 import './style/external/normalize.css';
 
 //Pages
+import Home from './pages/Home';
 import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
@@ -47,6 +48,7 @@ function App() {
             </nav>  
             
             <Routes>      
+              <Route path="/" element={<Home/>} />
               <Route path="/login" element={<Login/>} />
               <Route path="/groups" element={<Groups/>} />
               <Route path = "/group/:groupID" element = {<IndividualGroup />} />   =

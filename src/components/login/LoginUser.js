@@ -14,7 +14,7 @@ function LoginUser() {
     const navigate = useNavigate();
     const { currentUser, setLoginState} = useContext(LoginContext);
     const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const [userName, setUserName] = useState('david')
+    const [userName, setUserName] = useState('davey')
     const [password, setPassword] = useState('password')
 
     const handleChange = (event) => {
@@ -41,32 +41,30 @@ function LoginUser() {
           password: userInputPassword
         })
         .then(function (response) {
-          console.log(response);
           console.log(response.data);
+          const loginSuccess = response.data.loginSuccess;
+
+          //STEP 2: Success
+          if(loginSuccess == true) {
+            
+            //Step 2A: Set local storage  
+            localStorage.setItem('localStorageCurrentUser', JSON.stringify(userName));
+
+            //Step 2B: Set context
+            setLoginState(userName)
+ 
+            //Step 2C: Redirect to Groups
+            //navigate("/groups");
+
+          } else {
+            console.log("Display error message");
+          }
         })
         .catch(function (error) {
           console.log(error);
         });
-        //STEP 2: Success
-        //Step 2A: Set local storage  
-        localStorage.setItem('localStorageCurrentUser', JSON.stringify(userName));
 
-        //Step 2B: Set context
-        setLoginState(userName)
-        //setUserLoggedIn(true)
-
-        //Step 2C: Redirect to Groups
-        //navigate(from, {replace: true});
-        //navigate("/groups");
-      
     }
-
-    /*
-
-    const loginUser = () => {
-    
-    }
-    */
 
     return (
       <div className = "login">
