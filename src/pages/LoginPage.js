@@ -18,11 +18,13 @@ function LoginPage() {
     setLoginState(currentUserLoggedIn);
     if(currentUserLoggedIn == 'null') {
       setUserLoggedIn(false);
+      console.log("No one is logged in right now");
       console.log("Login Page: OK STAY HERE");
     } else {
       setUserLoggedIn(true);
       console.log("Login Page: DONT BE HERE");
-    }
+      console.log(currentUserLoggedIn + " is currently logged in");
+    } 
 }, []);
     return (
       <div className="login">

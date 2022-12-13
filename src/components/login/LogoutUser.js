@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { LoginContext } from "../../functions/context/LoginContext";
 import { useNavigate } from "react-router-dom";
-//import { LoggedInContext } from "../../functions/context/LoggedInContext";
 import axios from "axios";
 
 const axiosRequest = axios.create({
@@ -12,23 +11,20 @@ function LogoutUser() {
   const navigate = useNavigate();
   const { currentUser, setLoginState} = useContext(LoginContext);
   const logoutURL = "http://localhost:3003/logout"
-  //const { userLoggedIn, setUserLoggedIn} = useContext(LoggedInContext);
-        
+     
     function logout() {
         const data = localStorage.getItem("localStorageCurrentUser");
         const userName = JSON.parse(data);
         console.log("you are loggin out" + userName )
+        
         //STEP 1: Call Logout API
-
-        //STEP 2: Success
         axiosRequest.post(logoutURL, {
           userName: userName,
           refreshToken: "token"
         })
         .then(function (response) {
           console.log(response.data)
-          //setLoginStatus("nobody logged in!");
-          
+
           if(response.data.userLoggedIn != "notLoggedIn"){
             let loginStatusMessage = response.data.userName + " is currently logged in!"
             console.log(loginStatusMessage)
@@ -50,9 +46,7 @@ function LogoutUser() {
       
         //Step 2B: Set context
         setLoginState('null')
-        //setUserLoggedIn(false)
 
-    
         //Step 2C: Redirect to Login
         navigate("/login");
         

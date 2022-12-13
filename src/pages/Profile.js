@@ -21,6 +21,7 @@ function Profile() {
     } else {
       setUserLoggedIn(true);
       console.log("Profile Page: OK STAY HERE")
+      console.log(currentUserLoggedIn + " is currently logged in");
     }
  }, []);
 

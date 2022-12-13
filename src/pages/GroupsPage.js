@@ -25,6 +25,7 @@ function GroupsPage() {
    } else {
      setUserLoggedIn(true);
      console.log("Groups Page: OK STAY HERE")
+     console.log(currentUserLoggedIn + " is currently logged in");
    }
  }, []);
 
