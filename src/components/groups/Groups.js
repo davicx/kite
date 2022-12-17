@@ -11,7 +11,7 @@ async function getGroups(currentUser) {
 
 const Groups = (props) => {
   const currentUser = props.currentUser;
-  console.log(currentUser)
+  //console.log(currentUser)
 
   const { isLoading, data, isError, error  } = useQuery(['user-groups', currentUser], () => getGroups(currentUser), 
     { refetchInterval: 10000000 }
@@ -27,14 +27,14 @@ const Groups = (props) => {
   <div className="posts">
        <p> Groups </p>
        <p> User { currentUser } </p>
-       { data && console.log(groups)}
-      
+
   </div>
   );
   }
   
 export default Groups;
 /*
+       { data && console.log("")}
  {data && groups.map(group => (
           <div className="group" key={ group.groupID } >
             <Link to={`/group/${group.groupID}`}>{ group.groupID } </Link>
