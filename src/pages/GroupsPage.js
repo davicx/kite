@@ -6,6 +6,7 @@ import { LoginContext } from "../functions/context/LoginContext";
 
 import Groups from '../components/groups/Groups';
 import Posts from '../components/posts/Posts';
+import Refresh from '../components/login/Refresh';
 
 function GroupsPage() {
 
@@ -33,6 +34,7 @@ function GroupsPage() {
     <div className="user">
         <Groups currentUser = { currentUser } />        
         <Posts />        
+        <Refresh />        
     </div>
   );
 }

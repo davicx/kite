@@ -3,7 +3,7 @@ import { useNavigate  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
 import LogoutUser from '../components/login/LogoutUser';
 
-function Profile() {
+function ProfilePage() {
 
   //Login Status 
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default ProfilePage;
 
 
 

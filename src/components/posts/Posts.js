@@ -6,9 +6,27 @@ const axiosRequest = axios.create({
     withCredentials: true
   })  
 
-async function refreshAccessToken() {
-    console.log("new token for MEEEE!!")
-}
+
+  async function refreshToken() {
+    const refreshURL = "http://localhost:3003/refresh/tokens"
+      const data = localStorage.getItem("localStorageCurrentUser");
+      const userName = JSON.parse(data);
+      console.log("you are refreshing for" + userName )
+      
+      //STEP 1: Call Logout API
+      axiosRequest.post(refreshURL, {
+        userName: userName,
+        refreshToken: "dontneedheretoken"
+      })
+      .then(function (response) {
+        console.log(response.data)
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
 
 // Add a response interceptor
 
@@ -21,8 +39,11 @@ axiosRequest.interceptors.response.use(function (response) {
   console.log("interceptors: ERROR ")
   
   if(error.response.status == 401) {
-    console.log("Get a new token here");
-    refreshAccessToken()
+    console.log("A new token was got!! Get a new token here");
+    const refreshOutcome = refreshToken();
+    console.log("NEW TOKEN OUTCOME")
+    console.log(refreshOutcome)
+
   } 
   
   return Promise.reject(error);

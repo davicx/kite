@@ -14,7 +14,7 @@ import Home from './pages/Home';
 import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
-import Profile from './pages/Profile';
+import Profile from './pages/ProfilePage';
 import NotFound from './pages/NotFound';
 import IndividualGroup from './pages/IndividualGroup';
 import { LoginContext } from './functions/context/LoginContext';
