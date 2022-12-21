@@ -209,6 +209,15 @@ body {
   min-height: 40px;
 }
 
+.group {
+  float: left;
+  height: 200px;
+  width: 200px;
+  border: 1px solid blue;
+  margin: 40px;
+}
+
+
 .text {
   text-align: center;
 }

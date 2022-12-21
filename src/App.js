@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, Link } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query';
 
-//Function 
+//Functions 
 import { sayHello } from './functions/functions';
 
 //Style 

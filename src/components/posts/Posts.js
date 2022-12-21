@@ -6,7 +6,6 @@ const axiosRequest = axios.create({
     withCredentials: true
   })  
 
-
   async function refreshToken() {
     const refreshURL = "http://localhost:3003/refresh/tokens"
       const data = localStorage.getItem("localStorageCurrentUser");
@@ -29,21 +28,19 @@ const axiosRequest = axios.create({
 
 
 // Add a response interceptor
-
 axiosRequest.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
   console.log("interceptors: GOOD ")
   return response;
 }, function (error) {
-  console.log("interceptors: ERROR ")
+  console.log("interceptors: NEED NEW TOKEN ")
   
   if(error.response.status == 401) {
     console.log("A new token was got!! Get a new token here");
     const refreshOutcome = refreshToken();
     console.log("NEW TOKEN OUTCOME")
     console.log(refreshOutcome)
-
   } 
   
   return Promise.reject(error);
@@ -52,17 +49,8 @@ axiosRequest.interceptors.response.use(function (response) {
 
 
 async function getPosts(currentUser) {
-    
-    //Get a Token Here (Store expires in local storage)
-    const time = 40
-    if(time < 60) {
-      //console.log("WAIT GET A TOKEN to go")
-      //refreshAccessToken(currentUser)
-    } else {
-      //console.log("Good to go")
-    }
-
     const postURL = "http://localhost:3003/posts/user/" + currentUser; 
+    //const groupURL = 'http://localhost:3003/groups/' + currentUser;  
     const response = await axiosRequest.get(postURL)
   
     console.log("response");
@@ -82,18 +70,16 @@ const PostList = () => {
       console.log(error)
     }
   
+    const { isLoading, data, isError, error  } = useQuery(['group-posts', currentUser], () => getPosts(currentUser), 
+      { refetchInterval: 10000000,
+        onError: onError
+      }
+    )
 
-  const { isLoading, data, isError, error  } = useQuery(['group-posts', currentUser], () => getPosts(currentUser), 
-    { refetchInterval: 10000000,
-      onError: onError
-     }
-  )
-
-  const currentPosts = data;
+    const currentPosts = data;
   //console.log(isLoading)
   //console.log(isError)
   //console.log(error)
-
 
   return (
   <div className="posts">

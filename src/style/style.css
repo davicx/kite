@@ -11,9 +11,8 @@ Page Specific
 SECTION 4A: Login Page
 SECTION 4B: Registration Page
 SECTION 4C: Groups Page
-SECTION 4D: Posts Page
-SECTION 4E: Files Page 
-SECTION 4F: User Page
+SECTION 4D: Individual Group Page
+SECTION 4E: Profile Page 
 
 Component Specific
 SECTION 5A: Post
@@ -83,12 +82,52 @@ header {
 	z-index: 10;
 }
 
+/* Page Specific */
 /****************************************************
-SECTION 3A: Temp
+SECTION 4A: Login Page
+*****************************************************/
+
+/****************************************************
+SECTION 4B: Registration Page
+*****************************************************/
+
+
+/****************************************************
+SECTION 4C: Groups Page
+*****************************************************/
+.groups {
+	width: 60%;
+	margin-top: 12px;
+	margin-left: 20%;
+	min-height: 120px;
+	overflow: auto;
+	border: 1px solid black;
+}
+
+.group {
+  float: left;
+  height: 200px;
+  width: 200px;
+  border: 1px solid blue;
+  margin: 40px;
+}
+
+/****************************************************
+SECTION 4A: Individual Group Page 
+*****************************************************/
+
+/****************************************************
+SECTION 4A: Profile Page 
 *****************************************************/
 
 
 
+
+
+
+/****************************************************
+SECTION X: Temp
+*****************************************************/
 body {
 	margin: 40;
 	padding: 40;

@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
-
-//import { LoggedInContext } from "../functions/context/LoggedInContext";
-
-import Groups from '../components/groups/Groups';
 import Posts from '../components/posts/Posts';
 import Refresh from '../components/login/Refresh';
+
+import Groups from '../components/groups/GroupList';
 
 function GroupsPage() {
 
@@ -32,20 +30,23 @@ function GroupsPage() {
 
   return (
     <div className="user">
-        <Groups currentUser = { currentUser } />        
-        <Posts />        
-        <Refresh />        
+        <Groups currentUser = { currentUser } />       
+        <Refresh /> 
     </div>
   );
 }
 
 export default GroupsPage;
 
-
-
-
-
 /*
+<Posts />
+          
+
+
+
+
+
+        
 body {
   margin: 40;
   padding: 40;
