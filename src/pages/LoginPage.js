@@ -16,7 +16,8 @@ function LoginPage() {
     const data = localStorage.getItem("localStorageCurrentUser");
     const currentUserLoggedIn = JSON.parse(data);
     setLoginState(currentUserLoggedIn);
-    if(currentUserLoggedIn == 'null') {
+
+    if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
       setUserLoggedIn(false);
       console.log("No one is logged in right now");
       console.log("Login Page: OK STAY HERE");

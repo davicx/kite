@@ -41,10 +41,10 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <LoginContext.Provider value = {{currentUser, setLoginState}} > 
 
-            <nav>
-              <Link className="loginInput" to="/login">Login </Link>
-              <Link className="loginInput" to="/groups"> Groups </Link>
-              <Link className="loginInput" to="/profile"> Profile </Link>
+            <nav className="navBar">
+              <Link className="navLink" to="/login">Login </Link>
+              <Link className="navLink" to="/groups"> Groups </Link>
+              <Link className="navLink" to="/profile"> Profile </Link>
             </nav>  
             
             <Routes>      

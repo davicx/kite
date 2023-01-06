@@ -14,6 +14,7 @@ function ProfilePage() {
     const data = localStorage.getItem("localStorageCurrentUser");
     const currentUserLoggedIn = JSON.parse(data);
     setLoginState(currentUserLoggedIn);
+    //if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
     if(currentUserLoggedIn == 'null') {
       setUserLoggedIn(false);
       console.log("Profile Page: DONT BE HERE");

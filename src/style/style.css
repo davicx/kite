@@ -82,6 +82,22 @@ header {
 	z-index: 10;
 }
 
+.navBar {
+	border: 1px solid green;
+}
+
+.nav-holder {
+ 
+	width: 360px;
+	margin-left: 120px;
+}
+.navLink {
+	float: left;
+	text-align: center;
+	width: 120px;
+ 
+}
+
 /* Page Specific */
 /****************************************************
 SECTION 4A: Login Page
@@ -121,6 +137,29 @@ SECTION 4A: Profile Page
 *****************************************************/
 
 
+
+/* Component Specific */
+/****************************************************
+SECTION 5A: Post
+*****************************************************/
+.posts {
+  width: 60%;
+  margin-left: 20%;
+  border: 1px solid black;
+}
+
+.post {
+  width: 80%;
+  min-height: 42px;
+  margin-left: 10%;
+  margin-bottom: 8px;
+  border: 1px solid blue;
+}
+
+.post-text {
+  margin: 2px;
+  padding: 0px;
+}
 
 
 

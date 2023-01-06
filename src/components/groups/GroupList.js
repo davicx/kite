@@ -8,16 +8,54 @@ const axiosRequest = axios.create({
   withCredentials: true
 })  
 
+async function refreshToken() {
+  const refreshURL = "http://localhost:3003/refresh/tokens"
+    const data = localStorage.getItem("localStorageCurrentUser");
+    const userName = JSON.parse(data);
+    console.log("you are refreshing for" + userName )
+    
+    //STEP 1: Call Logout API
+    axiosRequest.post(refreshURL, {
+      userName: userName,
+      refreshToken: "dontneedheretoken"
+    })
+    .then(function (response) {
+      console.log(response.data)
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+// Add a response interceptor
+axiosRequest.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  console.log("interceptors: GOOD ")
+  return response;
+}, function (error) {
+  console.log("interceptors: NEED NEW TOKEN ")
+  
+  if(error.response.status == 401) {
+    console.log("A new token was got!! Get a new token here");
+    const refreshOutcome = refreshToken();
+    console.log("NEW TOKEN OUTCOME")
+    console.log(refreshOutcome)
+  } 
+  
+  return Promise.reject(error);
+  
+});
+
 async function getGroups(currentUser) {
-  currentUser = "davey"
-  //const groupURL = 'http://localhost:3003/groups/' + currentUser;
-  const groupURL = "http://localhost:3003/posts/user/" + currentUser;   
-  //const groupURL = "http://localhost:3003/posts/group/" + currentUser;
-  //const groupURL = "http://localhost:3003/test/" + currentUser;
-  //axios.defaults.withCredentials = true;
+  if(currentUser) {
+    console.log("GroupList: Getting groups for " + currentUser)
+  }
+   
+  const groupURL = "http://localhost:3003/groups/user/" + currentUser; 
   const { data } = await axiosRequest.get(groupURL)
-  console.log("data")
-  console.log(data)
+
   return data
 } 
 
@@ -41,6 +79,11 @@ const Groups = (props) => {
       { isLoading && <div> loading... </div>}
       { isError && <div> There was an error fetching the posts { error.message } </div>}
       { data && console.log(data)}
+      {data && groups.groups.map(group => (
+          <div className="group" key={ group.groupID } >
+            <Link to={`/group/${group.groupID}`}>{ group.groupID } | {group.groupName } </Link>
+          </div>
+      ))}
   </div>
   );
   }

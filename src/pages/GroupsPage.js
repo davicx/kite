@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
-import Posts from '../components/posts/Posts';
-import Refresh from '../components/login/Refresh';
 
+import Refresh from '../components/login/Refresh';
 import Groups from '../components/groups/GroupList';
 
 function GroupsPage() {
@@ -17,7 +16,8 @@ function GroupsPage() {
     const data = localStorage.getItem("localStorageCurrentUser");
     const currentUserLoggedIn = JSON.parse(data);
     setLoginState(currentUserLoggedIn);
-   if(currentUserLoggedIn == 'null') {
+    if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
+   //if(currentUserLoggedIn == 'null') {
      setUserLoggedIn(false);
      console.log("Groups Page: DONT BE HERE");
      
@@ -30,7 +30,8 @@ function GroupsPage() {
 
   return (
     <div className="user">
-        <Groups currentUser = { currentUser } />       
+        <Groups currentUser = { currentUser } />
+        
         <Refresh /> 
     </div>
   );

@@ -2,7 +2,8 @@ import { useParams } from "react-router";
 import React, { useContext, useState, useEffect } from 'react';
 import { BrowserRouter, useNavigate, Link  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
-//import Posts from './../components/posts/Posts';
+import Posts from '../components/posts/Posts';
+
 //import MakePost from './../components/posts/MakePost';
 
 const IndividualGroup = () => {
@@ -17,7 +18,7 @@ const IndividualGroup = () => {
       const data = localStorage.getItem("localStorageCurrentUser");
       const currentUserLoggedIn = JSON.parse(data);
       setLoginState(currentUserLoggedIn);
-      if(currentUserLoggedIn == 'null') {
+      if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
         setUserLoggedIn(false);
         console.log("Group Page: DONT BE HERE");
       } else {
@@ -28,6 +29,7 @@ const IndividualGroup = () => {
 
     return (
         <div>
+            <Posts groupID = { groupID }/>
             <p><b> Your on a group! </b></p>
             <p> Group ID { groupID } </p>
             <p> Current User: { currentUser } </p>
@@ -38,4 +40,3 @@ const IndividualGroup = () => {
 }
 
 export default IndividualGroup;
-

@@ -54,7 +54,7 @@ function LoginUser() {
             setLoginState(userName)
  
             //Step 2C: Redirect to Groups
-            //navigate("/groups");
+            navigate("/groups");
 
           } else {
             console.log("Display error message");
