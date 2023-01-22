@@ -19,6 +19,7 @@ function GroupsPage() {
     if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
    //if(currentUserLoggedIn == 'null') {
      setUserLoggedIn(false);
+     navigate("/login");
      console.log("Groups Page: DONT BE HERE");
      
    } else {

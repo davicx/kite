@@ -12,45 +12,71 @@ async function refreshToken() {
   const refreshURL = "http://localhost:3003/refresh/tokens"
     const data = localStorage.getItem("localStorageCurrentUser");
     const userName = JSON.parse(data);
-    console.log("you are refreshing for" + userName )
-    
+    //console.log("REFRESH TOKEN: you are refreshing for" + userName )
     //STEP 1: Call Logout API
     axiosRequest.post(refreshURL, {
       userName: userName,
       refreshToken: "dontneedheretoken"
     })
     .then(function (response) {
-      console.log(response.data)
+      //console.log(response)
       return response.data;
     })
     .catch(function (error) {
-      console.log(error);
+      //console.log(error);
     });
+
 }
 
 // Add a response interceptor
 axiosRequest.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
-  // Do something with response data
-  console.log("interceptors: GOOD ")
+  //console.log("INTERCEPTOR: Looks good! ")
   return response;
 }, function (error) {
-  console.log("interceptors: NEED NEW TOKEN ")
+  console.log("INTERCEPTOR: Need a new token ")
   
   if(error.response.status == 401) {
-    console.log("A new token was got!! Get a new token here");
+    //console.log("__________________________________")
+    //console.log("__________________________________")
+    console.log("FIRST 401")
+    console.log("error.response")
+    console.log(error.response.data)
+
+    console.log("Trying to get a new REFRESH Token");
     const refreshOutcome = refreshToken();
+    //console.log("refreshOutcome")
+    //console.log(refreshOutcome)
+    /*
     console.log("NEW TOKEN OUTCOME")
-    console.log(refreshOutcome)
+    
+    console.log()
+    if(refreshOutcome.logUserOut == true) {
+      console.log("REACT: LOG USER OUT")
+    } else {
+      console.log("REACT: Got the token ok... yayay!!")
+    }
+    console.log("__________________________________")
+    console.log("__________________________________")
+    */
   } 
+
+  //LOGOUT USER
+  if(error.response.status == 403) {
+    localStorage.setItem('localStorageCurrentUser', JSON.stringify("null"));   
+      
+    console.log("__________________________________")
+    console.log("LOGOUT")
+    console.log("__________________________________")
+  }
   
   return Promise.reject(error);
   
 });
 
 async function getGroups(currentUser) {
-  if(currentUser) {
-    console.log("GroupList: Getting groups for " + currentUser)
+  if(currentUser && currentUser != null) {
+    //console.log("getGroups: " + currentUser)
   }
    
   const groupURL = "http://localhost:3003/groups/user/" + currentUser; 
@@ -62,7 +88,7 @@ async function getGroups(currentUser) {
 
 const Groups = (props) => {
   const currentUser = props.currentUser;
-  console.log("GroupList: Getting groups for " + currentUser)
+  //console.log("GroupList: Getting groups for " + currentUser)
 
   const { isLoading, data, isError, error  } = useQuery(['user-groups', currentUser], () => getGroups(currentUser), 
     { refetchInterval: 10000000 }
@@ -70,7 +96,7 @@ const Groups = (props) => {
 
   var groups = data;
 
-  console.log(groups)
+  //console.log(groups)
   //console.log(isError)
   //console.log(error)
 

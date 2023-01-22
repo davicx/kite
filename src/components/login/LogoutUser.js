@@ -10,7 +10,7 @@ const axiosRequest = axios.create({
 function LogoutUser() {
   const navigate = useNavigate();
   const { currentUser, setLoginState} = useContext(LoginContext);
-  const logoutURL = "http://localhost:3003/logout"
+  const logoutURL = "http://localhost:3003/user/logout"
      
     function logout() {
         const data = localStorage.getItem("localStorageCurrentUser");

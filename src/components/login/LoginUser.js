@@ -10,7 +10,7 @@ const axiosRequest = axios.create({
 
 
 function LoginUser() {  
-    var loginURL = "http://localhost:3003/login"
+    var loginURL = "http://localhost:3003/user/login"
     const navigate = useNavigate();
     const { currentUser, setLoginState} = useContext(LoginContext);
     const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -54,7 +54,8 @@ function LoginUser() {
             setLoginState(userName)
  
             //Step 2C: Redirect to Groups
-            navigate("/groups");
+            //navigate("/groups");
+            navigate("/profile");
 
           } else {
             console.log("Display error message");
