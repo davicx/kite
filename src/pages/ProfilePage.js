@@ -4,6 +4,7 @@ import { LoginContext } from "../functions/context/LoginContext";
 import LogoutUser from '../components/login/LogoutUser';
 
 function ProfilePage() {
+  console.log("PAGE: ProfilePage")
 
   //Login Status 
   const navigate = useNavigate();

@@ -1,27 +1,33 @@
-import { useState, useEffect } from 'react';
+//import { useNavigate } from "react-router-dom";
 
-/*
-
-/* FUNCTIONS 
+/* 
 FUNCTIONS A: Login Functions 
 	1) Function A1: Login a User 
 	2) Function A2: Logout a User  
 	3) Function A3: Get Login Status 
 
 */
+
 //FUNCTIONS A: Login Functions 
 //Function A1: Login a User 
-export function loginUser(userName) {
+function loginUser(userName) {
     console.log("login " + userName)
 }
 
 //Function A2: Logout a User 
-export function logouUser(userName) {
-    console.log("logout " + userName)
+function logoutUser() {
+    //const navigate = useNavigate();
+    console.log("logout ")
+
+    //Step 2A: Set local storage  
+    localStorage.setItem('localStorageCurrentUser', JSON.stringify("null"));   
+
+    //Step 2B: Redirect to Login
+    //navigate("/login");
 }
 
 //Function A3: Get Login Status 
-export function loginStatus(userName) {
+function loginStatus(userName) {
     let userStatus = {
         isAuthenticated: false,
         user: userName,
@@ -36,11 +42,9 @@ export function loginStatus(userName) {
       return userStatus;
 }
 
-export function sayHello(userName) {
+function sayHello(userName) {
     console.log("hello " + userName)
 }
 
 
-
-
-//export default { sayHi, sayHello };
+export default { loginUser, logoutUser, loginStatus, sayHello };

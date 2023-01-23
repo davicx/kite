@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { LoginContext } from "../../functions/context/LoginContext";
+import functions from "../../functions/functions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 

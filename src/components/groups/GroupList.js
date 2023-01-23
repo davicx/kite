@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from "react-query";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+//import  functions from "../../functions/functions";
+import { LoginContext } from "../../functions/context/LoginContext";
+
+
 import axios from 'axios'
 
 
@@ -28,46 +32,22 @@ async function refreshToken() {
 
 }
 
-// Add a response interceptor
+//Handle Refresh Tokens
 axiosRequest.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
-  //console.log("INTERCEPTOR: Looks good! ")
+  console.log("INTERCEPTOR: Looks good! ")
   return response;
 }, function (error) {
-  console.log("INTERCEPTOR: Need a new token ")
-  
+  console.log("INTERCEPTOR: Need to get a access token or logout the user")
   if(error.response.status == 401) {
-    //console.log("__________________________________")
-    //console.log("__________________________________")
-    console.log("FIRST 401")
-    console.log("error.response")
-    console.log(error.response.data)
-
-    console.log("Trying to get a new REFRESH Token");
+    console.log("INTERCEPTOR 401: We got a 401 so we need a new access token. Will send refresh token ")
     const refreshOutcome = refreshToken();
-    //console.log("refreshOutcome")
-    //console.log(refreshOutcome)
-    /*
-    console.log("NEW TOKEN OUTCOME")
-    
-    console.log()
-    if(refreshOutcome.logUserOut == true) {
-      console.log("REACT: LOG USER OUT")
-    } else {
-      console.log("REACT: Got the token ok... yayay!!")
-    }
-    console.log("__________________________________")
-    console.log("__________________________________")
-    */
   } 
 
   //LOGOUT USER
   if(error.response.status == 403) {
-    localStorage.setItem('localStorageCurrentUser', JSON.stringify("null"));   
-      
-    console.log("__________________________________")
-    console.log("LOGOUT")
-    console.log("__________________________________")
+    console.log("INTERCEPTOR 403: We got a 403 so the refresh token was not good need to logout the user")  
+    localStorage.setItem('localStorageCurrentUser', JSON.stringify("null")); 
   }
   
   return Promise.reject(error);
@@ -87,8 +67,30 @@ async function getGroups(currentUser) {
 
 
 const Groups = (props) => {
-  const currentUser = props.currentUser;
-  //console.log("GroupList: Getting groups for " + currentUser)
+  console.log("COMPONENT: GroupsList")  
+
+  //Login Status 
+  const navigate = useNavigate();
+  const { currentUser, setLoginState} = useContext(LoginContext);
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+      const data = localStorage.getItem("localStorageCurrentUser");
+      const currentUserLoggedIn = JSON.parse(data);
+      setLoginState(currentUserLoggedIn);
+      if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
+      setUserLoggedIn(false);
+      navigate("/login");
+      console.log("Groups Page: DONT BE HERE");
+      
+    } else {
+      setUserLoggedIn(true);
+      console.log("Groups Page: OK STAY HERE")
+      console.log(currentUserLoggedIn + " is currently logged in");
+    }
+  }, []);
+
+  //const currentUser = props.currentUser;
 
   const { isLoading, data, isError, error  } = useQuery(['user-groups', currentUser], () => getGroups(currentUser), 
     { refetchInterval: 10000000 }
@@ -115,56 +117,3 @@ const Groups = (props) => {
   }
   
 export default Groups;
-
-
-/*
-       { data && console.log("")}
-      {data && groups.map(group => (
-          <div className="group" key={ group.groupID } >
-            <Link to={`/group/${group.groupID}`}>{ group.groupID } | {group.groupName } </Link>
-          </div>
-      ))}
-
-    
-async function getPosts(groupID) {
-  const postErrorURL = "/posts/group/error";
-  const postURL = 'http://localhost:3003/posts/group/' + groupID;  
-  const { data } = await axios.get(postURL)
-  return data
-} 
-
-const PostList = (props) => {
-  const groupID = props.groupID;
-  
-  const { isLoading, data, isError, error  } = useQuery(['group-posts', groupID], () => getPosts(groupID), 
-    { refetchInterval: 10000000 }
-  )
-
-  const currentPosts = data;
-  console.log(isLoading)
-  console.log(isError)
-  console.log(error)
-
-  return (
-  <div className="posts">
-       <p> Posts </p>
-
-      { data && <IndividualPost posts = { currentPosts } title="The posts!" />}
-      {console.log(data)}
-  </div>
-  );
-  }
-  
-export default PostList;
-<p> <b> Groups </b></p>
-<p> Current User: { currentUser } </p>
-<p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
-
-<Link to={`/group/1`}>{ "Music 1" } </Link>
-<Link to={`/group/2`}>{ "Music 2" } </Link>
-<Link className="" to="/group/5"> Games 5 </Link>
-
-//
-
-
-*/

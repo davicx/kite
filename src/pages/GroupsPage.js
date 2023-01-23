@@ -17,7 +17,6 @@ function GroupsPage() {
     const currentUserLoggedIn = JSON.parse(data);
     setLoginState(currentUserLoggedIn);
     if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
-   //if(currentUserLoggedIn == 'null') {
      setUserLoggedIn(false);
      navigate("/login");
      console.log("Groups Page: DONT BE HERE");
@@ -31,8 +30,7 @@ function GroupsPage() {
 
   return (
     <div className="user">
-        <Groups currentUser = { currentUser } />
-        
+        <Groups currentUser = { currentUser } />   
         <Refresh /> 
     </div>
   );
@@ -43,12 +41,6 @@ export default GroupsPage;
 /*
 <Posts />
           
-
-
-
-
-
-        
 body {
   margin: 40;
   padding: 40;
