@@ -7,6 +7,7 @@ const axiosRequest = axios.create({
     withCredentials: true
   })  
 
+/*
 async function refreshToken() {
   const refreshURL = "http://localhost:3003/refresh/tokens"
     const data = localStorage.getItem("localStorageCurrentUser");
@@ -44,6 +45,7 @@ axiosRequest.interceptors.response.use(function (response) {
   return Promise.reject(error);
   
 });
+*/
 
 
 async function getPosts(groupID) {
@@ -54,7 +56,6 @@ async function getPosts(groupID) {
   
 } 
 
-//https://www.youtube.com/watch?v=CWEOYFzgOJs&ab_channel=TheNetNinja
 const Posts = ({groupID}) => {
     const localData = localStorage.getItem("localStorageCurrentUser");
     const currentUser = JSON.parse(localData);

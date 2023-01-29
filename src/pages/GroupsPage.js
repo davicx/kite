@@ -1,11 +1,66 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
+import useLoginStatus from '../functions/hooks/useLoginStatus';
 
 import Refresh from '../components/login/Refresh';
 import Groups from '../components/groups/GroupList';
 
+import axios from 'axios'
+
+/*
+const axiosRequest = axios.create({
+  withCredentials: true
+})  
+
+async function refreshToken() {
+  const refreshURL = "http://localhost:3003/refresh/tokens"
+    const data = localStorage.getItem("localStorageCurrentUser");
+    const userName = JSON.parse(data);
+    //console.log("REFRESH TOKEN: you are refreshing for" + userName )
+    //STEP 1: Call Logout API
+    axiosRequest.post(refreshURL, {
+      userName: userName,
+      refreshToken: "dontneedheretoken"
+    })
+    .then(function (response) {
+      //console.log(response)
+      return response.data;
+    })
+    .catch(function (error) {
+      //console.log(error);
+    });
+}
+
+
+//Handle Refresh Tokens
+axiosRequest.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  console.log("INTERCEPTOR: Looks good! ")
+  return response;
+}, function (error) {
+  console.log("INTERCEPTOR: Status " + error.response.status)
+  
+  console.log("INTERCEPTOR: Need to get a access token or logout the user")
+  if(error.response.status == 498) {
+    console.log("INTERCEPTOR 498: We got a 498 so we need a new access token. Will send refresh token ")
+    const refreshOutcome = refreshToken();
+  } 
+
+  //LOGOUT USER
+  if(error.response.status == 440) {
+    console.log("INTERCEPTOR 440: We got a 440 so the refresh token was not good need to logout the user")  
+    localStorage.setItem('localStorageCurrentUser', JSON.stringify("null")); 
+    window.location.href = '/login';
+  }
+  
+  return Promise.reject(error);
+  
+});
+*/
+
 function GroupsPage() {
+  console.log("PAGE: GroupsPage")
 
   //Login Status 
   const navigate = useNavigate();
@@ -13,20 +68,20 @@ function GroupsPage() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   useEffect(() => {
-    const data = localStorage.getItem("localStorageCurrentUser");
-    const currentUserLoggedIn = JSON.parse(data);
-    setLoginState(currentUserLoggedIn);
-    if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
-     setUserLoggedIn(false);
-     navigate("/login");
-     console.log("Groups Page: DONT BE HERE");
-     
-   } else {
-     setUserLoggedIn(true);
-     console.log("Groups Page: OK STAY HERE")
-     console.log(currentUserLoggedIn + " is currently logged in");
-   }
- }, []);
+      const data = localStorage.getItem("localStorageCurrentUser");
+      const currentUserLoggedIn = JSON.parse(data);
+      setLoginState(currentUserLoggedIn);
+      if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
+      setUserLoggedIn(false);
+      //navigate("/login");
+      console.log("Groups Page: DONT BE HERE");
+      
+    } else {
+      setUserLoggedIn(true);
+      console.log("Groups Page: OK STAY HERE")
+      console.log(currentUserLoggedIn + " is currently logged in");
+    }
+  }, []);
 
   return (
     <div className="user">

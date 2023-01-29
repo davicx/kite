@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import React, { useContext, useState, useEffect } from 'react';
-import { BrowserRouter, useNavigate, Link  } from "react-router-dom"
+import { useNavigate, Link  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
 import Posts from '../components/posts/Posts';
 

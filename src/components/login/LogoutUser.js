@@ -55,7 +55,7 @@ function LogoutUser() {
     
     return (
     <div className = "holder">
-        <p>LOGOUT</p>
+        <p>LOGOUT { currentUser } </p>
         <button className="loginButton" onClick={() => logout() }> Logout </button>
       </div>
     );
