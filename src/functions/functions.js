@@ -53,6 +53,7 @@ function sayHello(userName) {
 
 //Function A4: Request new Refresh Token
 async function refreshToken() {
+  console.log("ATTEMPTING TO REFRESH TOKEN: refreshToken()")
     const refreshURL = "http://localhost:3003/refresh/tokens"
       const data = localStorage.getItem("localStorageCurrentUser");
       const userName = JSON.parse(data);
@@ -63,10 +64,11 @@ async function refreshToken() {
         refreshToken: "dontneedheretoken"
       })
       .then(function (response) {
-        //console.log(response)
+        console.log("refreshToken(): We got a new access token!")
         return response.data;
       })
       .catch(function (error) {
+        console.log("refreshToken(): We failed to get a new access token!")
         //console.log(error);
       });
   

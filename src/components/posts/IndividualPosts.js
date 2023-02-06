@@ -1,7 +1,6 @@
 const IndividualPosts = (props) => {
-    const posts = props.posts;
-
-    const title = props.title;
+    const posts = props.posts.posts;
+    //console.log(props.posts.posts)
 
     const likePost = (e) => {
       console.log(e.target);

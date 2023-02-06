@@ -58,30 +58,6 @@ function ProfilePage() {
   //const [userLoggedIn, setUserLoggedIn] = useState(false);
   const { currentUser, userLoggedIn  } = useLoginStatus();
   
-  /*
-  //Login Status 
-  const navigate = useNavigate();
-  const { currentUser, setLoginState} = useContext(LoginContext);
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const data = localStorage.getItem("localStorageCurrentUser");
-    const currentUserLoggedIn = JSON.parse(data);
-    setLoginState(currentUserLoggedIn);
-    //if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
-    if(currentUserLoggedIn == 'null') {
-      setUserLoggedIn(false);
-      console.log("Profile Page: DONT BE HERE");
-      //navigate("/login");
-    } else {
-      setUserLoggedIn(true);
-      console.log("Profile Page: OK STAY HERE")
-      console.log(currentUserLoggedIn + " is currently logged in");
-    }
- }, []);
-
- */
-
   return (
     <div className="user">
         <p><b> Profile </b></p>

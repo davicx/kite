@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, Link } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 //Functions 
 import { sayHello } from './functions/functions';
@@ -15,6 +16,7 @@ import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
 import Profile from './pages/ProfilePage';
+import Posts from './pages/PostsPage';
 import NotFound from './pages/NotFound';
 import IndividualGroup from './pages/IndividualGroup';
 import { LoginContext } from './functions/context/LoginContext';
@@ -45,6 +47,7 @@ function App() {
               <Link className="navLink" to="/login">Login </Link>
               <Link className="navLink" to="/groups"> Groups </Link>
               <Link className="navLink" to="/profile"> Profile </Link>
+              <Link className="navLink" to="/posts"> Posts </Link>
             </nav>  
             
             <Routes>      
@@ -53,9 +56,11 @@ function App() {
               <Route path="/groups" element={<Groups/>} />
               <Route path = "/group/:groupID" element = {<IndividualGroup />} />   =
               <Route path="/profile" element={<Profile/>} />
+              <Route path="/posts" element={<Posts/>} />
               <Route path="*" element={ <NotFound /> } />       
             </Routes>
-          </LoginContext.Provider>   
+          </LoginContext.Provider> 
+          <ReactQueryDevtools initialIsOpen={false} position='bottom-right'/>  
         </QueryClientProvider>
       </div>
 
@@ -63,6 +68,3 @@ function App() {
 }
 
 export default App;
-
-
-
