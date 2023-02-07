@@ -6,9 +6,9 @@ import axios from 'axios'
 async function updatePost(post) {
   const postURL = "http://localhost:3003/post/temp";
   const response = await axios.post(postURL, post);
-  console.log("RESPONSE DATA: ")
-  console.log(response.data)
-  console.log("_____________________")
+  //console.log("RESPONSE DATA: ")
+  //console.log(response.data)
+  //console.log("_____________________")
   return response.data;
 } 
 
@@ -16,17 +16,54 @@ function MakePost() {
   const queryClient = useQueryClient();
   const [postCaption, setPostCaption] = useState('say something cool!')
 
-  const { isLoading, mutate } = useMutation(updatePost, {
-    onSuccess: () => {
+  
+    const { isLoading, mutate } = useMutation(updatePost, {
+        onMutate: (post) => {
+            console.log("on Mutate: post");
+            console.log(post);
+            
+        },
+        onSuccess: (data) => {
+            console.log("on Success: data");
+            console.log(data.postID);
+            console.log(data);
+            //queryClient.setQueryData(['posts'], data)
+            queryClient.invalidateQueries(['posts'])
+        }
+    })
+
+        /*
         //setIsEditing(false)
         //queryClient.invalidateQueries(['post', postID])
         //queryClient.invalidateQueries(['posts', 0])
         //queryClient.setQueryData(['posts', { groupID: 77 }], updatePost)
         //queryClient.setQueryData(['post', { id: 1 }], data)
         console.log("onSuccess: ")
-        queryClient.invalidateQueries(['posts'])
-    }
-})
+        console.log(data)
+
+
+
+        //Doesn't work
+        queryClient.setQueryData('posts', (oldQueryData) => {
+            return {
+                ... oldQueryData,
+                data: [...oldQueryData,data, data.data]
+            }
+        })
+
+        //WORKS
+        //queryClient.invalidateQueries(['posts'])
+        */
+
+
+    //WORKING
+    /*
+    const { isLoading, mutate } = useMutation(updatePost, {
+        onSuccess: (data) => {
+            queryClient.invalidateQueries(['posts'])
+        }
+    })
+    */
 
   const handleChange = (event) => {
         const { name, value } = event.target
@@ -45,13 +82,16 @@ function MakePost() {
             postTo: "frodo",
             groupID: 77,
             listID: 0,
-            //postCaption: "NEW Hiya Frodo!! What a sunny day! The weather is perfect! wanna hike or we could garden!",   
             postCaption: postCaption,   
             notificationMessage: "Posted a Message",   
             notificationType: "new_post_text",
             notificationLink: "http://localhost:3003/posts/group/77"
           }
         mutate(post)
+    }
+
+    if(isLoading) {
+        return <p> saving data </p> 
     }
 
   return (
