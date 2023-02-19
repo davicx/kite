@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from "react-query";
 import axios from 'axios'
-import IndividualPosts from './IndividualPosts';
+import IndividualPosts from './IndividualPostsOLD';
 
 
 const api = axios.create({

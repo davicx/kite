@@ -17,7 +17,7 @@ async function getGroups(currentUser, api) {
 } 
 
 
-const Groups = (props) => {
+const GroupList = (props) => {
   //console.log("COMPONENT: GroupsList")  
   const currentUser = props.currentUser;
   const api = props.api;
@@ -44,7 +44,7 @@ const Groups = (props) => {
   );
   }
   
-export default Groups;
+export default GroupList;
 
 
 

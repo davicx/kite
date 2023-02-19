@@ -80,7 +80,6 @@ function GroupsPage() {
     <div className="user">
         <p> Current User: {currentUser}</p>
         <Groups currentUser = { currentUser } api = { axiosRequest } />   
-        <CreateGroup currentUser = { currentUser } api = { axiosRequest } />   
     </div>
   );
 }
@@ -93,7 +92,7 @@ export default GroupsPage;
     <div className="user">
         <p> Current User: {currentUser}</p>
         <Groups currentUser = { currentUser } api = { axiosRequest } />   
-        <Refresh /> 
+        <CreateGroup currentUser = { currentUser } api = { axiosRequest } />   
     </div>
   );
 */

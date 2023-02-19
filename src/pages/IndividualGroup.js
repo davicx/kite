@@ -4,7 +4,7 @@ import { useNavigate, Link  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
 import Posts from '../components/posts/Posts';
 
-//import MakePost from './../components/posts/MakePost';
+import NewPost from './../components/posts/NewPost';
 
 const IndividualGroup = () => {
     const { groupID } = useParams()
@@ -29,9 +29,9 @@ const IndividualGroup = () => {
 
     return (
         <div>
+            <NewPost groupID = { groupID } currentUser = { currentUser } />
             <Posts groupID = { groupID }/>
-            <p><b> Your on a group! </b></p>
-            <p> Group ID { groupID } </p>
+            <p><b> Your on a group! with the ID { groupID }</b></p>
             <p> Current User: { currentUser } </p>
             <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
             <Link className="" to="/groups"> Groups </Link>

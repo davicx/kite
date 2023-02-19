@@ -1,52 +1,11 @@
 import React from 'react';
 import { useQuery } from "react-query";
 import axios from 'axios'
-import IndividualPosts from './IndividualPosts';
+import IndividualPost from './IndividualPost';
 
 const axiosRequest = axios.create({
     withCredentials: true
   })  
-
-/*
-async function refreshToken() {
-  const refreshURL = "http://localhost:3003/refresh/tokens"
-    const data = localStorage.getItem("localStorageCurrentUser");
-    const userName = JSON.parse(data);
-    console.log("you are refreshing for" + userName )
-    
-    //STEP 1: Call Logout API
-    axiosRequest.post(refreshURL, {
-      userName: userName,
-      refreshToken: "dontneedheretoken"
-    })
-    .then(function (response) {
-      console.log(response.data)
-      return response.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-
-
-axiosRequest.interceptors.response.use(function (response) {
-  console.log("interceptors: GOOD ")
-  return response;
-}, function (error) {
-  console.log("interceptors: NEED NEW TOKEN ")
-  
-  if(error.response.status == 401) {
-    console.log("A new token was got!! Get a new token here");
-    const refreshOutcome = refreshToken();
-    console.log("NEW TOKEN OUTCOME")
-    console.log(refreshOutcome)
-  } 
-  
-  return Promise.reject(error);
-  
-});
-*/
-
 
 async function getPosts(groupID) {
     const groupPostURL = "http://localhost:3003/posts/group/" + groupID; 
@@ -80,12 +39,13 @@ const Posts = ({groupID}) => {
 
   return (
   <div className="posts">
-       <p> Posts </p>
+       <p><b> Group Posts </b> </p>
        <div className = "post-list" >
           { isLoading && <div> loading... </div>}
           { isError && <div> There was an error fetching the posts { error.message } </div>}
-          {data && currentPosts.map((post) => (console.log(post)))}
-          { data && <IndividualPosts posts = { currentPosts } title="The posts!" />}
+          {data && currentPosts.map((post) => (
+            <IndividualPost post = { post }  currentUser = {currentUser} key = { post.postID }/>
+          ))}
        </div>
   </div>
   );
@@ -95,32 +55,50 @@ export default Posts;
 
 
 /*
-{data && currentPosts.map((currentPost) => (<IndividualPost post = { currentPost } />))}
- 
- 
- const IndividualPost = (props) => {
-    const posts = props.posts;
-    console.log("IndividualPost " + posts)
-    const postID = posts.postID
-    const title = props.title;
+import React, { useState } from 'react';
+import { useQuery } from "react-query";
+import axios from 'axios'
+import Post from './Post';
 
-    const likePost = (e) => {
-      console.log(e.target);
-      console.log("you liked! " + postID);
-    }
+var currentUser = "davey"
 
+const api = axios.create({
+  
+})
+
+async function getPosts(groupID) {
+  const postURL = 'http://localhost:3003/api/posts';  
+  const { data } = await api.get(postURL)
+  console.log(data)
+  return data
+} 
+
+
+function WallPosts() {
+    var groupID = 72;
+    const postID = 1;
+ 
+    const { isLoading, data, isError, error  } = useQuery({
+        queryKey: ['group', groupID],
+        queryFn: () => getPosts(postID),
+        refetchInterval: 10000000 
+      })
+    
+    const currentPosts = data;
+    //console.log(isLoading  + " " + isError + " " + error)
+  
     return (
-        <div className = "post-list">
-            { posts.map((post) => (
-                <div className="post" key={ post.postID }>
-                    <p className = "post-text"> { post.postCaption } </p>
-                    <p className = "post-text"> { post.postID } |  { post.postFrom } | { post.postTo} | { post.groupID }</p>      
-                    <button onClick={ likePost }> Like </button>                         
-                </div>
-            ))}
-        </div>
-        );
-    }  
+    <div className="posts">
+        { isLoading && <div> loading... </div>}
+        { isError && <div> There was an error fetching the posts { error.message } </div>}
+        { data && currentPosts.map((post) => (
+            <Post post = { post }  currentUser = {currentUser} key = { post.postID }/>
+        ))}
+    </div>
+    );
+}
 
-export default IndividualPost;
+export default WallPosts;
+
+
 */
