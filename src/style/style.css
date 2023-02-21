@@ -152,7 +152,7 @@ SECTION 5A: Post
   width: 80%;
   min-height: 42px;
   margin-left: 10%;
-  margin-bottom: 8px;
+  margin-bottom: 22px;
   border: 1px solid blue;
 }
 
@@ -187,32 +187,8 @@ body {
 	border-bottom: 1px solid black;
   }
   
-  .posts {
-	width: 60%;
-	margin-left: 20%;
-	border: 1px solid black;
-  }
+
   
-  .post {
-	width: 80%;
-	min-height: 42px;
-	margin-left: 10%;
-	margin-bottom: 8px;
-	border: 1px solid blue;
-  }
-  
-  .post-text {
-	margin: 2px;
-	padding: 0px;
-  }
-  
-  .group {
-	float: left;
-	height: 200px;
-	width: 200px;
-	border: 1px solid blue;
-	margin: 40px;
-  }
   
   .link {
 	margin: 4px;

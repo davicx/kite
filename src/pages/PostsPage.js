@@ -5,8 +5,8 @@ import { LoginContext } from "../functions/context/LoginContext";
 import useLoginStatus from '../functions/hooks/useLoginStatus';
 import functions from "../functions/functions";
 
-import AllPosts from '../components/posts/AllPosts';
-import MakePost from '../components/posts/MakePost';
+//import AllPosts from '../components/posts/AllPosts';
+//import MakePost from '../components/posts/MakePost';
 
 import axios from 'axios'
 
@@ -21,8 +21,6 @@ function PostsPage() {
   return (
     <div className="user">
         <p> Posts </p>
-        <AllPosts />
-        <MakePost />
     </div>
   );
 }

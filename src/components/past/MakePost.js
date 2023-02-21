@@ -1,3 +1,4 @@
+/*
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from "react-query";
 import axios from 'axios'
@@ -53,18 +54,19 @@ function MakePost() {
 
         //WORKS
         //queryClient.invalidateQueries(['posts'])
-        */
+        *//*
 
 
     //WORKING
-    /*
+    
     const { isLoading, mutate } = useMutation(updatePost, {
         onSuccess: (data) => {
             queryClient.invalidateQueries(['posts'])
         }
     })
-    */
 
+    
+    
   const handleChange = (event) => {
         const { name, value } = event.target
         //console.log(value)
@@ -109,7 +111,7 @@ function MakePost() {
 
 
 export default MakePost;
-
+*/
 
 /*
 import React, { useState } from 'react';

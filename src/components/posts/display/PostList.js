@@ -15,7 +15,7 @@ async function getPosts(groupID) {
   
 } 
 
-const Posts = ({groupID}) => {
+const PostList = ({groupID}) => {
     const localData = localStorage.getItem("localStorageCurrentUser");
     const currentUser = JSON.parse(localData);
     console.log("Posts: Getting posts for the group " + groupID)
@@ -30,10 +30,6 @@ const Posts = ({groupID}) => {
         onError: onError
       }
     )
-
-    //Like Post
-    //Edit Post
-    //Delete Post 
 
     const currentPosts = data;
 
@@ -51,7 +47,7 @@ const Posts = ({groupID}) => {
   );
   }
   
-export default Posts;
+export default PostList;
 
 
 /*

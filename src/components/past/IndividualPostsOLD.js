@@ -1,3 +1,4 @@
+/*
 const IndividualPosts = (props) => {
     const posts = props.posts.posts;
     //console.log(props.posts.posts)
@@ -21,4 +22,5 @@ const IndividualPosts = (props) => {
     }  
 
 export default IndividualPosts;
+*/
 

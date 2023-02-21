@@ -1,3 +1,4 @@
+/*
 import React, { useState } from 'react';
 import { useQuery } from "react-query";
 import axios from 'axios'
@@ -37,7 +38,9 @@ function AllPosts() {
 
 export default AllPosts;
 
+*/
 
+/////////////
 /*
         {console.log(data)}
 const IndividualPost = (props) => {

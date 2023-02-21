@@ -1,25 +1,20 @@
+import Likes from '../actions/Likes';
+import EditPost from '../actions/EditPost';
+
 const IndividualPost = ({post, currentUser}) => {
     return (     
         <div className="post" >
             <p className = "post-text"> Current User { currentUser } </p>
             <p className = "post-text"> { post.postCaption } </p>
-            <p className = "post-text"> { post.postID } |  { post.postFrom } | { post.postTo} | { post.groupID }</p>                    
+            <p className = "post-text"> { post.postID } |  { post.postFrom } | { post.postTo} | { post.groupID }</p>  
+            <Likes post = { post } currentUser = {currentUser}  />                     
         </div>       
         );
     }  
 
 export default IndividualPost;
 /*
-            <button onClick={ likePost }> Like </button>  
-    const postID = post.postID
 
-    const likePost = (e) => {
-      console.log(e.target);
-      console.log("you liked! " + postID);
-    }
-
-import Likes from './Likes';
-import EditPost from './EditPost';
 
 const Post = (props) => {
     const currentUser = props.currentUser;

@@ -1,3 +1,4 @@
+/*
 const IndividualPost = ({post}) => {
     const postID = post.postID
 
@@ -16,3 +17,5 @@ const IndividualPost = ({post}) => {
     }  
 
 export default IndividualPost;
+
+*/

@@ -122,16 +122,16 @@ header {
   margin-left: 20%;
   border: 1px solid black;
 }
-
+/*
 .post {
   width: 80%;
   min-height: 42px;
   margin-left: 10%;
-  margin-bottom: 8px;
+  margin-bottom: 22px;
   border: 1px solid blue;
 }
-
-.post-text {
+*/
+post-text {
   margin: 2px;
   padding: 0px;
 }

@@ -2,9 +2,9 @@ import { useParams } from "react-router";
 import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, Link  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
-import Posts from '../components/posts/Posts';
-
-import NewPost from './../components/posts/NewPost';
+import GroupPosts from '../components/posts/GroupPosts';
+//import Posts from '../components/posts/GroupPosts';
+//import NewPost from './../components/posts/NewPost';
 
 const IndividualGroup = () => {
     const { groupID } = useParams()
@@ -29,14 +29,16 @@ const IndividualGroup = () => {
 
     return (
         <div>
-            <NewPost groupID = { groupID } currentUser = { currentUser } />
-            <Posts groupID = { groupID }/>
-            <p><b> Your on a group! with the ID { groupID }</b></p>
-            <p> Current User: { currentUser } </p>
-            <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
-            <Link className="" to="/groups"> Groups </Link>
+          <p><b>Current User: { currentUser } is visiting a group with the ID { groupID }</b></p>
+          <GroupPosts groupID = { groupID } currentUser = { currentUser } />
+          <Link className="" to="/groups"> Groups </Link>
         </div>
     )
 }
 
 export default IndividualGroup;
+
+/*
+
+<p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
+*/
