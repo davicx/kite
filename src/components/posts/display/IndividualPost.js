@@ -1,12 +1,13 @@
-import Likes from '../actions/Likes';
+import Likes from '../actions/like/Likes';
 import EditPost from '../actions/EditPost';
 
 const IndividualPost = ({post, currentUser}) => {
+    //console.log(post)
     return (     
         <div className="post" >
             <p className = "post-text"> Current User { currentUser } </p>
             <p className = "post-text"> { post.postCaption } </p>
-            <p className = "post-text"> { post.postID } |  { post.postFrom } | { post.postTo} | { post.groupID }</p>  
+            <p className = "post-text"> POST ID: { post.postID } |  { post.postFrom } | { post.postTo} | GROUP ID: { post.groupID }</p>  
             <Likes post = { post } currentUser = {currentUser}  />                     
         </div>       
         );

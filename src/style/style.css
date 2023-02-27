@@ -161,7 +161,12 @@ SECTION 5A: Post
   padding: 0px;
 }
 
-
+/* Likes */
+.like-list {
+	margin: 4px;
+	display: inline;
+	list-style-type: none;
+}
 
 
 /****************************************************
