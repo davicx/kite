@@ -40,7 +40,7 @@ const PostList = ({groupID}) => {
           { isLoading && <div> loading... </div>}
           { isError && <div> There was an error fetching the posts { error.message } </div>}
           {data && currentPosts.map((post) => (
-            <IndividualPost post = { post }  currentUser = {currentUser} key = { post.postID }/>
+            <IndividualPost post = { post }  groupID = { groupID } currentUser = {currentUser} key = { post.postID }/>
           ))}
        </div>
   </div>

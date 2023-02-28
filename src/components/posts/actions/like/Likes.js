@@ -5,26 +5,127 @@ import LikePost from './LikePost';
 import UnlikePost from './UnlikePost';
 
 const api = axios.create({
-  
+
 })
 
 async function likePostAPI(likedPost) {
     const postURL = "http://localhost:3003/post/like"
     const response = await axios.post(postURL, likedPost);
+    //console.log(response)
 
     return response.data;
 } 
 
 
-const Likes = (props) => {
+async function unlikePostAPI(likedPost) {
+    const postURL = "http://localhost:3003/post/unlike"
+    const response = await axios.post(postURL, likedPost);
+    //console.log(response)
+
+    return response.data;
+} 
+
+
+const Likes = ({groupID, post, currentUser}) => {
     const queryClient = useQueryClient();
-    const currentUser = props.currentUser;
-    var post = props.post;
+    var postID = post.postID
+    const postLikes = post.postLikesArray;
+    const simplePostLikes = post.simpleLikesArray;
  
-    const totalLikes = props.post.totalLikes;
-    const postLikes = props.post.postLikesArray;
-    const postUserLikesArray = props.post.likedByUsernameArray;
-    const postID = props.post.postID;
+
+    const handleLikePost = (postID, currentUser) => {
+        var likedPost = {
+            postID: postID,
+            currentUser: currentUser   
+        }
+
+        //likePostAPI(likedPost) 
+        mutate(likedPost)
+        //console.log(currentUser + " you liked " + postID)
+    }
+
+    const handleUnLikePost = (postID, currentUser) => {
+        console.log(currentUser + " you liked " + postID)
+        var likedPost = {
+            postID: postID,
+            currentUser: currentUser   
+        }
+
+        unlikePostAPI(likedPost)
+    }
+
+    //simplePostLikes.includes(currentUser) ? console.log("You ALREADY liked!  ") : console.log("Like Me!") 
+
+    const { isLoading, mutate } = useMutation(likePostAPI, {
+
+        onSuccess: (returnedData) => {
+            //console.log("returnedData")
+            //console.log(returnedData)  
+            //queryClient.invalidateQueries(['group-posts', groupID])
+
+            queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
+                console.log("returnedData")
+                //console.log(returnedData)
+                /*
+                "success": 1,
+                "successMessage": "you liked",
+                "postLikeID": 125,
+                "postID": 72,
+                "currentUser": "davey"
+                */
+                console.log("originalQueryData")
+                //console.log(originalQueryData)
+
+                //STEP 1: Get post ID of updated post and new like array 
+                const postID = returnedData.postID;
+
+                var updatedQueryData = structuredClone(originalQueryData);
+
+                
+                for (let i = 0; i < updatedQueryData.length; i++) {
+                    //console.log(updatedQueryData[i].postID + " " + postID)
+                    if(updatedQueryData[i].postID == postID) {
+                        console.log("Change this post! " + postID)
+
+                        /*
+                        //Need to update this part of the Post 
+                        "postLikesArray": [
+                                {
+                                    "postLikeID": 93,
+                                    "postID": 72,
+                                    "likedByUserName": "sam",
+                                    "likedByImage": "frodo.jpg",
+                                    "likedByFirstName": "sam gamgee",
+                                    "likedByLastName": "sam gamgee",
+                                    "timestamp": "2023-02-21T00:42:33.000Z"
+                                    //Also this should have a link to the user page!!
+                                },
+
+                                "simpleLikesArray": [
+                                    "sam",
+                                    "bilbo",
+                                    "frodo",
+                                    "davey"
+                                ]
+                        */
+
+                        //Create the new array of users who have liked this
+                        //updatedQueryData[i].postLikesArray = []
+                        //updatedQueryData[i].postLikesArray = returnedData.postLikesArray
+                        //updatedQueryData[i].totalLikes = returnedData.postLikesArray.length
+
+                    }
+                }
+
+                
+
+                return updatedQueryData;
+                //return [data];
+            })
+        
+            
+        }
+    })
 
     
     return (     
@@ -33,34 +134,18 @@ const Likes = (props) => {
             <ul> { postLikes.map((postLike) => (
               <li className= "like-list" key = { postLike.postLikeID } > { postLike.likedByUserName } </li> 
             ))}</ul>  
-            <LikePost post = { post } currentUser = {currentUser} />
+
+
+            { simplePostLikes.includes(currentUser) ? 
+                <button type="submit" className = "post-liked" onClick={() => { handleUnLikePost(postID, currentUser) }}>Unlike</button>: 
+                <button type="submit" className = "" onClick={() => { handleLikePost(postID, currentUser) }}>Like Me</button>
+            }
         </div>       
         );
     }  
 
 export default Likes;
 
-/*
-<Likes post = { post } currentUser = {currentUser}  />   
-<li key = { postLikes.postLikeID }  > { postLikes.likedByName } </li> 
-          <ul> { postLikesArray.map((postLikes) => (
-                <li key = { postLikes.likedByName }  > { postLikes.likedByName } </li> 
-            ))}</ul>        
-
-<ul> { postLikesArray.map((likedBy) => (
-                <li key = { likedBy}  > { likedBy } </li> 
-            ))}</ul>    
-
-"postLikes": [
-    {
-        "postLikeID": 92,
-        "postID": 70,
-        "likedByName": "sam",
-        "likedByImage": "12.jpg",
-        "likedByFirstName": "David",
-        "likedByLastName": "Vasquez"
-    }
-]*/
 
 
 //FROM SIMPLE
@@ -158,16 +243,6 @@ const Likes = (props) => {
   
 export default Likes;
 */
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -446,4 +521,26 @@ console.log(postLikesArray.includes(currentUser))
         
     
 
+/*
+            <LikePost post = { post } currentUser = {currentUser} />
+<Likes post = { post } currentUser = {currentUser}  />   
+<li key = { postLikes.postLikeID }  > { postLikes.likedByName } </li> 
+          <ul> { postLikesArray.map((postLikes) => (
+                <li key = { postLikes.likedByName }  > { postLikes.likedByName } </li> 
+            ))}</ul>        
+
+<ul> { postLikesArray.map((likedBy) => (
+                <li key = { likedBy}  > { likedBy } </li> 
+            ))}</ul>    
+
+"postLikes": [
+    {
+        "postLikeID": 92,
+        "postID": 70,
+        "likedByName": "sam",
+        "likedByImage": "12.jpg",
+        "likedByFirstName": "David",
+        "likedByLastName": "Vasquez"
+    }
+]*/
 
