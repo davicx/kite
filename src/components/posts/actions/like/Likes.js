@@ -4,17 +4,6 @@ import axios from 'axios'
 import LikePost from './LikePost';
 import UnlikePost from './UnlikePost';
 
-const api = axios.create({
-
-})
-
-async function likePostAPI(likedPost) {
-    const postURL = "http://localhost:3003/post/like"
-    const response = await axios.post(postURL, likedPost);
-    console.log(response.data)
-
-    return response.data;
-} 
 
 
 async function unlikePostAPI(likedPost) {
@@ -27,21 +16,10 @@ async function unlikePostAPI(likedPost) {
 
 
 const Likes = ({groupID, post, currentUser}) => {
-    const queryClient = useQueryClient();
     var postID = post.postID
     const postLikes = post.postLikesArray;
     const simplePostLikes = post.simpleLikesArray;
  
-
-    const handleLikePost = (postID, currentUser) => {
-        var likedPost = {
-            postID: postID,
-            currentUser: currentUser   
-        }
-
-        mutate(likedPost)
-
-    }
 
     const handleUnLikePost = (postID, currentUser) => {
         console.log(currentUser + " you liked " + postID)
@@ -53,50 +31,6 @@ const Likes = ({groupID, post, currentUser}) => {
         unlikePostAPI(likedPost)
     }
 
-
-    const { isLoading, mutate } = useMutation(likePostAPI, {
-
-        onSuccess: (returnedData) => {
-
-            queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
-
-                //STEP 1: Get post ID of updated post and new like array 
-                var updatedQueryData = structuredClone(originalQueryData);
-                const postID = returnedData.postID;
-                const currentUser = returnedData.currentUser;
-
-                for (let i = 0; i < updatedQueryData.length; i++) {
-
-                    if(updatedQueryData[i].postID == postID) {
-                        console.log("Change this post! " + postID)
-
-                        var postLike = {
-                            postLikeID: returnedData.postLikeID,
-                            postID: postID,
-                            likedByUserName: currentUser,
-                            likedByImage: "frodo.jpg",
-                            likedByFirstName: "sam gamgee",
-                            likedByLastName: "sam gamgee",
-                            timestamp: "2023-02-21T00:42:33.000Z"
-
-                        }
-
-                        //Create the new array of users who have liked this
-                        updatedQueryData[i].postLikesArray.push(postLike)
-                        updatedQueryData[i].simpleLikesArray.push(currentUser)
-                        updatedQueryData[i].totalLikes = updatedQueryData[i].simpleLikesArray.length
-
-                    }
-                }
-
-                return updatedQueryData;
-
-            })
-                
-        }
-    })
-
-    
     return (     
         <div className="post" >
             <p className = "post-text">total Likes { postLikes.length } </p>  
@@ -107,7 +41,7 @@ const Likes = ({groupID, post, currentUser}) => {
 
             { simplePostLikes.includes(currentUser) ? 
                 <button type="submit" className = "post-liked" onClick={() => { handleUnLikePost(postID, currentUser) }}>Unlike</button>: 
-                <LikePost />
+                <LikePost groupID = { groupID } post = { post } currentUser = {currentUser} />
             }
         </div>       
         );
