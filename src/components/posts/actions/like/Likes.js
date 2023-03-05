@@ -40,7 +40,7 @@ const Likes = ({groupID, post, currentUser}) => {
 
 
             { simplePostLikes.includes(currentUser) ? 
-                <button type="submit" className = "post-liked" onClick={() => { handleUnLikePost(postID, currentUser) }}>Unlike</button>: 
+                <UnlikePost groupID = { groupID } post = { post } currentUser = {currentUser} /> : 
                 <LikePost groupID = { groupID } post = { post } currentUser = {currentUser} />
             }
         </div>       
