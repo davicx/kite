@@ -34,7 +34,7 @@ function LikePost({groupID, post, currentUser}) {
   const { isLoading, mutate } = useMutation(likePostAPI, {
     onSuccess: (returnedData) => {
       queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
-
+        console.log(returnedData)
         //STEP 1: Get post ID of updated post and new like array 
         var updatedQueryData = structuredClone(originalQueryData);
         const postID = returnedData.postID;
