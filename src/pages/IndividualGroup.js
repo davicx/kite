@@ -8,6 +8,7 @@ import GroupPosts from '../components/posts/GroupPosts';
 
 const IndividualGroup = () => {
     const { groupID } = useParams()
+    console.log("PAGE: IndividualGroup Page");
 
     //Login Status 
     const navigate = useNavigate();
@@ -37,8 +38,3 @@ const IndividualGroup = () => {
 }
 
 export default IndividualGroup;
-
-/*
-
-<p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
-*/

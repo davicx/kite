@@ -10,7 +10,6 @@ import CreateGroup from '../components/groups/CreateGroup';
 
 import axios from 'axios'
 
-
 const axiosRequest = axios.create({
   withCredentials: true
 })  

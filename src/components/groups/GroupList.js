@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from "react-query";
-import { Link, useNavigate } from 'react-router-dom';
-import  functions from "../../functions/functions";
-import useHello from '../../functions/hooks/useHello';
-
+import { Link } from 'react-router-dom';
+//import  functions from "../../functions/functions";
+//import useHello from '../../functions/hooks/useHello';
 
 async function getGroups(currentUser, api) {
   if(currentUser && currentUser != null) {
@@ -21,6 +20,7 @@ const GroupList = (props) => {
   //console.log("COMPONENT: GroupsList")  
   const currentUser = props.currentUser;
   const api = props.api;
+  
   //const { hello} = useHello();
 
   const { isLoading, data, isError, error  } = useQuery(['user-groups', currentUser], () => getGroups(currentUser, api), 
@@ -28,7 +28,6 @@ const GroupList = (props) => {
   )
 
   var groups = data;
-  //console.log(groups + " " + isError + " " + error)
 
   return (
   <div className="groups">
