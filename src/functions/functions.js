@@ -58,6 +58,7 @@ async function refreshToken() {
       const data = localStorage.getItem("localStorageCurrentUser");
       const userName = JSON.parse(data);
       console.log("refreshToken: you are refreshing for" + userName)
+
       //STEP 1: Call Logout API
       axiosRequest.post(refreshURL, {
         userName: userName,
@@ -73,6 +74,5 @@ async function refreshToken() {
       });
   
   }
-
 
 export default { loginUser, logoutUser, loginStatus, refreshToken, sayHello };

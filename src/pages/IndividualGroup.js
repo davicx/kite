@@ -2,7 +2,10 @@ import { useParams } from "react-router";
 import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, Link  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
+//import { refreshToken } from "../functions/functions";
+import functions from '../functions/functions';
 import GroupPosts from '../components/posts/GroupPosts';
+
 //import Posts from '../components/posts/GroupPosts';
 //import NewPost from './../components/posts/NewPost';
 
@@ -13,27 +16,6 @@ const axiosRequest = axios.create({
   withCredentials: true
 })  
 
-async function refreshToken() {
-  console.log("ATTEMPTING TO REFRESH TOKEN: refreshToken()")
-    const refreshURL = "http://localhost:3003/refresh/tokens"
-      const data = localStorage.getItem("localStorageCurrentUser");
-      const userName = JSON.parse(data);
-      console.log("refreshToken: you are refreshing for" + userName)
-      //STEP 1: Call Logout API
-      axiosRequest.post(refreshURL, {
-        userName: userName,
-        refreshToken: "dontneedheretoken"
-      })
-      .then(function (response) {
-        console.log("refreshToken(): We got a new access token!")
-        return response.data;
-      })
-      .catch(function (error) {
-        console.log("refreshToken(): We failed to get a new access token!")
-        //console.log(error);
-      });
-  
-  }
 
 //STATUS 200: Good Request 
 axiosRequest.interceptors.response.use(function (response) {
@@ -53,7 +35,8 @@ axiosRequest.interceptors.response.use(function (response) {
 
     //const { data: blog, error, isPending } = useFetch('http://localhost:8000/blogs/' + id);
     //const { data, error, isPending } = useRefreshToken(refreshURL);
-    const refreshOutcome = refreshToken();
+    //const refreshOutcome = refreshToken(axiosRequest);
+    const refreshOutcome = functions.refreshToken(axiosRequest);
     console.log("We refreshed the access token!")
 
   } 
@@ -72,6 +55,10 @@ axiosRequest.interceptors.response.use(function (response) {
 //Login and Refresh
 
 const IndividualGroup = () => {
+    //const name = useDisplayName()
+    //console.log("NAME!!!!! " + name)
+    functions.sayHello("hi")
+
     const { groupID } = useParams()
     console.log("PAGE: IndividualGroup Page");
 
@@ -197,4 +184,30 @@ function GroupsPage() {
 
 export default GroupsPage;
 
+*/
+
+
+/*
+async function refreshToken(axiosRequest) {
+  console.log("ATTEMPTING TO REFRESH TOKEN: refreshToken()")
+    const refreshURL = "http://localhost:3003/refresh/tokens"
+      const data = localStorage.getItem("localStorageCurrentUser");
+      const userName = JSON.parse(data);
+      console.log("refreshToken: you are refreshing for" + userName)
+
+      //STEP 1: Call Logout API
+      axiosRequest.post(refreshURL, {
+        userName: userName,
+        refreshToken: "dontneedheretoken"
+      })
+      .then(function (response) {
+        console.log("refreshToken(): We got a new access token!")
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log("refreshToken(): We failed to get a new access token!")
+        //console.log(error);
+      });
+  
+  }
 */
