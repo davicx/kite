@@ -8,6 +8,8 @@ import Refresh from '../components/login/Refresh';
 import Groups from '../components/groups/GroupList';
 import CreateGroup from '../components/groups/CreateGroup';
 
+
+//USER: Login and Refresh 
 import axios from 'axios'
 
 const axiosRequest = axios.create({
@@ -70,6 +72,8 @@ axiosRequest.interceptors.response.use(function (response) {
   
 });
 
+//Login and Refresh
+
 
 function GroupsPage() {
   console.log("PAGE: GroupsPage")
@@ -85,13 +89,3 @@ function GroupsPage() {
 
 export default GroupsPage;
 
-
-/*
-  return (
-    <div className="user">
-        <p> Current User: {currentUser}</p>
-        <Groups currentUser = { currentUser } api = { axiosRequest } />   
-        <CreateGroup currentUser = { currentUser } api = { axiosRequest } />   
-    </div>
-  );
-*/

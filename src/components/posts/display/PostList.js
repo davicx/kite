@@ -3,19 +3,17 @@ import { useQuery } from "react-query";
 import axios from 'axios'
 import IndividualPost from './IndividualPost';
 
-const axiosRequest = axios.create({
-    withCredentials: true
-  })  
 
-async function getPosts(groupID) {
+
+async function getPosts(groupID, api) {
     const groupPostURL = "http://localhost:3003/posts/group/" + groupID; 
-    const response = await axiosRequest.get(groupPostURL)
+    const response = await api.get(groupPostURL)
   
     return response.data
   
 } 
 
-const PostList = ({groupID}) => {
+const PostList = ({groupID, api}) => {
     const localData = localStorage.getItem("localStorageCurrentUser");
     const currentUser = JSON.parse(localData);
     console.log("Posts: Getting posts for the group " + groupID)
@@ -25,7 +23,7 @@ const PostList = ({groupID}) => {
       console.log(error)
     }
   
-    const { isLoading, data, isError, error  } = useQuery(['group-posts', groupID], () => getPosts(groupID), 
+    const { isLoading, data, isError, error  } = useQuery(['group-posts', groupID], () => getPosts(groupID, api), 
       { refetchInterval: 10000000,
         onError: onError
       }
