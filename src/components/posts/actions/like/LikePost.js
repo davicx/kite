@@ -64,7 +64,6 @@ function LikePost({groupID, post, currentUser}) {
   return (
     <div className="">
         <button type="submit" className = "" onClick={() => { handleLikePost(postID, currentUser) }}>Like Me</button>
-
     </div>
   );
 }
