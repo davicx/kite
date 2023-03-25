@@ -24,7 +24,8 @@ function LikePost({groupID, post, currentUser}) {
   const handleLikePost = (postID, currentUser) => {
     var likedPost = {
         postID: postID,
-        currentUser: currentUser   
+        currentUser: currentUser,
+        groupID: groupID
     }
 
     mutate(likedPost)

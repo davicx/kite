@@ -33,22 +33,23 @@ const DeletePost = ({ groupID, currentUser, postID}) => {
           queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
             //queryClient.invalidateQueries(['group-posts', groupID]) 
 
-            var updatedQueryData = structuredClone(originalQueryData);
+            var updatedQueryData = [];
 
             //STEP 1: Remove post with this ID
-            const postID = returnedData.postID;
+            var deletedPostID = returnedData.data[0].postID
 
-            for (let i = 0; i < updatedQueryData.length; i++) {
-                if(updatedQueryData[i].postID != postID) {
-                    updatedQueryData.push(updatedQueryData[i])
+            for (let i = 0; i < originalQueryData.length; i++) {
+                if(originalQueryData[i].postID != deletedPostID) {
+                    updatedQueryData.push(originalQueryData[i])
                 }
             }
     
             return updatedQueryData;
-  
+            
             })    
         }
       })
+      
 
     return (     
         <div className="" >
@@ -58,20 +59,3 @@ const DeletePost = ({ groupID, currentUser, postID}) => {
     }  
 
 export default DeletePost;
-
-/*
-function LikePost({groupID, post, currentUser}) {
-
-
-
-
-  return (
-    <div className="">
-        <button type="submit" className = "" onClick={() => { handleLikePost(postID, currentUser) }}>Like Me</button>
-    </div>
-  );
-}
-
-
-export default LikePost;
-*/

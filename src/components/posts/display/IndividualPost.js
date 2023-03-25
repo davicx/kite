@@ -10,6 +10,7 @@ const IndividualPost = ({post, currentUser, groupID }) => {
             <p className = "post-text"> POST ID: { post.postID } |  { post.postFrom } | { post.postTo} | GROUP ID: { post.groupID }</p>  
             <Likes groupID = { groupID } post = { post } currentUser = {currentUser}  />    
             <DeletePost groupID = { groupID } currentUser = {currentUser} postID = { post.postID }  />           
+            <EditPost groupID = { groupID } currentUser = {currentUser} postID = { post.postID }  />           
         </div>       
         );
     }  
