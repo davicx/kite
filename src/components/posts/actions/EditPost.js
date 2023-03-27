@@ -6,9 +6,11 @@ const api = axios.create({
   
 })
 
-async function editPostAPI(post) {
-    const postURL = "http://localhost:3003/post/text";
-    const response = await axios.post(postURL, post);
+async function editPostAPI(editedPost) {
+    const postURL = "http://localhost:3003/post/caption/edit/";
+    const response = await axios.post(postURL, editedPost);
+    console.log("editPostAPI(editedPost)")
+    console.log(response.data)
 
     return response.data;
 } 
@@ -20,12 +22,20 @@ function EditPost({ groupID, currentUser, postID}) {
     const { isLoading, mutate } = useMutation(editPostAPI, {
         onSuccess: (returnedData) => {
            //queryClient.invalidateQueries(['group-posts', groupID])
-            const newPost = returnedData.newPost;
+           //console.log("returnedData")
+           //console.log(returnedData.data[0].postID)
+           const updatedPostID = returnedData.data[0].postID;
+           const newPostCaption = returnedData.data[0].newPostCaption;
 
-            queryClient.setQueryData(['group-posts', groupID], (oldPostData) => {
+           queryClient.setQueryData(['group-posts', groupID], (oldPostData) => {
                 var updatedPostData= structuredClone(oldPostData);
-                updatedPostData.unshift(newPost);
 
+                for (let i = 0; i < updatedPostData.length; i++) {
+                    if(updatedPostData[i].postID == updatedPostID) {
+                        updatedPostData[i].postCaption = newPostCaption;
+                    }
+                }
+    
                 return updatedPostData;
             })
         }
@@ -41,17 +51,16 @@ function EditPost({ groupID, currentUser, postID}) {
         event.preventDefault();
 
         var editedPost = {
-            masterSite: "kite",
             postID: postID,
-            postType: "text",
-            postFrom: currentUser,
-            postCaption: newPostCaption,
+            currentUser: currentUser,
+            newPostCaption: newPostCaption,
         }
 
-        console.log("POST the new edit!!")
-        console.log(editedPost)
+        //console.log("POST the new edit!!")
+        //console.log(editedPost)
+        //editPostAPI(editedPost)
         //makePost(newPost)
-        //mutate(newPost)
+        mutate(editedPost)
         
     }
 
