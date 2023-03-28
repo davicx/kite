@@ -100,7 +100,6 @@ const IndividualGroup = () => {
 
     return (
         <div>
-          <p><b>Current User: { currentUser } is visiting a group with the ID { groupID }</b></p>
           <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
           <Link className="" to="/groups"> Groups </Link>
         </div>
@@ -108,3 +107,11 @@ const IndividualGroup = () => {
 }
 
 export default IndividualGroup;
+
+/*
+        <div>
+          <p><b>Current User: { currentUser } is visiting a group with the ID { groupID }</b></p>
+          <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
+          <Link className="" to="/groups"> Groups </Link>
+        </div>
+*/

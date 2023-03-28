@@ -12,10 +12,12 @@ SECTION 4A: Login Page
 SECTION 4B: Register Page
 SECTION 4C: Groups Page
 SECTION 4D: Individual Group Page
-SECTION 4D: Profile Page
+SECTION 4E: Profile Page
 
 Component Specific
 SECTION 5A: Login
+SECTION 5B: Groups
+SECTION 5C: Posts
 
 Site Defaults
 SECTION 6A: CSS defaults  
@@ -72,9 +74,6 @@ SECTION 5A: Login
 
 
 
-
-
-
 /****************************************************
 SECTION 6A: CSS defaults  
 *****************************************************/
@@ -116,13 +115,13 @@ header {
   height: 58px;
   border-bottom: 1px solid black;
 }
-
+/*
 .posts {
   width: 60%;
   margin-left: 20%;
   border: 1px solid black;
 }
-/*
+
 .post {
   width: 80%;
   min-height: 42px;
@@ -130,11 +129,13 @@ header {
   margin-bottom: 22px;
   border: 1px solid blue;
 }
-*/
+
 post-text {
   margin: 2px;
   padding: 0px;
 }
+
+
 
 .group {
   float: left;
@@ -272,3 +273,5 @@ body {
   margin-top: 8px;
   width: 80%;
 }
+
+*/

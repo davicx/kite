@@ -1,8 +1,7 @@
 import React from 'react';
 import { useQuery } from "react-query";
-import axios from 'axios'
+//import axios from 'axios'
 import IndividualPost from './IndividualPost';
-
 
 
 async function getPosts(groupID, api) {
@@ -38,7 +37,7 @@ const PostList = ({groupID, api}) => {
           { isLoading && <div> loading... </div>}
           { isError && <div> There was an error fetching the posts { error.message } </div>}
           {data && currentPosts.map((post) => (
-            <IndividualPost post = { post }  groupID = { groupID } currentUser = {currentUser} key = { post.postID }/>
+            <IndividualPost api = { api } post = { post }  groupID = { groupID } currentUser = {currentUser} key = { post.postID }/>
           ))}
        </div>
   </div>
@@ -46,53 +45,3 @@ const PostList = ({groupID, api}) => {
   }
   
 export default PostList;
-
-
-/*
-import React, { useState } from 'react';
-import { useQuery } from "react-query";
-import axios from 'axios'
-import Post from './Post';
-
-var currentUser = "davey"
-
-const api = axios.create({
-  
-})
-
-async function getPosts(groupID) {
-  const postURL = 'http://localhost:3003/api/posts';  
-  const { data } = await api.get(postURL)
-  console.log(data)
-  return data
-} 
-
-
-function WallPosts() {
-    var groupID = 72;
-    const postID = 1;
- 
-    const { isLoading, data, isError, error  } = useQuery({
-        queryKey: ['group', groupID],
-        queryFn: () => getPosts(postID),
-        refetchInterval: 10000000 
-      })
-    
-    const currentPosts = data;
-    //console.log(isLoading  + " " + isError + " " + error)
-  
-    return (
-    <div className="posts">
-        { isLoading && <div> loading... </div>}
-        { isError && <div> There was an error fetching the posts { error.message } </div>}
-        { data && currentPosts.map((post) => (
-            <Post post = { post }  currentUser = {currentUser} key = { post.postID }/>
-        ))}
-    </div>
-    );
-}
-
-export default WallPosts;
-
-
-*/
