@@ -6,9 +6,11 @@ import IndividualPost from './IndividualPost';
 
 async function getPosts(groupID, api) {
     const groupPostURL = "http://localhost:3003/posts/group/" + groupID; 
+    //const groupPostURL = "http://localhost:3003/comments/72"; 
     const response = await api.get(groupPostURL)
+    console.log(response.data)
   
-    return response.data
+    return response.data.posts
   
 } 
 

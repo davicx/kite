@@ -9,7 +9,7 @@ const IndividualPost = ({api, post, currentUser, groupID }) => {
             <p className = "post-text"> Post Type { post.postType } </p>
             <p className = "post-text"> { post.postCaption } </p>
             <p className = "post-text"> POST ID: { post.postID } |  { post.postFrom } | { post.postTo} | GROUP ID: { post.groupID }</p>  
-            <Comments api = { api } groupID = { groupID } post = { post } currentUser = {currentUser}  /> 
+            <Comments api = { api } postComments = {post.commentsArray} groupID = { groupID } postID = { post.postID } currentUser = {currentUser}  /> 
         </div>       
         );
     }  
@@ -17,7 +17,10 @@ const IndividualPost = ({api, post, currentUser, groupID }) => {
 export default IndividualPost;
 
 /*
-<Likes groupID = { groupID } post = { post } currentUser = {currentUser}  />    
-<DeletePost groupID = { groupID } currentUser = {currentUser} postID = { post.postID }  />           
-<EditPost groupID = { groupID } currentUser = {currentUser} postID = { post.postID }  /> 
+
+//This is part of this just removed to make it easier! 
+            <Likes groupID = { groupID } post = { post } currentUser = {currentUser}  />    
+            <DeletePost groupID = { groupID } currentUser = {currentUser} postID = { post.postID }  />           
+            <EditPost groupID = { groupID } currentUser = {currentUser} postID = { post.postID }  />  
+
 */               

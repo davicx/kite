@@ -3,14 +3,56 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate, Link  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
 //import { refreshToken } from "../functions/functions";
-import apiFunctions from '../functions/apiFunctions';
 import GroupPosts from '../components/posts/GroupPosts';
+import apiFunctions from '../functions/apiFunctions';
+
+const axiosRequest = apiFunctions.getAPI();
+
+
+const IndividualGroup = () => {
+    const { groupID } = useParams()
+
+    //Login Status 
+    const { currentUser, setLoginState} = useContext(LoginContext);
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+  
+    useEffect(() => {
+      const data = localStorage.getItem("localStorageCurrentUser");
+      const currentUserLoggedIn = JSON.parse(data);
+      setLoginState(currentUserLoggedIn);
+      if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
+        setUserLoggedIn(false);
+        console.log("Group Page: DONT BE HERE");
+      } else {
+        setUserLoggedIn(true);
+        console.log("Group Page: OK STAY HERE")
+      }
+   }, []);
+
+    return (
+        <div>
+          <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
+          <Link className="" to="/groups"> Groups </Link>
+        </div>
+    )
+}
+
+export default IndividualGroup;
+
+/*
+        <div>
+          <p><b>Current User: { currentUser } is visiting a group with the ID { groupID }</b></p>
+          <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
+          <Link className="" to="/groups"> Groups </Link>
+        </div>
+*/
+
 
 //import Posts from '../components/posts/GroupPosts';
 //import NewPost from './../components/posts/NewPost';
 
 //USER: Login and Refresh 
-const axiosRequest = apiFunctions.getAPI();
+
 /*
 import axios from 'axios'
 
@@ -76,42 +118,4 @@ axiosRequest.interceptors.response.use(function (response) {
 });
 
 //Login and Refresh
-*/
-
-const IndividualGroup = () => {
-    const { groupID } = useParams()
-
-    //Login Status 
-    const { currentUser, setLoginState} = useContext(LoginContext);
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-  
-    useEffect(() => {
-      const data = localStorage.getItem("localStorageCurrentUser");
-      const currentUserLoggedIn = JSON.parse(data);
-      setLoginState(currentUserLoggedIn);
-      if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
-        setUserLoggedIn(false);
-        console.log("Group Page: DONT BE HERE");
-      } else {
-        setUserLoggedIn(true);
-        console.log("Group Page: OK STAY HERE")
-      }
-   }, []);
-
-    return (
-        <div>
-          <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
-          <Link className="" to="/groups"> Groups </Link>
-        </div>
-    )
-}
-
-export default IndividualGroup;
-
-/*
-        <div>
-          <p><b>Current User: { currentUser } is visiting a group with the ID { groupID }</b></p>
-          <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
-          <Link className="" to="/groups"> Groups </Link>
-        </div>
 */
