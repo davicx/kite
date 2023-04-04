@@ -42,7 +42,8 @@ function LoginUser() {
         })
         .then(function (response) {
           console.log(response.data);
-          const loginSuccess = response.data.loginSuccess;
+   
+          const loginSuccess = response.data.data.loginSuccess;
 
           //STEP 2: Success
           if(loginSuccess == true) {
