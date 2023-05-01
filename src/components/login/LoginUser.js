@@ -44,15 +44,18 @@ function LoginUser() {
           console.log(response.data);
    
           const loginSuccess = response.data.data.loginSuccess;
+          const currentUser = response.data.data.loggedInUser;
+
+          //var userNameServer = 
 
           //STEP 2: Success
           if(loginSuccess == true) {
             
             //Step 2A: Set local storage  
-            localStorage.setItem('localStorageCurrentUser', JSON.stringify(userName));
+            localStorage.setItem('localStorageCurrentUser', JSON.stringify(currentUser));
 
             //Step 2B: Set context
-            setLoginState(userName)
+            setLoginState(currentUser)
  
             //Step 2C: Redirect to Groups
             //navigate("/groups");
