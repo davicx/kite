@@ -11,5 +11,4 @@ function GroupPosts({ groupID, currentUser, api }) {
   );
 }
 
-
 export default GroupPosts;

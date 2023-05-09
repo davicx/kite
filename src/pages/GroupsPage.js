@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate  } from "react-router-dom"
-import { LoginContext } from "../functions/context/LoginContext";
+//import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
+//import { useNavigate  } from "react-router-dom"
+//import { LoginContext } from "../functions/context/LoginContext";
 import useLoginStatus from '../functions/hooks/useLoginStatus';
 import apiFunctions from '../functions/apiFunctions';
 import Groups from '../components/groups/GroupList';
-
 //import CreateGroup from '../components/groups/CreateGroup';
+//import NotificationList from '../components/notifications/NotificationList';
 
 const axiosRequest = apiFunctions.getAPI();
 
@@ -15,13 +16,19 @@ function GroupsPage() {
   return (
     <div className="user">
         <p> Current User: {currentUser}</p>
-        <Groups currentUser = { currentUser } api = { axiosRequest } />   
+        <Groups currentUser = { currentUser } api = { axiosRequest } /> 
+         
     </div>
   );
 }
 
 export default GroupsPage;
 
+
+/*
+        <!-- Doesn't work -->
+        <CreateGroup currentUser = { currentUser } api = { axiosRequest } />
+*/
 
 
 

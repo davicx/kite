@@ -5,34 +5,21 @@ import { LoginContext } from "../functions/context/LoginContext";
 //import { refreshToken } from "../functions/functions";
 import GroupPosts from '../components/posts/GroupPosts';
 import apiFunctions from '../functions/apiFunctions';
+import useLoginStatus from '../functions/hooks/useLoginStatus';
+import NotificationList from '../components/notifications/NotificationList';
 
 const axiosRequest = apiFunctions.getAPI();
 
 
-const IndividualGroup = () => {
+const IndividualGroup = (props) => {
     const { groupID } = useParams()
-
-    //Login Status 
-    const { currentUser, setLoginState} = useContext(LoginContext);
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-  
-    useEffect(() => {
-      const data = localStorage.getItem("localStorageCurrentUser");
-      const currentUserLoggedIn = JSON.parse(data);
-      setLoginState(currentUserLoggedIn);
-      if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
-        setUserLoggedIn(false);
-        console.log("Group Page: DONT BE HERE");
-      } else {
-        setUserLoggedIn(true);
-        console.log("Group Page: OK STAY HERE")
-      }
-   }, []);
+    const { currentUser, userLoggedIn  } = useLoginStatus();
 
     return (
         <div>
+          <NotificationList currentUser = { currentUser } api = { axiosRequest } />
           <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
-          <Link className="" to="/groups"> Groups </Link>
+          <Link className="" to="/groups"> Groups </Link>   
         </div>
     )
 }

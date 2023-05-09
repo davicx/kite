@@ -19,6 +19,7 @@ function NewPost({ groupID, currentUser }) {
     
     const { isLoading, mutate } = useMutation(makePost, {
         onSuccess: (returnedData) => {
+            console.log(returnedData)
            //queryClient.invalidateQueries(['group-posts', groupID])
             const newPost = returnedData.newPost;
 
