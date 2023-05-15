@@ -5,7 +5,7 @@ import React from 'react';
 import useLoginStatus from '../functions/hooks/useLoginStatus';
 import apiFunctions from '../functions/apiFunctions';
 import Groups from '../components/groups/GroupList';
-//import CreateGroup from '../components/groups/CreateGroup';
+//import CreateGroup from '../components/simple/simpleUser';
 //import NotificationList from '../components/notifications/NotificationList';
 
 const axiosRequest = apiFunctions.getAPI();
