@@ -17,6 +17,7 @@ import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
 import Profile from './pages/ProfilePage';
 import Posts from './pages/PostsPage';
+import Users from './pages/UsersPage';
 import NotFound from './pages/NotFound';
 import IndividualGroup from './pages/IndividualGroup';
 import { LoginContext } from './functions/context/LoginContext';
@@ -46,6 +47,7 @@ function App() {
             <nav className="navBar">
               <Link className="navLink" to="/login">Login </Link>
               <Link className="navLink" to="/groups"> Groups </Link>
+              <Link className="navLink" to="/users"> Users </Link>
               <Link className="navLink" to="/profile"> Profile </Link>
               <Link className="navLink" to="/posts"> Posts </Link>
             </nav>  
@@ -57,6 +59,7 @@ function App() {
               <Route path = "/group/:groupID" element = {<IndividualGroup />} />   =
               <Route path="/profile" element={<Profile/>} />
               <Route path="/posts" element={<Posts/>} />
+              <Route path="/users" element={<Users/>} />
               <Route path="*" element={ <NotFound /> } />       
             </Routes>
           </LoginContext.Provider> 

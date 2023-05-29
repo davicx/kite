@@ -4,8 +4,6 @@ import { LoginContext } from "../functions/context/LoginContext";
 import LogoutUser from '../components/login/LogoutUser';
 
 import useLoginStatus from '../functions/hooks/useLoginStatus';
-
-
 import axios from 'axios'
 
 
@@ -28,29 +26,6 @@ async function refreshToken() {
     });
 }
 
-/*
-axiosRequest.interceptors.response.use(function (response) {
-  // Any status code that lie within the range of 2xx cause this function to trigger
-  console.log("INTERCEPTOR: Looks good! ")
-  return response;
-}, function (error) {
-  console.log("INTERCEPTOR: Need to get a access token or logout the user")
-  if(error.response.status == 401) {
-    console.log("INTERCEPTOR 401: We got a 401 so we need a new access token. Will send refresh token ")
-    const refreshOutcome = refreshToken();
-  } 
-
-  //LOGOUT USER
-  if(error.response.status == 403) {
-    console.log("INTERCEPTOR 403: We got a 403 so the refresh token was not good need to logout the user")  
-    localStorage.setItem('localStorageCurrentUser', JSON.stringify("null")); 
-    window.location.href = '/login';
-  }
-  
-  return Promise.reject(error);
-  
-});
-*/
 
 function ProfilePage() {
   console.log("PAGE: ProfilePage")
@@ -75,6 +50,7 @@ export default ProfilePage;
 
 
 /*
+
 import React, { useState, useContext } from 'react';
 import { BrowserRouter, useNavigate, Link  } from "react-router-dom"
 import LogoutUser from '../components/login/LogoutUser';
