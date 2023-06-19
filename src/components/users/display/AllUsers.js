@@ -1,27 +1,74 @@
 import React from 'react';
-import SimpleUser from './SimpleUser';
+import { useQuery } from "react-query";
+import SimpleProfile from './SimpleProfile';
 
+async function getAllUsers(api) {
+   
+  const allUsersURL = "http://localhost:3003/users/all"; 
+  const { data } = await api.get(allUsersURL)
 
-//import apiFunctions from '../functions/apiFunctions';
-//import useLoginStatus from '../functions/hooks/useLoginStatus';
-
-//const axiosRequest = apiFunctions.getAPI();
+  return data
+} 
 
 const AllUsers = (props) => {
     const currentUser = props.currentUser;
     const api = props.api;
 
+    const { isLoading, data, isError, error  } = useQuery(['all-users'], () => getAllUsers(api), 
+    { refetchInterval: 10000000 }
+  )
+
     return (
         <div>
             <p> All Users {currentUser} </p>
-            <SimpleUser />
+            { isLoading && <div> loading... </div>}
+            { isError && <div> There was an error fetching the posts { error.message } </div>}
+            { data && console.log(data)}
+            <SimpleProfile />
         </div>
     )
 }
 
 export default AllUsers;
 
+
 /*
+import React from 'react';
+import { useQuery } from "react-query";
+import { Link } from 'react-router-dom';
+
+import SimpleProfile from '../users/display/SimpleProfile';
+
+const MyFriends = (props) => {
+    const currentUser = props.currentUser;
+    const api = props.api;
+
+    const { isLoading, data, isError, error  } = useQuery(['your-friends', currentUser], () => getYourFriends(currentUser, api), 
+        { refetchInterval: 10000000 }
+    )
+
+    return (
+        <div>
+            { isLoading && <div> loading... </div>}
+            { isError && <div> There was an error fetching the posts { error.message } </div>}
+            { data && console.log(data.friendsArray)}
+            <p> My Friends {currentUser}  </p>
+            {data && data.friendsArray.map((friend) => (
+                <SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.friendID }/>
+             ))}
+        </div>
+    )
+}
+
+export default MyFriends;
+*/
+
+
+/*
+//import apiFunctions from '../functions/apiFunctions';
+//import useLoginStatus from '../functions/hooks/useLoginStatus';
+
+//const axiosRequest = apiFunctions.getAPI();
 
 import React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from "react-query";

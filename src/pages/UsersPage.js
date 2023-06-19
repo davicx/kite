@@ -11,18 +11,10 @@ function UsersPage() {
   
   return (
     <div className="user">
-        <p> Current User: {currentUser}</p> 
         <UserProfile currentUser = { currentUser } api = { axiosRequest } /> 
-
     </div>
   );
 }
 
 export default UsersPage;
 
-
-/*
-  
-  <MyFriends currentUser = { currentUser } api = { axiosRequest } /> 
-  */
-  
