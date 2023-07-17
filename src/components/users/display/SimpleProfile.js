@@ -1,11 +1,11 @@
 
 //<SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.friendID }/>
-const SimpleProfile = ({userProfile,}) => {
+const SimpleProfile = ({friend}) => {
     return (     
         <div className="post" >
-            <p> Simple Profile for </p>
-            <p> Image: </p>
-            <p> Friend Status: </p>
+            <p> Simple Profile for {friend.friendName} </p>
+            <p> First Name: {friend.firstName}</p>
+            <p> Image: {friend.friendImage}</p>
         </div>       
         );
     }  

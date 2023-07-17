@@ -11,7 +11,7 @@ async function getYourFriends(currentUser, api) {
    
   const myFriendsURL = "http://localhost:3003/friends/" + currentUser; 
   const { data } = await api.get(myFriendsURL)
-
+  console.log(data)
   return data
 } 
 
@@ -30,7 +30,7 @@ const MyFriends = (props) => {
             { isError && <div> There was an error fetching the posts { error.message } </div>}
             { data && console.log(data.friendsArray)}
             <p> My Friends {currentUser}  </p>
-            {data && data.friendsArray.map((friend) => (
+            {data && data.data.map((friend) => (
                 <SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.friendID }/>
              ))}
         </div>
@@ -41,7 +41,9 @@ export default MyFriends;
 
 /*
 
-
+            {data && data.friendsArray.map((friend) => (
+                <SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.friendID }/>
+             ))}
 
     var groups = data;
 

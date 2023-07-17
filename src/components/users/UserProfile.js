@@ -1,6 +1,6 @@
 import React from 'react';
-import AllUsers from './display/AllUsers';
-//import MyFriends from '../friends/MyFriends';
+//import AllUsers from './display/AllUsers';
+import MyFriends from '../friends/MyFriends';
 //import PendingFriends from '../friends/PendingFriends';
 
 
@@ -10,8 +10,8 @@ const UserProfile = (props) => {
 
     return (
     <div className="groups">
-        <p> Your Profile! {currentUser}</p>
-        <AllUsers currentUser = { currentUser } api = { api } /> 
+        <p> Your Profile! {currentUser}</p><hr />
+        <MyFriends currentUser = { currentUser } api = { api } /> 
     </div>
     );
     }
