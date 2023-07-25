@@ -16,11 +16,3 @@ const IndividualPost = ({api, post, currentUser, groupID }) => {
 
 export default IndividualPost;
 
-/*
-
-//This is part of this just removed to make it easier! 
-            <Likes groupID = { groupID } post = { post } currentUser = {currentUser}  />    
-            <DeletePost groupID = { groupID } currentUser = {currentUser} postID = { post.postID }  />           
-            <EditPost groupID = { groupID } currentUser = {currentUser} postID = { post.postID }  />  
-
-*/               

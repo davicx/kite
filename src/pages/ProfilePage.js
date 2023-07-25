@@ -1,30 +1,39 @@
+import React from 'react';
+import useLoginStatus from '../functions/hooks/useLoginStatus';
+import apiFunctions from '../functions/apiFunctions';
+import UserProfile from '../components/users/UserProfile';
+import LogoutUser from '../components/login/LogoutUser';
+
+
+const axiosRequest = apiFunctions.getAPI();
+
+function ProfilePage() {
+  const { currentUser, userLoggedIn  } = useLoginStatus();
+  
+  return (
+    <div className="user">
+        <h4> PROFILE PAGE </h4>
+        <p> Current User: {currentUser}</p>
+        <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
+        <UserProfile currentUser = { currentUser } api = { axiosRequest } /> 
+        <LogoutUser />
+    </div>
+  );
+}
+
+export default ProfilePage;
+
+
+/*
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
+import UserProfile from '../components/users/UserProfile';
 import LogoutUser from '../components/login/LogoutUser';
 
 import useLoginStatus from '../functions/hooks/useLoginStatus';
 import axios from 'axios'
 
-
-async function refreshToken() {
-  const refreshURL = "http://localhost:3003/refresh/tokens"
-    const data = localStorage.getItem("localStorageCurrentUser");
-    const userName = JSON.parse(data);
-    //console.log("REFRESH TOKEN: you are refreshing for" + userName )
-    //STEP 1: Call Logout API
-    axios.post(refreshURL, {
-      userName: userName,
-      refreshToken: "dontneedheretoken"
-    })
-    .then(function (response) {
-      //console.log(response)
-      return response.data;
-    })
-    .catch(function (error) {
-      //console.log(error);
-    });
-}
 
 
 function ProfilePage() {
@@ -38,12 +47,14 @@ function ProfilePage() {
         <p><b> Profile </b></p>
         <p> Current User: { currentUser } </p>
         <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
+        <UserProfile currentUser = { currentUser } api = { axiosRequest } /> 
         <LogoutUser />
     </div>
   );
 }
 
 export default ProfilePage;
+*/
 
 
 

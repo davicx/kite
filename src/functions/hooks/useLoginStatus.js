@@ -15,12 +15,12 @@ function useLoginStatus() {
       if(currentUserLoggedIn == 'null') {
         setUserLoggedIn(false);
 
-        console.log("Profile Page: DONT BE HERE");
-        //navigate("/login");
+        //console.log("Logged In Page: DONT BE HERE");
+        navigate("/login");
       } else {
         setUserLoggedIn(true);
-        console.log("Profile Page: OK STAY HERE")
-        console.log(currentUserLoggedIn + " is currently logged in");
+        //console.log("Logged In Page: OK STAY HERE")
+        //console.log(currentUserLoggedIn + " is currently logged in");
       }
    }, []);
 

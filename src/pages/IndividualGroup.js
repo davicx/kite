@@ -14,17 +14,28 @@ const axiosRequest = apiFunctions.getAPI();
 const IndividualGroup = (props) => {
     const { groupID } = useParams()
     const { currentUser, userLoggedIn  } = useLoginStatus();
+    console.log("IndividualGroup: " + currentUser)
 
     return (
         <div>
-          <NotificationList currentUser = { currentUser } api = { axiosRequest } />
           <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
+          <NotificationList currentUser = { currentUser } api = { axiosRequest } />
           <Link className="" to="/groups"> Groups </Link>   
         </div>
     )
 }
 
 export default IndividualGroup;
+
+
+
+
+
+
+
+
+
+//APPENDIX
 
 /*
         <div>

@@ -17,7 +17,6 @@ async function getGroups(currentUser, api) {
 
 
 const GroupList = (props) => {
-  //console.log("COMPONENT: GroupsList")  
   const currentUser = props.currentUser;
   const api = props.api;
   
@@ -48,9 +47,7 @@ export default GroupList;
 
 
 //import useRefreshToken from '../../functions/hooks/useRefreshToken';
-
 //import axios from 'axios'
-
 
 /*
 async function refreshToken() {

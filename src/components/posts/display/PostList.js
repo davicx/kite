@@ -8,7 +8,7 @@ async function getPosts(groupID, api) {
     const groupPostURL = "http://localhost:3003/posts/group/" + groupID; 
     //const groupPostURL = "http://localhost:3003/comments/72"; 
     const response = await api.get(groupPostURL)
-    console.log(response.data.data.posts)
+    //console.log(response.data.data.posts)
   
     return response.data.data.posts
   
@@ -17,7 +17,7 @@ async function getPosts(groupID, api) {
 const PostList = ({groupID, api}) => {
     const localData = localStorage.getItem("localStorageCurrentUser");
     const currentUser = JSON.parse(localData);
-    console.log("Posts: Getting posts for the group " + groupID)
+    //console.log("Posts: Getting posts for the group " + groupID)
 
     const onError = (error) => {
       console.log("Do something here if there is Error!")
