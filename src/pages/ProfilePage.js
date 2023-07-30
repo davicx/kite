@@ -3,18 +3,24 @@ import useLoginStatus from '../functions/hooks/useLoginStatus';
 import apiFunctions from '../functions/apiFunctions';
 import UserProfile from '../components/users/UserProfile';
 import LogoutUser from '../components/login/LogoutUser';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 
 const axiosRequest = apiFunctions.getAPI();
 
 function ProfilePage() {
-  const { currentUser, userLoggedIn  } = useLoginStatus();
+
+    //STEP 1: Check user is logged in
+    const loggedInMessage = useLoginStatus();
+
+    //STEP 3: Get the current User
+    var [currentUser, setCurrentUser] = useCurrentUser();
   
   return (
     <div className="user">
         <h4> PROFILE PAGE </h4>
         <p> Current User: {currentUser}</p>
-        <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
+        
         <UserProfile currentUser = { currentUser } api = { axiosRequest } /> 
         <LogoutUser />
     </div>

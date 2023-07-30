@@ -5,8 +5,11 @@ const SimpleProfile = ({friend}) => {
     return (     
         <div className="post" >
             <Link to={`/friends/${friend.friendName}`}> {friend.friendName } </Link>
-            <p> Friend Status Message { friend.alsoYourFriend } </p>
-    
+            {friend.alsoYourFriend ? 
+                <p> Already friends </p>
+                : 
+                <p> Be my friend </p>    
+            }
         </div>       
         );
     }  
@@ -15,6 +18,8 @@ export default SimpleProfile;
 
 
 /*
+            <p> Friend Status Message { friend.alsoYourFriend } </p>
+    
         {friend.alsoYourFriend ? 
                 <p> Already friends </p>
                 : 

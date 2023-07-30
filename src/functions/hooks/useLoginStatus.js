@@ -1,30 +1,25 @@
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate  } from "react-router-dom"
-import { LoginContext } from "../context/LoginContext";
+//import { LoginContext } from "../context/LoginContext";
 
 function useLoginStatus() {
     const navigate = useNavigate();
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const { currentUser, setLoginState} = useContext(LoginContext);
+    //const { currentUser, setLoginState} = useContext(LoginContext);
 
     useEffect(() => {
       const data = localStorage.getItem("localStorageCurrentUser");
       const currentUserLoggedIn = JSON.parse(data);
-      setLoginState(currentUserLoggedIn);
-      //if(currentUserLoggedIn == 'null' || currentUserLoggedIn == null) {
-      if(currentUserLoggedIn == 'null') {
-        setUserLoggedIn(false);
+      //setLoginState(currentUserLoggedIn);
 
-        //console.log("Logged In Page: DONT BE HERE");
+      if(currentUserLoggedIn == 'null') {
+        console.log("Current user is null so you should be on login page");
         navigate("/login");
       } else {
-        setUserLoggedIn(true);
-        //console.log("Logged In Page: OK STAY HERE")
-        //console.log(currentUserLoggedIn + " is currently logged in");
+        console.log(currentUserLoggedIn + " is Logged In should be on one of their pages")
       }
    }, []);
 
-    return { currentUser, userLoggedIn }
+    return "useLoginStatus called"
 }
 
 export default useLoginStatus;

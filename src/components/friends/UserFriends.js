@@ -13,7 +13,7 @@ async function getUserFriends(currentUser, friendName, api) {
 
   const { data } = await api.get(getFriendsURL)
 
-  //console.log(getFriendsURL)
+  console.log(data.data)
   return data
 } 
 
@@ -27,10 +27,7 @@ const UserFriends = ({ currentUser, friendName, api }) => {
         <div>
             { isLoading && <div> loading... </div>}
             { isError && <div> There was an error fetching the posts { error.message } </div>}
-            {data && data.data.map((friend) => (
-                console.log(friend)
-
-             ))}
+     
             {data && data.data.map((friend) => (
                 <SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.friendID }/>
              ))}
@@ -39,3 +36,10 @@ const UserFriends = ({ currentUser, friendName, api }) => {
 }
 
 export default UserFriends;
+
+
+/*
+       {data && data.data.map((friend) => (
+                console.log(friend)
+             ))}
+*/

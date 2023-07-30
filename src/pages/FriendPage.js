@@ -7,22 +7,20 @@ import { LoginContext } from "../functions/context/LoginContext";
 import FriendList from '../components/friends/FriendList';
 import apiFunctions from '../functions/apiFunctions';
 import useLoginStatus from '../functions/hooks/useLoginStatus';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 const axiosRequest = apiFunctions.getAPI();
 
-//const IndividualGroup = (props) => {
 const FriendPage = (props) => {
-    const { friendName } = useParams()
-    const { currentUserLocal, userLoggedIn  } = useLoginStatus();
-    const userData = localStorage.getItem("localStorageCurrentUser");
-    const currentUser = JSON.parse(userData);
- 
 
-    if("NULL".localeCompare(currentUser.toUpperCase() == 0)) {
-        console.log("IndividualGroup: data not loaded yet")
-    } else {
-        console.log("IndividualGroup: " + currentUser)
-    }
+    //STEP 1: Get friend name from URL
+    const { friendName } = useParams()
+
+    //STEP 2: Check user is logged in 
+    const loggedInMessage = useLoginStatus();
+
+    //STEP 3: Get the current User
+    var [currentUser, setCurrentUser] = useCurrentUser();
 
     return (
         <div>
