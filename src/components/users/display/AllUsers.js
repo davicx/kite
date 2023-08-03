@@ -2,9 +2,8 @@ import React from 'react';
 import { useQuery } from "react-query";
 import SimpleProfile from './SimpleProfile';
 
-async function getAllUsers(api) {
-   
-  const allUsersURL = "http://localhost:3003/users/all"; 
+async function getAllUsers(api, currentUser) {
+  const allUsersURL = "http://localhost:3003/users/all/" + currentUser; 
   const { data } = await api.get(allUsersURL)
 
   return data
@@ -14,7 +13,7 @@ const AllUsers = (props) => {
     const currentUser = props.currentUser;
     const api = props.api;
 
-    const { isLoading, data, isError, error  } = useQuery(['all-users'], () => getAllUsers(api), 
+    const { isLoading, data, isError, error  } = useQuery(['all-users'], () => getAllUsers(api, currentUser), 
     { refetchInterval: 10000000 }
   )
 
@@ -24,7 +23,10 @@ const AllUsers = (props) => {
             { isLoading && <div> loading... </div>}
             { isError && <div> There was an error fetching the posts { error.message } </div>}
             { data && console.log(data)}
-            <SimpleProfile />
+            {data && data.data.map((friend) => (
+                <SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.userName }/>
+             ))}
+
         </div>
     )
 }
@@ -33,6 +35,7 @@ export default AllUsers;
 
 
 /*
+            <SimpleProfile />
 import React from 'react';
 import { useQuery } from "react-query";
 import { Link } from 'react-router-dom';

@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AddFriend from '../../friends/actions/AddFriend';
 
-const SimpleProfile = ({friend}) => {
+
+const SimpleProfile = ({api, friend, currentUser}) => {
     return (     
         <div className="post" >
             <Link to={`/friends/${friend.friendName}`}> {friend.friendName } </Link>
+            <p> {friend.userName} </p>
             {friend.alsoYourFriend ? 
                 <p> Already friends </p>
                 : 
-                <p> Be my friend </p>    
+                <AddFriend api = { api } friend = { friend } currentUser = {currentUser}  />    
             }
         </div>       
         );
@@ -16,17 +19,3 @@ const SimpleProfile = ({friend}) => {
 
 export default SimpleProfile;
 
-
-/*
-            <p> Friend Status Message { friend.alsoYourFriend } </p>
-    
-        {friend.alsoYourFriend ? 
-                <p> Already friends </p>
-                : 
-                <p> Be my friend </p>    
-            }
-
-<p> Simple Profile for {friend.friendName} </p>
-<p> First Name: {friend.firstName}</p>
-<p> Image: {friend.friendImage}</p>
-*/

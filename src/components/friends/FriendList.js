@@ -8,7 +8,7 @@ async function getUserFriends(currentUser, friendName, api) {
   const getFriendsURL = "http://localhost:3003/friend/" + friendName + "/user/" + currentUser; 
   const { data } = await api.get(getFriendsURL)
 
-  console.log(data.data)
+  //console.log(data.data)
 
   return data
 } 

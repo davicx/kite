@@ -56,6 +56,7 @@ function App() {
               <Link className="navLink" to="/groups"> Groups </Link>
               <Link className="navLink" to="/profile"> Profile </Link>
               <Link className="navLink" to="/posts"> Posts </Link>
+              <Link className="navLink" to="/users"> Users </Link>
             </nav>  
             
             <Routes>      

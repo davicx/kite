@@ -33,7 +33,7 @@ const MyFriends = (props) => {
                 <SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.friendID }/>
              ))}
             {data && data.data.map((friend) => (
-                console.log(friend)
+                console.log("friend")
              ))}
         </div>
     )
