@@ -36,7 +36,7 @@ function App() {
      const data = localStorage.getItem("localStorageCurrentUser");
      const currentUserLoggedIn = JSON.parse(data);
      setLoginState(currentUserLoggedIn);
-    if(currentUserLoggedIn == 'null') {
+    if(currentUserLoggedIn == "null") {
       setUserLoggedIn(false);
     } else {
       setUserLoggedIn(true);

@@ -11,9 +11,9 @@ function useLoginStatus() {
       const currentUserLoggedIn = JSON.parse(data);
       //setLoginState(currentUserLoggedIn);
 
-      if(currentUserLoggedIn == 'null') {
+      if(currentUserLoggedIn == "null") {
         console.log("Current user is null so you should be on login page");
-        navigate("/login");
+        //navigate("/login");
       } else {
         console.log(currentUserLoggedIn + " is Logged In should be on one of their pages")
       }
