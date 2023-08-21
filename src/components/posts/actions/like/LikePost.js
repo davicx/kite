@@ -19,7 +19,7 @@ async function likePostAPI(likedPost) {
 
 function LikePost({groupID, post, currentUser}) {
   const queryClient = useQueryClient();
-  const postUserLikesArray = post.likedByUsernameArray;
+  //const postUserLikesArray = post.likedByUsernameArray;
   const postID = post.postID;
 
 
@@ -38,6 +38,7 @@ function LikePost({groupID, post, currentUser}) {
     onSuccess: (returnedData) => {
       queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
         console.log(returnedData)
+        
         //STEP 1: Get post ID of updated post and new like array 
         var updatedQueryData = structuredClone(originalQueryData);
         const postID = returnedData.postID;
