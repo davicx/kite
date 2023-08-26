@@ -26,6 +26,9 @@ const AllUsers = (props) => {
             {data && data.data.map((friend) => (
                 <SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.userName }/>
              ))}
+              {data && data.data.map((friend) => (
+                console.log(friend)
+             ))}
 
         </div>
     )
