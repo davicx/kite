@@ -16,12 +16,11 @@ async function likePostAPI(likedPost) {
   return response.data;
 } 
 
-
+//COMPONENT: Like Post  
 function LikePost({groupID, post, currentUser}) {
   const queryClient = useQueryClient();
   //const postUserLikesArray = post.likedByUsernameArray;
   const postID = post.postID;
-
 
   const handleLikePost = (postID, currentUser) => {
     var likedPost = {

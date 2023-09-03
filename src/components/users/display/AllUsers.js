@@ -22,14 +22,10 @@ const AllUsers = (props) => {
             <p> All Users {currentUser} </p>
             { isLoading && <div> loading... </div>}
             { isError && <div> There was an error fetching the posts { error.message } </div>}
-            { data && console.log(data)}
+
             {data && data.data.map((friend) => (
                 <SimpleProfile api = { api } friend = { friend } currentUser = {currentUser} key = { friend.userName }/>
              ))}
-              {data && data.data.map((friend) => (
-                console.log(friend)
-             ))}
-
         </div>
     )
 }
@@ -38,6 +34,16 @@ export default AllUsers;
 
 
 /*
+            { data && console.log(data)}
+            { data && console.log(data)}
+               {data && data.data.map((friend) => (
+                  console.log(friend)
+               ))}
+
+               {data && data.data.map((friend) => (
+                  console.log(friend)
+               ))}
+               ))}
             <SimpleProfile />
 import React from 'react';
 import { useQuery } from "react-query";

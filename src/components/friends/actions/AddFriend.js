@@ -1,52 +1,82 @@
 import React from 'react';
-//import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import axios from 'axios'
 
 //PART 1: API Call
-async function addFriendAPI(api, currentUser, friend) {
+async function addFriendAPI(addFriendRequest) {
+    const requestAPI = addFriendRequest.api
+    const requestBody = addFriendRequest.addFriendBody
+    console.log("addFriend")
+    console.log(requestBody)
+    console.log("addFriend")
     const addFriendURL = "http://localhost:3003/friend/request/"
-    
-    const addFriendBody = {
-        "masterSite": "kite",
-        "currentUser": currentUser,
-        "addFriendName": friend.friendName           
-    }
-
-    //const response = await axios.post(postURL, likedPost);
-    const response = await api.post(addFriendURL, addFriendBody);
-    console.log(response.data)
+    const response = await requestAPI.post(addFriendURL, requestBody);
+    //console.log(response.data)
   
     return response.data;
 } 
 
-
-
-const handleAddFriend = (api, currentUser, friend) => {
-    console.log(currentUser + " wants to add " + friend.friendName + " as a friend!")
-    addFriendAPI(api, currentUser, friend)
-    /*
-    var likedPost = {
-        postID: postID,
-        currentUser: currentUser,
-        groupID: groupID
-    }
-    */
-    //mutate(likedPost)
-
-}
-
-
-
+//COMPONENT: Add Friend 
 const AddFriend = ({api, currentUser, friend}) => {
+    const queryClient = useQueryClient();
+
+    //Button: Add a Friend on Button Click 
+    const handleAddFriend = (api, currentUser, friendName) => {
+        //console.log(currentUser + " wants to add " + friend.friendName + " as a friend!")
+        var addFriendBody = {
+            masterSite: "kite",
+            currentUser: currentUser,
+            addFriendName: friendName
+        }
+
+        var addFriendRequest = {
+            api: api,
+            addFriendBody: addFriendBody
+        }
+
+        mutate(addFriendRequest)
+    }
+
+    //Action: Use React Query to make call
+    const { isLoading, mutate } = useMutation(addFriendAPI, {
+        onSuccess: (returnedData) => {
+          queryClient.setQueryData(['all-users'], (originalQueryData) => {
+            var updatedQueryData = structuredClone(originalQueryData);
+            const statusCode = returnedData.statusCode
+            const currentUser = returnedData.data.currentUser
+            const newFriend = returnedData.data.friendName
+ 
+            //Loop over all the users and update the new friend to be request pending
+            for (let i = 0; i < updatedQueryData.data.length; i++) {
+                //console.log(updatedQueryData.data[i].friendName + " " + newFriend)
+                if(updatedQueryData.data[i].friendName.toUpperCase() === newFriend.toUpperCase()) {
+                    //console.log("update this one!")
+                    updatedQueryData.data[i].friendshipKey = "request_pending"
+
+                }
+            }
+            
+            return updatedQueryData;
+    
+            })
+                
+        }
+      })
+
     return (     
         <div className="" >
-            <button type="submit" className = "" onClick={() => { handleAddFriend(api, currentUser, friend) }}>Add a Friend!</button>
+            <button type="submit" className = "" onClick={() => { handleAddFriend(api, currentUser, friend.friendName) }}>Add a Friend!</button>
         </div>       
         );
     }  
 
 export default AddFriend;
 
+
+
+
+
+//RESPONSE
 
 //WORKS NO REACT QUERY
 /*
