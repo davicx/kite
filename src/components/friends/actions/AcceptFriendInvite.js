@@ -38,36 +38,28 @@ const AcceptFriendInvite = ({api, currentUser, friend}) => {
        
     }
 
-        //Action: Use React Query to make call
-        const { isLoading, mutate } = useMutation(acceptFriendInviteAPI, {
-            onSuccess: (returnedData) => {
-                queryClient.setQueryData(['all-users'], (originalQueryData) => {
-                var updatedQueryData = structuredClone(originalQueryData);
-                console.log(returnedData)
-                console.log(updatedQueryData)
-
-                /*
-                JUST NEEDS THIS = )
-                const statusCode = returnedData.statusCode
-                const currentUser = returnedData.data.currentUser
-                const newFriend = returnedData.data.friendName
+    //Action: Use React Query to make call
+    const { isLoading, mutate } = useMutation(acceptFriendInviteAPI, {
+        onSuccess: (returnedData) => {
+            queryClient.setQueryData(['all-users'], (originalQueryData) => {
+            var updatedQueryData = structuredClone(originalQueryData);
+            const currentUser = returnedData.data.currentUser
+            const newFriend = returnedData.data.friendName
     
-                //Loop over all the users and update the new friend to be request pending
-                for (let i = 0; i < updatedQueryData.data.length; i++) {
-                    //console.log(updatedQueryData.data[i].friendName + " " + newFriend)
-                    if(updatedQueryData.data[i].friendName.toUpperCase() === newFriend.toUpperCase()) {
-                        updatedQueryData.data[i].friendshipKey = "not_friends"
-                    }
+            //Loop over all the users and update the new friend to be request pending
+            for (let i = 0; i < updatedQueryData.data.length; i++) {
+                //console.log(updatedQueryData.data[i].friendName + " " + newFriend)
+                if(updatedQueryData.data[i].friendName.toUpperCase() === newFriend.toUpperCase()) {
+                    updatedQueryData.data[i].friendshipKey = "friends"
                 }
-                
-                */
-                return updatedQueryData;
-            
-        
-                })
-            
             }
-        })
+            
+            return updatedQueryData;
+    
+            })
+        
+        }
+    })
 
             
     return (     
