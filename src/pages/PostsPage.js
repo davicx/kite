@@ -17,10 +17,19 @@ const axiosRequest = axios.create({
 
 
 function PostsPage() {
+  
+  /*
+  //STEP 1: Check user is logged in
+    const loggedInMessage = useLoginStatus();
+
+    //STEP 3: Get the current User
+    var [currentUser, setCurrentUser] = useCurrentUser();
+  */
 
   return (
     <div className="user">
         <PostList groupID = { 70 } api = { axiosRequest }/>
+        <NewPost currentUser = "davey" groupID = { 70 } api = { axiosRequest }/>
 
     </div>
   );
