@@ -4,6 +4,7 @@ import { useNavigate, Link  } from "react-router-dom"
 import { LoginContext } from "../functions/context/LoginContext";
 //import { refreshToken } from "../functions/functions";
 import GroupPosts from '../components/posts/GroupPosts';
+import GroupUsers from '../components/groups/GroupUsers';
 import apiFunctions from '../functions/apiFunctions';
 import useLoginStatus from '../functions/hooks/useLoginStatus';
 import NotificationList from '../components/notifications/NotificationList';
@@ -19,6 +20,7 @@ const IndividualGroup = (props) => {
     return (
         <div>
           <GroupPosts groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
+          <GroupUsers groupID = { groupID } currentUser = { currentUser } api = { axiosRequest } />
           <NotificationList currentUser = { currentUser } api = { axiosRequest } />
           <Link className="" to="/groups"> Groups </Link>   
         </div>

@@ -15,7 +15,7 @@ async function makePost(post) {
 
 function NewPost({ groupID, currentUser }) {
     const queryClient = useQueryClient();
-    const [postCaption, setPostCaption] = useState('say something cool!')
+    const [postCaption, setPostCaption] = useState('Hiya sam! wanna go on a hike today the weather is perfect!')
     
     const { isLoading, mutate } = useMutation(makePost, {
         onSuccess: (returnedData) => {
