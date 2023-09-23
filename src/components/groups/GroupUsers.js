@@ -21,19 +21,17 @@ const GroupUsers = (props) => {
 
     return (
         <div className="groups">
-            <p><b> Group Users </b></p>
+            <p><b> Active Group Users </b></p>
             { isLoading && <div> loading... </div>}
             { isError && <div> There was an error fetching the posts { error.message } </div>}
-            { data && console.log("data.data.activeGroupUsers")}
-            { data && console.log("data.data.pendingGroupUsers")}
-            {data.data.activeGroupUsers.map((user) => (
+            { data && console.log(data.data.activeGroupUsers)}
+            { data && console.log(data.data.pendingGroupUsers)}
+            
+            {data && data.data.activeGroupUsers.map((user) => (
                 <p key={user}>{user}</p>
             ))}
-
-
         </div>
     );
 }
   
 export default GroupUsers;
-

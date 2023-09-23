@@ -39,11 +39,15 @@ const PostList = ({groupID, api}) => {
           { isLoading && <div> loading... </div>}
           { isError && <div> There was an error fetching the posts { error.message } </div>}
           {data && currentPosts.map((post) => (
-            <IndividualPost api = { api } post = { post }  groupID = { groupID } currentUser = {currentUser} key = { post.postID }/>
-          ))}
+              <IndividualPost api = { api } post = { post }  groupID = { groupID } currentUser = {currentUser} key = { post.postID }/>
+          ))} 
        </div>
   </div>
   );
   }
   
 export default PostList;
+
+/*
+
+*/
