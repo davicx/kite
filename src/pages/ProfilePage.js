@@ -13,7 +13,7 @@ function ProfilePage() {
     //STEP 1: Check user is logged in
     const loggedInMessage = useLoginStatus();
 
-    //STEP 3: Get the current User
+    //STEP 2: Get the current User
     var [currentUser, setCurrentUser] = useCurrentUser();
   
   return (

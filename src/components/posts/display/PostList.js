@@ -48,6 +48,3 @@ const PostList = ({groupID, api}) => {
   
 export default PostList;
 
-/*
-
-*/

@@ -8,11 +8,11 @@ function getAPI() {
     
       axiosRequest.interceptors.response.use(function (response) {
         // Any status code that lie within the range of 2xx cause this function to trigger
-        console.log("__________________________")
-        console.log("INTERCEPTOR: Looks good! ")
-        console.log("Status: 200")
-        console.log("Message you are logged in")
-        console.log("__________________________")
+        //console.log("__________________________")
+        //console.log("INTERCEPTOR: Looks good! ")
+        //console.log("Status: 200")
+        //console.log("Message you are logged in")
+        //console.log("__________________________")
 
         return response;
       }, function (error) {

@@ -1,7 +1,7 @@
 import Likes from '../actions/like/Likes';
 import EditPost from '../actions/EditPost';
 import DeletePost from '../actions/DeletePost';
-import Comments from '../../comments/CommentList';
+import Comments from '../../comments/Comments';
 
 //LIKES: groupID, post, currentUser
 const IndividualPost = ({api, post, currentUser, groupID }) => {

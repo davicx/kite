@@ -11,7 +11,21 @@ import Groups from '../components/groups/GroupList';
 const axiosRequest = apiFunctions.getAPI();
 
 function GroupsPage() {
-  const { currentUser, userLoggedIn  } = useLoginStatus();
+  /*
+  const [items, setItems] = useState([]);
+
+useEffect(() => {
+  const items = JSON.parse(localStorage.getItem('items'));
+  if (items) {
+   setItems(items);
+  }
+}, []);
+*/
+  const data = localStorage.getItem("localStorageCurrentUser");
+  const currentUser = JSON.parse(data);
+  //const { currentUser, userLoggedIn  } = useLoginStatus();
+  console.log("GroupsPage")
+  console.log("Current User " + currentUser)
   
   return (
     <div className="user">

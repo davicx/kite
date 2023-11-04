@@ -38,24 +38,28 @@ function LikePost({groupID, post, currentUser}) {
       queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
         console.log(returnedData)
         
-        //STEP 1: Get post ID of updated post and new like array 
-        var updatedQueryData = structuredClone(originalQueryData);
-        const postID = returnedData.postID;
-        const currentUser = returnedData.currentUser;
+          //STEP 1: Get post ID of updated post and new like array 
+          var updatedQueryData = structuredClone(originalQueryData);
+          console.log("updatedQueryData")
+          console.log(updatedQueryData)
+          console.log("updatedQueryData")
 
-        for (let i = 0; i < updatedQueryData.length; i++) {
+          const postID = returnedData.postID;
+          const currentUser = returnedData.currentUser;
 
-            if(updatedQueryData[i].postID == postID) {
+          for (let i = 0; i < updatedQueryData.length; i++) {
 
-                var postLike = returnedData.newLike[0];
+              if(updatedQueryData[i].postID == postID) {
 
-                //Create the new array of users who have liked this
-                updatedQueryData[i].postLikesArray.push(postLike)
-                updatedQueryData[i].simpleLikesArray.push(currentUser)
-                updatedQueryData[i].totalLikes = updatedQueryData[i].simpleLikesArray.length
+                  var postLike = returnedData.newLike[0];
 
-            }
-        }
+                  //Create the new array of users who have liked this
+                  updatedQueryData[i].postLikesArray.push(postLike)
+                  updatedQueryData[i].simpleLikesArray.push(currentUser)
+                  updatedQueryData[i].totalLikes = updatedQueryData[i].simpleLikesArray.length
+
+              }
+          }
 
             return updatedQueryData;
 

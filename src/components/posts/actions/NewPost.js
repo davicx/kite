@@ -2,41 +2,19 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from "react-query";
 import axios from 'axios'
 
-const api = axios.create({
-  
-})
-
-async function makePost(post) {
+//FUNCTION 1: New Post API
+async function makePostAPI(post) {
     const postURL = "http://localhost:3003/post/text";
     const response = await axios.post(postURL, post);
 
     return response.data;
 } 
 
-function NewPost({ groupID, currentUser }) {
-    const queryClient = useQueryClient();
+function NewPost({ groupID, currentUser, api }) {
+
+    //FUNCTION 2: Handle New Post Submit Button
     const [postCaption, setPostCaption] = useState('Hiya sam! wanna go on a hike today the weather is perfect!')
-    
-    const { isLoading, mutate } = useMutation(makePost, {
-        onSuccess: (returnedData) => {
-            console.log(returnedData)
-           //OLD: queryClient.invalidateQueries(['group-posts', groupID])
-            let newPost = returnedData.data;
-
-            console.log("returnedData")
-            console.log(returnedData)
-            /*
-            queryClient.setQueryData(['group-posts', groupID], (oldPostData) => {
-                var updatedPostData= structuredClone(oldPostData);
-                updatedPostData.unshift(newPost);
-
-                return updatedPostData;
-            })
-            */
-        }
-    })
-    
-
+   
     const handleChange = (event) => {
         const { name, value } = event.target
         setPostCaption(value)
@@ -58,108 +36,41 @@ function NewPost({ groupID, currentUser }) {
             notificationLink: "http://localhost:3003/posts/group/" + groupID
         }
         //makePost(newPost)
+        //console.log(newPost)
         mutate(newPost)
         
     }
 
-    return (
-    <div className="new-post">
-         <p><b> Make a Post </b>to Group { groupID } NEEDS UPDATING </p>
-         <form onSubmit={ handleSubmit }>
-            <label> </label> 
-            <input name= "postCaption" type="text" value={ postCaption } onChange={handleChange} />
-            <p> {postCaption}</p>
-            <button type="submit"> Submit </button>
-        </form>
-    </div>
-    );
-}
-
-
-export default NewPost;
-
-
-
-
-//ORIGINAL
-/*
-import React, { useState } from 'react';
-import { useMutation, useQueryClient } from "react-query";
-import axios from 'axios'
-
-const api = axios.create({
-  
-})
-
-async function makePost(post) {
-    const postURL = "http://localhost:3003/post/text";
-    const response = await axios.post(postURL, post);
-
-    return response.data;
-} 
-
-function NewPost({ groupID, currentUser }) {
+    //FUNCTION 3: React Query Mutation
     const queryClient = useQueryClient();
-    const [postCaption, setPostCaption] = useState('Hiya sam! wanna go on a hike today the weather is perfect!')
-    
-    const { isLoading, mutate } = useMutation(makePost, {
+    const { isLoading, mutate } = useMutation(makePostAPI, {
         onSuccess: (returnedData) => {
-            console.log(returnedData)
-           //OLD: queryClient.invalidateQueries(['group-posts', groupID])
-            let newPost = returnedData.data;
+          queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
+                var updatedPostData = structuredClone(originalQueryData);
+                let newPost = returnedData.data;
 
-            console.log("returnedData")
-            console.log(returnedData)
-            
-            queryClient.setQueryData(['group-posts', groupID], (oldPostData) => {
-                var updatedPostData= structuredClone(oldPostData);
                 updatedPostData.unshift(newPost);
 
-                return updatedPostData;
+                return updatedPostData;     
             })
-            
         }
-    })
-    
+      })
 
-    const handleChange = (event) => {
-        const { name, value } = event.target
-        setPostCaption(value)
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        var newPost = {
-            masterSite: "kite",
-            postType: "text",
-            postFrom: currentUser,
-            postTo: groupID,
-            groupID: groupID,
-            listID: 0,
-            postCaption: postCaption,
-            notificationMessage: "Posted a Message",   
-            notificationType: "new_post_text",
-            notificationLink: "http://localhost:3003/posts/group/" + groupID
-        }
-        //makePost(newPost)
-        mutate(newPost)
-        
-    }
-
+    //FUNCTION 4: React and Site Page
     return (
-    <div className="new-post">
-         <p><b> Make a Post </b>to Group { groupID }</p>
-         <form onSubmit={ handleSubmit }>
-            <label> </label> 
-            <input name= "postCaption" type="text" value={ postCaption } onChange={handleChange} />
-            <p> {postCaption}</p>
-            <button type="submit"> Submit </button>
-        </form>
-    </div>
+        <div className="new-post">
+            <p><b> Make a Post </b>to Group { groupID } </p>
+            <p> Current User: { currentUser} </p>
+            <form onSubmit={ handleSubmit }>
+                <label> </label> 
+                <input name= "postCaption" type="text" value={ postCaption } onChange={handleChange} />
+                <p> {postCaption}</p>
+                <button type="submit"> Submit </button>
+            </form>
+        </div>
     );
 }
 
-
 export default NewPost;
-*/
+
+

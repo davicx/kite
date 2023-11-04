@@ -1,10 +1,35 @@
 import React from 'react';
 import { useQuery } from "react-query";
-import IndividualComment from './display/IndividualComment';
+import IndividualComment from './IndividualComment';
+
+//api = { api } postComments = {post.commentsArray} groupID = { groupID } postID = { post.postID } currentUser = {currentUser}
+const CommentList = ({api, postComments, groupID, postID, currentUser }) => {
+  return (
+    <div className="posts">
+        <p><b> Comments</b> </p>
+        <div className = "post-list" >
+        {postComments && postComments.map((comment) => (
+              <IndividualComment api = { api } comment = { comment }  groupID = { groupID }  key = { comment.commentID }/>
+            ))}
+        </div>
+    </div>
+  );
+  }
+  
+export default CommentList;
+
+
+
+
+//BACKUP
+/*
+import React from 'react';
+import { useQuery } from "react-query";
+import IndividualComment from './IndividualComment';
 
 //<Comments api = { api } groupID = { groupID } postID = { post.postID } currentUser = {currentUser}  /> 
 
-/*
+
 async function getComments(postID, api) {
     const commentPostURL = "http://localhost:3003/comments/" + postID; 
     const response = await api.get(commentPostURL)
@@ -15,7 +40,7 @@ async function getComments(postID, api) {
     return response.data
   
 } 
-*/
+
 
 //This does not need API just send as a prop
 const CommentList = ({api, groupID, postComments, postID}) => {
@@ -23,7 +48,7 @@ const CommentList = ({api, groupID, postComments, postID}) => {
     const currentUser = JSON.parse(localData);
     //console.log("Posts: Getting Comments for the post " + postID)
 
-    /*
+    
     const onError = (error) => {
       console.log("Do something here if there is Error!")
       console.log(error)
@@ -36,7 +61,7 @@ const CommentList = ({api, groupID, postComments, postID}) => {
     )
 
     const currentPosts = data;
-    */
+    
 //<IndividualComment api = { api } post = { post }  groupID = { groupID } currentUser = {currentUser} key = { post.postID }/>
   return (
   <div className="posts">
@@ -51,3 +76,4 @@ const CommentList = ({api, groupID, postComments, postID}) => {
   }
   
 export default CommentList;
+*/

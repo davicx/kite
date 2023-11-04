@@ -2,13 +2,10 @@ import Posts from './display/PostList';
 import NewPost from './actions/NewPost';
 
 function GroupPosts({ groupID, currentUser, api }) {
-
-  console.log("GroupPosts: groupID " + groupID)
-  console.log("GroupPosts: currentUser " + currentUser)
   
   return (
   <div className="">
-    <NewPost groupID = { groupID } currentUser = { currentUser }  />
+    <NewPost currentUser = {currentUser} groupID = { groupID } api = { api }/>
     <Posts groupID = { groupID } api = { api }/>
   </div>
   );
