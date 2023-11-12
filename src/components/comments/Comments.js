@@ -6,7 +6,7 @@ function Comments({ api, postComments, groupID, postID, currentUser }) {
   return (
   <div className="">
     <p> Comments: </p>
-    <CommentList groupID = { groupID } api = { api }/>
+    <CommentList api = { api } groupID = { groupID } postComments={ postComments } />
     <NewComment api = { api } postComments = {postComments} groupID = { groupID } postID = { postID } currentUser = {currentUser}/>
 
   </div>

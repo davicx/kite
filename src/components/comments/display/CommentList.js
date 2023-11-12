@@ -1,9 +1,9 @@
 import React from 'react';
 import { useQuery } from "react-query";
 import IndividualComment from './IndividualComment';
-
+//<CommentList groupID = { groupID } postComments={ postComments } api = { api }/>
 //api = { api } postComments = {post.commentsArray} groupID = { groupID } postID = { post.postID } currentUser = {currentUser}
-const CommentList = ({api, postComments, groupID, postID, currentUser }) => {
+const CommentList = ({api, groupID, postComments}) => {
   return (
     <div className="posts">
         <p><b> Comments</b> </p>
