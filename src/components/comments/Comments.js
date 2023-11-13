@@ -1,14 +1,13 @@
 import CommentList from './display/CommentList';
 import NewComment from './actions/NewComment';
 
-function Comments({ api, postComments, groupID, postID, currentUser }) {
+function Comments({ api, postComments, groupID, postID, postTo, currentUser }) {
   
   return (
   <div className="">
     <p> Comments: </p>
     <CommentList api = { api } groupID = { groupID } postComments={ postComments } />
-    <NewComment api = { api } postComments = {postComments} groupID = { groupID } postID = { postID } currentUser = {currentUser}/>
-
+    <NewComment api = { api } postComments = {postComments} groupID = { groupID } postID = { postID } postTo = { postTo } currentUser = {currentUser}/>
   </div>
   );
 }
