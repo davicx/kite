@@ -12,9 +12,10 @@ const IndividualPost = ({api, post, currentUser, groupID }) => {
             <p className = "post-text"> POST ID: { post.postID } |  { post.postFrom } | { post.postTo} | GROUP ID: { post.groupID }</p>  
             <Likes api = { api } post = {post}  currentUser = {currentUser} groupID = { groupID }  /> 
             <Comments api = { api } postComments = {post.commentsArray} groupID = { groupID } postID = { post.postID } postTo = { post.postTo } currentUser = {currentUser}  /> 
+            <EditPost api = { api } groupID = { groupID } post = { post } currentUser = {currentUser}  /> 
         </div>       
         );
     }  
-
+//groupID, currentUser, postID
 export default IndividualPost;
 

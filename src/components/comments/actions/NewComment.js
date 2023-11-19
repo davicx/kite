@@ -36,8 +36,6 @@ function NewComment({ api, postComments, groupID, postID, postTo, currentUser })
             notificationLink: "http://localhost:3003/posts/group/" + groupID
         }
 
-        //makePost(newPost)
-        //console.log(newComment)
         mutate(newComment)
         
     }
@@ -48,68 +46,17 @@ function NewComment({ api, postComments, groupID, postID, postTo, currentUser })
         onSuccess: (returnedData) => {
           queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
                 var updatedPostData = structuredClone(originalQueryData);
-                //let newPost = returnedData.data;
-            
-
-                console.log("returnedData")
-                console.log(returnedData.data)
-                console.log("returnedData")
-
-                
                 var postID = returnedData.data.postID
-                var returnedComment = returnedData.data
+                var newComment = returnedData.data;
+
+                //Inser the new comment into the post that the comment was made too 
                 for (let i = 0; i < updatedPostData.length; i++) {
-                    //console.log(updatedPostData[i])
                     if(updatedPostData[i].postID == postID) {
-                        console.log("Update this post")
-                        console.log(updatedPostData[i]);
-                        //var postLike = returnedData.newLike[0];
-
-                        //Create the new array of users who have liked this
-                        //updatedQueryData[i].postLikesArray.push(postLike)
-                        //updatedQueryData[i].simpleLikesArray.push(currentUser)
-                        //updatedQueryData[i].totalLikes = updatedQueryData[i].simpleLikesArray.length
-
-                        /*
-                        {
-                            "commentID": 179,
-                            "postID": 537,
-                            "commentCaption": "Yes lets go hike!",
-                            "commentFrom": "davey",
-                            "userName": "davey",
-                            "imageName": "davey.jpg",
-                            "firstName": "davey v",
-                            "lastName": "davey v",
-                            "commentLikes": [],
-                            "postDate": "11/12/2023",
-                            "postTime": "4:47 pm",
-                            "timeMessage": "a few seconds ago",
-                            "created": "2023-11-13T00:47:48.620Z",
-                            "commentLikeCount": 0
-                          }
-                          {
-                            "commentID": 178,
-                            "postID": 537,
-                            "commentCaption": "Yes lets go hike!",
-                            "commentFrom": "davey",
-                            "userName": "davey",
-                            "imageName": "davey.jpg",
-                            "firstName": "davey v",
-                            "lastName": "davey v",
-                            "commentLikes": [],
-                            "created": "2023-11-13T00:47:30.000Z",
-                            "commentLikeCount": 0
-                            }
-                          */
+                        updatedPostData[i].commentsArray.push(newComment)
                     }
                     
                 }
-                console.log("originalQueryData")
-                //updatedPostData.unshift(newPost);
-
-                //Set the new posts
-
-                return originalQueryData;     
+                return updatedPostData;     
             })
         }
       })
@@ -128,4 +75,5 @@ function NewComment({ api, postComments, groupID, postID, postTo, currentUser })
 }
 
 export default NewComment;
+
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from "react-query";
 import axios from 'axios'
 
+//WORKING ON EDIT POST
 const api = axios.create({
   
 })
@@ -15,9 +16,10 @@ async function editPostAPI(editedPost) {
     return response.data;
 } 
 
-function EditPost({ groupID, currentUser, postID}) {
+//<EditPost api = { api } groupID = { groupID } post = { post } currentUser = {currentUser}  /> 
+function EditPost({ api, groupID, post, currentUser}) {
     const queryClient = useQueryClient();
-    const [newPostCaption, setPostCaption] = useState('oh change me!')
+    const [newPostCaption, setPostCaption] = useState(post.postCaption)
     
     const { isLoading, mutate } = useMutation(editPostAPI, {
         onSuccess: (returnedData) => {
@@ -51,7 +53,7 @@ function EditPost({ groupID, currentUser, postID}) {
         event.preventDefault();
 
         var editedPost = {
-            postID: postID,
+            postID: post.postID,
             currentUser: currentUser,
             newPostCaption: newPostCaption,
         }
