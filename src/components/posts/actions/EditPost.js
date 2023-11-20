@@ -58,10 +58,6 @@ function EditPost({ api, groupID, post, currentUser}) {
             newPostCaption: newPostCaption,
         }
 
-        //console.log("POST the new edit!!")
-        //console.log(editedPost)
-        //editPostAPI(editedPost)
-        //makePost(newPost)
         mutate(editedPost)
         
     }
