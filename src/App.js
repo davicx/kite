@@ -20,6 +20,7 @@ import Posts from './pages/PostsPage';
 import Users from './pages/UsersPage';
 import NotFound from './pages/NotFound';
 import IndividualGroup from './pages/IndividualGroup';
+import Playground from './pages/Playground';
 //import IndividualFriend from './pages/IndividualFriendPage';
 //This is temp above works
 import IndividualFriend from './pages/FriendPage';
@@ -68,6 +69,7 @@ function App() {
               <Route path="/profile" element={<Profile/>} />
               <Route path="/posts" element={<Posts/>} />
               <Route path="/users" element={<Users/>} />
+              <Route path="/playground" element={<Playground/>} />
               <Route path="*" element={ <NotFound /> } />       
             </Routes>
           </LoginContext.Provider> 
