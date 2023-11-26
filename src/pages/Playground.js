@@ -6,15 +6,98 @@ import functions from "../functions/functions";
 
 import axios from 'axios'
 
-
-
 function Playground() {
-    const [postCaption, editPostCaption] = useState('Post caption! Edit Me! wanna go on a hike today the weather is perfect!')
-   
-    const handleEditPost = (postCaption) => {
-        console.log("you clicked")
-        console.log(postCaption)
-      }
+  const [postCaption, editPostCaption] = useState('Hi Edit Me! Wanna go on a hike today the weather is perfect!')
+  const [postCaptionArea, showPostCaption] = useState('show')
+  const [editPostArea, showEditPost] = useState('hide')
+  
+  //POST AREA
+  function handleEditPostSubmit() {
+    showPostCaption('hide')
+    showEditPost('show')
+  }
+  
+
+  //EDIT AREA
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    editPostCaption(value)
+  }
+
+  const handleSubmit = (event) => {
+      event.preventDefault();
+      const { name, value } = event.target
+      showPostCaption('show')
+      showEditPost('hide')
+      console.log("Submit")
+      console.log(postCaption)
+  }
+
+  return (
+    <div className="user">
+      <div className = {postCaptionArea}> 
+        <p>{ postCaption } </p>
+        <button className="" onClick={() => handleEditPostSubmit() }> Edit Post </button>  
+      </div>
+
+      <div className = {editPostArea}> 
+        <form onSubmit={ handleSubmit }>
+          <label> </label>
+          <textarea value={ postCaption } onChange={ handleChange } />
+          <button type="submit"> Submit </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default Playground;
+
+
+
+function PostCaption() {
+  // Declare a new state variable, which we'll call "count"
+  const [name, setLocation] = useState("Frodo");
+
+  return (
+    <div className="user">
+      <p>Name {name} </p>
+      <p> Location: Shire </p>
+    </div>
+  );
+}
+function EditPost() {
+  // Declare a new state variable, which we'll call "count"
+  const [name, setLocation] = useState("Frodo");
+
+  return (
+    <div className="user">
+      <p>Name {name} </p>
+      <p> Location: Shire </p>
+    </div>
+  );
+}
+
+
+//COMPONENT
+/*
+//https://www.freecodecamp.org/news/pass-data-between-components-in-react/
+import React, { useState } from 'react';
+
+
+
+
+export default Frodo;
+*/
+//SIMPLE 1
+/*
+function Playground() {
+  const [postCaption, editPostCaption] = useState('Post caption! Edit Me! wanna go on a hike today the weather is perfect!')
+  
+  const handleEditPost = (postCaption) => {
+      console.log("you clicked")
+      console.log(postCaption)
+    }
 
   return (
     <div className="user">
@@ -28,59 +111,12 @@ function Playground() {
 }
 
 export default Playground;
-
-/*
-class NameForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<NameForm />);
-
 */
+
 //NEW POST
 
 /*
-<textarea name="postContent" value = {postCaption} rows={4} cols={40} />
-import React, { useState } from 'react';
-import { useMutation, useQueryClient } from "react-query";
-import axios from 'axios'
-
-//FUNCTION 1: New Post API
-async function makePostAPI(post) {
-    const postURL = "http://localhost:3003/post/text";
-    const response = await axios.post(postURL, post);
-
-    return response.data;
-} 
-
+<input name= "postCaption" type="text" value={ postCaption } onChange={handleChange} />
 function NewPost({ groupID, currentUser, api }) {
 
     //FUNCTION 2: Handle New Post Submit Button

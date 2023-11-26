@@ -5,22 +5,12 @@ import React from 'react';
 import useLoginStatus from '../functions/hooks/useLoginStatus';
 import apiFunctions from '../functions/apiFunctions';
 import Groups from '../components/groups/GroupList';
-//import CreateGroup from '../components/simple/simpleUser';
+import CreateGroup from '../components/groups/CreateGroup';
 //import NotificationList from '../components/notifications/NotificationList';
 
 const axiosRequest = apiFunctions.getAPI();
 
 function GroupsPage() {
-  /*
-  const [items, setItems] = useState([]);
-
-useEffect(() => {
-  const items = JSON.parse(localStorage.getItem('items'));
-  if (items) {
-   setItems(items);
-  }
-}, []);
-*/
   const data = localStorage.getItem("localStorageCurrentUser");
   const currentUser = JSON.parse(data);
   //const { currentUser, userLoggedIn  } = useLoginStatus();
@@ -30,8 +20,8 @@ useEffect(() => {
   return (
     <div className="user">
         <p> Current User: {currentUser}</p>
+        <CreateGroup api = { axiosRequest } currentUser = { currentUser } />
         <Groups currentUser = { currentUser } api = { axiosRequest } /> 
-         
     </div>
   );
 }
