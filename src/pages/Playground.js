@@ -29,8 +29,6 @@ function Playground() {
       const { name, value } = event.target
       showPostCaption('show')
       showEditPost('hide')
-      console.log("Submit")
-      console.log(postCaption)
   }
 
   return (

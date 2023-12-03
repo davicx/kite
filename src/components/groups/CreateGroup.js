@@ -13,11 +13,20 @@ async function createGroupAPI(newGroup) {
     return response.data;
 }
 
-
+//https://www.youtube.com/watch?v=EpE6TU58cPw
+//https://www.youtube.com/watch?v=TlP5WIxVirU
 function CreateGroup({api, currentUser}) {  
     const [groupName, setGroupName] = useState('New Group!')
-    
-    //FUNCTION 2: Handle New Group Submit Button
+    const [groupUserName, setGroupUserName] = useState('')
+
+    //FUNCTION 2: Handle New Group User Name
+    const handleUserChange = (event) => {
+        const { name, value } = event.target
+        console.log("you typed " + value)
+        setGroupUserName(value)
+    }
+
+    //FUNCTION 3: Handle New Group Submit Button
     const handleChange = (event) => {
         const { name, value } = event.target
         setGroupName(value)
@@ -32,11 +41,10 @@ function CreateGroup({api, currentUser}) {
             "groupType": "kite",
             "groupPrivate": 1,
             "groupUsers": ["davey", "sam", "frodo"],
-            "notificationMessage": "Invited you to a new Group",  
+            "notificationMessage": currentUser + " invited you to a new Group",  
             "notificationType": "group_invite",
             "notificationLink": "http://localhost:3003/group/77"   
         }
-        console.log(newGroup)
         mutate(newGroup)
         
     }
@@ -47,11 +55,14 @@ function CreateGroup({api, currentUser}) {
         onSuccess: (returnedData) => {
           queryClient.setQueryData(['user-groups', currentUser], (originalQueryData) => {
                 var updatedGroupData = structuredClone(originalQueryData);
-                console.log(returnedData)
-                //let newPost = returnedData.data;
 
-                //updatedPostData.unshift(newPost);
+                let newGroup = {
+                    "groupID": returnedData.data.groupID,
+                    "groupName": returnedData.data.groupName
+                }
+                updatedGroupData.groups.push(newGroup)    
 
+                console.log(updatedGroupData)
                 return updatedGroupData;     
             })
         }
@@ -60,8 +71,11 @@ function CreateGroup({api, currentUser}) {
     return (
       <div className = "login">
           <form onSubmit={ handleSubmit }>
-              <input name= "group-name" className="loginInput" type="text" value={ groupName } onChange={handleChange} />
+              <p><b> Group Name  </b></p>
+              <input name= "group-name" className="loginInput" type="text" value={ groupName } onChange={ handleChange} />
               <p> { groupName } </p>
+              <input name= "group-name" className="loginInput" type="text" value={ groupUserName } onChange={handleUserChange} />
+              <p> { groupUserName } </p>
               <button type="submit" className="loginButton" > Create New Group </button>
           </form>
       </div>
