@@ -21,7 +21,6 @@ const GroupList = (props) => {
   const api = props.api;
   
   //const { hello} = useHello();
-
   const { isLoading, data, isError, error  } = useQuery(['user-groups', currentUser], () => getGroups(currentUser, api), 
     { refetchInterval: 10000000 }
   )

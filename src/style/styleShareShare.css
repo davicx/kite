@@ -59,7 +59,6 @@ border-bottom: 1px solid var(--global-nav-border);
 
 */
 
-
 /****************************************************
 SECTION 1: Main Body, Global Styles
 *****************************************************/
@@ -3067,3 +3066,11 @@ Evently Header
 #E91746
 */
 
+
+
+
+.single-line {
+	float: left;
+	width: 100%;
+	text-align: center;
+  }

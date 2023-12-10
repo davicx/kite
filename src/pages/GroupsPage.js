@@ -5,6 +5,7 @@ import React from 'react';
 import useLoginStatus from '../functions/hooks/useLoginStatus';
 import apiFunctions from '../functions/apiFunctions';
 import Groups from '../components/groups/GroupList';
+import FriendSearch from '../components/search/FriendSearch';
 import CreateGroup from '../components/groups/CreateGroup';
 //import NotificationList from '../components/notifications/NotificationList';
 
@@ -20,6 +21,7 @@ function GroupsPage() {
   return (
     <div className="user">
         <p> Current User: {currentUser}</p>
+        <FriendSearch api = { axiosRequest } currentUser = { currentUser } />
         <CreateGroup api = { axiosRequest } currentUser = { currentUser } />
         <Groups currentUser = { currentUser } api = { axiosRequest } /> 
     </div>
