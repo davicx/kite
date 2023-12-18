@@ -6,11 +6,8 @@ import axios from 'axios'
 async function friendSearchAPI(currentUser,searchString) {   
     if (searchString.length > 0) {
         const friendSearchURL = "http://localhost:3003/search/user/" + currentUser + "/string/" + searchString; 
-        console.log("friendSearchURL")
-        console.log(friendSearchURL)
         const { data } = await axios.get(friendSearchURL)
-        console.log("API CALLED")
-    
+
         return data
     } 
 
@@ -23,7 +20,6 @@ function FriendSearch({ api, currentUser }) {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setSearchString(value);
-
     }
 
      //FUNCTION 3: React Query 
@@ -34,7 +30,12 @@ function FriendSearch({ api, currentUser }) {
     return (
         <div className="new-post">
             <p className = "single-line">Friend Name</p>
+            
             { data && console.log(data.data)}
+            {data && data.data.map(user => (
+                console.log(user.friendName)
+            ))}
+
             <input name= "group-name" className="" type="text" value={ searchString } onChange={ handleChange} />
             <p className = "single-line"> Typed { searchString } </p>
         </div>
@@ -42,6 +43,14 @@ function FriendSearch({ api, currentUser }) {
 }
 
 export default FriendSearch;
+
+/*
+      {data && groups.groups.map(group => (
+          <div className="group" key={ group.groupID } >
+            <Link to={`/group/${group.groupID}`}>{ group.groupID } | {group.groupName } </Link>
+          </div>
+      ))}
+*/
 
 
 

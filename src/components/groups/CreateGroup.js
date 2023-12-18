@@ -15,16 +15,25 @@ async function createGroupAPI(newGroup) {
 
 //https://www.youtube.com/watch?v=EpE6TU58cPw
 //https://www.youtube.com/watch?v=TlP5WIxVirU
+
+//WEB DEV
+//https://www.youtube.com/watch?v=TlP5WIxVirU&t=619s
 function CreateGroup({api, currentUser}) {  
     const [groupName, setGroupName] = useState('New Group!')
-    const [groupUserName, setGroupUserName] = useState('')
+    const [groupUsers, setGroupUsers] = useState('')
+    const [isChecked, setIsChecked] = useState(false);
 
     //FUNCTION 2: Handle New Group User Name
     const handleUserChange = (event) => {
         const { name, value } = event.target
         console.log("you typed " + value)
-        setGroupUserName(value)
+        setGroupUsers(value)
     }
+
+    const handleOnChange = () => {
+        setIsChecked(!isChecked);
+        console.log("Clicked box " + isChecked)
+    };
 
     //FUNCTION 3: Handle New Group Submit Button
     const handleChange = (event) => {
@@ -45,7 +54,8 @@ function CreateGroup({api, currentUser}) {
             "notificationType": "group_invite",
             "notificationLink": "http://localhost:3003/group/77"   
         }
-        mutate(newGroup)
+        //mutate(newGroup)
+        console.log("Clicked box " + isChecked)
         
     }
 
@@ -74,8 +84,7 @@ function CreateGroup({api, currentUser}) {
               <p><b> Group Name  </b></p>
               <input name= "group-name" className="loginInput" type="text" value={ groupName } onChange={ handleChange} />
               <p> { groupName } </p>
-              <input name= "group-name" className="loginInput" type="text" value={ groupUserName } onChange={handleUserChange} />
-              <p> { groupUserName } </p>
+              <input type="checkbox" id="topping" name="topping" value="Sam" checked={isChecked} onChange={handleOnChange}/> Sam
               <button type="submit" className="loginButton" > Create New Group </button>
           </form>
       </div>
