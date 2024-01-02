@@ -19,6 +19,7 @@ const AllUsers = (props) => {
 
     return (
         <div>
+            <p> __________________ </p>
             <p> All Users {currentUser} </p>
             { isLoading && <div> loading... </div>}
             { isError && <div> There was an error fetching the posts { error.message } </div>}

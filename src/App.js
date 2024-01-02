@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { sayHello } from './functions/functions';
 
 //Style 
+import './style/styleOLD.css';
 import './style/style.css';
 import './style/external/normalize.css';
 
@@ -45,9 +46,6 @@ function App() {
     }
   }, []);
 
-  //http://localhost:3000/group/70
-  //http://localhost:3000/friend/sam
-
   return (
       <div className="App">
         <QueryClientProvider client={queryClient}>
@@ -83,7 +81,3 @@ function App() {
 }
 
 export default App;
-
-/*
-<Link className="navLink" to="/users"> Users </Link>
-*/

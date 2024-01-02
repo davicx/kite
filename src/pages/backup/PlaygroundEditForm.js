@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from "react-query";
 import { useNavigate  } from "react-router-dom" 
-import useLoginStatus from '../functions/hooks/useLoginStatus';
-import functions from "../functions/functions";
+import useLoginStatus from '../../functions/hooks/useLoginStatus';
+import functions from "../../functions/functions";
 
 import axios from 'axios'
 

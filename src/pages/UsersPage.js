@@ -5,7 +5,7 @@ import LogoutUser from '../components/login/LogoutUser';
 //import useCurrentUser from '../hooks/useCurrentUser';
 import useCurrentUser from '../hooks/useCurrentUser';
 
-//import MyFriends from '../components/friends/MyFriends';
+import MyFriends from '../components/friends/MyFriends';
 import AllUsers from '../components/users/display/AllUsers';
 
 const axiosRequest = apiFunctions.getAPI();
@@ -21,6 +21,7 @@ function UsersPage() {
   
   return (
     <div className="user">
+        <MyFriends currentUser = { currentUser} api = { axiosRequest } /> 
         <AllUsers currentUser = { currentUser} api = { axiosRequest } /> 
         <LogoutUser />
     </div>
