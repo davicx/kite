@@ -5,13 +5,17 @@ import { useQuery } from "react-query";
 
 
 async function getSimpleUsers(currentUser, api) { 
+    //simple/users/
   const getSimpleUsersURL = "http://localhost:3003/simple/users/" + currentUser; 
+  console.log("getSimpleUsersURL")
+  console.log(getSimpleUsersURL)
   const { data } = await api.get(getSimpleUsersURL)
-
+  console.log(data)
   return data
 } 
 
 const SimpleGetUsers = ({ currentUser, api }) => {
+    console.log("DV")
     const { isLoading, data, isError, error  } = useQuery(['simple-get-users', currentUser], () => getSimpleUsers(currentUser, api), 
         { refetchInterval: 10000000 }
     )
@@ -33,6 +37,9 @@ export default SimpleGetUsers;
 
 
 /*
+            {data && data.map((user) => (
+                <p> { user.userID } | { user.userName} </p>
+             ))}
         {data && data.data.map((user) => (
                 console.log()
              ))}

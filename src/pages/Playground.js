@@ -9,12 +9,13 @@ import SimpleCheckbox from '../components/playground/SimpleCheckbox';
 import SimpleEdit from '../components/playground/SimpleEdit';
 import SimpleAddUser from '../components/playground/SimpleAddUser';
 import SimpleUserSearch from '../components/playground/SimpleUserSearch';
-
+import SimpleInput from '../components/playground/SimpleInput';
+import SimpleHook from '../components/playground/SimpleHook';
+import SimpleAddGroupUser from '../components/playground/SimpleAddGroupUser';
 
 import axios from 'axios'
 
 const axiosRequest = apiFunctions.getAPI();
-
 
 function Playground() {
     let currentUser = "davey"
@@ -22,7 +23,9 @@ function Playground() {
 
     return (
         <div className="user">
-            <SimpleUserSearch api = { axiosRequest } currentUser = { currentUser } searchString = { searchString }/> 
+        
+            <SimpleAddGroupUser /> 
+
         </div>
     );
 }
@@ -30,6 +33,10 @@ function Playground() {
 export default Playground;
 
 /*
+<SimpleHook /> 
+<SimpleAddLocalStorage /> 
+<SimpleGetUsers api = { axiosRequest } currentUser = { currentUser } /> 
+<SimpleUserSearch api = { axiosRequest } currentUser = { currentUser } searchString = { searchString }/> 
 <SimpleAddUser api = { axiosRequest } currentUser = { currentUser }/> 
 <SimpleGetUsers api = { axiosRequest } currentUser = { currentUser } /> 
 <SimpleCheckbox /> 
