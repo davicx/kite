@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useLocalStorage from '../../hooks/useLocalStorage';
 import useUpdateLogger from '../../hooks/useUpdateLogger';
 
-const SimpleAddLocalStorage = () => {
+const SimpleAddGroupUsers= ({ currentUser, api }) => {
   const [postCaption, editPostCaption] = useState('Hi Edit Me! Wanna go on a hike today the weather is perfect!')
 
   const handleChange = (event) => {
@@ -21,7 +21,7 @@ const SimpleAddLocalStorage = () => {
       <div> 
         <form onSubmit={ handleSubmit }>
           <label> </label>
-          <textarea value={ postCaption } onChange={ handleChange } />
+          <textarea rows="4" cols="50" value={ postCaption } onChange={ handleChange } />
           <p> {postCaption} </p>
           <button type="submit"> Submit </button>
         </form>
@@ -30,8 +30,12 @@ const SimpleAddLocalStorage = () => {
 }
 
 
-export default SimpleAddLocalStorage;
+export default SimpleAddGroupUsers;
 
+
+
+
+//APPENDIX
 /*
 const SimpleAddLocalStorage = () => {
     const [isChecked, setIsChecked] = useState(false);

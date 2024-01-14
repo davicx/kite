@@ -13,7 +13,7 @@ async function getSimpleUsers(currentUser, api) {
   return data
 } 
 
-const SimpleGetUsers = ({ currentUser, api }) => {
+const SimpleGetUsers = ({ api, currentUser }) => {
     const { isLoading, data, isError, error  } = useQuery(['simple-get-users', currentUser], () => getSimpleUsers(currentUser, api), 
         { refetchInterval: 10000000 }
     )

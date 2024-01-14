@@ -10,7 +10,9 @@ import SimpleEdit from '../components/playground/SimpleEdit';
 import SimpleAddUser from '../components/playground/SimpleAddUser';
 import SimpleUserSearch from '../components/playground/SimpleUserSearch';
 import SimpleInput from '../components/playground/SimpleInput';
-import SimpleHook from '../components/playground/SimpleHook';
+import SimpleLocalStorage from '../components/playground/SimpleLocalStorage';
+import SimpleArray from '../components/playground/SimpleArray';
+import SimpleParent from '../components/playground/SimpleParent';
 import SimpleAddGroupUser from '../components/playground/SimpleAddGroupUser';
 
 import axios from 'axios'
@@ -24,7 +26,7 @@ function Playground() {
     return (
         <div className="user">
         
-            <SimpleAddGroupUser /> 
+            <SimpleParent api = { axiosRequest } currentUser = { currentUser } /> 
 
         </div>
     );
@@ -33,6 +35,9 @@ function Playground() {
 export default Playground;
 
 /*
+            <SimpleAddGroupUser api = { axiosRequest } currentUser = { currentUser } /> 
+            <SimpleArray api = { axiosRequest } currentUser = { currentUser } /> 
+
 <SimpleHook /> 
 <SimpleAddLocalStorage /> 
 <SimpleGetUsers api = { axiosRequest } currentUser = { currentUser } /> 

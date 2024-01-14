@@ -3,10 +3,7 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 import useUpdateLogger from '../../hooks/useUpdateLogger';
 
 //TYPE 1
-
-
-//TYPE 2
-const SimpleHook = () => {
+const SimpleLocalStorage = () => {
     const [name, setName] = useLocalStorage('name', '')
     useUpdateLogger(name)
 
@@ -17,7 +14,7 @@ const SimpleHook = () => {
     )
 }
 
-export default SimpleHook;
+export default SimpleLocalStorage;
 
 
 /*

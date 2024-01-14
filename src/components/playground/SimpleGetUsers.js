@@ -5,7 +5,6 @@ import { useQuery } from "react-query";
 
 
 async function getSimpleUsers(currentUser, api) { 
-    //simple/users/
   const getSimpleUsersURL = "http://localhost:3003/simple/users/" + currentUser; 
   console.log("getSimpleUsersURL")
   console.log(getSimpleUsersURL)
