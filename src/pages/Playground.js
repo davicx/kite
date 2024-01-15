@@ -14,6 +14,7 @@ import SimpleLocalStorage from '../components/playground/SimpleLocalStorage';
 import SimpleArray from '../components/playground/SimpleArray';
 import SimpleParent from '../components/playground/SimpleParent';
 import SimpleAddGroupUser from '../components/playground/SimpleAddGroupUser';
+import SimpleUseEffect from '../components/playground/SimpleUseEffect';
 
 import axios from 'axios'
 
@@ -26,8 +27,8 @@ function Playground() {
     return (
         <div className="user">
         
-            <SimpleParent api = { axiosRequest } currentUser = { currentUser } /> 
-
+            <SimpleUseEffect api = { axiosRequest } currentUser = { currentUser } /> 
+            <SimpleLocalStorage /> 
         </div>
     );
 }
@@ -35,8 +36,9 @@ function Playground() {
 export default Playground;
 
 /*
-            <SimpleAddGroupUser api = { axiosRequest } currentUser = { currentUser } /> 
-            <SimpleArray api = { axiosRequest } currentUser = { currentUser } /> 
+<SimpleParent api = { axiosRequest } currentUser = { currentUser } /> 
+<SimpleAddGroupUser api = { axiosRequest } currentUser = { currentUser } /> 
+<SimpleArray api = { axiosRequest } currentUser = { currentUser } /> 
 
 <SimpleHook /> 
 <SimpleAddLocalStorage /> 

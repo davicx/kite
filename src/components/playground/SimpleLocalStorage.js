@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useLocalStorage from '../../hooks/useLocalStorage';
 import useUpdateLogger from '../../hooks/useUpdateLogger';
 
-//TYPE 1
+//TYPE 2: My Learning 
 const SimpleLocalStorage = () => {
     const [name, setName] = useLocalStorage('name', '')
     useUpdateLogger(name)
@@ -17,6 +17,28 @@ const SimpleLocalStorage = () => {
 export default SimpleLocalStorage;
 
 
+//TYPE 1: Example (Working)
+/*
+const SimpleLocalStorage = () => {
+  const [name, setName] = useLocalStorage('name', '')
+  useUpdateLogger(name)
+
+  return (
+      <div>
+          <input type="text" value={name} onChange={e => setName(e.target.value)} />
+      </div>
+  )
+}
+
+export default SimpleLocalStorage;
+*/
+
+
+
+
+
+
+//APPENDIX
 /*
 import React, { useState } from 'react';
 
