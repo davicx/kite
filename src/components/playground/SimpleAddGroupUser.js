@@ -2,13 +2,105 @@ import React, { useState, useEffect } from 'react'
 import useLocalStorage from '../../hooks/useLocalStorage';
 import IndividualGroupUser from './IndividualGroupUser';
 
+var localStorageBaseArray = []
+var david = {
+  userID: 1,
+  userName: "david",
+}
+var sam = {
+  userID: 2,
+  userName: "sam",
+}
+var frodo = {
+  userID: 3,
+  userName: "frodo",
+}
+
+var friendsArray = [david, sam, frodo]
+
+
+const SimpleAddGroupUsers= ({ currentUser, api }) => {
+  const [newGroupUsers, addNewGroupUser] = useLocalStorage('newGroupUser', localStorageBaseArray)
+  const [availableFriends, addUser] = useState(friendsArray)
+
+  //const [users, addUser] = useState(friendsArray)
+  
+  //STEP 1: Get Current Users from Local Storage 
+
+
+  //FUNCTIONS: Add or Remove Users
+  //Add Group User
+  const addGroupUser = (userName) => {
+
+    //Step 1: Add New Group User to Local Storage Array 
+    console.log("You are going to add " + userName)
+    
+    //Step 2: Remove User from Current available Friends
+    const updatedFriendsArray = availableFriends.filter(user => user.userName !== userName);
+    console.log(updatedFriendsArray)
+    console.log(friendsArray)
+    console.log(userName)
+    addUser(updatedFriendsArray)  
+
+    //const newUsers = users.filter(user => user.userName !== userName);
+    //addUser(newUsers)  
+  
+  }
+
+  //Part 3B: Add a friend from the new group 
+  const removeGroupUser = (userID) => {
+
+      //Step 1: Remove New Group User from Local Storage Array 
+      console.log("You will remove " + userID)
+
+      //Step 2: Add User back to available Friends
+  }
+
+  return (
+      <div> 
+          <div className='simple-border'>
+          <h4> Friends you can Add </h4>
+            {availableFriends.map((user) => (
+                <IndividualGroupUser key = { user.userName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
+            ))} 
+          </div>
+
+      </div>
+  );
+}
+
+
+export default SimpleAddGroupUsers;
+
+
+//TEMP CODE
+/*
+
+
+  //localStorage.setItem("newGroupUser", '');
+  //localStorage.getItem("temp");
+  //console.log(theTemp)
+
+          <h4> New Group Users</h4>
+          <div className='simple-border'>
+          {newGroupUser.map((user) => (
+                <p key = {user}> {user } </p>
+            ))} 
+            </div>
+
+*/
+
+
+//BACKUP
+/*
+
 const SimpleAddGroupUsers= ({ currentUser, api }) => {
   /*
   let newGroupUsersLocalStorage = ["sam", "frodo"] 
   let string = JSON.stringify(students) 
   localStorage.setItem("students", string) 
-  */
-     ////
+  *//*
+       ////
     // If I have this array:
     var myArray = ["david", "sam", "frodo"];
 
@@ -99,7 +191,7 @@ const SimpleAddGroupUsers= ({ currentUser, api }) => {
     let newGroupUserArray = oldGroupUserArray;
     console.log(newGroupUserArray);
     setNewGroupUser(newGroupUserArray)
-    */
+    *//*
 
     //Step 2: Remove User from Current available Friends
     const newUsers = users.filter(user => user.userName !== userName);
@@ -145,7 +237,7 @@ const SimpleAddGroupUsers= ({ currentUser, api }) => {
 
 export default SimpleAddGroupUsers;
 
-
+*/
 
 
 //APPENDIX
