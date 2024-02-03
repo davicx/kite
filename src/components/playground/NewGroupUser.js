@@ -9,7 +9,7 @@ const IndividualGroupUser = ({addGroupUser, removeGroupUser, user }) => {
       <div> 
         <div className=''> 
           <p> {userID } | {userName} </p>
-          <button onClick={() => addGroupUser(userName)}>Add Me to your Group | {userName}</button> 
+          <button onClick={() => removeGroupUser(userName)}>Remove Me | {userName}</button>
         </div>
       </div>
   );

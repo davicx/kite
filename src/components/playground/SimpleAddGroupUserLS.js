@@ -22,28 +22,37 @@ var merry = {
 
 var friendsArray = [david, sam, frodo]
 var localStorageBaseArray = []
-var newGroupUsersArray = [merry]
 
-
-const SimpleAddGroupUsers= ({ currentUser, api }) => {
-  const [newGroupUsersLS, addNewGroupUserLS] = useLocalStorage('newGroupUser', localStorageBaseArray)
+const SimpleAddGroupUserLS = ({ currentUser, api }) => {
+  const [currentGroupUsers, updateCurrentGroupUsers] = useLocalStorage('newGroupUser', localStorageBaseArray)
   const [availableFriends, updateAvailableFriends] = useState(friendsArray)
-  const [newGroupUsers, updateNewGroupUsers] = useState(newGroupUsersArray)
 
   //STEP 1: Get Current Users from Local Storage 
+  useEffect(() => {
+    console.log("Remove Users from availableFriends who are in local storage")
+    let currentAvailableFriends = [...availableFriends];
+
+    for(let i = 0; i < currentGroupUsers.length; i++){
+      console.log(currentGroupUsers[i].userName)
+      currentAvailableFriends = currentAvailableFriends.filter(user => user.userName !== currentGroupUsers[i].userName);
+   }
+   updateAvailableFriends(currentAvailableFriends)
+
+  }, [])
 
 
   //FUNCTIONS: Add or Remove Users
-  //Add Group User (Add to local storage and remove from friend list)
+  //Add Group User 
   const addGroupUser = (userName) => {
 
-    //Step 1: Add New Group User to Pending Group
+    console.log(currentGroupUsers)
+    //Step 1: Add New Group User to Local Storage Pending Group
     console.log("You are going to add " + userName)
-    let updatedNewGroupUsersArray = [...newGroupUsers];
+    let updatedCurrentGroupUsersArray = [...currentGroupUsers];
     let newUser = availableFriends.find(x => x.userName === userName);
 
-    updatedNewGroupUsersArray.push(newUser);
-    updateNewGroupUsers(updatedNewGroupUsersArray);
+    updatedCurrentGroupUsersArray.push(newUser);
+    updateCurrentGroupUsers(updatedCurrentGroupUsersArray);
  
     //Step 2: Remove User from Current available Friends
     const updatedFriendsArray = availableFriends.filter(user => user.userName !== userName);
@@ -51,17 +60,17 @@ const SimpleAddGroupUsers= ({ currentUser, api }) => {
   
   }
 
-  //Remove Group User (Remove from local storage and add to friend list)
+  //Remove Group User 
   const removeGroupUser = (userName) => {
 
       //Step 1: Remove New Group User from Pending Group 
       console.log("You will remove " + userName)
-      const updatednewGroupUsers = newGroupUsers.filter(user => user.userName !== userName);
-      updateNewGroupUsers(updatednewGroupUsers);
+      const updatedCurrentGroupUsers = currentGroupUsers.filter(user => user.userName !== userName);
+      updateCurrentGroupUsers(updatedCurrentGroupUsers);
 
       //Step 2: Add User back to available Friends
       let updatedAvailableFriendsArray = [...availableFriends];
-      let selectedUser = newGroupUsers.find(x => x.userName === userName);
+      let selectedUser = currentGroupUsers.find(x => x.userName === userName);
 
       updatedAvailableFriendsArray.push(selectedUser);
       updateAvailableFriends(updatedAvailableFriendsArray);
@@ -79,9 +88,10 @@ const SimpleAddGroupUsers= ({ currentUser, api }) => {
             <hr />
             <hr />
             <p> New Group Users </p>
-            {newGroupUsers.map((user) => (
+            {currentGroupUsers.map((user) => (
                 <NewGroupUser key = { user.userName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
             ))} 
+
           </div>
 
       </div>
@@ -89,16 +99,14 @@ const SimpleAddGroupUsers= ({ currentUser, api }) => {
 }
 
 
-export default SimpleAddGroupUsers;
+export default SimpleAddGroupUserLS;
 
 
 //TEMP CODE
 /*
-            <p> New Group Local Storage Users </p>
-            {newGroupUsers.map((user) => (
-                <NewGroupUser key = { user.userName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
+            {currentGroupUsers.map((user) => (
+                console.log(user)
             ))} 
-
 
   //localStorage.setItem("newGroupUser", '');
   //localStorage.getItem("temp");
