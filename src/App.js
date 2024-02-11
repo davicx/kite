@@ -16,6 +16,7 @@ import Home from './pages/Home';
 import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
+import NewGroup from './pages/NewGroupPage';
 import Profile from './pages/ProfilePage';
 import Posts from './pages/PostsPage';
 import Users from './pages/UsersPage';
@@ -64,6 +65,7 @@ function App() {
               <Route path="/" element={<Home/>} />
               <Route path="/login" element={<Login/>} />
               <Route path="/groups" element={<Groups/>} />
+              <Route path="/groups/new" element={<NewGroup/>} />
               <Route path = "/group/:groupID" element = {<IndividualGroup />} />   
               <Route path = "/friends/:friendName" element = {<IndividualFriend />} />   
               <Route path="/profile" element={<Profile/>} />

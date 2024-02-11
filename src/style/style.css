@@ -179,6 +179,9 @@ SECTION 6A: Modal
 /****************************************************
 APPENDIX A: CSS defaults  
 *****************************************************/
+.center {
+	text-align: center;
+}
 .simple-border {
 	margin: 4px;
 	margin-bottom: 8px;

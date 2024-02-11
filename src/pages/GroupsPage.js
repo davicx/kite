@@ -1,5 +1,6 @@
-//import React, { useState, useEffect, useContext } from 'react';
 import React from 'react';
+import { Link  } from "react-router-dom"
+
 //import { useNavigate  } from "react-router-dom"
 //import { LoginContext } from "../functions/context/LoginContext";
 import useLoginStatus from '../functions/hooks/useLoginStatus';
@@ -21,9 +22,10 @@ function GroupsPage() {
   return (
     <div className="user">
         <p> Current User: {currentUser}</p>
-        <FriendSearch api = { axiosRequest } currentUser = { currentUser } />
-        <CreateGroup api = { axiosRequest } currentUser = { currentUser } />
         <Groups currentUser = { currentUser } api = { axiosRequest } /> 
+        <CreateGroup api = { axiosRequest } currentUser = { currentUser } />
+        <Link className="navLink center" to="/groups/new"> New Group </Link>
+        
     </div>
   );
 }
@@ -32,8 +34,9 @@ export default GroupsPage;
 
 
 /*
-        <!-- Doesn't work -->
-        <CreateGroup currentUser = { currentUser } api = { axiosRequest } />
+    <FriendSearch api = { axiosRequest } currentUser = { currentUser } />
+    <!-- Doesn't work -->
+    <CreateGroup currentUser = { currentUser } api = { axiosRequest } />
 */
 
 

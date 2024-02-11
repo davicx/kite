@@ -28,6 +28,11 @@ const GroupUsers = (props) => {
             {data && data.data.activeGroupUsers.map((user) => (
                 <p key={user}>{user}</p>
             ))}
+                 
+            <p><b> Pending Group Users </b></p>
+            {data && data.data.pendingGroupUsers.map((user) => (
+                <p key={user}>{user}</p>
+            ))}
         </div>
     );
 }

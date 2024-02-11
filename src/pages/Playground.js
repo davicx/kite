@@ -17,6 +17,7 @@ import SimpleButtonParent from '../components/playground/SimpleButtonParent';
 import SimpleAddGroupUser from '../components/playground/SimpleAddGroupUserLS';
 import SimpleUseEffect from '../components/playground/SimpleUseEffect';
 import SimpleSaveToStateAPI from '../components/playground/SimpleSaveToStateAPI';
+import Example from '../components/playground/tutorials/Example';
 
 import axios from 'axios'
 
@@ -28,8 +29,8 @@ function Playground() {
 
     return (
         <div className="user">
-            <SimpleAddGroupUser /> 
-            
+            <Example /> 
+               
         </div>
     );
 }
@@ -37,6 +38,7 @@ function Playground() {
 export default Playground;
 
 /*
+<SimpleAddGroupUser />    
 <SimpleSaveToStateAPI /> 
 <SimpleUseEffect api = { axiosRequest } currentUser = { currentUser } /> 
 <SimpleLocalStorage /> 

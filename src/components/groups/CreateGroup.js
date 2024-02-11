@@ -1,258 +1,155 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
+import useLocalStorage from '../../hooks/useLocalStorage';
+import IndividualGroupUser from './users/IndividualGroupUser';
+import NewGroupUser from './users/NewGroupUser';
 
-
-//FUNCTION 1: New Post API
-async function createGroupAPI(newGroup) {
-    const groupURL = "http://localhost:3003/group/create/";
-    //const response = await axios.post('')
-    const response = await axios.post(groupURL, newGroup);
-    //setMessage(response.data)
-    console.log(response.data.data)
-    return response.data;
+//TEMP 
+var sam = {
+  userID: 2,
+  userName: "sam",
+}
+var frodo = {
+  userID: 3,
+  userName: "frodo",
+}
+var merry = {
+  userID: 4,
+  userName: "merry",
+}
+var david = {
+  userID: 5,
+  userName: "pippin",
 }
 
-//https://www.youtube.com/watch?v=EpE6TU58cPw
-//https://www.youtube.com/watch?v=TlP5WIxVirU
+var friendsArray = [david, sam, frodo, merry]
 
-//WEB DEV
-//https://www.youtube.com/watch?v=TlP5WIxVirU&t=619s
-function CreateGroup({api, currentUser}) {  
-    const [groupName, setGroupName] = useState('New Group!')
-    const [groupUsers, setGroupUsers] = useState('')
-    const [isChecked, setIsChecked] = useState(false);
+//Function: New Group API
+async function createGroupAPI(newGroup) {
+  const groupURL = "http://localhost:3003/group/create/";
+  //const response = await axios.post('')
+  const response = await axios.post(groupURL, newGroup);
+  //setMessage(response.data)
+  console.log(response.data)
+  return response.data;
+}
 
-    //FUNCTION 2: Handle New Group User Name
-    const handleUserChange = (event) => {
-        const { name, value } = event.target
-        console.log("you typed " + value)
-        setGroupUsers(value)
-    }
+function CreateGroup({api, currentUser}) {   
+   const [groupName, setGroupName] = useState('New Group!')
+   const [availableFriends, updateAvailableFriends] = useState(friendsArray)
+   //const [currentGroupUsers, updateCurrentGroupUsers] = useLocalStorage('newGroupUser', localStorageBaseArray)
+   const [newGroupUsers, updateNewGroupUsers] = useState([])
 
-    const handleOnChange = () => {
-        setIsChecked(!isChecked);
-        console.log("Clicked box " + isChecked)
-    };
+  //FUNCTIONS: Change Functions
+  //Function: Handle Group Name Change
+  const handleNameChange = (event) => {
+      const { name, value } = event.target
+      setGroupName(value)
+  }
 
-    //FUNCTION 3: Handle New Group Submit Button
-    const handleChange = (event) => {
-        const { name, value } = event.target
-        setGroupName(value)
-    }
+  //Function: New Group Submit 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(newGroupUsers)
+    let newGroupUserNames = [currentUser]
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log("Create a new Group " + groupName + " for "  + currentUser)
-        const newGroup = {
-            "currentUser": currentUser,
-            "groupName": groupName,
-            "groupType": "kite",
-            "groupPrivate": 1,
-            "groupUsers": ["davey", "sam", "frodo"],
-            "notificationMessage": currentUser + " invited you to a new Group",  
-            "notificationType": "group_invite",
-            "notificationLink": "http://localhost:3003/group/77"   
-        }
-        //mutate(newGroup)
-        console.log("Clicked box " + isChecked)
-        
-    }
+    for (let i = 0; i < newGroupUsers.length; i++) {
+      newGroupUserNames.push(newGroupUsers[i].userName)
+    } 
+    console.log(newGroupUserNames);
 
-    //FUNCTION 3: React Query Mutation
-    const queryClient = useQueryClient();
-    const { isLoading, mutate } = useMutation(createGroupAPI, {
-        onSuccess: (returnedData) => {
-          queryClient.setQueryData(['user-groups', currentUser], (originalQueryData) => {
-                var updatedGroupData = structuredClone(originalQueryData);
+    const newGroup = {
+          "currentUser": currentUser,
+          "groupName": groupName,
+          "groupType": "kite",
+          "groupPrivate": 1,
+          "groupUsers": newGroupUserNames,
+          "notificationMessage": currentUser + " invited you to a new Group",  
+          "notificationType": "group_invite",
+          "notificationLink": "http://localhost:3003/group/77"   
+      }
+      mutate(newGroup)
+      console.log(newGroup)   
+  }
 
-                let newGroup = {
-                    "groupID": returnedData.data.groupID,
-                    "groupName": returnedData.data.groupName
-                }
-                updatedGroupData.groups.push(newGroup)    
+  //FUNCTIONS: Add or Remove Users
+  //Function: Add a new group User
+  const addGroupUser = (userName) => {
 
-                console.log(updatedGroupData)
-                return updatedGroupData;     
-            })
-        }
-      })
+    //Step 1: Add New Group User to Local Storage Pending Group
+    console.log("You are going to add " + userName)
+    let updatedNewGroupUsersArray = [...newGroupUsers];
+    let newUser = availableFriends.find(x => x.userName === userName);
+
+    updatedNewGroupUsersArray.push(newUser);
+    updateNewGroupUsers(updatedNewGroupUsersArray);
+ 
+    //Step 2: Remove User from Current available Friends
+    const updatedFriendsArray = availableFriends.filter(user => user.userName !== userName);
+    updateAvailableFriends(updatedFriendsArray)  
+  
+  }
+
+  //Function: Remove a new group User
+  const removeGroupUser = (userName) => {
+
+    //Step 1: Remove New Group User from Pending Group 
+    console.log("You will remove " + userName)
+    const updatedNewGroupUsers = newGroupUsers.filter(user => user.userName !== userName);
+    updateNewGroupUsers(updatedNewGroupUsers);
+
+    //Step 2: Add User back to available Friends
+    let updatedAvailableFriendsArray = [...availableFriends];
+    let selectedUser = newGroupUsers.find(x => x.userName === userName);
+
+    updatedAvailableFriendsArray.push(selectedUser);
+    updateAvailableFriends(updatedAvailableFriendsArray);
+ 
+  }
+
+  //FUNCTIONS: React Query Functions
+  //Function: React Query Mutation
+  const queryClient = useQueryClient();
+  const { isLoading, mutate } = useMutation(createGroupAPI, {
+      onSuccess: (returnedData) => {
+        queryClient.setQueryData(['user-groups', currentUser], (originalQueryData) => {
+              var updatedGroupData = structuredClone(originalQueryData);
+
+              let newGroup = {
+                  "groupID": returnedData.data.groupID,
+                  "groupName": returnedData.data.groupName
+              }
+              updatedGroupData.groups.push(newGroup)    
+
+              return updatedGroupData;     
+          })
+      }
+    })
+
 
     return (
-      <div className = "login">
-          <form onSubmit={ handleSubmit }>
-              <p><b> Group Name  </b></p>
-              <input name= "group-name" className="loginInput" type="text" value={ groupName } onChange={ handleChange} />
-              <p> { groupName } </p>
-              <input type="checkbox" id="topping" name="topping" value="Sam" checked={isChecked} onChange={handleOnChange}/> Sam
-              <button type="submit" className="loginButton" > Create New Group </button>
-          </form>
-      </div>
+    <div className = "login">
+      <form onSubmit={ handleSubmit }>
+        <input name= "group-name" className="loginInput" type="text" value={ groupName } onChange={ handleNameChange } />
+        <p> { groupName } </p>
+        <button type="submit" className="loginButton" > Create New Group </button>
+      </form>
+
+      <h4> Friends you can Add </h4>
+      {availableFriends.map((user) => (
+          <IndividualGroupUser key = { user.userName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
+      ))} 
+      <hr />
+      <hr />
+      <h4> New Group Users </h4>
+      {newGroupUsers.map((user) => (
+          <NewGroupUser key = { user.userName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
+      ))} 
+    </div>
+
     );
   }
 
 export default CreateGroup;
 
-
-//PASS TO API
-/*
-import React from 'react';
-import { useMutation, useQueryClient } from "react-query";
-
-import axios from 'axios'
-
-//PART 1: API Call
-async function cancelFriendRequestAPI(cancelFriendRequest) {
-    const requestAPI = cancelFriendRequest.api
-    const requestBody = cancelFriendRequest.cancelFriendRequestBody
-
-    const cancelFriendRequestURL = "http://localhost:3003/friend/cancel/"
-    const response = await requestAPI.post(cancelFriendRequestURL, requestBody);
-    //console.log(response.data)
-  
-    return response.data;
-} 
-
-//COMPONENT: Friend Request
-const FriendRequest = ({api, currentUser, friend}) => {
-    const queryClient = useQueryClient();
-
-    //Button: Add a Friend on Button Click 
-    const handleCancelFriendRequest = (api, currentUser, friendName) => {
-        console.log(currentUser + " wants to cancel " + friend.friendName + " as a friend!")
-        var cancelFriendRequestBody = {
-            masterSite: "kite",
-            currentUser: currentUser,
-            friendName: friendName
-        }
-
-        var cancelFriendRequest = {
-            api: api,
-            cancelFriendRequestBody: cancelFriendRequestBody
-        }
-
-        mutate(cancelFriendRequest)
-       
-    }
-
-    //Action: Use React Query to make call
-    const { isLoading, mutate } = useMutation(cancelFriendRequestAPI, {
-        onSuccess: (returnedData) => {
-            queryClient.setQueryData(['all-users'], (originalQueryData) => {
-            var updatedQueryData = structuredClone(originalQueryData);
-            const statusCode = returnedData.statusCode
-            const currentUser = returnedData.data.currentUser
-            const newFriend = returnedData.data.friendName
-
-            //Loop over all the users and update the new friend to be request pending
-            for (let i = 0; i < updatedQueryData.data.length; i++) {
-                //console.log(updatedQueryData.data[i].friendName + " " + newFriend)
-                if(updatedQueryData.data[i].friendName.toUpperCase() === newFriend.toUpperCase()) {
-                    updatedQueryData.data[i].friendshipKey = "not_friends"
-                }
-            }
-            
-            return updatedQueryData;
-    
-            })
-        
-        }
-        })
-
-    return (     
-        <div className="" >
-            <p> Friend Request </p>
-            <p> Friendship Request Pending (they have to response and you can cancel) - "request_pending"</p>
-            <button type="submit" className = "" onClick={() => { handleCancelFriendRequest(api, currentUser, friend.friendName) }}>Cancel</button>
-        </div>       
-        );
-    }  
-
-export default FriendRequest;
-
-
-
-
-*/
-
-
-
-//EXAMPLE
-/*
-import React, { useState } from 'react';
-import { useMutation, useQueryClient } from "react-query";
-import axios from 'axios'
-
-//FUNCTION 1: New Post API
-async function makePostAPI(post) {
-    const postURL = "http://localhost:3003/post/text";
-    const response = await axios.post(postURL, post);
-
-    return response.data;
-} 
-
-function NewPost({ groupID, currentUser, api }) {
-
-    //FUNCTION 2: Handle New Post Submit Button
-    const [postCaption, setPostCaption] = useState('Hiya sam! wanna go on a hike today the weather is perfect!')
-   
-    const handleChange = (event) => {
-        const { name, value } = event.target
-        setPostCaption(value)
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        var newPost = {
-            masterSite: "kite",
-            postType: "text",
-            postFrom: currentUser,
-            postTo: groupID,
-            groupID: groupID,
-            listID: 0,
-            postCaption: postCaption,
-            notificationMessage: "Posted a Message",   
-            notificationType: "new_post_text",
-            notificationLink: "http://localhost:3003/posts/group/" + groupID
-        }
-        //makePost(newPost)
-        //console.log(newPost)
-        mutate(newPost)
-        
-    }
-
-    //FUNCTION 3: React Query Mutation
-    const queryClient = useQueryClient();
-    const { isLoading, mutate } = useMutation(makePostAPI, {
-        onSuccess: (returnedData) => {
-          queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
-                var updatedPostData = structuredClone(originalQueryData);
-                let newPost = returnedData.data;
-
-                updatedPostData.unshift(newPost);
-
-                return updatedPostData;     
-            })
-        }
-      })
-
-    //FUNCTION 4: React and Site Page
-    return (
-        <div className="new-post">
-            <p><b> Make a Post </b>to Group { groupID } </p>
-            <p> Current User: { currentUser} </p>
-            <form onSubmit={ handleSubmit }>
-                <label> </label> 
-                <input name= "postCaption" type="text" value={ postCaption } onChange={handleChange} />
-                <p> {postCaption}</p>
-                <button type="submit"> Submit </button>
-            </form>
-        </div>
-    );
-}
-
-export default NewPost;
-
-
-*/
