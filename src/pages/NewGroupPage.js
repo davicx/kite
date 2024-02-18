@@ -1,7 +1,8 @@
 import React from 'react';
 
 import apiFunctions from '../functions/apiFunctions';
-import CreateGroup from '../components/groups/CreateGroup';
+//import CreateGroup from '../components/groups/CreateGroup';
+import CreateGroupTwo from '../components/groups/CreateGroupTwo';
 
 const axiosRequest = apiFunctions.getAPI();
 
@@ -11,7 +12,7 @@ function GroupsPage() {
   
   return (
     <div className="user">
-        <CreateGroup api = { axiosRequest } currentUser = { currentUser } />
+        <CreateGroupTwo api = { axiosRequest } currentUser = { currentUser } />
     </div>
   );
 }

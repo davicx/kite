@@ -36,7 +36,7 @@ function FriendSearch({ api, currentUser }) {
                 console.log(user.friendName)
             ))}
 
-            <input name= "group-name" className="" type="text" value={ searchString } onChange={ handleChange} />
+            <input name= "group-name" className="friend-search-input-box" type="text" value={ searchString } onChange={ handleChange} />
             <p className = "single-line"> Typed { searchString } </p>
         </div>
     );

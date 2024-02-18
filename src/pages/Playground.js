@@ -18,6 +18,9 @@ import SimpleAddGroupUser from '../components/playground/SimpleAddGroupUserLS';
 import SimpleUseEffect from '../components/playground/SimpleUseEffect';
 import SimpleSaveToStateAPI from '../components/playground/SimpleSaveToStateAPI';
 import Example from '../components/playground/tutorials/Example';
+import Learning from '../components/playground/tutorials/Learning';
+//import AutoComplete from '../components/playground/tutorials/autoComplete/AutoComplete';
+import AutoComplete from '../components/playground/tutorials/autoComplete/AutoComplete';
 
 import axios from 'axios'
 
@@ -29,8 +32,7 @@ function Playground() {
 
     return (
         <div className="user">
-            <Example /> 
-               
+            <AutoComplete />       
         </div>
     );
 }
@@ -38,6 +40,7 @@ function Playground() {
 export default Playground;
 
 /*
+            <Example /> 
 <SimpleAddGroupUser />    
 <SimpleSaveToStateAPI /> 
 <SimpleUseEffect api = { axiosRequest } currentUser = { currentUser } /> 

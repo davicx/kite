@@ -38,7 +38,6 @@ async function createGroupAPI(newGroup) {
 function CreateGroup({api, currentUser}) {   
    const [groupName, setGroupName] = useState('New Group!')
    const [availableFriends, updateAvailableFriends] = useState(friendsArray)
-   //const [currentGroupUsers, updateCurrentGroupUsers] = useLocalStorage('newGroupUser', localStorageBaseArray)
    const [newGroupUsers, updateNewGroupUsers] = useState([])
 
   //FUNCTIONS: Change Functions
