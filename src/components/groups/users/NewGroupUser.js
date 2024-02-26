@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 
-const IndividualGroupUser = ({addGroupUser, removeGroupUser, user }) => {
+const NewGroupUser = ({addGroupUser, removeGroupUser, user }) => {
   let userID = user.userID
   let userName = user.userName
 
@@ -9,12 +9,12 @@ const IndividualGroupUser = ({addGroupUser, removeGroupUser, user }) => {
       <div> 
         <div className=''> 
           <p> {userID } | {userName} </p>
-          <button onClick={() => removeGroupUser(userName)}>Remove Me | {userName}</button>
+          <button onClick={() => addGroupUser(userName)}>Add Me to your Group | {userName}</button> 
         </div>
       </div>
   );
 }
 
 
-export default IndividualGroupUser;
+export default NewGroupUser;
 

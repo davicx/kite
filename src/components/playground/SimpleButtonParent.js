@@ -2,27 +2,28 @@ import React, { useState } from 'react'
 
 import SimpleButtonChild from './SimpleButtonChild'
 
+let david = {
+  userID: 1,
+  userName: "david",
+}
+let sam = {
+  userID: 2,
+  userName: "sam",
+}
+let frodo = {
+  userID: 3,
+  userName: "frodo",
+}
+
+let usersArray = [david, sam, frodo]
+
+
 const SimpleButtonParent = () => {
-  let david = {
-      userID: 1,
-      userName: "david",
-    }
-    let sam = {
-      userID: 2,
-      userName: "sam",
-    }
-    let frodo = {
-      userID: 3,
-      userName: "frodo",
-    }
-  
-    let usersArray = [david, sam, frodo]
-  
-    const [users, addUser] = useState(usersArray)
+    const [users, removeUser] = useState(usersArray)
 
     const handleDelete = (userID) => {
       const newUsers = users.filter(user => user.userID !== userID);
-      addUser(newUsers)
+      removeUser(newUsers)
     }
 
     const handleClicking = (userID) => {

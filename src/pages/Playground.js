@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from "react-query";
 import { useNavigate  } from "react-router-dom" 
 import useLoginStatus from '../functions/hooks/useLoginStatus';
-import functions from "../functions/functions";
-import apiFunctions from '../functions/apiFunctions';
+
+//import functions from "../functions/functions";
+//import apiFunctions from '../functions/apiFunctions';
 import SimpleGetUsers from '../components/playground/SimpleGetUsers';
 import SimpleCheckbox from '../components/playground/SimpleCheckbox';
 import SimpleEdit from '../components/playground/SimpleEdit';
@@ -21,8 +22,12 @@ import Example from '../components/playground/tutorials/Example';
 import Learning from '../components/playground/tutorials/Learning';
 //import AutoComplete from '../components/playground/tutorials/autoComplete/AutoComplete';
 import AutoComplete from '../components/playground/tutorials/autoComplete/AutoComplete';
+import MainApp from '../components/playground/tutorials/learnAPI/MainApp';
+import NewGroup from '../components/groups/actions/NewGroup';
+import apiFunctions from '../functions/apiFunctions';
 
-import axios from 'axios'
+
+//import axios from 'axios'
 
 const axiosRequest = apiFunctions.getAPI();
 
@@ -32,7 +37,7 @@ function Playground() {
 
     return (
         <div className="user">
-            <AutoComplete />       
+            <NewGroup api = { axiosRequest } currentUser = { "davey" } />
         </div>
     );
 }
@@ -40,6 +45,28 @@ function Playground() {
 export default Playground;
 
 /*
+
+const axiosRequest = apiFunctions.getAPI();
+
+function GroupsPage() {
+  const data = localStorage.getItem("localStorageCurrentUser");
+  const currentUser = JSON.parse(data);
+  //const { currentUser, userLoggedIn  } = useLoginStatus();
+  console.log("GroupsPage")
+  console.log("Current User " + currentUser)
+  
+  return (
+    <div className="user">
+        <p> Current User: {currentUser}</p>
+        <Groups currentUser = { currentUser } api = { axiosRequest } /> 
+        <CreateGroup api = { axiosRequest } currentUser = { currentUser } />
+        <Link className="navLink center" to="/groups/new"> New Group </Link>
+        
+    </div>
+  );
+}
+
+<AutoComplete />   
             <Example /> 
 <SimpleAddGroupUser />    
 <SimpleSaveToStateAPI /> 
