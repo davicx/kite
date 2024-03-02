@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 
-const AddGroupUser = ({addGroupUser, removeGroupUser, user }) => {
+const AddGroupUser = ({addGroupUser, user }) => {
   let userName = user.friendName
 
   return (

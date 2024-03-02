@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 
 
-const RemoveGroupUser = ({addGroupUser, removeGroupUser, user }) => {
-  let userID = user.userID
-  let userName = user.userName
+const RemoveGroupUser = ({removeGroupUser, user }) => {
+  let userName = user.friendName
 
   return (
       <div> 
         <div className=''> 
-          <p> {userID } | {userName} </p>
-          <button onClick={() => removeGroupUser(userName)}>Remove Me | {userName}</button>
+          <p> {userName} </p>
+          <button onClick={() => removeGroupUser(user)}>Remove Me | {userName}</button>
         </div>
       </div>
   );

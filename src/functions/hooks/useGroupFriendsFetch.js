@@ -25,7 +25,13 @@ const useFetch = (url, newGroupUsers) => {
       })
   }, [url])
 
-  
+
+  //Filter out already added users
+  if(data != null) {
+
+
+  }  
+
   return { data, isPending, error };
 }
  

@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react'
-//import useLocalStorage from '../../hooks/useLocalStorage';
-//import IndividualGroupUser from './IndividualGroupUser';
-//import NewGroupUser from './NewGroupUser';
 import AddGroupUser from '../users/AddGroupUser'
 import RemoveGroupUser from '../users/RemoveGroupUser'
-
-import useFetch from '../../../functions/hooks/useFetch'
 
 import useGroupFriendsFetch from '../../../functions/hooks/useGroupFriendsFetch'
 
@@ -15,39 +10,81 @@ const NewGroup= ({ currentUser, api }) => {
     const [availableFriends, updateAvailableFriends] = useState([])
     const [newGroupUsers, updateNewGroupUsers] = useState([])
 
-    //PART 1: Friend Search 
+    //SEARCH FUNCTION
     const friendSearchURL = "http://localhost:3003/search/user/" + currentUser + "/string/" + searchString; 
 
     //Make useFetch for this and filter data here useFetch(friendSearchURL, selectedUsers)
     var { data, isPending, error } = useGroupFriendsFetch(friendSearchURL, newGroupUsers);
+    //console.log("data")
+    //console.log(data)
 
+    useEffect(() => {
+        if(data != null) {
 
+            //No one has been added to a group
+            if(newGroupUsers.length < 1) {
+                console.log("No one in the group!")
+                updateAvailableFriends(data.data)
 
-    //PART 2: Functions
+            } else {
+                
+                //Create a Set of current group users
+                let newGroupUsersSet = new Set();
+
+                for (let i = 0; i < newGroupUsers.length; i++) {
+                    newGroupUsersSet.add(newGroupUsers[i].friendName.toLowerCase())
+                }
+                
+                //Loop over recently returned users and add any that are not in the set
+                let newGroupUsersArray = []
+
+                for (let i = 0; i < data.data.length; i++) {
+                    let currentUser = data.data[i].friendName.toLowerCase();
+
+                    if(!newGroupUsersSet.has(currentUser)) {
+                        newGroupUsersArray.push(data.data[i])
+                    } 
+                }
+                updateAvailableFriends(newGroupUsersArray)
+
+            }     
+        }  
+
+    }, [searchString])
+
+    //GROUP CREATE ACTIONS
     const addGroupUser = (user) => {
-        let a = [1, 2, 3, 4, 5];
-        let b = [0, ...a];
-        console.log("original array")
-        console.log(newGroupUsers)
-        console.log("new array")
         let updatedNewGroupUsers = [...newGroupUsers, user]
-        console.log(updatedNewGroupUsers)
-
-        //Step 1: Add New Group User to Local Storage Pending Group
-        console.log("You are going to add " + user.friendName)
-
+        //console.log("You are going to add " + user.friendName)
+        
+        //Add to new Group
         updateNewGroupUsers(updatedNewGroupUsers)
+
+        //Remove from Avaiable Friends
+        let updatedAvailableFriends = availableFriends.filter(function (currentUser) {
+            return currentUser.friendName.toLowerCase() != user.friendName.toLowerCase()
+          });
+          //console.log(updatedAvailableFriends)
+          updateAvailableFriends(updatedAvailableFriends)
     }
 
-    const removeGroupUser = (userName) => {
+    const removeGroupUser = (user) => {
 
-        //Step 1: Add New Group User to Local Storage Pending Group
-        console.log("You are going to remove " + userName)
+        //Remove From New Group Users
+        let updatedNewGroupUsers = newGroupUsers.filter(function (currentUser) {
+            return currentUser.friendName.toLowerCase() != user.friendName.toLowerCase()
+          });
+    
+        updateNewGroupUsers(updatedNewGroupUsers)
+ 
+        //Add to Available Friends
+        let updatedAvailableFriends = [...availableFriends, user]
+        updateAvailableFriends(updatedAvailableFriends)  
  
     }
-
-    //PART 3: Form Actions
-    const handleChange = (event) => {
+    
+    //FORM ACTIONS
+    const handleNameChange = (event) => {
         const { name, value } = event.target
         setGroupName(value)
     }   
@@ -55,17 +92,25 @@ const NewGroup= ({ currentUser, api }) => {
     const handleSearchChange = (event) => {
         const { name, value } = event.target
         setSearchString(value)
+        
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Create a new Group " + groupName + " for "  + currentUser)
+
+        let newGroupUserNames = []
+
+        for (let i = 0; i < newGroupUsers.length; i++) {
+            newGroupUserNames.push(newGroupUsers[i].friendName)
+        }
+
         const newGroup = {
             "currentUser": currentUser,
             "groupName": groupName,
             "groupType": "kite",
             "groupPrivate": 1,
-            "groupUsers": ["davey", "sam", "frodo"],
+            "groupUsers": newGroupUserNames,
             "notificationMessage": currentUser + " invited you to a new Group",  
             "notificationType": "group_invite",
             "notificationLink": "http://localhost:3003/group/77"   
@@ -75,127 +120,72 @@ const NewGroup= ({ currentUser, api }) => {
         
     }
 
+    //REACT QUERY 
+
 
     return (
         <div> 
+            {/* New Group From */}
             <div className='simple-border sixty'>
                 <form onSubmit={ handleSubmit }>
-                <p><b> Group Name  </b></p>
-                <input name= "group-name" className="simple-input-box" type="text" value={ groupName } onChange={ handleChange} />
-                <p> { groupName } </p>
-                <hr />
-                <p><b> Friend Search </b></p>
-                <input name= "group-friend-search" className="simple-input-box" type="text" value={ searchString } onChange={ handleSearchChange} />
-                <p> { searchString } </p>
-  
-                <button type="submit" className="loginButton" > Create New Group </button>
-            </form>
+                    <p><b> Group Name | { groupName }</b></p>
+                    <input name= "group-name" className="simple-input-box" type="text" value={ groupName } onChange={ handleNameChange} /><hr />
+
+                    <p><b> Friend Search </b></p>
+                    <input name= "group-friend-search" className="simple-input-box" type="text" value={ searchString } onChange={ handleSearchChange} />
+                    <p> { searchString } </p>
+    
+                    <button type="submit" className="loginButton" > Create New Group </button>
+                </form>
             </div>
 
+            {/* Friends you can add */}
             <div className='simple-border sixty'>
                 <h4> Friends you can Add </h4>
-                {data && data.data.map((user) => (
-                    <AddGroupUser key = { user.friendName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
-                    
+                {availableFriends && availableFriends.map((user) => (
+                    <AddGroupUser key = { user.friendName } addGroupUser = {addGroupUser} user = {user} />     
                 ))} 
             </div>
 
+
+            {/* GROUP FORM */}
             <div className='simple-border sixty'>
                 <h4> New Group Users </h4>
                 {newGroupUsers.map((user) => (
-                    <p key = {user.friendName}> {user.friendName }</p>
-                ))} 
+                    <RemoveGroupUser key = { user.friendName } removeGroupUser = {removeGroupUser} user = {user} />   
+                ))}     
             </div>
+
         
         </div>
     );
 
-    /*
-                    {newGroupUsers.map((user) => (
-                    <RemoveGroupUser key = { user.friendName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
-                ))} 
-                */
 }
 
 
 export default NewGroup;
 
+
 /*
+   if(newGroupUsers.length < 1) {
+                updateAvailableFriends(data.data)
+            } else {
+                //Filter over array of Current Users
+                let availableFriendsSet = new Set();
                 
-            <ul> 
-                { error && <div>{ error }</div> }
-                { isPending && <div>Loading...</div> }
-                {data && data.data.map(friend => (
-                    <div key = {friend.friendName} className='small-border'>                                          
-                        <p> { friend.friendName } </p>
-                        <button onClick={() => addGroupUser(friend.friendName)}>Add Me to your Group | {friend.friendName }</button> 
-                    </div>
-                ))}
-            </ul>
-                <FriendSearch api = { api } currentUser = { "davey" } />
-function MyAPI() {
-    const { data: posts, isPending, error } = useFetch("http://localhost:3003/simple/posts")
+                for (let i = 0; i < newGroupUsers.length; i++) {
+                    for (let j = 0; j < data.data.length; j++) {
 
-    return (
-        <div> 
-            <ul> 
-              { error && <div>{ error }</div> }
-              { isPending && <div>Loading...</div> }
-              {posts && <PostList posts = {posts}/> }
-            </ul>
-        </div>
-    );
-}
+                        //If they don't match add to the set
+                        console.log(newGroupUsers[i].friendName.toLowerCase() + " " + data.data[j].friendName.toLowerCase())
+                        if(newGroupUsers[i].friendName.toLowerCase() != data.data[j].friendName.toLowerCase()) {
+                            availableFriendsSet.add(newGroupUsers[i])    
+                        }
+                    }
+                } 
+                let availableFriendsArray = Array.from(availableFriendsSet);
+                console.log(availableFriendsArray)
+                updateAvailableFriends(availableFriendsArray)
 
-*/
-
-
-
-/*
-import React, { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import axios from 'axios'
-
-//FUNCTION 1: Search for Friends API
-async function friendSearchAPI(currentUser,searchString) {   
-    if (searchString.length > 0) {
-        const friendSearchURL = "http://localhost:3003/search/user/" + currentUser + "/string/" + searchString; 
-        const { data } = await axios.get(friendSearchURL)
-
-        return data
-    } 
-
-} 
-
-function FriendSearch({ api, currentUser }) {
-    const [searchString, setSearchString] = useState('')
-
-    //FUNCTION 2: Handle user typing
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setSearchString(value);
-    }
-
-     //FUNCTION 3: React Query 
-    const { isLoading, data, isError, error  } = useQuery(['friend-search', searchString], () => friendSearchAPI(currentUser, searchString), 
-        {  staleTime: 60000 }
-    )
-
-    return (
-        <div className="new-post">
-            <p className = "single-line">Friend Name</p>
-            
-            { data && console.log(data.data)}
-            {data && data.data.map(user => (
-                console.log(user.friendName)
-            ))}
-
-            <input name= "group-name" className="friend-search-input-box" type="text" value={ searchString } onChange={ handleChange} />
-            <p className = "single-line"> Typed { searchString } </p>
-        </div>
-    );
-}
-
-export default FriendSearch;
-export default FriendSearch;
+            }
 */
