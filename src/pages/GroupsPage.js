@@ -13,6 +13,7 @@ import NewGroup from '../components/groups/actions/NewGroup';
 
 const axiosRequest = apiFunctions.getAPI();
 
+//GROUPS PAGE
 function GroupsPage() {
   const data = localStorage.getItem("localStorageCurrentUser");
   const currentUser = JSON.parse(data);
