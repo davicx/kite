@@ -1,62 +1,12 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import useLocalStorage from '../../hooks/useLocalStorage';
-import IndividualGroupUser from './users/IndividualGroupUser';
-import NewGroupUser from './users/NewGroupUser';
-import NewGroupSearch from '../search/NewGroupSearchTS';
+import useLocalStorage from '../../../hooks/useLocalStorage';
+//import IndividualGroupUser from '../users/IndividualGroupUser';
+//import NewGroupUser from '../users/NewGroupUser';
 
 
-//TEMP 
-var frodo5 = {
-  firstName: "frodo5",
-  friendImage: "frodo5.jpg",
-  friendName: "frodo5",
-  lastName: "baggins"
-}
-var frodo6 = {
-  firstName: "frodo6",
-  friendImage: "frodo6.jpg",
-  friendName: "frodo6",
-  lastName: "baggins"
-}
-
-var frodo7 = {
-  firstName: "frodo7",
-  friendImage: "frodo7.jpg",
-  friendName: "frodo7",
-  lastName: "baggins"
-}
-
-
-var friendsArray = [frodo5, frodo6, frodo7]
-
-
-function CreateGroupTwo({api, currentUser}) {   
-  const [newGroupUsers, updateNewGroupUsers] = useState(friendsArray)
-
-    return (
-    <div className = "login">
-      <p> Friend Search </p>
-      <NewGroupSearch api = {api} currentUser = { currentUser } newGroupUsers = {newGroupUsers}/>
-
-    </div>
-
-    );
-  }
-
-export default CreateGroupTwo;
-
-
-/*
-
-<ul>
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ul>  
-
-
+//FIRST STEP 
 //TEMP 
 var sam = {
   userID: 2,
@@ -87,7 +37,7 @@ async function createGroupAPI(newGroup) {
   return response.data;
 }
 
-function CreateGroupTwo({api, currentUser}) {   
+function CreateGroup({api, currentUser}) {   
    const [groupName, setGroupName] = useState('New Group!')
    const [availableFriends, updateAvailableFriends] = useState(friendsArray)
    const [newGroupUsers, updateNewGroupUsers] = useState([])
@@ -165,6 +115,7 @@ function CreateGroupTwo({api, currentUser}) {
   const { isLoading, mutate } = useMutation(createGroupAPI, {
       onSuccess: (returnedData) => {
         queryClient.setQueryData(['user-groups', currentUser], (originalQueryData) => {
+
               var updatedGroupData = structuredClone(originalQueryData);
 
               let newGroup = {
@@ -176,22 +127,11 @@ function CreateGroupTwo({api, currentUser}) {
               return updatedGroupData;     
           })
       }
+
     })
 
-
-    return (
-    <div className = "login">
-      <p> Friend Search </p>
-      <FriendSearch api = {api} currentUser = { currentUser } />
-      <p> Friend Search </p>
-
-      <form onSubmit={ handleSubmit }>
-        <input name= "group-name" className="loginInput" type="text" value={ groupName } onChange={ handleNameChange } />
-        <p> { groupName } </p>
-        <button type="submit" className="loginButton" > Create New Group </button>
-      </form>
-
-      <h4> Friends you can Add </h4>
+    /*
+          <h4> Friends you can Add </h4>
       {availableFriends.map((user) => (
           <IndividualGroupUser key = { user.userName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
       ))} 
@@ -201,13 +141,93 @@ function CreateGroupTwo({api, currentUser}) {
       {newGroupUsers.map((user) => (
           <NewGroupUser key = { user.userName } addGroupUser = {addGroupUser} removeGroupUser = {removeGroupUser} user = {user} />
       ))} 
+    */
+
+
+    return (
+    <div className = "login">
+      <form onSubmit={ handleSubmit }>
+        <input name= "group-name" className="loginInput" type="text" value={ groupName } onChange={ handleNameChange } />
+        <p> { groupName } </p>
+        <button type="submit" className="loginButton" > Create New Group </button>
+      </form>
+
+
     </div>
 
     );
   }
 
-export default CreateGroupTwo;
+export default CreateGroup;
 
+
+/*
+import React, { useState } from 'react'
+
+
+const IndividualGroupFriendAdd = ({addGroupUser, removeGroupUser, user }) => {
+  let userID = user.userID
+  let userName = user.userName
+
+  return (
+      <div> 
+        <div className=''> 
+          <p> {userID } | {userName} </p>
+          <button onClick={() => addGroupUser(userName)}>Add Me to your Group | {userName}</button> 
+        </div>
+      </div>
+  );
+}
+
+
+export default IndividualGroupFriendAdd;
+
+*/
+
+
+/*
+import React, { useState } from 'react'
+
+
+const IndividualGroupUser = ({addGroupUser, removeGroupUser, user }) => {
+  let userID = user.userID
+  let userName = user.userName
+
+  return (
+      <div> 
+        <div className=''> 
+          <p> {userID } | {userName} </p>
+          <button onClick={() => removeGroupUser(userName)}>Remove Me to your Group | {userName}</button> 
+        </div>
+      </div>
+  );
+}
+
+
+export default IndividualGroupUser;
+
+*/
+
+/*
+import React, { useState } from 'react'
+
+
+const NewGroupUser = ({addGroupUser, removeGroupUser, user }) => {
+  let userID = user.userID
+  let userName = user.userName
+
+  return (
+      <div> 
+        <div className=''> 
+          <p> {userID } | {userName} </p>
+          <button onClick={() => addGroupUser(userName)}>Add Me to your Group | {userName}</button> 
+        </div>
+      </div>
+  );
+}
+
+
+export default NewGroupUser;
 
 
 */

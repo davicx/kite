@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
 import AddGroupUser from '../users/AddGroupUser'
 import RemoveGroupUser from '../users/RemoveGroupUser'
 
 import useGroupFriendsFetch from '../../../functions/hooks/useGroupFriendsFetch'
+
+async function createGroupAPI(newGroup) {
+    const groupURL = "http://localhost:3003/group/create/";
+    const response = await axios.post(groupURL, newGroup);
+    console.log(response.data)
+    return response.data;
+  }
 
 const NewGroup= ({ currentUser, api }) => {
     const [groupName, setGroupName] = useState('New Group!')
@@ -15,15 +24,13 @@ const NewGroup= ({ currentUser, api }) => {
 
     //Make useFetch for this and filter data here useFetch(friendSearchURL, selectedUsers)
     var { data, isPending, error } = useGroupFriendsFetch(friendSearchURL, newGroupUsers);
-    //console.log("data")
-    //console.log(data)
+
 
     useEffect(() => {
         if(data != null) {
 
             //No one has been added to a group
             if(newGroupUsers.length < 1) {
-                console.log("No one in the group!")
                 updateAvailableFriends(data.data)
 
             } else {
@@ -99,7 +106,7 @@ const NewGroup= ({ currentUser, api }) => {
         event.preventDefault();
         console.log("Create a new Group " + groupName + " for "  + currentUser)
 
-        let newGroupUserNames = []
+        let newGroupUserNames = [currentUser]
 
         for (let i = 0; i < newGroupUsers.length; i++) {
             newGroupUserNames.push(newGroupUsers[i].friendName)
@@ -115,13 +122,30 @@ const NewGroup= ({ currentUser, api }) => {
             "notificationType": "group_invite",
             "notificationLink": "http://localhost:3003/group/77"   
         }
-        //mutate(newGroup)
-        console.log(newGroup)
+        mutate(newGroup)
+        //console.log(newGroup)
         
     }
 
     //REACT QUERY 
+    //Function: React Query Mutation
+    const queryClient = useQueryClient();
+    const { isLoading, mutate } = useMutation(createGroupAPI, {
+        onSuccess: (returnedData) => {
+          queryClient.setQueryData(['user-groups', currentUser], (originalQueryData) => {     
+                var updatedGroupData = structuredClone(originalQueryData);
 
+                let newGroup = {
+                    "groupID": returnedData.data.groupID,
+                    "groupName": returnedData.data.groupName
+                }
+                updatedGroupData.groups.push(newGroup)    
+
+                return updatedGroupData;  
+
+            })
+        }
+      })
 
     return (
         <div> 
@@ -165,27 +189,3 @@ const NewGroup= ({ currentUser, api }) => {
 
 export default NewGroup;
 
-
-/*
-   if(newGroupUsers.length < 1) {
-                updateAvailableFriends(data.data)
-            } else {
-                //Filter over array of Current Users
-                let availableFriendsSet = new Set();
-                
-                for (let i = 0; i < newGroupUsers.length; i++) {
-                    for (let j = 0; j < data.data.length; j++) {
-
-                        //If they don't match add to the set
-                        console.log(newGroupUsers[i].friendName.toLowerCase() + " " + data.data[j].friendName.toLowerCase())
-                        if(newGroupUsers[i].friendName.toLowerCase() != data.data[j].friendName.toLowerCase()) {
-                            availableFriendsSet.add(newGroupUsers[i])    
-                        }
-                    }
-                } 
-                let availableFriendsArray = Array.from(availableFriendsSet);
-                console.log(availableFriendsArray)
-                updateAvailableFriends(availableFriendsArray)
-
-            }
-*/

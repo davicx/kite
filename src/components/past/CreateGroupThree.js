@@ -2,8 +2,60 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import useLocalStorage from '../../hooks/useLocalStorage';
-import IndividualGroupUser from './users/IndividualGroupUser';
-import NewGroupUser from './users/NewGroupUser';
+import IndividualGroupUser from '../groups/users/IndividualGroupUser';
+import NewGroupUser from '../groups/users/NewGroupUser';
+import NewGroupSearch from '../search/NewGroupSearchTS';
+
+
+//TEMP 
+var frodo5 = {
+  firstName: "frodo5",
+  friendImage: "frodo5.jpg",
+  friendName: "frodo5",
+  lastName: "baggins"
+}
+var frodo6 = {
+  firstName: "frodo6",
+  friendImage: "frodo6.jpg",
+  friendName: "frodo6",
+  lastName: "baggins"
+}
+
+var frodo7 = {
+  firstName: "frodo7",
+  friendImage: "frodo7.jpg",
+  friendName: "frodo7",
+  lastName: "baggins"
+}
+
+
+var friendsArray = [frodo5, frodo6, frodo7]
+
+
+function CreateGroupTwo({api, currentUser}) {   
+  const [newGroupUsers, updateNewGroupUsers] = useState(friendsArray)
+
+    return (
+    <div className = "login">
+      <p> Friend Search </p>
+      <NewGroupSearch api = {api} currentUser = { currentUser } newGroupUsers = {newGroupUsers}/>
+
+    </div>
+
+    );
+  }
+
+export default CreateGroupTwo;
+
+
+/*
+
+<ul>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ul>  
+
 
 //TEMP 
 var sam = {
@@ -35,7 +87,7 @@ async function createGroupAPI(newGroup) {
   return response.data;
 }
 
-function CreateGroup({api, currentUser}) {   
+function CreateGroupTwo({api, currentUser}) {   
    const [groupName, setGroupName] = useState('New Group!')
    const [availableFriends, updateAvailableFriends] = useState(friendsArray)
    const [newGroupUsers, updateNewGroupUsers] = useState([])
@@ -129,6 +181,10 @@ function CreateGroup({api, currentUser}) {
 
     return (
     <div className = "login">
+      <p> Friend Search </p>
+      <FriendSearch api = {api} currentUser = { currentUser } />
+      <p> Friend Search </p>
+
       <form onSubmit={ handleSubmit }>
         <input name= "group-name" className="loginInput" type="text" value={ groupName } onChange={ handleNameChange } />
         <p> { groupName } </p>
@@ -150,5 +206,8 @@ function CreateGroup({api, currentUser}) {
     );
   }
 
-export default CreateGroup;
+export default CreateGroupTwo;
 
+
+
+*/

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 //import useLocalStorage from '../../hooks/useLocalStorage';
 //import IndividualGroupUser from './IndividualGroupUser';
 //import NewGroupUser from './NewGroupUser';
-import AddGroupUser from '../users/AddGroupUser'
-import RemoveGroupUser from '../users/RemoveGroupUser'
+//import AddGroupUser from '../groups/users/AddGroupUser'
+//import RemoveGroupUser from '../groups/users/RemoveGroupUser'
 
-import useGroupFriendsFetch from '../../../functions/hooks/useGroupFriendsFetch'
+//import useGroupFriendsFetch from '../../functions/hooks/useGroupFriendsFetch'
 
 const NewGroup= ({ currentUser, api }) => {
     const [groupName, setGroupName] = useState('New Group!')

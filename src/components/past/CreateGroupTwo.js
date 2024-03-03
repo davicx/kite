@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import useLocalStorage from '../../hooks/useLocalStorage';
-import IndividualGroupUser from './users/IndividualGroupUser';
-import NewGroupUser from './users/NewGroupUser';
+import IndividualGroupUser from '../groups/users/IndividualGroupUser';
+import NewGroupUser from '../groups/users/NewGroupUser';
 import NewGroupSearch from '../search/NewGroupSearchTS';
 
 

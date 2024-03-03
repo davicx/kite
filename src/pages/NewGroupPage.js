@@ -2,7 +2,7 @@ import React from 'react';
 
 import apiFunctions from '../functions/apiFunctions';
 //import CreateGroup from '../components/groups/CreateGroup';
-import CreateGroupTwo from '../components/groups/CreateGroupTwo';
+//import CreateGroupTwo from '../components/groups/CreateGroupTwo';
 
 const axiosRequest = apiFunctions.getAPI();
 
@@ -12,7 +12,7 @@ function GroupsPage() {
   
   return (
     <div className="user">
-        <CreateGroupTwo api = { axiosRequest } currentUser = { currentUser } />
+        <p> hi </p>
     </div>
   );
 }
@@ -20,6 +20,7 @@ function GroupsPage() {
 export default GroupsPage;
 
 /*
+<CreateGroupTwo api = { axiosRequest } currentUser = { currentUser } />
 <FriendSearch api = { axiosRequest } currentUser = { currentUser } />
 import FriendSearch from '../components/search/FriendSearch';
 */
