@@ -23,11 +23,8 @@ import Users from './pages/UsersPage';
 import NotFound from './pages/NotFound';
 import IndividualGroup from './pages/IndividualGroup';
 import Playground from './pages/Playground';
-//import PlaygroundCheckbox from './pages/PlaygroundCheckbox';
-//import IndividualFriend from './pages/IndividualFriendPage';
-//This is temp above works
 import IndividualFriend from './pages/FriendPage';
-//
+
 import { LoginContext } from './functions/context/LoginContext';
 
 const queryClient = new QueryClient();
@@ -83,3 +80,7 @@ function App() {
 }
 
 export default App;
+
+//import PlaygroundCheckbox from './pages/PlaygroundCheckbox';
+//import IndividualFriend from './pages/IndividualFriendPage';
+//This is temp above works
