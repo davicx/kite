@@ -8,8 +8,8 @@ import { sayHello } from './functions/functions';
 
 //Style 
 import './style/styleOLD.css';
-import './style/style.css';
 import './style/external/normalize.css';
+import './style/style.css';
 
 //Pages
 import Home from './pages/Home';
