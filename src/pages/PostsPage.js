@@ -19,10 +19,9 @@ const axiosRequest = axios.create({
 function PostsPage() {
 
   return (
-    <div className="user">
-        <PostList groupID = { 70 } api = { axiosRequest }/>
+    <div id = "site-wrapper">
         <NewPost currentUser = "davey" groupID = { 70 } api = { axiosRequest }/>
-
+        <PostList groupID = { 70 } api = { axiosRequest }/>
     </div>
   );
 }

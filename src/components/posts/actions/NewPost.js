@@ -63,8 +63,9 @@ function NewPost({ groupID, currentUser, api }) {
             <p> Current User: { currentUser} </p>
             <form onSubmit={ handleSubmit }>
                 <label> </label> 
-                <input name= "postCaption" type="text" value={ postCaption } onChange={handleChange} />
-                <p> {postCaption}</p>
+                <input name= "postCaption" className = "new-post-caption" type="text" value={ postCaption } onChange={handleChange} />
+                <p> &nbsp </p>
+                <input type="file" id="myFile" name="filename"></input>
                 <button type="submit"> Submit </button>
             </form>
         </div>

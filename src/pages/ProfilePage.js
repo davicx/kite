@@ -4,7 +4,7 @@ import apiFunctions from '../functions/apiFunctions';
 import UserProfile from '../components/users/UserProfile';
 import LogoutUser from '../components/login/LogoutUser';
 import useCurrentUser from '../hooks/useCurrentUser';
-
+import MyFriends from '../components/friends/MyFriends';
 
 const axiosRequest = apiFunctions.getAPI();
 
@@ -22,6 +22,7 @@ function ProfilePage() {
         <p> Current User: {currentUser}</p>
         
         <UserProfile currentUser = { currentUser } api = { axiosRequest } /> 
+        <MyFriends currentUser = { currentUser } api = { axiosRequest } /> 
         <LogoutUser />
     </div>
   );
