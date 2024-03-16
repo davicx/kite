@@ -17,14 +17,6 @@ const axiosRequest = axios.create({
 
 
 function PostsPage() {
-  
-  /*
-  //STEP 1: Check user is logged in
-    const loggedInMessage = useLoginStatus();
-
-    //STEP 3: Get the current User
-    var [currentUser, setCurrentUser] = useCurrentUser();
-  */
 
   return (
     <div className="user">
@@ -36,3 +28,12 @@ function PostsPage() {
 }
 
 export default PostsPage;
+
+  
+  /*
+  //STEP 1: Check user is logged in
+    const loggedInMessage = useLoginStatus();
+
+    //STEP 3: Get the current User
+    var [currentUser, setCurrentUser] = useCurrentUser();
+  */
