@@ -16,6 +16,7 @@ import SimpleArray from '../components/playground/SimpleArray';
 import SimpleButtonParent from '../components/playground/SimpleButtonParent';
 //import SimpleAddGroupUser from '../components/playground/SimpleAddGroupUser';
 import SimpleAddGroupUser from '../components/playground/SimpleAddGroupUserLS';
+import SimpleUpload from '../components/playground/SimpleUpload';
 import SimpleUseEffect from '../components/playground/SimpleUseEffect';
 import SimpleSaveToStateAPI from '../components/playground/SimpleSaveToStateAPI';
 import Example from '../components/playground/tutorials/Example';
@@ -37,7 +38,7 @@ function Playground() {
 
     return (
         <div className="user">
-            <NewGroup api = { axiosRequest } currentUser = { "davey" } />
+            <SimpleUpload api = { axiosRequest } currentUser = { currentUser } />
         </div>
     );
 }
@@ -45,7 +46,7 @@ function Playground() {
 export default Playground;
 
 /*
-
+<NewGroup api = { axiosRequest } currentUser = { "davey" } />
 const axiosRequest = apiFunctions.getAPI();
 
 function GroupsPage() {

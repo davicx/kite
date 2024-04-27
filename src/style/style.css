@@ -193,7 +193,7 @@ APPENDIX A: CSS defaults
 
 
 .blue-border {
-	border: 1px solid black;
+	border: 1px solid blue;
 }
 
 .small-border {
@@ -250,7 +250,7 @@ APPENDIX F: Temporary Code
 *****************************************************/
 .new-post {
 	width: 60%;
-  margin-left: 20%;
+  	margin-left: 20%;
 	border: 1px solid blue;
 }
 
@@ -273,8 +273,8 @@ li {
 .returned-user {
 	border: 1px solid blue;
 	width: 120px;
-
 }
+
 /****************************************************
 APPENDIX G: Color Ideas
 *****************************************************/
