@@ -21,7 +21,7 @@ const NewGroup= ({ currentUser, api }) => {
 
     //SEARCH FUNCTION
     const friendSearchURL = "http://localhost:3003/search/user/" + currentUser + "/string/" + searchString; 
-
+    
     //Make useFetch for this and filter data here useFetch(friendSearchURL, selectedUsers)
     var { data, isPending, error } = useGroupFriendsFetch(friendSearchURL, newGroupUsers);
 
@@ -98,8 +98,8 @@ const NewGroup= ({ currentUser, api }) => {
     
     const handleSearchChange = (event) => {
         const { name, value } = event.target
-        setSearchString(value)
-        
+
+        setSearchString(value)   
     }
 
     const handleSubmit = (event) => {
