@@ -150,6 +150,11 @@ SECTION 5A: Post
   padding: 0px;
 }
 
+.image-size {
+	height: 500px;
+	width: 500px;
+}
+
 /* POST: Post Likes */
 .like-list {
 	margin: 4px;

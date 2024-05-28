@@ -35,9 +35,12 @@ const axiosRequest = apiFunctions.getAPI();
 function Playground() {
     let currentUser = "davey"
     let searchString = "fro"
+    let url = "https://insta-app-bucket-tutorial.s3.us-west-2.amazonaws.com/images/postImage-1716851490721-546172183-59045070_p0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAXZAOI335HZSDKHVN%2F20240527%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240527T233903Z&X-Amz-Expires=3600&X-Amz-Signature=48fca7e102adc1ba65c31bbd08703cdbdae763c88495377f6aa7bf08be4c4397&X-Amz-SignedHeaders=host&x-id=GetObject"
 
     return (
-        <div className="user">
+        <div className="user" >
+        
+           <img src={url} alt="hi"/>
             <SimpleUpload api = { axiosRequest } currentUser = { currentUser } />
         </div>
     );
@@ -46,6 +49,8 @@ function Playground() {
 export default Playground;
 
 /*
+  <img src="https://instasam-demo-thing-two.s3.us-west-2.amazonaws.com/59045070_p0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAXZAOI335JR6QQSHA%2F20240526%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240526T234807Z&X-Amz-Expires=3600&X-Amz-Signature=3e31cf4b0d6324c8d1822f31c4d684dcc67dd26f3d2e161a9fea811dbd7bd24d&X-Amz-SignedHeaders=host&x-id=GetObject" alt="Girl in a jacket"> 
+
 <NewGroup api = { axiosRequest } currentUser = { "davey" } />
 const axiosRequest = apiFunctions.getAPI();
 

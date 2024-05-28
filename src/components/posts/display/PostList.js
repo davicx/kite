@@ -8,8 +8,9 @@ async function getPosts(groupID, api) {
     const groupPostURL = "http://localhost:3003/posts/group/" + groupID; 
     //const groupPostURL = "http://localhost:3003/comments/72"; 
     const response = await api.get(groupPostURL)
+    console.log(response.data.data)
   
-    return response.data.data.posts
+    return response.data.data
   
 } 
 
