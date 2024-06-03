@@ -7,6 +7,8 @@ import functions from "../functions/functions";
 
 import PostList from '../components/posts/display/PostList';
 import NewPost from '../components/posts/actions/NewPost';
+import NewPhotoPost from '../components/posts/actions/NewPhotoPost';
+import NewPhotoPhotoWithQuery from '../components/posts/actions/NewPhotoPhotoWithQuery';
 
 import axios from 'axios'
 
@@ -20,7 +22,7 @@ function PostsPage() {
 
   return (
     <div id = "site-wrapper">
-        <NewPost currentUser = "davey" groupID = { 70 } api = { axiosRequest }/>
+        <NewPhotoPhotoWithQuery currentUser = "davey" groupID = { 70 } api = { axiosRequest }/>
         <PostList groupID = { 70 } api = { axiosRequest }/>
     </div>
   );
