@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from "react-query";
 import axios from 'axios'
 
-//ADD REACT QUERY BUT NO IMAGE
-async function postImage(newPost) {
+//FUNCTION 1: New Post API
+async function makePostAPI(newPost) {
     const formData = new FormData();
     formData.append("postImage", newPost.image)
     formData.append("postCaption", newPost.postCaption)
@@ -18,8 +18,7 @@ async function postImage(newPost) {
     formData.append("notificationLink", "http://localhost:3003/posts/group/70")
 
     const result = await axios.post('http://localhost:3003/post/photo/local/aws', formData, { headers: {'Content-Type': 'multipart/form-data'}})
-  
-    console.log(result.data)
+
     return result.data
 }
 
@@ -28,6 +27,7 @@ const NewPhotoPost = ({ groupID, currentUser, api }) => {
     const [file, setFile] = useState()
     const [postCaption, setPostCaption] = useState('Hiya sam! wanna go on a hike today the weather is perfect!')
   
+    //FUNCTION 2: Handle New Post Submit Button
     const handleChange = (event) => {
         const { name, value } = event.target
         setPostCaption(value)
@@ -50,14 +50,32 @@ const NewPhotoPost = ({ groupID, currentUser, api }) => {
         notificationLink: "http://localhost:3003/posts/group/" + groupID
     }
 
-      const result = await postImage(newPost)
-    }
+    mutate(newPost)
+
+      //const result = await makePostAPI(newPost)
+   }
   
     const fileSelected = event => {
       const file = event.target.files[0]
           setFile(file)
       }
+
+    //FUNCTION 3: React Query Mutation
+    const queryClient = useQueryClient();
+    const { isLoading, mutate } = useMutation(makePostAPI, {
+        onSuccess: (returnedData) => {
+          queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
+                var updatedPostData = structuredClone(originalQueryData);
+                let newPost = returnedData.data;
+                
+                updatedPostData.unshift(newPost);
+
+                return updatedPostData;     
+            })
+        }
+      })
   
+    
     return (
       <div className="App">
         <form onSubmit={handleSubmit} className = "sixty">

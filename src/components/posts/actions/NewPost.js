@@ -36,6 +36,12 @@ function NewPost({ groupID, currentUser, api }) {
             notificationType: "new_post_text",
             notificationLink: "http://localhost:3003/posts/group/" + groupID
         }
+        console.log("New Post")
+        console.log(newPost)
+        console.log("New Post")
+        
+        
+
         mutate(newPost)
         
     }
@@ -44,9 +50,17 @@ function NewPost({ groupID, currentUser, api }) {
     const queryClient = useQueryClient();
     const { isLoading, mutate } = useMutation(makePostAPI, {
         onSuccess: (returnedData) => {
+        console.log("returnedData")
+        console.log(returnedData)
+        console.log("       ")
+
           queryClient.setQueryData(['group-posts', groupID], (originalQueryData) => {
                 var updatedPostData = structuredClone(originalQueryData);
                 let newPost = returnedData.data;
+
+                console.log("updatedPostData")
+                console.log(updatedPostData)
+                console.log("       ")
 
                 updatedPostData.unshift(newPost);
 
