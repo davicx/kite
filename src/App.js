@@ -7,8 +7,9 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { sayHello } from './functions/functions';
 
 //Style 
-import './style/styleOLD.css';
 import './style/external/normalize.css';
+//import './style/styleOLD.css';
+//import './style/styleNew.css';
 import './style/style.css';
 
 //Pages
@@ -49,14 +50,14 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <LoginContext.Provider value = {{currentUser, setLoginState}} > 
 
-            <nav className="navBar">
-              <Link className="navLink" to="/login">Login </Link>
-              <Link className="navLink" to="/groups"> Groups </Link>
-              <Link className="navLink" to="/profile"> Profile </Link>
-              <Link className="navLink" to="/posts"> Posts </Link>
-              <Link className="navLink" to="/users"> Users </Link>
-              <Link className="navLink" to="/playground"> Playground </Link>
-            </nav>  
+          <nav className="navBar">
+  <Link className="navLink" to="/login">Login </Link>
+  <Link className="navLink" to="/groups"> Groups </Link>
+  <Link className="navLink" to="/profile"> Profile </Link>
+  <Link className="navLink" to="/posts"> Posts </Link>
+  <Link className="navLink" to="/users"> Users </Link>
+  <Link className="navLink" to="/playground"> Playground </Link>
+</nav>  
             
             <Routes>      
               <Route path="/" element={<Home/>} />
@@ -80,6 +81,17 @@ function App() {
 }
 
 export default App;
+
+/*
+<nav className="navBar">
+  <Link className="navLink" to="/login">Login </Link>
+  <Link className="navLink" to="/groups"> Groups </Link>
+  <Link className="navLink" to="/profile"> Profile </Link>
+  <Link className="navLink" to="/posts"> Posts </Link>
+  <Link className="navLink" to="/users"> Users </Link>
+  <Link className="navLink" to="/playground"> Playground </Link>
+</nav>  
+*/
 
 //import PlaygroundCheckbox from './pages/PlaygroundCheckbox';
 //import IndividualFriend from './pages/IndividualFriendPage';

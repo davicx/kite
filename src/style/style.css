@@ -9,30 +9,14 @@ SECTION 3A: Header and Navigation Bar
 
 Page Specific 
 SECTION 4A: Login Page
-SECTION 4B: Registration Page
-SECTION 4C: Groups Page
-SECTION 4D: Individual Group Page
-SECTION 4E: Profile Page 
-SECTION 4F: Friend Page 
-
-Component Specific
-SECTION 5A: Post
-SECTION 5B: Comment
-SECTION 5C: Like
-SECTION 5D: Individual Group
-
-Modal Specific 
-SECTION 6A: Modal
 
 Appendix 
 APPENDIX A: CSS defaults  
 APPENDIX B: Buttons
-APPENDIX C: Fonts				
+APPENDIX C: Grid System
 APPENDIX D: Warning and Error Text	 
-APPENDIX E: Old Code 	  
-APPENDIX F: Temporary Code Pulled From Old Site
-APPENDIX G: Color Ideas
-APPENDIX H: Tutorials
+APPENDIX E: Fonts				  
+APPENDIX F: Color Ideas
 */
 
 
@@ -77,274 +61,82 @@ header {
 	z-index: 10;
 }
 
+/* Logo */
+.header-desktop-logo-area {
+	float: left;
+	width: 30%;
+	height: 68px;
+}
+
+.desktop-cloud-logo-image {
+	float: left;
+	height: 38px;
+	margin-top: 12px;
+	margin-left: 28px;
+}
+
+/* Icons */
+.header-desktop-icon-area {
+	float: left;
+	width: 70%;
+	height: 68px;
+	background-color: blue;
+}
+
+
+
+
 
 /* Page Specific */
 /****************************************************
 SECTION 4A: Login Page
 *****************************************************/
+.login-page {
+	background-image:		
+	url('../images/background/overlay/overlay.png'),		
+	-moz-linear-gradient(top, rgba(0,0,0,0) 75%, rgba(0,0,0,0.65)),		
+	url("../images/background/background.jpg");
 
+	background-image:		
+	url('../images/background/overlay/overlay.png'),		
+	-webkit-linear-gradient(top, rgba(0,0,0,0) 75%, rgba(0,0,0,0.65)),	
+	url("../images/background/background.jpg");
+	
+	background-position: top left, bottom left, auto;
+    background-size: auto, 100% 100%, cover;
+	background-repeat: repeat, no-repeat, auto;	
+    height: 100vh;
 
-/****************************************************
-SECTION 4B: Registration Page
-*****************************************************/
-
-
-/****************************************************
-SECTION 4C: Groups Page
-*****************************************************/
-.groups {
-	width: 60%;
-	margin-top: 12px;
-	margin-left: 20%;
-	min-height: 120px;
-	overflow: auto;
-	border: 1px solid black;
 }
 
-.group {
-  float: left;
-  height: 200px;
-  width: 200px;
-  border: 1px solid blue;
-  margin: 40px;
-} 
-
-
-/****************************************************
-SECTION 4D: Individual Group Page
-*****************************************************/
-
-
-/****************************************************
-SECTION 4E: Profile Page 
-*****************************************************/
-
-
-/****************************************************
-SECTION 4F: Friend Page
-*****************************************************/
-
-
-
-/* Component Specific */
-/****************************************************
-SECTION 5A: Post
-*****************************************************/
-/* POST: Post Header */
-.posts {
-  width: 60%;
-  margin-left: 20%;
-  border: 1px solid black;
-}
-
-.post {
-  width: 80%;
-  min-height: 42px;
-  margin-left: 10%;
-  margin-bottom: 22px;
-  border: 1px solid blue;
-}
-
-.post-text {
-  margin: 2px;
-  padding: 0px;
-}
-
-.image-size {
-	width: 500px;
-	min-height: 100px;
-}
-
-/* POST: Post Likes */
-.like-list {
-	margin: 4px;
-	display: inline;
-	list-style-type: none;
-}
-
-/****************************************************
-SECTION 5B: Comment
-*****************************************************/
-  
-/****************************************************
-SECTION 5C: Like
-*****************************************************/
-  
-/****************************************************
-SECTION 5D: Individual Group
-*****************************************************/
-  
-
-/* Modal Specific  */
-/****************************************************
-SECTION 6A: Modal
-*****************************************************/
 
 
 /* Appendix  */
 /****************************************************
 APPENDIX A: CSS defaults  
 *****************************************************/
-.center {
-	text-align: center;
-}
-
-.simple-border {
-	margin: 4px;
-	margin-bottom: 8px;
-	border: 1px solid black;
-	min-width: 400px;
-}
-
-
-.blue-border {
-	border: 1px solid blue;
-}
-
-.small-border {
-	border: 1px solid black;
-	width: 220px;
-	min-height: 40px;
-	overflow: auto;	
-	margin: 0px auto 0px auto;
-	margin: 4px;
-}
-
-.eighty {
-	width: 80%;
-	max-width: 1440px;
-	overflow: auto;	
-	margin: 0px auto 0px auto;
-}
-
-.sixty {
-	width: 60%;
-	max-width: 1440px;
-	overflow: auto;	
-	margin: 0px auto 0px auto;
-}
-
-.simple-input-box {
-	float: left;
-	height: 22px;
-	margin-top: 8px;
-	margin-left: 30%;
-	width: 40%;
-	border: 1px solid blue;
-  
-}
 
 /****************************************************
 APPENDIX B: Buttons
 *****************************************************/
 
 /****************************************************
-APPENDIX C: Fonts
+APPENDIX C: Grid System
 *****************************************************/
 
 /****************************************************
-APPENDIX D: Warning and Error Text
+APPENDIX D: Warning and Error Text	 
 *****************************************************/
 
 /****************************************************
-APPENDIX E: Old Code 
+APPENDIX E: Fonts	
 *****************************************************/
 
 /****************************************************
-APPENDIX F: Temporary Code
+APPENDIX F: Color Ideas
 *****************************************************/
-.new-post {
-	width: 60%;
-  	margin-left: 20%;
-	border: 1px solid blue;
-}
-
-.new-post-caption {
-	border: 1px solid gray;	
-	width: 60%;
-	margin-left: 20%;
-	clear:both;
-}
-
-.friend-search-input-box {
-	border: 1px solid blue;
-	width: 220px;
-}
-
-li {
-	list-style: none;
-}
-
-.returned-user {
-	border: 1px solid blue;
-	width: 120px;
-}
 
 /****************************************************
 APPENDIX G: Color Ideas
 *****************************************************/
 
-
-		
-/****************************************************
-APPENDIX H: Tutorials
-*****************************************************/
-
-.search-bar-container {
-	padding-top: 20vh;
-	width: 40%;
-	margin: auto;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	min-width: 200px;
-  }
-
-  .input-wrapper {
-	width: 100%;
-	height: 2.5rem;
-	border: none;
-	border-radius: 10px;
-	padding: 0 15px;
-	box-shadow: 0px 0px 8px #ddd;
-	background-color: white;
-	display: flex;
-	align-items: center;
-  }
-  
-  input {
-	background-color: transparent;
-	border: none;
-	height: 100%;
-	font-size: 1.25rem;
-	width: 100%;
-	margin-left: 5px;
-  }
-  
-  input:focus {
-	outline: none;
-  }
-  
-  #search-icon {
-	color: royalblue;
-  }
-
-  .search-result {
-	padding: 10px 20px;
-  }
-  
-  .search-result:hover {
-	background-color: #efefef;
-  }
-
-  .results-list {
-	width: 100%;
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	box-shadow: 0px 0px 8px #ddd;
-	border-radius: 10px;
-	margin-top: 1rem;
-	max-height: 300px;
-	overflow-y: auto;
-  }

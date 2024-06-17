@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useNavigate } from "react-router-dom"
+import { useNavigate, } from "react-router-dom"
 import LoginUser from '../components/login/LoginUser';
 import LoginStatus from '../components/login/LoginStatus';
 import { LoginContext } from "../functions/context/LoginContext";
+//import cloudLogo from './path/to/logo.jpg';
+
 
 
 function LoginPage() {  
@@ -28,17 +30,54 @@ function LoginPage() {
     } 
 }, []);
     return (
-      <div className="login">
-        <label>Current User: { currentUser } </label> 
-        <p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
+      <div className="login-page">
+        <header> 
+  
+            <div className = "header-desktop-logo-area">
+              <img title = "Home Page" src="images/icons/logo/cloud.png" style={{}} className = "desktop-cloud-logo-image" alt="cloud"></img>
+            </div>
+       
+            <div className = "header-desktop-icon-area">
+              <p> hi </p>	
+            </div>
+
+        </header>
+      
+        <p> hi </p>
+        <p> hi </p>
+        <p> hi </p>
+        <p> hi </p>
+        <p> hi </p>
+        <p> hi </p>
         <LoginUser />
-        <LoginStatus />
       </div>
     );
   }
 
 export default LoginPage;
 
+/*
+        <header className = ""> 
+        
+          <div class = "header">
+            
+            <div id = "header-index-page-logo-holder">
+              <img title = "Home Page" src="../images/icons/logo/cloud.png" id = "desktop-cloud-logo-image" class = "" alt=""></img>
+            </div>
+            
+            <div id = "header-index-page-icon-holder">
+              <a href="http://people.oregonstate.edu/~vasquezd/sites/template/site_files/register.php" id="" class="header-login-button header-index-button "><p class = "login-button-text">Register </p></a>
+              <a href="http://people.oregonstate.edu/~vasquezd/sites/template/index.php" id="" class="header-login-button header-index-button "><p class = "login-button-text">Sign In </p></a>	
+            </div>
+
+          </div>	
+        </header>
+      
+<label>Current User: { currentUser } </label> 
+<p> User Logged In: { userLoggedIn ? 'yep!' : 'nooo' } </p>
+<LoginUser />
+<LoginStatus />
+*/
 
 
 
