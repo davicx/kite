@@ -77,10 +77,10 @@ const NewPhotoPost = ({ groupID, currentUser, api }) => {
   
     
     return (
-      <div className="App">
-        <form onSubmit={handleSubmit} className = "sixty">
-          <input onChange={fileSelected} className="simple-border" type="file" accept="image/*"></input>
-          <input name= "postCaption" className = "new-post-caption" type="text" value={ postCaption } onChange={handleChange} />
+      <div className="new-post">
+        <form onSubmit={handleSubmit} className = "">
+          <input onChange={fileSelected} className="" type="file" accept="image/*"></input>
+          <input name= "postCaption" className = "" type="text" value={ postCaption } onChange={handleChange} />
           <button type="submit">Submit</button>
         </form>
       </div>

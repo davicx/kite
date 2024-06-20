@@ -83,7 +83,7 @@ body {
 SECTION 2: Site Structure
 *****************************************************/
 /* SITE WRAPPER */
-#site-wrapper-spacer {
+.site-wrapper-spacer {
 	float: left;
 	height: 68px;
 	width: 100%;

@@ -9,6 +9,12 @@ SECTION 3A: Header and Navigation Bar
 
 Page Specific 
 SECTION 4A: Login Page
+SECTION 4B: Registration Page
+SECTION 4C: Groups Page
+SECTION 4D: Posts Page
+
+Component Specific
+SECTION 5A: Post
 
 Appendix 
 APPENDIX A: CSS defaults  
@@ -41,7 +47,15 @@ body {
 /****************************************************
 SECTION 2: Site Structure
 *****************************************************/
-
+/* SITE WRAPPER */
+.site-body {
+	float: left;
+	margin-top: 68px;
+	min-height: 68px;
+	overflow: auto;
+	width: 99%;
+	border: 1px solid blue;
+}
 
 /****************************************************
 SECTION 3A: Header and Navigation Bar
@@ -84,9 +98,6 @@ header {
 }
 
 
-
-
-
 /* Page Specific */
 /****************************************************
 SECTION 4A: Login Page
@@ -109,6 +120,56 @@ SECTION 4A: Login Page
 
 }
 
+/****************************************************
+SECTION 4B: Registration Page
+*****************************************************/
+
+
+/****************************************************
+SECTION 4C: Groups Page
+*****************************************************/
+
+
+/****************************************************
+SECTION 4D: Posts Page
+*****************************************************/
+.posts {
+	float: left;
+	min-height: 200px;
+	overflow: auto;
+	border: 1px solid black;
+	margin-left: 10%;
+	width: 80%;
+}
+
+
+
+/* Component Specific */
+/****************************************************
+SECTION 5A: Post
+*****************************************************/
+.post {
+	float: left;
+	overflow: auto;
+	width: 80%;
+	min-height: 200px;
+	margin-left: 10%;
+	margin-bottom: 80px;
+	border: 1px solid blue;	
+}
+
+/****************************************************
+SECTION 5B: New Post
+*****************************************************/
+.new-post {
+	float: left;
+	overflow: auto;
+	width: 80%;
+	margin-left: 10%;
+	margin-bottom: 42px;
+	min-height: 100px;
+	background-color: blue;
+}
 
 
 /* Appendix  */

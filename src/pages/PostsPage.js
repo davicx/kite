@@ -7,8 +7,8 @@ import functions from "../functions/functions";
 
 import PostList from '../components/posts/display/PostList';
 import NewPost from '../components/posts/actions/NewPost';
-import NewPhotoPost from '../components/posts/actions/NewPhotoPost';
-import NewPhotoPhotoWithQuery from '../components/posts/actions/NewPhotoPhotoWithQuery';
+import NewPhotoPost from '../components/posts/actions/NewPhotoPostOld';
+import NewPhotoPhoto from '../components/posts/actions/NewPhotoPhoto';
 
 import axios from 'axios'
 
@@ -21,20 +21,28 @@ const axiosRequest = axios.create({
 function PostsPage() {
 
   return (
-    <div id = "site-wrapper">
-        <NewPhotoPhotoWithQuery currentUser = "davey" groupID = { 70 } api = { axiosRequest }/>
-        <PostList groupID = { 70 } api = { axiosRequest }/>
+    <div className = "">
+      <header> 
+        <p> header </p>
+      </header>
+      <div className="site-body">
+        <div className="posts">
+          <NewPhotoPhoto currentUser = "davey" groupID = { 70 } api = { axiosRequest }/>
+          <PostList groupID = { 70 } api = { axiosRequest }/>
+        </div>
+
+      </div>
     </div>
   );
 }
 
 export default PostsPage;
 
-  
-  /*
-  //STEP 1: Check user is logged in
-    const loggedInMessage = useLoginStatus();
 
-    //STEP 3: Get the current User
-    var [currentUser, setCurrentUser] = useCurrentUser();
-  */
+/*
+//STEP 1: Check user is logged in
+  const loggedInMessage = useLoginStatus();
+
+  //STEP 3: Get the current User
+  var [currentUser, setCurrentUser] = useCurrentUser();
+*/

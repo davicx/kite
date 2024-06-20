@@ -7,13 +7,8 @@ import Comments from '../../comments/Comments';
 const IndividualPost = ({api, post, currentUser, groupID }) => {
     return (     
         <div className="post" >
-            <h4 className = "post-text"> Post ID { post.postID } </h4>
-            <p className = "post-text"> Post Type { post.postType } </p>
-            <p className = "post-text"> { post.postCaption } </p>
-         
             <img src={post.fileUrl} alt="hiya!"className="image-size" ></img>
-            <p className = "post-text"> POST ID: { post.postID } |  { post.postFrom } | { post.postTo} | GROUP ID: { post.groupID }</p>  
-
+            <p className = ""> { post.postCaption } </p>
         </div>       
         );
     }  
@@ -23,9 +18,14 @@ export default IndividualPost;
 
 
 /*
-    <Likes api = { api } post = {post}  currentUser = {currentUser} groupID = { groupID }  /> 
-    <Comments api = { api } postComments = {post.commentsArray} groupID = { groupID } postID = { post.postID } postTo = { post.postTo } currentUser = {currentUser}  /> 
-    <DeletePost api = { api } groupID = { groupID } postID = { post.postID } currentUser = {currentUser}  /> 
-    <EditPost api = { api } groupID = { groupID } post = { post } currentUser = {currentUser}  /> 
-    */
+<p className = "post-text"> POST ID: { post.postID } |  { post.postFrom } | { post.postTo} | GROUP ID: { post.groupID }</p> 
+<h4 className = "post-text"> Post ID { post.postID } </h4>
+<p className = "post-text"> Post Type { post.postType } </p>
+
+
+<Likes api = { api } post = {post}  currentUser = {currentUser} groupID = { groupID }  /> 
+<Comments api = { api } postComments = {post.commentsArray} groupID = { groupID } postID = { post.postID } postTo = { post.postTo } currentUser = {currentUser}  /> 
+<DeletePost api = { api } groupID = { groupID } postID = { post.postID } currentUser = {currentUser}  /> 
+<EditPost api = { api } groupID = { groupID } post = { post } currentUser = {currentUser}  /> 
+*/
 

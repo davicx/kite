@@ -18,7 +18,6 @@ async function getPosts(groupID, api) {
 const PostList = ({groupID, api}) => {
     const localData = localStorage.getItem("localStorageCurrentUser");
     const currentUser = JSON.parse(localData);
-    //console.log("Posts: Getting posts for the group " + groupID)
 
     const onError = (error) => {
       console.log("Do something here if there is Error!")
@@ -34,15 +33,12 @@ const PostList = ({groupID, api}) => {
     const currentPosts = data;
 
   return (
-  <div className="posts">
-       <p><b> Group Posts </b> </p>
-       <div className = "post-list" >
-          { isLoading && <div> loading... </div>}
-          { isError && <div> There was an error fetching the posts { error.message } </div>}
-          {data && currentPosts.map((post) => (
-              <IndividualPost api = { api } post = { post }  groupID = { groupID } currentUser = {currentUser} key = { post.postID }/>
-          ))} 
-       </div>
+  <div className="">
+      { isLoading && <div> loading... </div>}
+      { isError && <div> There was an error fetching the posts { error.message } </div>}
+      {data && currentPosts.map((post) => (
+          <IndividualPost api = { api } post = { post }  groupID = { groupID } currentUser = {currentUser} key = { post.postID }/>
+      ))} 
   </div>
   );
   }
