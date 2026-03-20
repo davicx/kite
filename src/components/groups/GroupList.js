@@ -25,14 +25,13 @@ const GroupList = (props) => {
     { refetchInterval: 10000000 }
   )
 
-  var groups = data;
+  const groupList = data?.groups ?? [];
 
   return (
   <div className="groups">
       { isLoading && <div> loading... </div>}
       { isError && <div> There was an error fetching the posts { error.message } </div>}
-      { data && console.log()}
-      {data && groups.groups.map(group => (
+      { groupList.map(group => (
           <div className="group" key={ group.groupID } >
             <Link to={`/group/${group.groupID}`}>{ group.groupID } | {group.groupName } </Link>
           </div>

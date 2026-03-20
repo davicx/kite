@@ -17,6 +17,7 @@ import Home from './pages/Home';
 import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
+import ChatPage from './pages/ChatPage';
 import NewGroup from './pages/NewGroupPage';
 import Profile from './pages/ProfilePage';
 import Posts from './pages/PostsPage';
@@ -57,6 +58,7 @@ function App() {
   <Link className="navLink" to="/posts"> Posts </Link>
   <Link className="navLink" to="/users"> Users </Link>
   <Link className="navLink" to="/playground"> Playground </Link>
+  <Link className="navLink" to="/chat"> Chat </Link>
 </nav>  
             
             <Routes>      
@@ -70,6 +72,7 @@ function App() {
               <Route path="/posts" element={<Posts/>} />
               <Route path="/users" element={<Users/>} />
               <Route path="/playground" element={<Playground/>} />
+              <Route path="/chat" element={<ChatPage/>} />
               <Route path="*" element={ <NotFound /> } />       
             </Routes>
           </LoginContext.Provider> 
