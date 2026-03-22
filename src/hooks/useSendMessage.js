@@ -2,31 +2,33 @@ import { useMutation, useQueryClient } from 'react-query';
 import { sendMessageAPI } from '../functions/api/chatAPI';
 
 /**
- * Hook for sending chat messages via React Query mutation.
- * Ready for future: invalidate ['chat-messages'] when polling/sync is added.
- *
  * @param {Object} api - Axios instance from apiFunctions.getAPI()
- * @param {string} username - Current user (from LoginContext / localStorage)
- * @returns {{ sendMessage: Function, isLoading: boolean, isError: boolean, error: Error | null }}
+ * @param {string} username - Current user
+ * @param {Object} opts
+ * @param {number} opts.groupID
+ * @param {number} opts.conversationID
  */
-export function useSendMessage(api, username) {
+export function useSendMessage(api, username, { groupID, conversationID }) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
     (message) => {
       const resolvedUsername =
         username && username !== 'null' ? username : 'anonymous';
-      const payload = {
-        username: resolvedUsername,
-        message: message.trim(),
-        timestamp: new Date().toISOString(),
-      };
-      return sendMessageAPI({ api, payload });
+      return sendMessageAPI({
+        api,
+        payload: {
+          username: resolvedUsername,
+          message: message.trim(),
+          timestamp: new Date().toISOString(),
+          groupID,
+          conversationID,
+        },
+      });
     },
     {
       onSuccess: () => {
-        // Future: invalidate chat messages when we add polling/sync
-        // queryClient.invalidateQueries(['chat-messages']);
+        queryClient.invalidateQueries(['chat-messages', groupID, conversationID]);
       },
     }
   );
