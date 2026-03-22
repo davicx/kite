@@ -7,15 +7,14 @@ import apiFunctions from '../functions/apiFunctions';
 import { LoginContext } from '../functions/context/LoginContext';
 import { useSendMessage } from '../hooks/useSendMessage';
 import {
-  fetchConversationById,
   fetchConversationMessages,
+  fetchConversationsForGroup,
 } from '../functions/api/chatAPI';
+import ChatConversationSidebar from '../components/chat/ChatConversationSidebar';
 
 const api = apiFunctions.getAPI();
 
-/** Demo wiring: group 70 + conversation id 1 (“Sailing”) — see conversations_seed_demo.sql */
 const DEMO_GROUP_ID = 70;
-const DEMO_CONVERSATION_ID = 1;
 const POLL_MS = 4000;
 
 function ChatPage() {
@@ -23,20 +22,34 @@ function ChatPage() {
   const stored = localStorage.getItem('localStorageCurrentUser');
   const currentUser = contextUser ?? (stored ? JSON.parse(stored) : null);
 
+  const [selectedConversationID, setSelectedConversationID] = useState(null);
   const [message, setMessage] = useState('');
-  const { sendMessage, isLoading } = useSendMessage(api, currentUser, {
-    groupID: DEMO_GROUP_ID,
-    conversationID: DEMO_CONVERSATION_ID,
-  });
 
-  const { data: convRes } = useQuery(
-    ['conversation', DEMO_CONVERSATION_ID],
-    () => fetchConversationById({ api, conversationID: DEMO_CONVERSATION_ID }),
-    { staleTime: 60_000 }
+  const { data: groupConversationsRes } = useQuery(
+    ['group-conversations', DEMO_GROUP_ID],
+    () => fetchConversationsForGroup({ api, groupID: DEMO_GROUP_ID }),
+    { staleTime: 30_000 }
   );
 
+  const conversationList = groupConversationsRes?.data ?? [];
+  const activeConv = conversationList.find(
+    (c) => c.conversationID === selectedConversationID
+  );
   const conversationTitle =
-    convRes?.data?.conversationTitle || 'Sailing (demo)';
+    activeConv?.conversationTitle ||
+    (selectedConversationID
+      ? `Thread ${selectedConversationID}`
+      : 'Select a conversation');
+
+  const { sendMessage, isLoading } = useSendMessage(api, currentUser, {
+    groupID: DEMO_GROUP_ID,
+    conversationID: selectedConversationID ?? 0,
+  });
+
+  const canSend =
+    selectedConversationID != null &&
+    selectedConversationID > 0 &&
+    !isLoading;
 
   const {
     data: messagesRes,
@@ -44,26 +57,27 @@ function ChatPage() {
     isError: messagesError,
     error: messagesErr,
   } = useQuery(
-    ['chat-messages', DEMO_GROUP_ID, DEMO_CONVERSATION_ID],
+    ['chat-messages', DEMO_GROUP_ID, selectedConversationID],
     () =>
       fetchConversationMessages({
         api,
-        conversationID: DEMO_CONVERSATION_ID,
+        conversationID: selectedConversationID,
       }),
-    { refetchInterval: POLL_MS, refetchOnWindowFocus: true }
+    {
+      enabled: selectedConversationID != null && selectedConversationID > 0,
+      refetchInterval: POLL_MS,
+      refetchOnWindowFocus: true,
+    }
   );
 
-  const messages = useMemo(
-    () => messagesRes?.data ?? [],
-    [messagesRes]
-  );
+  const messages = useMemo(() => messagesRes?.data ?? [], [messagesRes]);
 
   const handleChange = (e) => setMessage(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const trimmed = message.trim();
-    if (!trimmed || isLoading) return;
+    if (!trimmed || !canSend) return;
 
     sendMessage(trimmed, {
       onSuccess: () => setMessage(''),
@@ -74,8 +88,18 @@ function ChatPage() {
     currentUser && currentUser !== 'null' ? currentUser : 'anonymous';
 
   return (
-    <div className="d-flex flex-column vh-100 bg-light">
-      <header className="bg-white border-bottom shadow-sm py-2">
+    <div
+      className="d-flex flex-column bg-light min-h-0"
+      style={{
+        // App nav sits above routes; global CSS also fixes plain `header` — keep chat below fold
+        height: 'calc(100vh - 3.25rem)',
+        maxHeight: 'calc(100vh - 3.25rem)',
+      }}
+    >
+      <header
+        className="bg-white border-bottom shadow-sm py-2 flex-shrink-0"
+        style={{ position: 'relative', height: 'auto', width: '100%' }}
+      >
         <div className="container-fluid d-flex align-items-center justify-content-between px-4">
           <div className="d-flex align-items-center gap-4">
             <div className="d-flex align-items-center">
@@ -118,13 +142,22 @@ function ChatPage() {
         </div>
       </header>
 
-      <div className="d-flex flex-grow-1 overflow-hidden">
-        <aside className="flex-grow-1 bg-white border-end min-w-0" />
+      <div className="d-flex flex-grow-1 overflow-hidden min-h-0 align-items-stretch">
+        <ChatConversationSidebar
+          groupID={DEMO_GROUP_ID}
+          api={api}
+          currentUser={currentUser}
+          selectedConversationID={selectedConversationID}
+          onSelectConversation={setSelectedConversationID}
+        />
 
-        <main className="d-flex flex-column flex-shrink-0 bg-light" style={{ width: 800 }}>
+        <main className="d-flex flex-column flex-grow-1 bg-light min-w-0 min-h-0 mx-auto" style={{ maxWidth: 800 }}>
           <div className="px-4 pt-3 pb-0">
             <p className="text-muted small mb-1">
-              Group {DEMO_GROUP_ID} · conversation #{DEMO_CONVERSATION_ID}
+              Group {DEMO_GROUP_ID}
+              {selectedConversationID != null
+                ? ` · conversation #${selectedConversationID}`
+                : ''}
             </p>
             <h1 className="h5 mb-0">{conversationTitle}</h1>
             <p className="text-muted small mb-0">
@@ -132,22 +165,30 @@ function ChatPage() {
             </p>
           </div>
 
-          <div className="flex-grow-1 d-flex flex-column p-4">
+          <div className="flex-grow-1 d-flex flex-column p-4 min-h-0">
             <div
               className="bg-white rounded-3 shadow-sm flex-grow-1 overflow-auto p-4 mb-3"
-              style={{ minHeight: 300 }}
+              style={{ minHeight: 280 }}
             >
-              {messagesLoading && (
+              {selectedConversationID == null && (
+                <p className="text-muted small">
+                  Choose a conversation on the left or create a new one.
+                </p>
+              )}
+              {selectedConversationID != null && messagesLoading && (
                 <p className="text-muted small">Loading messages…</p>
               )}
-              {messagesError && (
+              {selectedConversationID != null && messagesError && (
                 <p className="text-danger small">
                   Could not load messages ({messagesErr?.message || 'error'}). Are you logged in?
                 </p>
               )}
-              {!messagesLoading && !messagesError && messages.length === 0 && (
-                <p className="text-muted small">No messages yet. Say hi below.</p>
-              )}
+              {selectedConversationID != null &&
+                !messagesLoading &&
+                !messagesError &&
+                messages.length === 0 && (
+                  <p className="text-muted small">No messages yet. Say hi below.</p>
+                )}
               {messages.map((m) => {
                 const mine =
                   m.messageFrom &&
@@ -156,13 +197,13 @@ function ChatPage() {
                 return (
                   <div
                     key={m.messageID}
-                    className={`mb-3 ${mine ? 'text-end' : ''}`}
+                    className={`mb-3 ${mine ? 'text-end' : 'text-start'}`}
                   >
                     <div
                       className={`d-inline-block rounded-3 px-3 py-2 ${
                         mine
-                          ? 'bg-light text-dark border'
-                          : 'bg-primary text-white'
+                          ? 'bg-primary text-white shadow-sm'
+                          : 'bg-body-secondary text-dark border border-secondary'
                       }`}
                     >
                       <small>{m.messageCaption}</small>
@@ -176,27 +217,29 @@ function ChatPage() {
               })}
             </div>
 
-            <form onSubmit={handleSubmit} className="d-flex gap-2" style={{ marginBottom: 40 }}>
+            <form onSubmit={handleSubmit} className="d-flex gap-2 flex-shrink-0" style={{ marginBottom: 24 }}>
               <input
                 type="text"
                 className="form-control rounded-3"
-                placeholder="Type a message..."
+                placeholder={
+                  canSend
+                    ? 'Type a message...'
+                    : 'Select a conversation to send'
+                }
                 value={message}
                 onChange={handleChange}
-                disabled={isLoading}
+                disabled={!canSend}
               />
               <button
                 type="submit"
                 className="btn btn-primary rounded-3 px-4"
-                disabled={isLoading || !message.trim()}
+                disabled={!canSend || !message.trim()}
               >
                 {isLoading ? 'Sending...' : 'Submit'}
               </button>
             </form>
           </div>
         </main>
-
-        <aside className="flex-grow-1 bg-white border-start min-w-0" />
       </div>
     </div>
   );
