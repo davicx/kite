@@ -1,5 +1,6 @@
 /**
  * Chat API — messages + conversations (Kite uses localhost:3003 API).
+ * Message routes are duplicated under application/atlas — toggle in app.js; URLs stay /message, /messages/...
  */
 
 const CHAT_API_BASE = 'http://localhost:3003';
