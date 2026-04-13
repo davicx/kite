@@ -47,36 +47,63 @@ function App() {
   }, []);
 
   return (
-      <div className="App">
+      <div
+        className="App"
+        style={{
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
+      >
         <QueryClientProvider client={queryClient}>
-          <LoginContext.Provider value = {{currentUser, setLoginState}} > 
-
-          <nav className="navBar">
-  <Link className="navLink" to="/login">Login </Link>
-  <Link className="navLink" to="/groups"> Groups </Link>
-  <Link className="navLink" to="/profile"> Profile </Link>
-  <Link className="navLink" to="/posts"> Posts </Link>
-  <Link className="navLink" to="/users"> Users </Link>
-  <Link className="navLink" to="/playground"> Playground </Link>
-  <Link className="navLink" to="/chat"> Chat </Link>
-</nav>  
-            
-            <Routes>      
-              <Route path="/" element={<Home/>} />
-              <Route path="/login" element={<Login/>} />
-              <Route path="/groups" element={<Groups/>} />
-              <Route path="/groups/new" element={<NewGroup/>} />
-              <Route path = "/group/:groupID" element = {<IndividualGroup />} />   
-              <Route path = "/friends/:friendName" element = {<IndividualFriend />} />   
-              <Route path="/profile" element={<Profile/>} />
-              <Route path="/posts" element={<Posts/>} />
-              <Route path="/users" element={<Users/>} />
-              <Route path="/playground" element={<Playground/>} />
-              <Route path="/chat" element={<ChatPage/>} />
-              <Route path="*" element={ <NotFound /> } />       
-            </Routes>
-          </LoginContext.Provider> 
-          <ReactQueryDevtools initialIsOpen={false} position='bottom-right'/>  
+          <div
+            style={{
+              flex: 1,
+              minHeight: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <LoginContext.Provider value={{ currentUser, setLoginState }}>
+              <nav className="navBar" style={{ flexShrink: 0 }}>
+                <Link className="navLink" to="/login">Login </Link>
+                <Link className="navLink" to="/groups"> Groups </Link>
+                <Link className="navLink" to="/profile"> Profile </Link>
+                <Link className="navLink" to="/posts"> Posts </Link>
+                <Link className="navLink" to="/users"> Users </Link>
+                <Link className="navLink" to="/playground"> Playground </Link>
+                <Link className="navLink" to="/chat"> Chat </Link>
+              </nav>
+              <div
+                className="app-route-shell"
+                style={{
+                  flex: 1,
+                  minHeight: 0,
+                  overflowY: 'auto',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Routes>
+                  <Route path="/" element={<Home/>} />
+                  <Route path="/login" element={<Login/>} />
+                  <Route path="/groups" element={<Groups/>} />
+                  <Route path="/groups/new" element={<NewGroup/>} />
+                  <Route path="/group/:groupID" element={<IndividualGroup />} />
+                  <Route path="/friends/:friendName" element={<IndividualFriend />} />
+                  <Route path="/profile" element={<Profile/>} />
+                  <Route path="/posts" element={<Posts/>} />
+                  <Route path="/users" element={<Users/>} />
+                  <Route path="/playground" element={<Playground/>} />
+                  <Route path="/chat" element={<ChatPage/>} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
+            </LoginContext.Provider>
+            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+          </div>
         </QueryClientProvider>
       </div>
 

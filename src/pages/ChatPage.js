@@ -89,11 +89,12 @@ function ChatPage() {
 
   return (
     <div
-      className="d-flex flex-column bg-light min-h-0"
+      className="d-flex flex-column bg-light"
       style={{
-        // App nav sits above routes; global CSS also fixes plain `header` — keep chat below fold
-        height: 'calc(100vh - 3.25rem)',
-        maxHeight: 'calc(100vh - 3.25rem)',
+        // Fill `.app-route-shell` from App.js (flex parent + minHeight:0); do not use 100vh here — App nav sits above routes.
+        flex: 1,
+        minHeight: 0,
+        overflow: 'hidden',
       }}
     >
       <header
@@ -142,7 +143,10 @@ function ChatPage() {
         </div>
       </header>
 
-      <div className="d-flex flex-grow-1 overflow-hidden min-h-0 align-items-stretch">
+      <div
+        className="d-flex flex-grow-1 overflow-hidden align-items-stretch"
+        style={{ flex: 1, minHeight: 0, minWidth: 0 }}
+      >
         <ChatConversationSidebar
           groupID={DEMO_GROUP_ID}
           api={api}
@@ -151,8 +155,11 @@ function ChatPage() {
           onSelectConversation={setSelectedConversationID}
         />
 
-        <main className="d-flex flex-column flex-grow-1 bg-light min-w-0 min-h-0 mx-auto" style={{ maxWidth: 800 }}>
-          <div className="px-4 pt-3 pb-0">
+        <main
+          className="d-flex flex-column flex-grow-1 bg-light mx-auto overflow-hidden"
+          style={{ maxWidth: 800, flex: 1, minHeight: 0, minWidth: 0 }}
+        >
+          <div className="px-4 pt-3 pb-0 flex-shrink-0">
             <p className="text-muted small mb-1">
               Group {DEMO_GROUP_ID}
               {selectedConversationID != null
@@ -165,10 +172,13 @@ function ChatPage() {
             </p>
           </div>
 
-          <div className="flex-grow-1 d-flex flex-column p-4 min-h-0">
+          <div
+            className="flex-grow-1 d-flex flex-column p-4"
+            style={{ flex: 1, minHeight: 0 }}
+          >
             <div
               className="bg-white rounded-3 shadow-sm flex-grow-1 overflow-auto p-4 mb-3"
-              style={{ minHeight: 280 }}
+              style={{ minHeight: 0, flex: 1 }}
             >
               {selectedConversationID == null && (
                 <p className="text-muted small">
