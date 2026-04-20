@@ -32,8 +32,7 @@ function getAPI() {
           console.log("__________________________")
           console.log("INTERCEPTOR 498: We got a 498 so we need a new access token. Will send refresh token ")
           console.log("Status: 498")
-          const refreshURL = "http://localhost:3003/refresh/tokens"
-          const refreshOutcome = functions.refreshToken();
+          functions.refreshToken();
           console.log("Message: We refreshed the access token!")
           console.log("__________________________")
         }
