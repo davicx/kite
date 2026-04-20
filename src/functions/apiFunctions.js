@@ -1,10 +1,6 @@
 import axios from 'axios'
 import functions from "./functions";
 
-
-import axios from 'axios'
-import functions from "./functions";
-
 function getAPI() {
     const axiosRequest = axios.create({
         withCredentials: true
@@ -59,6 +55,8 @@ function getAPI() {
 }
 
 export default { getAPI };
+
+
 /*
 function getAPI() {
     const axiosRequest = axios.create({
