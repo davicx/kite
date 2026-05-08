@@ -18,6 +18,7 @@ import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
 import ChatPage from './pages/ChatPage';
+import DashboardPage from './pages/DashboardPage';
 import NewGroup from './pages/NewGroupPage';
 import Profile from './pages/ProfilePage';
 import Posts from './pages/PostsPage';
@@ -70,11 +71,13 @@ function App() {
               <nav className="navBar" style={{ flexShrink: 0 }}>
                 <Link className="navLink" to="/login">Login </Link>
                 <Link className="navLink" to="/groups"> Groups </Link>
+                <Link className="navLink" to="/chat"> Chat </Link>
+                <Link className="navLink" to="/dashboard"> Dashboard </Link>
                 <Link className="navLink" to="/profile"> Profile </Link>
                 <Link className="navLink" to="/posts"> Posts </Link>
-                <Link className="navLink" to="/users"> Users </Link>
-                <Link className="navLink" to="/playground"> Playground </Link>
-                <Link className="navLink" to="/chat"> Chat </Link>
+                {/* <Link className="navLink" to="/users"> Users </Link> */}
+                {/* <Link className="navLink" to="/playground"> Playground </Link> */}
+
               </nav>
               <div
                 className="app-route-shell"
@@ -98,6 +101,7 @@ function App() {
                   <Route path="/users" element={<Users/>} />
                   <Route path="/playground" element={<Playground/>} />
                   <Route path="/chat" element={<ChatPage/>} />
+                  <Route path="/dashboard" element={<DashboardPage/>} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
