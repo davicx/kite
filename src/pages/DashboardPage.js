@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { AtlasFindingsContext } from '../functions/context/AtlasFindingsContext';
+
 function DashboardPage() {
+  const { findings: findingsFromContext } = useContext(AtlasFindingsContext) || {};
+  const findings = findingsFromContext ?? [];
   return (
     <div
       className="d-flex flex-column bg-light"
@@ -78,33 +82,28 @@ function DashboardPage() {
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
+                  <th scope="col">Severity</th>
+                  <th scope="col">Resource</th>
+                  <th scope="col">Issue</th>
+                  <th scope="col">Recommendation</th>
+                  <th scope="col">Savings</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>John</td>
-                  <td>Doe</td>
-                  <td>@social</td>
-                </tr>
+                {findings.map((finding) => (
+                  <tr key={finding.findingID}>
+                    <td>{finding.severity}</td>
+                    <td>{finding.resourceName}</td>
+                    <td>{finding.title}</td>
+                    <td>{finding.recommendation}</td>
+                    <td>{`$${finding.estimatedMonthlySavings}`}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
+            {findings.length === 0 && (
+              <p className="text-muted small mb-0">Run an EC2 scan from Chat to populate this table.</p>
+            )}
           </div>
         </div>
       </main>

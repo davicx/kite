@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import apiFunctions from '../functions/apiFunctions';
 import { LoginContext } from '../functions/context/LoginContext';
+import { AtlasFindingsContext } from '../functions/context/AtlasFindingsContext';
 import { useSendMessage } from '../hooks/useSendMessage';
 import {
   fetchConversationMessages,
@@ -19,6 +20,7 @@ const POLL_MS = 4000;
 
 function ChatPage() {
   const { currentUser: contextUser } = useContext(LoginContext);
+  const { setFindings } = useContext(AtlasFindingsContext) || {};
   const stored = localStorage.getItem('localStorageCurrentUser');
   const currentUser = contextUser ?? (stored ? JSON.parse(stored) : null);
 
@@ -80,7 +82,16 @@ function ChatPage() {
     if (!trimmed || !canSend) return;
 
     sendMessage(trimmed, {
-      onSuccess: () => setMessage(''),
+      onSuccess: (data) => {
+        if (
+          typeof setFindings === 'function' &&
+          data?.data?.atlas &&
+          Array.isArray(data.data.atlas.findings)
+        ) {
+          setFindings(data.data.atlas.findings);
+        }
+        setMessage('');
+      },
     });
   };
 
