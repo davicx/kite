@@ -85,10 +85,10 @@ function ChatPage() {
       onSuccess: (data) => {
         if (
           typeof setFindings === 'function' &&
-          data?.data?.atlas &&
-          Array.isArray(data.data.atlas.findings)
+          data?.data?.atlasResponse &&
+          Array.isArray(data.data.atlasResponse.findings)
         ) {
-          setFindings(data.data.atlas.findings);
+          setFindings(data.data.atlasResponse.findings);
         }
         setMessage('');
       },
