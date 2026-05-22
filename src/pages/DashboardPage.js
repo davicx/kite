@@ -59,8 +59,7 @@ function DashboardPage() {
 
       <main
         className="d-flex flex-column flex-grow-1 bg-light mx-auto overflow-auto"
-        style={{ maxWidth: 800, flex: 1, minHeight: 0, minWidth: 0, width: '100%' }}
-      >
+        style={{ maxWidth: 800, flex: 1, minHeight: 0, minWidth: 0, width: '100%' }}>
         <div className="px-4 pt-3 pb-0 flex-shrink-0">
           <h1 className="h5 mb-0">Dashboard</h1>
         </div>
