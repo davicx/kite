@@ -125,13 +125,8 @@ function ChatPage() {
               <span className="text-dark fs-5 fw-bold ms-0" style={{ fontFamily: 'monospace' }}>{'}'}</span>
             </div>
             <nav className="d-flex gap-3">
-              <Link to="/login" className="text-decoration-none text-dark">Login</Link>
-              <Link to="/groups" className="text-decoration-none text-dark">Groups</Link>
-              <Link to="/profile" className="text-decoration-none text-dark">Profile</Link>
-              <Link to="/posts" className="text-decoration-none text-dark">Posts</Link>
-              <Link to="/users" className="text-decoration-none text-dark">Users</Link>
-              <Link to="/playground" className="text-decoration-none text-dark">Playground</Link>
               <Link to="/chat" className="text-decoration-none text-dark">Chat</Link>
+              <Link to="/dashboard" className="text-decoration-none text-dark">Dashboard</Link>
             </nav>
           </div>
           <div className="d-flex align-items-center gap-3">
