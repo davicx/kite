@@ -20,7 +20,7 @@ const POLL_MS = 4000;
 
 function ChatPage() {
   const { currentUser: contextUser } = useContext(LoginContext);
-  const { setFindings } = useContext(AtlasFindingsContext) || {};
+  const { setFindings, setNavigatorData } = useContext(AtlasFindingsContext) || {};
   const stored = localStorage.getItem('localStorageCurrentUser');
   const currentUser = contextUser ?? (stored ? JSON.parse(stored) : null);
 
@@ -83,6 +83,13 @@ function ChatPage() {
 
     sendMessage(trimmed, {
       onSuccess: (data) => {
+        const navigatorData =
+          data?.data?.atlasResponse?.navigatorResponse?.data || null;
+
+        if (typeof setNavigatorData === 'function' && navigatorData) {
+          setNavigatorData(navigatorData);
+        }
+
         if (
           typeof setFindings === 'function' &&
           data?.data?.atlasResponse &&

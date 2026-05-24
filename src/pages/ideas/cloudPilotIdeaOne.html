@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudPilot Layout Concept</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Inter, sans-serif;
+      background: #1f1f1f;
+      color: white;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Header */
+    .header {
+      height: 64px;
+      background: #2a2a2a;
+      border-bottom: 1px solid #3b3b3b;
+
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Shared content area */
+    .content {
+      flex: 1;
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: #1f1f1f;
+    }
+
+    .panel {
+      border-radius: 16px;
+      background: #2d2d2d;
+      border: 1px solid #3a3a3a;
+
+      padding: 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 18px;
+      color: #d1d1d1;
+    }
+
+    /* Layout 1 */
+    .helper-panel {
+      width: 260px;
+      min-width: 260px;
+    }
+
+    .chat-panel {
+      flex: 1;
+    }
+
+    /* Layout 2 */
+    .info-panel {
+      width: 340px;
+      min-width: 340px;
+    }
+
+    /* Demo spacing */
+    .section-title {
+      position: absolute;
+      top: 80px;
+      left: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .view {
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .divider {
+      height: 20px;
+      background: #111;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================= -->
+  <!-- VIEW 1 -->
+  <!-- Full Chat -->
+  <!-- ========================= -->
+<!--   <div class="view">
+    <div class="app">
+
+      <div class="header">
+        CloudPilot
+      </div>
+
+      <div class="content">
+
+        <div class="panel helper-panel">
+          Helper Panel
+        </div>
+
+        <div class="panel chat-panel">
+          Chat
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+-->
+  <div class="divider"></div>
+
+  <!-- ========================= -->
+  <!-- VIEW 2 -->
+  <!-- Chat + Info -->
+  <!-- ========================= -->
+
+  <div class="view">
+    <div class="app">
+
+      <div class="header">
+        CloudPilot
+      </div>
+
+      <div class="content">
+
+        <div class="panel helper-panel">
+          Helper Panel
+        </div>
+
+        <div class="panel chat-panel">
+          Chat
+        </div>
+
+        <div class="panel info-panel">
+          Info
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

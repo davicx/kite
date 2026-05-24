@@ -37,6 +37,7 @@ function App() {
   const [currentUser, setLoginState] = useState('null');
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [findings, setFindings] = useState([]);
+  const [navigatorData, setNavigatorData] = useState(null);
 
   useEffect(() => {
      const data = localStorage.getItem("localStorageCurrentUser");
@@ -70,7 +71,7 @@ function App() {
             }}
           >
             <LoginContext.Provider value={{ currentUser, setLoginState }}>
-              <AtlasFindingsContext.Provider value={{ findings, setFindings }}>
+              <AtlasFindingsContext.Provider value={{ findings, setFindings, navigatorData, setNavigatorData }}>
                 <nav className="navBar" style={{ flexShrink: 0 }}>
                   <Link className="navLink" to="/login">Login </Link>
                   <Link className="navLink" to="/groups"> Groups </Link>
