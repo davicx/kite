@@ -146,8 +146,7 @@ function ChatPage() {
             <div className="d-flex align-items-center">
               <div
                 className="rounded-circle overflow-hidden d-flex align-items-center justify-content-center"
-                style={{ width: 36, height: 36, backgroundColor: '#6c5ce7' }}
-              >
+                style={{ width: 36, height: 36, backgroundColor: '#6c5ce7' }}  >
                 <span className="text-white fw-bold small">U</span>
               </div>
               <span className="ms-1 text-muted" style={{ fontSize: 10 }}>▼</span>
