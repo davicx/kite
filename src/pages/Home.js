@@ -11,7 +11,8 @@ function Home() {
         if(currentUserLoggedIn == 'null') {
             navigate("/login");
         } else {
-            navigate("/groups");
+            navigate("/chat");
+            //navigate("/groups");
         }
     }, []);
 

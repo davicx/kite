@@ -57,9 +57,9 @@ function LoginUser() {
             //Step 2B: Set context
             setLoginState(currentUser)
  
-            //Step 2C: Redirect to Groups
+            //Step 2C: Redirect after login
+            navigate("/chat");
             //navigate("/groups");
-            navigate("/profile");
 
           } else {
             console.log("Display error message");
