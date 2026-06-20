@@ -67,6 +67,7 @@ function DashboardPage() {
         </div>
       </header>
 
+
       <main
         className="d-flex flex-column flex-grow-1 bg-light mx-auto overflow-auto"
         style={{ maxWidth: 1100, flex: 1, minHeight: 0, minWidth: 0, width: '100%' }}>
