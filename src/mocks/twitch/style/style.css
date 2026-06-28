@@ -1,0 +1,725 @@
+/*TOC*/
+/*
+Global
+SECTION 1: Main Body, Global Styles
+SECTION 2: App Layout
+
+Header
+SECTION 3A: Header Structure
+SECTION 3B: Header Search
+SECTION 3C: Header Actions
+
+Sidebar
+SECTION 4A: Sidebar Structure
+SECTION 4B: Recommended Categories
+SECTION 4C: Live Channels
+
+Main Content
+SECTION 5A: Section Headers
+SECTION 5B: Stream Grid
+SECTION 5C: Stream Card
+SECTION 5D: Thumbnails
+SECTION 5E: Stream Meta & Tags
+
+Appendix
+APPENDIX A: CSS Defaults
+APPENDIX B: Colors
+*/
+
+
+/****************************************************
+SECTION 1: Main Body, Global Styles
+*****************************************************/
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	height: 100%;
+	background-color: #ffffff;
+}
+
+body {
+	height: 100%;
+	font-family: "Inter", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	color: #0e0e10;
+	background-color: #ffffff;
+	-webkit-font-smoothing: antialiased;
+	cursor: default;
+	user-select: none;
+	pointer-events: none;
+}
+
+svg {
+	flex-shrink: 0;
+}
+
+
+/****************************************************
+SECTION 2: App Layout
+*****************************************************/
+#app {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100%;
+	overflow: hidden;
+}
+
+#body {
+	display: flex;
+	flex: 1;
+	overflow: hidden;
+}
+
+
+/****************************************************
+SECTION 3A: Header Structure
+*****************************************************/
+#header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 50px;
+	padding: 0 16px;
+	background-color: #ffffff;
+	border-bottom: 1px solid #e5e5e5;
+	flex-shrink: 0;
+}
+
+.header-left {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 200px;
+}
+
+.header-nav {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	margin-left: 8px;
+}
+
+.header-nav-link {
+	font-size: 18px;
+	font-weight: 600;
+	color: #0e0e10;
+}
+
+.header-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	max-width: 580px;
+	padding: 0 16px;
+}
+
+.header-right {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 4px;
+	min-width: 280px;
+}
+
+.twitch-logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.header-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #0e0e10;
+	padding: 8px;
+	position: relative;
+}
+
+.header-icon--more {
+	margin-left: 4px;
+}
+
+.header-icon--badge {
+	position: relative;
+}
+
+
+/****************************************************
+SECTION 3B: Header Search
+*****************************************************/
+.search-group {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.search-bar {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	height: 36px;
+	border: 1px solid #ccc;
+	border-right: none;
+	border-radius: 4px 0 0 4px;
+	background-color: #f7f7f8;
+	padding: 0 12px;
+}
+
+.search-placeholder {
+	font-size: 14px;
+	color: #53535f;
+}
+
+.search-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 36px;
+	background-color: #efeff1;
+	border: 1px solid #ccc;
+	border-radius: 0 4px 4px 0;
+	color: #0e0e10;
+	flex-shrink: 0;
+}
+
+
+/****************************************************
+SECTION 3C: Header Actions
+*****************************************************/
+.notif-badge {
+	position: absolute;
+	top: 4px;
+	right: 2px;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 4px;
+	border-radius: 9px;
+	background-color: #eb0400;
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 18px;
+	text-align: center;
+}
+
+.ad-free-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 0 12px;
+	height: 30px;
+	margin: 0 8px;
+	border: 1px solid #0e0e10;
+	border-radius: 4px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #0e0e10;
+	white-space: nowrap;
+}
+
+.user-avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: #9146ff;
+	color: #ffffff;
+	margin-left: 4px;
+}
+
+
+/****************************************************
+SECTION 4A: Sidebar Structure
+*****************************************************/
+#sidebar {
+	width: 300px;
+	min-width: 300px;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #f7f7f8;
+	border-right: 1px solid #e5e5e5;
+	padding: 8px 0 24px 0;
+}
+
+.sidebar-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 8px 16px 12px 16px;
+}
+
+.sidebar-title {
+	font-size: 18px;
+	font-weight: 600;
+	color: #0e0e10;
+}
+
+.sidebar-collapse {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #53535f;
+}
+
+.sidebar-section {
+	padding: 0 8px;
+	margin-bottom: 8px;
+}
+
+.sidebar-section-title {
+	font-size: 13px;
+	font-weight: 600;
+	color: #53535f;
+	padding: 8px 8px 6px 8px;
+}
+
+.show-more {
+	font-size: 13px;
+	font-weight: 600;
+	color: #9146ff;
+	padding: 8px;
+	margin-top: 4px;
+}
+
+
+/****************************************************
+SECTION 4B: Recommended Categories
+*****************************************************/
+.category-item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 6px 8px;
+	border-radius: 4px;
+}
+
+.category-thumb {
+	width: 40px;
+	height: 52px;
+	border-radius: 4px;
+	flex-shrink: 0;
+	background-size: cover;
+	background-position: center;
+}
+
+.category-thumb--chat {
+	background: linear-gradient(160deg, #7b1fa2, #e91e63);
+}
+
+.category-thumb--fortnite {
+	background: linear-gradient(160deg, #1565c0, #42a5f5);
+}
+
+.category-thumb--mobas {
+	background: linear-gradient(160deg, #c62828, #ff7043);
+}
+
+.category-thumb--music {
+	background: linear-gradient(160deg, #4527a0, #7e57c2);
+}
+
+.category-thumb--sports {
+	background: linear-gradient(160deg, #2e7d32, #66bb6a);
+}
+
+.category-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.category-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #0e0e10;
+	line-height: 1.3;
+}
+
+.category-tag {
+	font-size: 13px;
+	color: #53535f;
+	line-height: 1.3;
+}
+
+.live-count {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #53535f;
+	flex-shrink: 0;
+}
+
+.live-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #eb0400;
+	flex-shrink: 0;
+}
+
+
+/****************************************************
+SECTION 4C: Live Channels
+*****************************************************/
+.channel-item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 6px 8px;
+	border-radius: 4px;
+}
+
+.channel-avatar {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	flex-shrink: 0;
+	background-size: cover;
+	background-position: center;
+}
+
+.channel-avatar--jynxzi {
+	background: linear-gradient(135deg, #ff6f00, #ffca28);
+}
+
+.channel-avatar--peanut {
+	background: linear-gradient(135deg, #5d4037, #8d6e63);
+}
+
+.channel-avatar--shroud {
+	background: linear-gradient(135deg, #37474f, #78909c);
+}
+
+.channel-avatar--caseoh {
+	background: linear-gradient(135deg, #1b5e20, #4caf50);
+}
+
+.channel-avatar--emily {
+	background: linear-gradient(135deg, #ad1457, #f48fb1);
+}
+
+.channel-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.channel-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #0e0e10;
+	line-height: 1.3;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.channel-game {
+	font-size: 13px;
+	color: #53535f;
+	line-height: 1.3;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+/****************************************************
+SECTION 5A: Section Headers
+*****************************************************/
+#main {
+	flex: 1;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #ffffff;
+	padding: 16px 24px 32px 24px;
+}
+
+.stream-section {
+	margin-bottom: 32px;
+}
+
+.section-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+}
+
+.section-title {
+	font-size: 20px;
+	font-weight: 600;
+	color: #0e0e10;
+}
+
+.section-title--purple {
+	color: #9146ff;
+}
+
+.section-link {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #9146ff;
+}
+
+.show-more-bottom {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	padding: 16px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #9146ff;
+}
+
+
+/****************************************************
+SECTION 5B: Stream Grid
+*****************************************************/
+.stream-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 16px;
+}
+
+
+/****************************************************
+SECTION 5C: Stream Card
+*****************************************************/
+.stream-card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.stream-thumb {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border-radius: 4px;
+	overflow: hidden;
+	background-color: #18181b;
+}
+
+.live-badge {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	padding: 2px 4px;
+	border-radius: 4px;
+	background-color: #eb0400;
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1.4;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.viewer-badge {
+	position: absolute;
+	bottom: 8px;
+	left: 8px;
+	padding: 2px 4px;
+	border-radius: 4px;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: #ffffff;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+
+/****************************************************
+SECTION 5D: Thumbnails
+*****************************************************/
+.stream-thumb--osrs {
+	background: linear-gradient(160deg, #1b5e20 0%, #33691e 50%, #558b2f 100%);
+}
+
+.stream-thumb--wow {
+	background: linear-gradient(160deg, #0d47a1 0%, #1565c0 50%, #42a5f5 100%);
+}
+
+.stream-thumb--ff14 {
+	background: linear-gradient(160deg, #311b92 0%, #512da8 50%, #7e57c2 100%);
+}
+
+.stream-thumb--albion {
+	background: linear-gradient(160deg, #4e342e 0%, #6d4c41 50%, #8d6e63 100%);
+}
+
+.stream-thumb--hot1 {
+	background: linear-gradient(160deg, #e65100 0%, #ff9800 50%, #ffcc80 100%);
+}
+
+.stream-thumb--hot2 {
+	background: linear-gradient(160deg, #1b5e20 0%, #388e3c 50%, #81c784 100%);
+}
+
+.stream-thumb--hot3 {
+	background: linear-gradient(160deg, #263238 0%, #455a64 50%, #78909c 100%);
+}
+
+.stream-thumb--hot4 {
+	background: linear-gradient(160deg, #b71c1c 0%, #d32f2f 50%, #ef5350 100%);
+}
+
+
+/****************************************************
+SECTION 5E: Stream Meta & Tags
+*****************************************************/
+.stream-meta {
+	display: flex;
+	gap: 10px;
+	padding-top: 10px;
+	align-items: flex-start;
+}
+
+.stream-avatar {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	flex-shrink: 0;
+	background-size: cover;
+	background-position: center;
+}
+
+.stream-avatar--osrs {
+	background: linear-gradient(135deg, #33691e, #689f38);
+}
+
+.stream-avatar--wow {
+	background: linear-gradient(135deg, #1565c0, #42a5f5);
+}
+
+.stream-avatar--ff14 {
+	background: linear-gradient(135deg, #512da8, #9575cd);
+}
+
+.stream-avatar--albion {
+	background: linear-gradient(135deg, #5d4037, #a1887f);
+}
+
+.stream-avatar--hot1 {
+	background: linear-gradient(135deg, #ff6f00, #ffca28);
+}
+
+.stream-avatar--hot2 {
+	background: linear-gradient(135deg, #1b5e20, #4caf50);
+}
+
+.stream-avatar--hot3 {
+	background: linear-gradient(135deg, #37474f, #90a4ae);
+}
+
+.stream-avatar--hot4 {
+	background: linear-gradient(135deg, #5d4037, #8d6e63);
+}
+
+.stream-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.stream-title {
+	font-size: 15px;
+	font-weight: 600;
+	color: #0e0e10;
+	line-height: 1.35;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	margin-bottom: 4px;
+}
+
+.stream-channel {
+	font-size: 13px;
+	color: #53535f;
+	line-height: 1.3;
+	margin-bottom: 2px;
+}
+
+.verified {
+	color: #9146ff;
+	font-size: 12px;
+}
+
+.stream-game {
+	font-size: 13px;
+	color: #53535f;
+	line-height: 1.3;
+	margin-bottom: 6px;
+}
+
+.stream-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.tag {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 10px;
+	background-color: #efeff1;
+	font-size: 12px;
+	font-weight: 600;
+	color: #53535f;
+	line-height: 1.5;
+}
+
+.stream-menu {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #0e0e10;
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+	margin-top: -2px;
+}
+
+
+/****************************************************
+APPENDIX A: CSS Defaults
+*****************************************************/
+/* Non-interactive mock — no hover, focus, or pointer states */
+
+
+/****************************************************
+APPENDIX B: Colors
+*****************************************************/
+/*
+Primary text:       #0e0e10
+Secondary text:     #53535f
+Page bg:            #ffffff
+Sidebar bg:         #f7f7f8
+Search bg:          #f7f7f8
+Search btn bg:      #efeff1
+Twitch purple:      #9146ff
+Live red:           #eb0400
+Notif badge:        #eb0400
+Tag bg:             #efeff1
+Border:             #e5e5e5 / #ccc
+Thumbnail bg:       #18181b
+Viewer badge:       rgba(0, 0, 0, 0.7)
+*/

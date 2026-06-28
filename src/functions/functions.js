@@ -11,6 +11,10 @@ FUNCTIONS A: Login Functions
 	3) Function A3: Get Login Status 
 	4) Function A4: Request new Refresh Token
 
+FUNCTIONS B: Device ID Functions
+	1) Function B1: createDeviceId
+	2) Function B2: getDeviceId
+
 */
 
 //FUNCTIONS A: Login Functions 
@@ -75,4 +79,28 @@ async function refreshToken() {
   
   }
 
-export default { loginUser, logoutUser, loginStatus, refreshToken, sayHello };
+//FUNCTIONS B: Device ID Functions
+//Function B1: Create a new browser device id
+function createDeviceId() {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return 'web-' + crypto.randomUUID();
+  }
+
+  return 'web-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+}
+
+//Function B2: Stable per-browser id for refresh_tokens.device_id (matches iOS LoginAPI)
+function getDeviceId() {
+  const storageKey = 'kite_device_id';
+  let deviceId = localStorage.getItem(storageKey);
+
+  if (!deviceId) {
+    deviceId = createDeviceId();
+    localStorage.setItem(storageKey, deviceId);
+  }
+
+  return deviceId;
+}
+
+export default { loginUser, logoutUser, loginStatus, refreshToken, sayHello, getDeviceId };
+export { getDeviceId };

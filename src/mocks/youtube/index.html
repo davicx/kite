@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>YouTube</title>
+	<link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+<div id="app">
+
+	<!-- HEADER -->
+	<header id="header">
+		<div class="header-left">
+			<span class="header-icon" aria-hidden="true">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+				</svg>
+			</span>
+			<img class="yt-logo" src="../images/YouTubeLogo/yt_logo.png" alt="YouTube">
+		</div>
+
+		<div class="header-center">
+			<div class="search-group">
+				<div class="search-bar">
+					<input class="search-input" type="text" value="sailing south pacific" readonly tabindex="-1">
+					<span class="search-clear" aria-hidden="true">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+						</svg>
+					</span>
+				</div>
+				<span class="search-button" aria-hidden="true">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+					</svg>
+				</span>
+			</div>
+			<span class="mic-button" aria-hidden="true">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+					<path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+				</svg>
+			</span>
+		</div>
+
+		<div class="header-right">
+			<span class="create-button">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M14 13h-3v3h-2v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-6.39l4 1.83V8.56l-4 1.83V6m1-1v3.83L22 7.17V16h-2v-5.17L15 12.83V18H2V5h16z"/>
+				</svg>
+				Create
+			</span>
+			<span class="header-icon" aria-hidden="true">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm9-1H5v-2l1-1v-5c0-2.66 1.75-4.92 4.25-5.65V4c0-1.1.9-2 2-2s2 .9 2 2v.35C15.75 5.08 17.5 7.34 17.5 10v5l1 1v2z"/>
+				</svg>
+			</span>
+			<span class="user-avatar">D</span>
+		</div>
+	</header>
+
+	<div id="body">
+
+		<!-- SIDEBAR -->
+		<aside id="sidebar">
+
+			<div class="sidebar-section">
+				<div class="sidebar-item sidebar-item--active">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+					</svg>
+					<span>Home</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33c-.77-.32-1.2-.5-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.57-5.07-1.28-2.45-4.52-2.45-5.8 0L9 6.94 6.23 3.99C5.46 3.67 4.77 3.5 4.06 3.5 2.38 3.5 1 4.88 1 6.56c0 .71.17 1.4.5 2.17l2.95 5.77c.32.77.5 1.46.5 2.17 0 1.68 1.38 3.06 3.06 3.06.71 0 1.4-.17 2.17-.5l5.77-2.95c.77-.32 1.46-.5 2.17-.5 1.68 0 3.06-1.38 3.06-3.06 0-.71-.17-1.4-.5-2.17l-2.95-5.77z"/>
+					</svg>
+					<span>Shorts</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M10 18v-6l5 3-5 3zm7.69-9.37-1-2.29A2 2 0 0 0 14.89 5H9.11c-.9 0-1.71.51-2.1 1.33l-1 2.29C5.34 9.19 4 11.02 4 13v5c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-5c0-1.98-1.34-3.81-3.31-4.37zM9 11.5l3.5-2.06L16 11.5v5H9v-5z"/>
+					</svg>
+					<span>Subscriptions</span>
+				</div>
+			</div>
+
+			<div class="sidebar-divider"></div>
+
+			<div class="sidebar-section">
+				<div class="sidebar-heading">
+					<span>Subscriptions</span>
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+					</svg>
+				</div>
+				<div class="sidebar-item sidebar-item--channel">
+					<span class="channel-dot channel-dot--green"></span>
+					<span>Educate</span>
+					<span class="new-badge"></span>
+				</div>
+				<div class="sidebar-item sidebar-item--channel">
+					<span class="channel-dot channel-dot--blue"></span>
+					<span>NeetCode</span>
+					<span class="new-badge"></span>
+				</div>
+				<div class="sidebar-item sidebar-item--channel">
+					<span class="channel-dot channel-dot--photo channel-dot--darren"></span>
+					<span>Darren Daily</span>
+				</div>
+				<div class="sidebar-item sidebar-item--channel">
+					<span class="channel-dot channel-dot--photo channel-dot--penguin"></span>
+					<span>Penguinz0</span>
+				</div>
+				<div class="sidebar-item sidebar-item--channel">
+					<span class="channel-dot channel-dot--photo channel-dot--house"></span>
+					<span>Real Estate Investing wit...</span>
+				</div>
+			</div>
+
+			<div class="sidebar-divider"></div>
+
+			<div class="sidebar-section">
+				<div class="sidebar-heading">
+					<span>You</span>
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+					</svg>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+					</svg>
+					<span>Your channel</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+					</svg>
+					<span>History</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM12 6h6v2h-6V6zm0 3h6v2h-6V9zm0 3h6v2h-6v-2z"/>
+					</svg>
+					<span>Playlists</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+					</svg>
+					<span>Watch later</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+					</svg>
+					<span>Liked videos</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M10 10.5h1.5v-1.5H10v1.5zm-3 0H8.5v-1.5H7v1.5zm-3 0h1.5v-1.5H4v1.5zM21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12z"/>
+					</svg>
+					<span>Your videos</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/>
+					</svg>
+					<span>Downloads</span>
+				</div>
+			</div>
+
+			<div class="sidebar-divider"></div>
+
+			<div class="sidebar-section">
+				<div class="sidebar-heading">
+					<span>Explore</span>
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+					</svg>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+					</svg>
+					<span>Shopping</span>
+				</div>
+				<div class="sidebar-item">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+					</svg>
+					<span>Music</span>
+				</div>
+			</div>
+
+		</aside>
+
+		<!-- MAIN -->
+		<main id="main">
+
+			<div class="chip-bar">
+				<div class="chip chip--feed">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+					</svg>
+					Your custom feed
+				</div>
+				<div class="chip chip--active">All</div>
+				<div class="chip">Mansions</div>
+				<div class="chip">Luxury yachts</div>
+				<div class="chip">Test drives</div>
+				<div class="chip">Recently uploaded</div>
+				<div class="chip">Watched</div>
+				<div class="chip">New to you</div>
+				<div class="chip">AI</div>
+				<div class="chip">Sailing</div>
+				<div class="chip">Creative coaching</div>
+				<span class="chip-scroll" aria-hidden="true">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+					</svg>
+				</span>
+			</div>
+
+			<div class="video-grid">
+
+				<!-- Sponsored -->
+				<article class="video-card video-card--ad">
+					<div class="thumbnail thumbnail--ad">
+						<div class="ad-overlay">
+							<span class="ad-title">tech interview prep</span>
+							<span class="ad-subtitle">that actually works</span>
+						</div>
+					</div>
+					<div class="video-meta">
+						<div class="video-info video-info--full">
+							<h3 class="video-title">Tech Interview Prep That Actually Works</h3>
+							<p class="video-stats">Sponsored &bull; Squarespace</p>
+							<div class="ad-buttons">
+								<span class="ad-btn ad-btn--watch">Watch</span>
+								<span class="ad-btn ad-btn--subscribe">Subscribe</span>
+							</div>
+						</div>
+						<span class="video-menu" aria-hidden="true">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+							</svg>
+						</span>
+					</div>
+				</article>
+
+				<!-- Video 2 -->
+				<article class="video-card">
+					<div class="thumbnail thumbnail--interview">
+						<span class="duration">22:31</span>
+					</div>
+					<div class="video-meta">
+						<span class="channel-avatar channel-avatar--hi">HI</span>
+						<div class="video-info">
+							<h3 class="video-title">Videographer films himself getting fired for being late</h3>
+							<p class="video-stats">Hello Interview &bull; 117K views &bull; 4mo ago</p>
+						</div>
+						<span class="video-menu" aria-hidden="true">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+							</svg>
+						</span>
+					</div>
+				</article>
+
+				<!-- Video 3 -->
+				<article class="video-card">
+					<div class="thumbnail thumbnail--keyboard">
+						<span class="duration">10:40:46</span>
+					</div>
+					<div class="video-meta">
+						<span class="channel-avatar channel-avatar--cm">CM</span>
+						<div class="video-info">
+							<h3 class="video-title">CM Club Live Stream</h3>
+							<p class="video-stats">CM Club &bull; 274K views &bull; Streamed 1mo ago</p>
+						</div>
+						<span class="video-menu" aria-hidden="true">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+							</svg>
+						</span>
+					</div>
+				</article>
+
+				<!-- Video 4 -->
+				<article class="video-card">
+					<div class="thumbnail thumbnail--cloud">
+						<span class="duration">1:56:51</span>
+					</div>
+					<div class="video-meta">
+						<span class="channel-avatar channel-avatar--hi">HI</span>
+						<div class="video-info">
+							<h3 class="video-title">Cloud Architect Interview with a Meta Staff Engineer</h3>
+							<p class="video-stats">Hello Interview &bull; 52K views &bull; 1mo ago</p>
+						</div>
+						<span class="video-menu" aria-hidden="true">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+							</svg>
+						</span>
+					</div>
+				</article>
+
+				<!-- Video 5 -->
+				<article class="video-card">
+					<div class="thumbnail thumbnail--sailing">
+						<span class="duration">10:46</span>
+					</div>
+					<div class="video-meta">
+						<span class="channel-avatar channel-avatar--uma">U</span>
+						<div class="video-info">
+							<h3 class="video-title">Sailing the South Pacific — Episode 12</h3>
+							<p class="video-stats">UmaSia &bull; 395K views &bull; 9mo ago</p>
+						</div>
+						<span class="video-menu" aria-hidden="true">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+							</svg>
+						</span>
+					</div>
+				</article>
+
+				<!-- Video 6 -->
+				<article class="video-card">
+					<div class="thumbnail thumbnail--system">
+						<span class="duration">13:03</span>
+					</div>
+					<div class="video-meta">
+						<span class="channel-avatar channel-avatar--sd">SD</span>
+						<div class="video-info">
+							<h3 class="video-title">System Design Roadmap for 2025</h3>
+							<p class="video-stats">System Design Roadmap &bull; 52K views &bull; 1mo ago</p>
+						</div>
+						<span class="video-menu" aria-hidden="true">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+							</svg>
+						</span>
+					</div>
+				</article>
+
+			</div>
+
+		</main>
+
+	</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,752 @@
+/*TOC*/
+/*
+Global
+SECTION 1: Main Body, Global Styles
+SECTION 2: App Layout
+
+Sidebar
+SECTION 3A: Sidebar Structure
+SECTION 3B: Sidebar Brand
+SECTION 3C: Sidebar Navigation
+SECTION 3D: Conversations List
+SECTION 3E: Sidebar Footer
+
+Header
+SECTION 4A: Header Structure
+SECTION 4B: Header Search
+SECTION 4C: Header Actions
+
+Main Content
+SECTION 5A: Chip Bar
+SECTION 5B: Thread Header
+SECTION 5C: Message Panel
+SECTION 5D: Finding Summary
+SECTION 5E: Composer
+SECTION 5F: Quick Actions
+
+Appendix
+APPENDIX A: CSS Defaults
+APPENDIX B: Colors
+*/
+
+
+/****************************************************
+SECTION 1: Main Body, Global Styles
+*****************************************************/
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	height: 100%;
+	background-color: #ffffff;
+}
+
+body {
+	height: 100%;
+	font-family: "Roboto", Arial, sans-serif;
+	font-size: 14px;
+	color: #0f0f0f;
+	background-color: #ffffff;
+	-webkit-font-smoothing: antialiased;
+	cursor: default;
+	user-select: none;
+	pointer-events: none;
+}
+
+svg {
+	flex-shrink: 0;
+}
+
+code {
+	font-family: "Roboto Mono", monospace;
+	font-size: 13px;
+	background-color: rgba(0, 0, 0, 0.06);
+	padding: 1px 6px;
+	border-radius: 4px;
+}
+
+
+/****************************************************
+SECTION 2: App Layout
+*****************************************************/
+#app {
+	display: flex;
+	height: 100vh;
+	width: 100%;
+	overflow: hidden;
+}
+
+#right-pane {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+}
+
+
+/****************************************************
+SECTION 3A: Sidebar Structure
+*****************************************************/
+#sidebar {
+	display: flex;
+	flex-direction: column;
+	width: 260px;
+	min-width: 260px;
+	height: 100vh;
+	background-color: #ffffff;
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 8px 0;
+	flex-shrink: 0;
+}
+
+.sidebar-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 8px 12px 16px 16px;
+}
+
+.sidebar-divider {
+	height: 1px;
+	background-color: rgba(0, 0, 0, 0.1);
+	margin: 8px 12px;
+}
+
+.sidebar-section {
+	padding: 0 8px;
+}
+
+.sidebar-section--grow {
+	flex: 1;
+	overflow: hidden;
+	padding-top: 4px;
+}
+
+.sidebar-section-title {
+	font-size: 12px;
+	font-weight: 500;
+	color: #606060;
+	padding: 8px 12px 6px 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.sidebar-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #606060;
+	padding: 4px;
+}
+
+
+/****************************************************
+SECTION 3B: Sidebar Brand
+*****************************************************/
+.brand-mark {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.brand-brace {
+	font-family: "Roboto Mono", monospace;
+	font-size: 18px;
+	font-weight: 700;
+	color: #0f0f0f;
+	line-height: 1;
+}
+
+.brand-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	background-color: #0f0f0f;
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+
+/****************************************************
+SECTION 3C: Sidebar Navigation
+*****************************************************/
+.sidebar-item {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 0 12px;
+	height: 40px;
+	border-radius: 10px;
+	color: #0f0f0f;
+	font-size: 14px;
+}
+
+.sidebar-item svg {
+	color: #0f0f0f;
+}
+
+.sidebar-item--active {
+	background-color: #f2f2f2;
+	font-weight: 500;
+}
+
+
+/****************************************************
+SECTION 3D: Conversations List
+*****************************************************/
+.sidebar-item--conv {
+	gap: 12px;
+	padding-left: 16px;
+	font-size: 14px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sidebar-item--conv-active {
+	background-color: #f2f2f2;
+	font-weight: 500;
+}
+
+.conv-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.conv-dot--warn {
+	background-color: #e65100;
+}
+
+.conv-dot--ok {
+	background-color: #2e7d32;
+}
+
+.conv-dot--info {
+	background-color: #1565c0;
+}
+
+.conv-dot--muted {
+	background-color: #9e9e9e;
+}
+
+
+/****************************************************
+SECTION 3E: Sidebar Footer
+*****************************************************/
+.sidebar-footer {
+	padding: 8px 12px 12px 12px;
+	margin-top: auto;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.new-conversation {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	height: 36px;
+	margin-bottom: 12px;
+	border-radius: 18px;
+	background-color: #065fd4;
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.user-profile {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.user-avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background-color: #6c5ce7;
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: 600;
+	flex-shrink: 0;
+}
+
+.user-info {
+	min-width: 0;
+}
+
+.user-name {
+	font-size: 14px;
+	font-weight: 500;
+	color: #0f0f0f;
+	line-height: 1.3;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.user-plan {
+	font-size: 12px;
+	color: #606060;
+	line-height: 1.3;
+}
+
+
+/****************************************************
+SECTION 4A: Header Structure
+*****************************************************/
+#header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 56px;
+	padding: 0 24px;
+	background-color: #ffffff;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	flex-shrink: 0;
+}
+
+.header-left {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	min-width: 200px;
+}
+
+.header-title {
+	font-size: 18px;
+	font-weight: 500;
+	color: #0f0f0f;
+	letter-spacing: -0.01em;
+}
+
+.header-nav {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.header-nav-link {
+	font-size: 14px;
+	color: #606060;
+	padding: 6px 0;
+}
+
+.header-nav-link--active {
+	color: #0f0f0f;
+	font-weight: 500;
+	border-bottom: 2px solid #0f0f0f;
+}
+
+.header-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	max-width: 560px;
+}
+
+.header-right {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	min-width: 100px;
+}
+
+.header-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #0f0f0f;
+}
+
+.user-avatar--header {
+	background-color: #a0522d;
+}
+
+
+/****************************************************
+SECTION 4B: Header Search
+*****************************************************/
+.search-group {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	max-width: 480px;
+}
+
+.search-bar {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	height: 40px;
+	border: 1px solid #ccc;
+	border-right: none;
+	border-radius: 40px 0 0 40px;
+	background-color: #ffffff;
+	padding: 0 16px;
+}
+
+.search-placeholder {
+	font-size: 14px;
+	color: #909090;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.search-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 40px;
+	background-color: #f8f8f8;
+	border: 1px solid #ccc;
+	border-radius: 0 40px 40px 0;
+	color: #0f0f0f;
+	flex-shrink: 0;
+}
+
+
+/****************************************************
+SECTION 4C: Header Actions
+*****************************************************/
+/* See header-right in 4A */
+
+
+/****************************************************
+SECTION 5A: Chip Bar
+*****************************************************/
+#main {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	background-color: #f9f9f9;
+}
+
+.chip-bar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 24px;
+	background-color: #ffffff;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	flex-shrink: 0;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 12px;
+	border-radius: 8px;
+	background-color: rgba(0, 0, 0, 0.05);
+	font-size: 14px;
+	color: #0f0f0f;
+	flex-shrink: 0;
+}
+
+.chip--active {
+	background-color: #0f0f0f;
+	color: #ffffff;
+}
+
+
+/****************************************************
+SECTION 5B: Thread Header
+*****************************************************/
+.main-inner {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	max-width: 800px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 24px;
+	min-height: 0;
+}
+
+.thread-header {
+	padding: 20px 0 16px 0;
+	flex-shrink: 0;
+}
+
+.thread-meta {
+	font-size: 12px;
+	color: #606060;
+	margin-bottom: 4px;
+}
+
+.thread-title {
+	font-size: 20px;
+	font-weight: 500;
+	color: #0f0f0f;
+	margin-bottom: 4px;
+	letter-spacing: -0.01em;
+}
+
+.thread-sub {
+	font-size: 12px;
+	color: #606060;
+}
+
+
+/****************************************************
+SECTION 5C: Message Panel
+*****************************************************/
+.message-panel {
+	flex: 1;
+	overflow: hidden;
+	background-color: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	padding: 20px;
+	margin-bottom: 16px;
+	min-height: 0;
+}
+
+.message {
+	margin-bottom: 20px;
+}
+
+.message:last-child {
+	margin-bottom: 0;
+}
+
+.message--user {
+	text-align: right;
+}
+
+.message--assistant {
+	text-align: left;
+}
+
+.message-bubble {
+	display: inline-block;
+	max-width: 92%;
+	padding: 12px 16px;
+	border-radius: 12px;
+	font-size: 14px;
+	line-height: 1.55;
+	text-align: left;
+}
+
+.message--user .message-bubble {
+	background-color: #065fd4;
+	color: #ffffff;
+	border-bottom-right-radius: 4px;
+}
+
+.message--assistant .message-bubble {
+	background-color: #f2f2f2;
+	color: #0f0f0f;
+	border: 1px solid rgba(0, 0, 0, 0.06);
+	border-bottom-left-radius: 4px;
+}
+
+.message-bubble--compact {
+	display: inline-flex;
+	align-items: flex-start;
+	gap: 8px;
+}
+
+.message-bubble--compact svg {
+	color: #2e7d32;
+	margin-top: 2px;
+}
+
+.message-lead {
+	margin-bottom: 12px;
+}
+
+.message-detail {
+	margin-top: 12px;
+	font-size: 13px;
+	color: #606060;
+}
+
+.message-meta {
+	font-size: 12px;
+	color: #909090;
+	margin-top: 6px;
+}
+
+
+/****************************************************
+SECTION 5D: Finding Summary
+*****************************************************/
+.finding-summary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 12px 0;
+}
+
+.finding-stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 72px;
+	padding: 10px 14px;
+	border-radius: 10px;
+	background-color: #ffffff;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.finding-count {
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+.finding-label {
+	font-size: 11px;
+	color: #606060;
+	margin-top: 2px;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+.finding-stat--high .finding-count {
+	color: #c62828;
+}
+
+.finding-stat--medium .finding-count {
+	color: #e65100;
+}
+
+.finding-stat--low .finding-count {
+	color: #1565c0;
+}
+
+.finding-stat--savings .finding-count {
+	color: #2e7d32;
+}
+
+
+/****************************************************
+SECTION 5E: Composer
+*****************************************************/
+.composer {
+	flex-shrink: 0;
+	padding-bottom: 24px;
+}
+
+.composer-bar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	height: 52px;
+	padding: 0 8px 0 16px;
+	background-color: #ffffff;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 26px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.composer-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #606060;
+}
+
+.composer-placeholder {
+	flex: 1;
+	font-size: 15px;
+	color: #909090;
+	min-width: 0;
+}
+
+.composer-send {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background-color: #0f0f0f;
+	color: #ffffff;
+	flex-shrink: 0;
+}
+
+
+/****************************************************
+SECTION 5F: Quick Actions
+*****************************************************/
+.quick-actions {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 14px;
+}
+
+.quick-action {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 14px;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 20px;
+	background-color: #ffffff;
+	font-size: 13px;
+	color: #0f0f0f;
+}
+
+.quick-action svg {
+	color: #606060;
+}
+
+
+/****************************************************
+APPENDIX A: CSS Defaults
+*****************************************************/
+/* Non-interactive mock — no hover, focus, or pointer states */
+
+
+/****************************************************
+APPENDIX B: Colors
+*****************************************************/
+/*
+Primary text:       #0f0f0f
+Secondary text:     #606060
+Muted text:         #909090
+Page bg:            #f9f9f9
+Surface:            #ffffff
+Sidebar active:     #f2f2f2
+Chip active:        #0f0f0f
+Primary action:     #065fd4
+User bubble:        #065fd4
+Brand icon bg:      #0f0f0f
+Avatar purple:      #6c5ce7
+Avatar brown:       #a0522d
+High severity:      #c62828
+Medium severity:    #e65100
+Low severity:       #1565c0
+Savings green:      #2e7d32
+Border:             rgba(0, 0, 0, 0.06–0.12)
+Search border:      #ccc
+*/

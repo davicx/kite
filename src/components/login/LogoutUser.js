@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { LoginContext } from "../../functions/context/LoginContext";
 import functions from "../../functions/functions";
+import { getDeviceId } from "../../functions/functions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -21,7 +22,8 @@ function LogoutUser() {
         //STEP 1: Call Logout API
         axiosRequest.post(logoutURL, {
           userName: userName,
-          refreshToken: "token"
+          refreshToken: "token",
+          device_id: getDeviceId()
         })
         .then(function (response) {
           console.log(response.data)

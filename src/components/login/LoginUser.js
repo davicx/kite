@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation, useNavigate, useResolvedPath } from "react-router-dom";
 //import { loginUser } from '../../functions/functions';
 import { LoginContext } from "../../functions/context/LoginContext";
+import { getDeviceId } from "../../functions/functions";
 import axios from "axios";
 
 const axiosRequest = axios.create({
@@ -38,7 +39,8 @@ function LoginUser() {
     
         axiosRequest.post(loginURL, {
           userName: userInputName,
-          password: userInputPassword
+          password: userInputPassword,
+          device_id: getDeviceId()
         })
         .then(function (response) {
           console.log(response.data);

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Twitch</title>
+	<link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+<div id="app">
+
+	<!-- HEADER -->
+	<header id="header">
+		<div class="header-left">
+			<span class="twitch-logo" aria-hidden="true">
+				<svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+					<path fill="#9146FF" d="M5 0L2 3v34l5 5h6l3-3V8l3-3H5z"/>
+					<path fill="#9146FF" d="M15 5v30h6V5h-6zm10 0v30h6l3-3V8l-3-3h-6z"/>
+					<path fill="#fff" d="M20 10h4v10h-4V10zm6 0h4v10h-4V10z"/>
+				</svg>
+			</span>
+			<nav class="header-nav">
+				<span class="header-nav-link">Following</span>
+				<span class="header-nav-link">Browse</span>
+			</nav>
+			<span class="header-icon header-icon--more" aria-hidden="true">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+					<circle cx="12" cy="5" r="2"/>
+					<circle cx="12" cy="12" r="2"/>
+					<circle cx="12" cy="19" r="2"/>
+				</svg>
+			</span>
+		</div>
+
+		<div class="header-center">
+			<div class="search-group">
+				<div class="search-bar">
+					<span class="search-placeholder">Search</span>
+				</div>
+				<span class="search-button" aria-hidden="true">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+					</svg>
+				</span>
+			</div>
+		</div>
+
+		<div class="header-right">
+			<span class="header-icon header-icon--badge" aria-hidden="true">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+				</svg>
+				<span class="notif-badge">44</span>
+			</span>
+			<span class="header-icon" aria-hidden="true">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+				</svg>
+			</span>
+			<span class="header-icon" aria-hidden="true">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2z"/>
+				</svg>
+			</span>
+			<span class="header-icon" aria-hidden="true">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+				</svg>
+			</span>
+			<span class="ad-free-btn">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+				</svg>
+				Go Ad-Free for Free
+			</span>
+			<span class="user-avatar" aria-hidden="true">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+				</svg>
+			</span>
+		</div>
+	</header>
+
+	<div id="body">
+
+		<!-- SIDEBAR -->
+		<aside id="sidebar">
+
+			<div class="sidebar-header">
+				<span class="sidebar-title">For You</span>
+				<span class="sidebar-collapse" aria-hidden="true">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+					</svg>
+				</span>
+			</div>
+
+			<div class="sidebar-section">
+				<div class="sidebar-section-title">Recommended Categories</div>
+
+				<div class="category-item">
+					<div class="category-thumb category-thumb--chat"></div>
+					<div class="category-info">
+						<div class="category-name">Just Chatting</div>
+						<div class="category-tag">IRL</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>437K</div>
+				</div>
+
+				<div class="category-item">
+					<div class="category-thumb category-thumb--fortnite"></div>
+					<div class="category-info">
+						<div class="category-name">Fortnite</div>
+						<div class="category-tag">Shooter</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>104K</div>
+				</div>
+
+				<div class="category-item">
+					<div class="category-thumb category-thumb--mobas"></div>
+					<div class="category-info">
+						<div class="category-name">MOBAs</div>
+						<div class="category-tag">Strategy</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>81.2K</div>
+				</div>
+
+				<div class="category-item">
+					<div class="category-thumb category-thumb--music"></div>
+					<div class="category-info">
+						<div class="category-name">Music</div>
+						<div class="category-tag">Creative</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>53K</div>
+				</div>
+
+				<div class="category-item">
+					<div class="category-thumb category-thumb--sports"></div>
+					<div class="category-info">
+						<div class="category-name">Sports</div>
+						<div class="category-tag">Sports</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>34.4K</div>
+				</div>
+
+				<div class="show-more">Show More</div>
+			</div>
+
+			<div class="sidebar-section">
+				<div class="sidebar-section-title">Live Channels</div>
+
+				<div class="channel-item">
+					<div class="channel-avatar channel-avatar--jynxzi"></div>
+					<div class="channel-info">
+						<div class="channel-name">Jynxzi</div>
+						<div class="channel-game">Fortnite</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>48K</div>
+				</div>
+
+				<div class="channel-item">
+					<div class="channel-avatar channel-avatar--peanut"></div>
+					<div class="channel-info">
+						<div class="channel-name">TheBurntPeanut</div>
+						<div class="channel-game">ARC Raiders</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>23.4K</div>
+				</div>
+
+				<div class="channel-item">
+					<div class="channel-avatar channel-avatar--shroud"></div>
+					<div class="channel-info">
+						<div class="channel-name">shroud</div>
+						<div class="channel-game">Marvel Rivals</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>26.4K</div>
+				</div>
+
+				<div class="channel-item">
+					<div class="channel-avatar channel-avatar--caseoh"></div>
+					<div class="channel-info">
+						<div class="channel-name">caseoh_</div>
+						<div class="channel-game">Just Chatting</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>52.4K</div>
+				</div>
+
+				<div class="channel-item">
+					<div class="channel-avatar channel-avatar--emily"></div>
+					<div class="channel-info">
+						<div class="channel-name">ExtraEmily</div>
+						<div class="channel-game">Just Chatting</div>
+					</div>
+					<div class="live-count"><span class="live-dot"></span>4.8K</div>
+				</div>
+
+				<div class="show-more">Show More</div>
+			</div>
+
+		</aside>
+
+		<!-- MAIN -->
+		<main id="main">
+
+			<section class="stream-section">
+				<div class="section-header">
+					<h2 class="section-title section-title--purple">MMORPGs</h2>
+					<span class="section-link">Show all <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></span>
+				</div>
+
+				<div class="stream-grid">
+
+					<article class="stream-card">
+						<div class="stream-thumb stream-thumb--osrs">
+							<span class="live-badge">LIVE</span>
+							<span class="viewer-badge">141 viewers</span>
+						</div>
+						<div class="stream-meta">
+							<div class="stream-avatar stream-avatar--osrs"></div>
+							<div class="stream-info">
+								<h3 class="stream-title">[OSRS] HCIM Day 47 — Quest grind &amp; boss prep</h3>
+								<p class="stream-channel">B0aty <span class="verified">✓</span></p>
+								<p class="stream-game">Old School RuneScape</p>
+								<div class="stream-tags">
+									<span class="tag">English</span>
+									<span class="tag">OSRS</span>
+								</div>
+							</div>
+							<span class="stream-menu" aria-hidden="true">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</span>
+						</div>
+					</article>
+
+					<article class="stream-card">
+						<div class="stream-thumb stream-thumb--wow">
+							<span class="live-badge">LIVE</span>
+							<span class="viewer-badge">892 viewers</span>
+						</div>
+						<div class="stream-meta">
+							<div class="stream-avatar stream-avatar--wow"></div>
+							<div class="stream-info">
+								<h3 class="stream-title">Mythic+ push with the guild — keys all night</h3>
+								<p class="stream-channel">Maximum <span class="verified">✓</span></p>
+								<p class="stream-game">World of Warcraft</p>
+								<div class="stream-tags">
+									<span class="tag">English</span>
+									<span class="tag">MMORPG</span>
+								</div>
+							</div>
+							<span class="stream-menu" aria-hidden="true">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</span>
+						</div>
+					</article>
+
+					<article class="stream-card">
+						<div class="stream-thumb stream-thumb--ff14">
+							<span class="live-badge">LIVE</span>
+							<span class="viewer-badge">2.1K viewers</span>
+						</div>
+						<div class="stream-meta">
+							<div class="stream-avatar stream-avatar--ff14"></div>
+							<div class="stream-info">
+								<h3 class="stream-title">Savage prog week 2 — let's clear this floor</h3>
+								<p class="stream-channel">Xeno <span class="verified">✓</span></p>
+								<p class="stream-game">FINAL FANTASY XIV Online</p>
+								<div class="stream-tags">
+									<span class="tag">English</span>
+								</div>
+							</div>
+							<span class="stream-menu" aria-hidden="true">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</span>
+						</div>
+					</article>
+
+					<article class="stream-card">
+						<div class="stream-thumb stream-thumb--albion">
+							<span class="live-badge">LIVE</span>
+							<span class="viewer-badge">356 viewers</span>
+						</div>
+						<div class="stream-meta">
+							<div class="stream-avatar stream-avatar--albion"></div>
+							<div class="stream-info">
+								<h3 class="stream-title">ZvZ tonight — full guild rally in the black zone</h3>
+								<p class="stream-channel">SBI International</p>
+								<p class="stream-game">Albion Online</p>
+								<div class="stream-tags">
+									<span class="tag">English</span>
+									<span class="tag">PvP</span>
+								</div>
+							</div>
+							<span class="stream-menu" aria-hidden="true">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</span>
+						</div>
+					</article>
+
+				</div>
+			</section>
+
+			<section class="stream-section">
+				<div class="section-header">
+					<h2 class="section-title">What's hot</h2>
+					<span class="section-link">Show all <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></span>
+				</div>
+
+				<div class="stream-grid">
+
+					<article class="stream-card">
+						<div class="stream-thumb stream-thumb--hot1">
+							<span class="live-badge">LIVE</span>
+							<span class="viewer-badge">18.2K viewers</span>
+						</div>
+						<div class="stream-meta">
+							<div class="stream-avatar stream-avatar--hot1"></div>
+							<div class="stream-info">
+								<h3 class="stream-title">RANKED GRIND TO IMMORTAL — DAY 12</h3>
+								<p class="stream-channel">Jynxzi <span class="verified">✓</span></p>
+								<p class="stream-game">Fortnite</p>
+								<div class="stream-tags">
+									<span class="tag">English</span>
+								</div>
+							</div>
+							<span class="stream-menu" aria-hidden="true">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</span>
+						</div>
+					</article>
+
+					<article class="stream-card">
+						<div class="stream-thumb stream-thumb--hot2">
+							<span class="live-badge">LIVE</span>
+							<span class="viewer-badge">9.4K viewers</span>
+						</div>
+						<div class="stream-meta">
+							<div class="stream-avatar stream-avatar--hot2"></div>
+							<div class="stream-info">
+								<h3 class="stream-title">reacting to clips + just vibing</h3>
+								<p class="stream-channel">caseoh_ <span class="verified">✓</span></p>
+								<p class="stream-game">Just Chatting</p>
+								<div class="stream-tags">
+									<span class="tag">English</span>
+									<span class="tag">IRL</span>
+								</div>
+							</div>
+							<span class="stream-menu" aria-hidden="true">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</span>
+						</div>
+					</article>
+
+					<article class="stream-card">
+						<div class="stream-thumb stream-thumb--hot3">
+							<span class="live-badge">LIVE</span>
+							<span class="viewer-badge">6.7K viewers</span>
+						</div>
+						<div class="stream-meta">
+							<div class="stream-avatar stream-avatar--hot3"></div>
+							<div class="stream-info">
+								<h3 class="stream-title">Marvel Rivals ranked — support main</h3>
+								<p class="stream-channel">shroud <span class="verified">✓</span></p>
+								<p class="stream-game">Marvel Rivals</p>
+								<div class="stream-tags">
+									<span class="tag">English</span>
+								</div>
+							</div>
+							<span class="stream-menu" aria-hidden="true">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</span>
+						</div>
+					</article>
+
+					<article class="stream-card">
+						<div class="stream-thumb stream-thumb--hot4">
+							<span class="live-badge">LIVE</span>
+							<span class="viewer-badge">3.2K viewers</span>
+						</div>
+						<div class="stream-meta">
+							<div class="stream-avatar stream-avatar--hot4"></div>
+							<div class="stream-info">
+								<h3 class="stream-title">ARC Raiders extraction runs w/ the squad</h3>
+								<p class="stream-channel">TheBurntPeanut <span class="verified">✓</span></p>
+								<p class="stream-game">ARC Raiders</p>
+								<div class="stream-tags">
+									<span class="tag">English</span>
+									<span class="tag">Shooter</span>
+								</div>
+							</div>
+							<span class="stream-menu" aria-hidden="true">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</span>
+						</div>
+					</article>
+
+				</div>
+			</section>
+
+			<div class="show-more-bottom">
+				Show more
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+			</div>
+
+		</main>
+
+	</div>
+
+</div>
+
+</body>
+</html>
