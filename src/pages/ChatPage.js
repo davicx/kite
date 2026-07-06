@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useContext, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,7 +20,7 @@ const POLL_MS = 4000;
 
 function ChatPage() {
   const { currentUser: contextUser } = useContext(LoginContext);
-  const { setFindings, setNavigatorData } = useContext(AtlasFindingsContext) || {};
+  const { setFindings, setNavigatorData, setChatContext } = useContext(AtlasFindingsContext) || {};
   const stored = localStorage.getItem('localStorageCurrentUser');
   const currentUser = contextUser ?? (stored ? JSON.parse(stored) : null);
 
@@ -104,6 +104,18 @@ function ChatPage() {
 
   const displayName =
     currentUser && currentUser !== 'null' ? currentUser : 'anonymous';
+
+  useEffect(() => {
+    if (typeof setChatContext !== 'function') {
+      return;
+    }
+
+    setChatContext({
+      conversationID: selectedConversationID,
+      groupID: DEMO_GROUP_ID,
+      username: displayName,
+    });
+  }, [selectedConversationID, displayName, setChatContext]);
 
   return (
     <div

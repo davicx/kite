@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function NavigatorDataRenderer({ navigatorData }) {
+function NavigatorDataRenderer({ navigatorData, onUndoLatest, undoLoading }) {
+  const [detailTable, setDetailTable] = useState(null);
+
   if (!navigatorData) {
     return null;
   }
 
+  
   const stats = Array.isArray(navigatorData.stats) ? navigatorData.stats : [];
   const tables = Array.isArray(navigatorData.tables) ? navigatorData.tables : [];
   const alerts = Array.isArray(navigatorData.alerts) ? navigatorData.alerts : [];
@@ -29,8 +32,27 @@ function NavigatorDataRenderer({ navigatorData }) {
       ))}
 
       {tables.map((table, index) => (
-        <GenericTable key={table.id || table.title || index} table={table} />
+        <GenericTable
+          key={table.id || table.title || index}
+          table={table}
+          onOpenDetail={setDetailTable}
+          onUndoLatest={onUndoLatest}
+          undoLoading={undoLoading}
+        />
       ))}
+
+      {detailTable && (
+        <div>
+          <button
+            type="button"
+            className="btn btn-link btn-sm px-0 mb-2"
+            onClick={() => setDetailTable(null)}
+          >
+            ← Back
+          </button>
+          <GenericTable table={detailTable} />
+        </div>
+      )}
 
       {actions.length > 0 && <NavigatorActions actions={actions} />}
 
@@ -60,10 +82,31 @@ function NavigatorStats({ stats }) {
   );
 }
 
-function GenericTable({ table }) {
+function GenericTable({ table, onOpenDetail, onUndoLatest, undoLoading }) {
   const columns = Array.isArray(table.columns) ? table.columns : [];
   const rows = Array.isArray(table.rows) ? table.rows : [];
   const hasColumns = columns.length > 0;
+
+  const handleCellClick = (row, column) => {
+    if (!column.clickable || typeof onOpenDetail !== 'function') {
+      return;
+    }
+
+    const detailKey = column.detail_key || column.detailKey;
+    const detail = detailKey ? row[detailKey] : null;
+
+    if (detail && typeof detail === 'object') {
+      onOpenDetail(detail);
+    }
+  };
+
+  const handleUndoClick = (row) => {
+    if (typeof onUndoLatest !== 'function' || !row.undo_enabled) {
+      return;
+    }
+
+    onUndoLatest(row.undo_confirm || 'Undo the most recent change?');
+  };
 
   return (
     <div className="border rounded-3 overflow-hidden">
@@ -87,12 +130,52 @@ function GenericTable({ table }) {
             </thead>
             <tbody>
               {rows.map((row, rowIndex) => (
-                <tr key={row.row_id || rowIndex}>
-                  {columns.map((column) => (
-                    <td key={column.key}>
-                      {formatNavigatorValue(row[column.key], column.type)}
-                    </td>
-                  ))}
+                <tr key={row.row_id || row.history_id || rowIndex}>
+                  {columns.map((column) => {
+                    const isClickable = column.clickable === true;
+                    const isUndoAction =
+                      column.type === 'action' && column.action === 'undo_latest';
+                    const titleKey = column.title_key || column.titleKey;
+                    const titleValue =
+                      titleKey && row[titleKey] ? String(row[titleKey]) : undefined;
+
+                    if (isUndoAction) {
+                      return (
+                        <td key={column.key}>
+                          {row.undo_enabled ? (
+                            <button
+                              type="button"
+                              className="btn btn-outline-primary btn-sm py-0 px-2"
+                              disabled={undoLoading}
+                              onClick={() => handleUndoClick(row)}
+                            >
+                              {undoLoading ? '…' : 'Undo'}
+                            </button>
+                          ) : (
+                            '—'
+                          )}
+                        </td>
+                      );
+                    }
+
+                    const cellValue = formatNavigatorValue(row[column.key], column.type);
+
+                    return (
+                      <td key={column.key} title={titleValue}>
+                        {isClickable ? (
+                          <button
+                            type="button"
+                            className="btn btn-link btn-sm p-0 align-baseline"
+                            onClick={() => handleCellClick(row, column)}
+                          >
+                            {cellValue}
+                          </button>
+                        ) : (
+                          cellValue
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>
@@ -151,6 +234,10 @@ function formatNavigatorValue(value, type) {
         {String(value)}
       </span>
     );
+  }
+
+  if (type === 'action') {
+    return String(value);
   }
 
   return String(value);

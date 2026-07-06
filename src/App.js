@@ -29,7 +29,7 @@ import Playground from './pages/Playground';
 import IndividualFriend from './pages/FriendPage';
 
 import { LoginContext } from './functions/context/LoginContext';
-import { AtlasFindingsContext } from './functions/context/AtlasFindingsContext';
+import { AtlasFindingsContext, DEFAULT_CHAT_CONTEXT } from './functions/context/AtlasFindingsContext';
 
 const queryClient = new QueryClient();
 
@@ -38,6 +38,7 @@ function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [findings, setFindings] = useState([]);
   const [navigatorData, setNavigatorData] = useState(null);
+  const [chatContext, setChatContext] = useState(DEFAULT_CHAT_CONTEXT);
 
   useEffect(() => {
      const data = localStorage.getItem("localStorageCurrentUser");
@@ -71,7 +72,16 @@ function App() {
             }}
           >
             <LoginContext.Provider value={{ currentUser, setLoginState }}>
-              <AtlasFindingsContext.Provider value={{ findings, setFindings, navigatorData, setNavigatorData }}>
+              <AtlasFindingsContext.Provider
+                value={{
+                  findings,
+                  setFindings,
+                  navigatorData,
+                  setNavigatorData,
+                  chatContext,
+                  setChatContext,
+                }}
+              >
                 <nav className="navBar" style={{ flexShrink: 0 }}>
                   <Link className="navLink" to="/login">Login </Link>
                   <Link className="navLink" to="/groups"> Groups </Link>

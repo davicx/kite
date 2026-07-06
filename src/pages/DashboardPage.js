@@ -1,13 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import apiFunctions from '../functions/apiFunctions';
 import { AtlasFindingsContext } from '../functions/context/AtlasFindingsContext';
+import { sendMessageAPI } from '../functions/api/chatAPI';
 import NavigatorDataRenderer from '../components/navigator/NavigatorDataRenderer';
 
+const api = apiFunctions.getAPI();
+
+function extractNavigatorData(response) {
+  return response?.data?.atlasResponse?.navigatorResponse?.data || null;
+}
+
 function DashboardPage() {
-  const { findings: findingsFromContext, navigatorData } = useContext(AtlasFindingsContext) || {};
+  const {
+    findings: findingsFromContext,
+    navigatorData,
+    setNavigatorData,
+    chatContext,
+  } = useContext(AtlasFindingsContext) || {};
   const findings = findingsFromContext ?? [];
+  const [undoLoading, setUndoLoading] = useState(false);
+
   const hasNavigatorData =
     navigatorData &&
     (
@@ -16,6 +31,52 @@ function DashboardPage() {
       (Array.isArray(navigatorData.alerts) && navigatorData.alerts.length > 0) ||
       (Array.isArray(navigatorData.cards) && navigatorData.cards.length > 0)
     );
+
+  const handleUndoLatest = useCallback(
+    async (confirmMessage) => {
+      const conversationID = chatContext?.conversationID;
+      const groupID = chatContext?.groupID ?? 70;
+      const username = chatContext?.username || 'anonymous';
+
+      if (!conversationID || conversationID <= 0) {
+        window.alert('Select a conversation in Chat first.');
+        return;
+      }
+
+      if (!window.confirm(confirmMessage || 'Undo the most recent change?')) {
+        return;
+      }
+
+      setUndoLoading(true);
+
+      try {
+        const payload = {
+          username,
+          groupID,
+          conversationID,
+        };
+
+        await sendMessageAPI({ api, payload: { ...payload, message: 'undo' } });
+
+        const historyResponse = await sendMessageAPI({
+          api,
+          payload: { ...payload, message: 'show my recent history' },
+        });
+        const refreshedNavigator = extractNavigatorData(historyResponse);
+
+        if (typeof setNavigatorData === 'function' && refreshedNavigator) {
+          setNavigatorData(refreshedNavigator);
+        }
+      } catch (error) {
+        window.alert(
+          'Undo failed. Try again from Chat or check that you are logged in.'
+        );
+      } finally {
+        setUndoLoading(false);
+      }
+    },
+    [chatContext, setNavigatorData]
+  );
 
   return (
     <div
@@ -84,7 +145,11 @@ function DashboardPage() {
             style={{ minHeight: 0, flex: 1 }}
           >
             {hasNavigatorData ? (
-              <NavigatorDataRenderer navigatorData={navigatorData} />
+              <NavigatorDataRenderer
+                navigatorData={navigatorData}
+                onUndoLatest={handleUndoLatest}
+                undoLoading={undoLoading}
+              />
             ) : (
               <>
                 <table className="table">
@@ -110,7 +175,9 @@ function DashboardPage() {
                   </tbody>
                 </table>
                 {findings.length === 0 && (
-                  <p className="text-muted small mb-0">Run an EC2 scan from Chat to populate this table.</p>
+                  <p className="text-muted small mb-0">
+                    Run an EC2 scan or type &quot;show my recent history&quot; in Chat to populate this view.
+                  </p>
                 )}
               </>
             )}
