@@ -18,9 +18,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
-    "test": "react-scripts test",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider craco start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -42,6 +42,10 @@
     ]
   },
   "devDependencies": {
-    "react-error-overlay": "^6.0.9"
+    "@craco/craco": "^6.4.5",
+    "autoprefixer": "^9.8.8",
+    "postcss": "^7.0.39",
+    "react-error-overlay": "^6.0.9",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   }
 }

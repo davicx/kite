@@ -18,6 +18,7 @@ import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import Groups from './pages/GroupsPage';
 import ChatPage from './pages/ChatPage';
+import ChatPageTwo from './pages/chatTwo/ChatPageTwo';
 import DashboardPage from './pages/DashboardPage';
 import NewGroup from './pages/NewGroupPage';
 import Profile from './pages/ProfilePage';
@@ -86,6 +87,7 @@ function App() {
                   <Link className="navLink" to="/login">Login </Link>
                   <Link className="navLink" to="/groups"> Groups </Link>
                   <Link className="navLink" to="/chat"> Chat </Link>
+                  <Link className="navLink" to="/chat-two"> Chat Two </Link>
                   <Link className="navLink" to="/dashboard"> Dashboard </Link>
                   <Link className="navLink" to="/profile"> Profile </Link>
                   <Link className="navLink" to="/posts"> Posts </Link>
@@ -115,6 +117,7 @@ function App() {
                     <Route path="/users" element={<Users/>} />
                     <Route path="/playground" element={<Playground/>} />
                     <Route path="/chat" element={<ChatPage/>} />
+                    <Route path="/chat-two" element={<ChatPageTwo/>} />
                     <Route path="/dashboard" element={<DashboardPage/>} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>

@@ -1,0 +1,136 @@
+/*TOC*/
+/*
+Global
+SECTION 1: Main Body, Global Styles 
+SECTION 2: Site Structure
+
+Header and Navigation 
+SECTION 3A: Header and Navigation Bar 
+
+Page Specific 
+SECTION 4A: Login Page
+SECTION 4B: Registration Page
+SECTION 4C: Groups Page
+SECTION 4D: Posts Page
+SECTION 4E: Files Page 
+SECTION 4F: Group Members Page
+SECTION 4G: Chat Two Page
+
+Component Specific
+SECTION 5A: Post
+SECTION 5B: Make Post
+SECTION 5C: Comments 
+SECTION 5D: Make Comment 
+SECTION 5E: Group
+SECTION 5F: Group Info 
+SECTION 5G: Create Group
+SECTION 5G: Add Group User 
+SECTION 5H: File
+SECTION 5I: Folder
+SECTION 5J: Folder BreadCrumb
+SECTION 5K: Notifications
+SECTION 5L: Discussion 
+SECTION 5P: User Profile 
+ 
+Modal Specific 
+SECTION 6A: Modal
+
+Appendix 
+APPENDIX A: CSS defaults  
+APPENDIX B: Warning and Error Text	
+APPENDIX C: Fonts				
+APPENDIX D: Buttons
+APPENDIX E: Old Code 	  
+APPENDIX F: Temporary Code Pulled From Old Site
+APPENDIX G: Color Ideas
+
+Hulu
+#CC2F49
+#C9314B
+#9D3345
+#C0334A
+
+L to R
+#D5314C
+#BD334A
+#BB3349
+
+header
+border-bottom: 1px solid var(--global-nav-border);
+
+*/
+
+@tailwind utilities;
+
+/****************************************************
+SECTION 1: Main Body, Global Styles
+*****************************************************/
+
+
+/****************************************************
+SECTION 2: Site Structure
+*****************************************************/
+
+
+/****************************************************
+SECTION 3A: Header and Navigation Bar
+*****************************************************/
+
+
+/****************************************************
+SECTION 4G: Chat Two Page
+*****************************************************/
+.chat-two {
+	/* Fill .app-route-shell (flex parent) — no 100vh guess, no bottom gap */
+	flex: 1;
+	height: 100%;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+/* Override global `header { position: fixed }` from style.css */
+.chat-two-header {
+	position: relative;
+	top: auto;
+	z-index: 1;
+	flex-shrink: 0;
+	height: 68px;
+	width: 100%;
+	background-color: #CC2F49;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.chat-two-body {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: row;
+}
+
+.chat-two-menu {
+	flex-shrink: 0;
+	width: 180px;
+	background-color: #9D3345;
+}
+
+.chat-two-right {
+	flex: 1;
+	min-width: 0;
+	background-color: #E8EEF4;
+}
+
+/****************************************************
+APPENDIX A: CSS defaults  
+*****************************************************/
+
+/****************************************************
+APPENDIX G: Color Ideas
+*****************************************************/
+/* Hulu
+#CC2F49
+#C9314B
+#9D3345
+#C0334A
+*/
