@@ -1,4 +1,11 @@
-import React, { useState, useContext, useMemo, useEffect } from 'react';
+import React, {
+  useState,
+  useContext,
+  useMemo,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,21 +18,54 @@ import {
   fetchConversationMessages,
   fetchConversationsForGroup,
 } from '../functions/api/chatAPI';
+import { formatYouSelectedMessage } from '../functions/findings/selectedFinding';
 import ChatConversationSidebar from '../components/chat/ChatConversationSidebar';
+import ChatNavigatorPreview from '../components/chat/ChatNavigatorPreview';
+import ChatInstructionsPanel from '../components/chat/ChatInstructionsPanel';
 
 const api = apiFunctions.getAPI();
 
 const DEMO_GROUP_ID = 70;
 const POLL_MS = 4000;
 
+function isInstructionsPayload(atlasResponse) {
+  return (
+    atlasResponse &&
+    atlasResponse.type === 'instructions' &&
+    Array.isArray(atlasResponse.steps) &&
+    atlasResponse.steps.length > 0
+  );
+}
+
 function ChatPage() {
   const { currentUser: contextUser } = useContext(LoginContext);
-  const { setFindings, setNavigatorData, setChatContext } = useContext(AtlasFindingsContext) || {};
+  const {
+    setFindings,
+    setNavigatorData,
+    setChatContext,
+    selectedFinding,
+    setSelectedFinding,
+    navigatorData,
+    findings,
+    instructionsData,
+    setInstructionsData,
+  } = useContext(AtlasFindingsContext) || {};
   const stored = localStorage.getItem('localStorageCurrentUser');
   const currentUser = contextUser ?? (stored ? JSON.parse(stored) : null);
 
   const [selectedConversationID, setSelectedConversationID] = useState(null);
   const [message, setMessage] = useState('');
+  // Local copy so Chat still renders if context setter is missing/stale
+  const [localInstructions, setLocalInstructions] = useState(null);
+  // Spike: which message should show the navigator preview under it (latest CloudPilot reply after a scan/action)
+  const [previewMessageID, setPreviewMessageID] = useState(null);
+  const [showPreviewFallback, setShowPreviewFallback] = useState(false);
+
+  const walkthrough = isInstructionsPayload(localInstructions)
+    ? localInstructions
+    : isInstructionsPayload(instructionsData)
+      ? instructionsData
+      : null;
 
   const { data: groupConversationsRes } = useQuery(
     ['group-conversations', DEMO_GROUP_ID],
@@ -43,9 +83,76 @@ function ChatPage() {
       ? `Thread ${selectedConversationID}`
       : 'Select a conversation');
 
+  const handleMessageResponse = useCallback(
+    (data) => {
+      const atlasResponse = data?.data?.atlasResponse || null;
+      const navigatorDataFromResponse =
+        atlasResponse?.navigatorResponse?.data || null;
+
+      if (typeof setNavigatorData === 'function' && navigatorDataFromResponse) {
+        setNavigatorData(navigatorDataFromResponse);
+      }
+
+      if (
+        typeof setFindings === 'function' &&
+        atlasResponse &&
+        Array.isArray(atlasResponse.findings)
+      ) {
+        setFindings(atlasResponse.findings);
+      }
+
+      const cloudPilotMessage =
+        data?.data?.CloudPilotResponseMessage ||
+        data?.data?.cloudPilotResponseMessage ||
+        null;
+      const cloudPilotMessageID =
+        cloudPilotMessage?.messageID || cloudPilotMessage?.message_id || null;
+
+      const hasPreview =
+        Boolean(navigatorDataFromResponse) ||
+        (Array.isArray(atlasResponse?.findings) &&
+          atlasResponse.findings.length > 0);
+
+      if (hasPreview && cloudPilotMessageID) {
+        setPreviewMessageID(cloudPilotMessageID);
+        setShowPreviewFallback(false);
+      } else if (hasPreview) {
+        setPreviewMessageID(null);
+        setShowPreviewFallback(true);
+      } else {
+        setPreviewMessageID(null);
+        setShowPreviewFallback(false);
+      }
+
+      if (isInstructionsPayload(atlasResponse)) {
+        setLocalInstructions(atlasResponse);
+        if (typeof setInstructionsData === 'function') {
+          setInstructionsData(atlasResponse);
+        }
+      } else {
+        setLocalInstructions(null);
+        if (typeof setInstructionsData === 'function') {
+          setInstructionsData(null);
+        }
+      }
+
+      // Helpful while wiring Mode 1 — remove once stable
+      console.log('[Chat] message response atlasResponse', {
+        type: atlasResponse?.type || null,
+        stepCount: atlasResponse?.stepCount || 0,
+        keys: atlasResponse ? Object.keys(atlasResponse) : [],
+      });
+
+      setMessage('');
+    },
+    [setFindings, setNavigatorData, setInstructionsData]
+  );
+
   const { sendMessage, isLoading } = useSendMessage(api, currentUser, {
     groupID: DEMO_GROUP_ID,
     conversationID: selectedConversationID ?? 0,
+    selectedFinding: selectedFinding || null,
+    onResponse: handleMessageResponse,
   });
 
   const canSend =
@@ -76,30 +183,29 @@ function ChatPage() {
 
   const handleChange = (e) => setMessage(e.target.value);
 
+  const selectedConversationIDRef = useRef(selectedConversationID);
+  selectedConversationIDRef.current = selectedConversationID;
+
+  const handleSelectConversation = useCallback(
+    (conversationID) => {
+      if (Number(selectedConversationIDRef.current) !== Number(conversationID)) {
+        setPreviewMessageID(null);
+        setShowPreviewFallback(false);
+        setLocalInstructions(null);
+        if (typeof setInstructionsData === 'function') {
+          setInstructionsData(null);
+        }
+      }
+      setSelectedConversationID(conversationID);
+    },
+    [setInstructionsData]
+  );
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const trimmed = message.trim();
     if (!trimmed || !canSend) return;
-
-    sendMessage(trimmed, {
-      onSuccess: (data) => {
-        const navigatorData =
-          data?.data?.atlasResponse?.navigatorResponse?.data || null;
-
-        if (typeof setNavigatorData === 'function' && navigatorData) {
-          setNavigatorData(navigatorData);
-        }
-
-        if (
-          typeof setFindings === 'function' &&
-          data?.data?.atlasResponse &&
-          Array.isArray(data.data.atlasResponse.findings)
-        ) {
-          setFindings(data.data.atlasResponse.findings);
-        }
-        setMessage('');
-      },
-    });
+    sendMessage(trimmed);
   };
 
   const displayName =
@@ -158,7 +264,8 @@ function ChatPage() {
             <div className="d-flex align-items-center">
               <div
                 className="rounded-circle overflow-hidden d-flex align-items-center justify-content-center"
-                style={{ width: 36, height: 36, backgroundColor: '#6c5ce7' }}  >
+                style={{ width: 36, height: 36, backgroundColor: '#6c5ce7' }}
+              >
                 <span className="text-white fw-bold small">U</span>
               </div>
               <span className="ms-1 text-muted" style={{ fontSize: 10 }}>▼</span>
@@ -176,7 +283,7 @@ function ChatPage() {
           api={api}
           currentUser={currentUser}
           selectedConversationID={selectedConversationID}
-          onSelectConversation={setSelectedConversationID}
+          onSelectConversation={handleSelectConversation}
         />
 
         <main
@@ -194,6 +301,30 @@ function ChatPage() {
             <p className="text-muted small mb-0">
               Signed in as <strong>{displayName}</strong> · refreshes every {POLL_MS / 1000}s
             </p>
+            {selectedFinding && (
+              <div
+                className="alert alert-info border border-info d-flex align-items-start justify-content-between gap-2 mt-2 mb-0 py-2"
+                role="status"
+              >
+                <div className="small">
+                  <div className="fw-semibold">
+                    {formatYouSelectedMessage(selectedFinding)}
+                  </div>
+                  <div className="text-muted">
+                    Ask about this finding below (e.g. “why is this bad?”)
+                  </div>
+                </div>
+                {typeof setSelectedFinding === 'function' && (
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-outline-secondary"
+                    onClick={() => setSelectedFinding(null)}
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           <div
@@ -220,7 +351,9 @@ function ChatPage() {
               {selectedConversationID != null &&
                 !messagesLoading &&
                 !messagesError &&
-                messages.length === 0 && (
+                messages.length === 0 &&
+                !selectedFinding &&
+                !walkthrough && (
                   <p className="text-muted small">No messages yet. Say hi below.</p>
                 )}
               {messages.map((m) => {
@@ -228,6 +361,11 @@ function ChatPage() {
                   m.messageFrom &&
                   displayName &&
                   m.messageFrom === displayName;
+                const showPreviewUnderThis =
+                  !mine &&
+                  previewMessageID != null &&
+                  Number(m.messageID) === Number(previewMessageID);
+
                 return (
                   <div
                     key={m.messageID}
@@ -246,12 +384,50 @@ function ChatPage() {
                       {mine ? 'You' : m.messageFrom} · {m.messageTime || ''}{' '}
                       {m.timeMessage ? `(${m.timeMessage})` : ''}
                     </div>
+                    {showPreviewUnderThis && (
+                      <ChatNavigatorPreview
+                        navigatorData={navigatorData}
+                        findings={findings}
+                      />
+                    )}
                   </div>
                 );
               })}
+              {showPreviewFallback &&
+                selectedConversationID != null &&
+                (navigatorData || (Array.isArray(findings) && findings.length > 0)) && (
+                  <div className="mb-3 text-start">
+                    <ChatNavigatorPreview
+                      navigatorData={navigatorData}
+                      findings={findings}
+                    />
+                  </div>
+                )}
+              {selectedConversationID != null && walkthrough && (
+                <div className="mb-3 text-start w-100">
+                  <ChatInstructionsPanel instructions={walkthrough} />
+                </div>
+              )}
+              {selectedFinding && selectedConversationID != null && (
+                <div className="mb-3 text-start">
+                  <div
+                    className="d-inline-block rounded-3 px-3 py-2 text-dark border"
+                    style={{ backgroundColor: '#cff4fc', borderColor: '#9eeaf9' }}
+                  >
+                    <small>{formatYouSelectedMessage(selectedFinding)}</small>
+                  </div>
+                  <div className="small text-muted mt-1">
+                    Dashboard selection · not saved
+                  </div>
+                </div>
+              )}
             </div>
 
-            <form onSubmit={handleSubmit} className="d-flex gap-2 flex-shrink-0" style={{ marginBottom: 24 }}>
+            <form
+              onSubmit={handleSubmit}
+              className="d-flex gap-2 flex-shrink-0"
+              style={{ marginBottom: 24 }}
+            >
               <input
                 type="text"
                 className="form-control rounded-3"

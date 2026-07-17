@@ -20,6 +20,8 @@ import Groups from './pages/GroupsPage';
 import ChatPage from './pages/ChatPage';
 import ChatPageTwo from './pages/chatTwo/ChatPageTwo';
 import DashboardPage from './pages/DashboardPage';
+import TodoPage from './pages/TodoPage';
+import SystemDesignPage from './pages/SystemDesignPage/SystemDesignPage';
 import NewGroup from './pages/NewGroupPage';
 import Profile from './pages/ProfilePage';
 import Posts from './pages/PostsPage';
@@ -39,6 +41,8 @@ function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [findings, setFindings] = useState([]);
   const [navigatorData, setNavigatorData] = useState(null);
+  const [instructionsData, setInstructionsData] = useState(null);
+  const [selectedFinding, setSelectedFinding] = useState(null);
   const [chatContext, setChatContext] = useState(DEFAULT_CHAT_CONTEXT);
 
   useEffect(() => {
@@ -79,6 +83,10 @@ function App() {
                   setFindings,
                   navigatorData,
                   setNavigatorData,
+                  instructionsData,
+                  setInstructionsData,
+                  selectedFinding,
+                  setSelectedFinding,
                   chatContext,
                   setChatContext,
                 }}
@@ -89,6 +97,8 @@ function App() {
                   <Link className="navLink" to="/chat"> Chat </Link>
                   <Link className="navLink" to="/chat-two"> Chat Two </Link>
                   <Link className="navLink" to="/dashboard"> Dashboard </Link>
+                  <Link className="navLink" to="/todos"> To Dos </Link>
+                  <Link className="navLink" to="/system-design"> System Design </Link>
                   <Link className="navLink" to="/profile"> Profile </Link>
                   <Link className="navLink" to="/posts"> Posts </Link>
                   {/* <Link className="navLink" to="/users"> Users </Link> */}
@@ -119,6 +129,8 @@ function App() {
                     <Route path="/chat" element={<ChatPage/>} />
                     <Route path="/chat-two" element={<ChatPageTwo/>} />
                     <Route path="/dashboard" element={<DashboardPage/>} />
+                    <Route path="/todos" element={<TodoPage/>} />
+                    <Route path="/system-design" element={<SystemDesignPage/>} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </div>

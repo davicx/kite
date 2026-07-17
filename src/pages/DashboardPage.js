@@ -5,7 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import apiFunctions from '../functions/apiFunctions';
 import { AtlasFindingsContext } from '../functions/context/AtlasFindingsContext';
 import { sendMessageAPI } from '../functions/api/chatAPI';
+import { toSelectedFinding } from '../functions/findings/selectedFinding';
 import NavigatorDataRenderer from '../components/navigator/NavigatorDataRenderer';
+import ChatInstructionsPanel from '../components/chat/ChatInstructionsPanel';
 
 const api = apiFunctions.getAPI();
 
@@ -18,10 +20,19 @@ function DashboardPage() {
     findings: findingsFromContext,
     navigatorData,
     setNavigatorData,
+    instructionsData,
+    selectedFinding,
+    setSelectedFinding,
     chatContext,
   } = useContext(AtlasFindingsContext) || {};
   const findings = findingsFromContext ?? [];
   const [undoLoading, setUndoLoading] = useState(false);
+
+  const hasInstructions =
+    instructionsData &&
+    instructionsData.type === 'instructions' &&
+    Array.isArray(instructionsData.steps) &&
+    instructionsData.steps.length > 0;
 
   const hasNavigatorData =
     navigatorData &&
@@ -31,6 +42,37 @@ function DashboardPage() {
       (Array.isArray(navigatorData.alerts) && navigatorData.alerts.length > 0) ||
       (Array.isArray(navigatorData.cards) && navigatorData.cards.length > 0)
     );
+
+  const handleSelectFinding = useCallback(
+    (source) => {
+      if (typeof setSelectedFinding !== 'function') {
+        return;
+      }
+
+      let next = toSelectedFinding(source);
+
+      // Prefer full finding fields when Navigator row was clicked
+      if (next && Array.isArray(findings) && findings.length > 0) {
+        const match = findings.find((finding) => {
+          if (next.instanceId && finding.resourceID === next.instanceId) {
+            if (!next.title || finding.title === next.title) {
+              return true;
+            }
+          }
+          return false;
+        });
+
+        if (match) {
+          next = toSelectedFinding(match) || next;
+        }
+      }
+
+      if (next) {
+        setSelectedFinding(next);
+      }
+    },
+    [setSelectedFinding, findings]
+  );
 
   const handleUndoLatest = useCallback(
     async (confirmMessage) => {
@@ -78,6 +120,9 @@ function DashboardPage() {
     [chatContext, setNavigatorData]
   );
 
+  const selectedInstanceId = selectedFinding?.instanceId || null;
+  const selectedTitle = selectedFinding?.title || null;
+
   return (
     <div
       className="d-flex flex-column bg-light"
@@ -106,6 +151,7 @@ function DashboardPage() {
             <nav className="d-flex gap-3">
               <Link to="/chat" className="text-decoration-none text-dark">Chat</Link>
               <Link to="/dashboard" className="text-decoration-none text-dark">Dashboard</Link>
+              <Link to="/todos" className="text-decoration-none text-dark">To Dos</Link>
             </nav>
           </div>
           <div className="d-flex align-items-center gap-3">
@@ -144,15 +190,26 @@ function DashboardPage() {
             className="bg-white rounded-3 shadow-sm flex-grow-1 overflow-auto p-4 mb-3"
             style={{ minHeight: 0, flex: 1 }}
           >
+            {hasInstructions && (
+              <div className="mb-4">
+                <ChatInstructionsPanel instructions={instructionsData} />
+              </div>
+            )}
+
             {hasNavigatorData ? (
               <NavigatorDataRenderer
                 navigatorData={navigatorData}
                 onUndoLatest={handleUndoLatest}
                 undoLoading={undoLoading}
+                onSelectFinding={handleSelectFinding}
+                selectedFinding={selectedFinding}
               />
             ) : (
               <>
-                <table className="table">
+                <p className="text-muted small mb-2">
+                  Click a finding row to ask about it in Chat.
+                </p>
+                <table className="table table-hover">
                   <thead>
                     <tr>
                       <th scope="col">Severity</th>
@@ -163,20 +220,34 @@ function DashboardPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {findings.map((finding) => (
-                      <tr key={finding.findingID}>
-                        <td>{finding.severity}</td>
-                        <td>{finding.resourceName}</td>
-                        <td>{finding.title}</td>
-                        <td>{finding.recommendation}</td>
-                        <td>{`$${finding.estimatedMonthlySavings}`}</td>
-                      </tr>
-                    ))}
+                    {findings.map((finding) => {
+                      const isSelected =
+                        selectedInstanceId &&
+                        finding.resourceID === selectedInstanceId &&
+                        (!selectedTitle || finding.title === selectedTitle);
+
+                      return (
+                        <tr
+                          key={finding.findingID}
+                          role="button"
+                          className={isSelected ? 'table-primary' : undefined}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => handleSelectFinding(finding)}
+                        >
+                          <td>{finding.severity}</td>
+                          <td>{finding.resourceName}</td>
+                          <td>{finding.title}</td>
+                          <td>{finding.recommendation}</td>
+                          <td>{`$${finding.estimatedMonthlySavings}`}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
-                {findings.length === 0 && (
+                {findings.length === 0 && !hasInstructions && (
                   <p className="text-muted small mb-0">
                     Run an EC2 scan or type &quot;show my recent history&quot; in Chat to populate this view.
+                    Choose Instructions (1) in Chat to show a walkthrough here.
                   </p>
                 )}
               </>

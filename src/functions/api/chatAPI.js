@@ -23,6 +23,11 @@ export async function sendMessageAPI({ api, payload }) {
     conversationID: Number(payload.conversationID ?? 0),
   };
 
+  // Optional — when UI (or a test) sends a slim selected finding for Situation
+  if (payload.selectedFinding) {
+    body.selectedFinding = payload.selectedFinding;
+  }
+
   const { data } = await api.post(url, body);
   return data;
 }
