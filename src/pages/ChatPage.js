@@ -22,6 +22,7 @@ import { formatYouSelectedMessage } from '../functions/findings/selectedFinding'
 import ChatConversationSidebar from '../components/chat/ChatConversationSidebar';
 import ChatNavigatorPreview from '../components/chat/ChatNavigatorPreview';
 import ChatInstructionsPanel from '../components/chat/ChatInstructionsPanel';
+import ChatPullRequestPanel from '../components/chat/ChatPullRequestPanel';
 
 const api = apiFunctions.getAPI();
 
@@ -34,6 +35,15 @@ function isInstructionsPayload(atlasResponse) {
     atlasResponse.type === 'instructions' &&
     Array.isArray(atlasResponse.steps) &&
     atlasResponse.steps.length > 0
+  );
+}
+
+function isPullRequestPayload(atlasResponse) {
+  return (
+    atlasResponse &&
+    atlasResponse.type === 'pr' &&
+    typeof atlasResponse.pullRequestUrl === 'string' &&
+    atlasResponse.pullRequestUrl.length > 0
   );
 }
 
@@ -57,6 +67,7 @@ function ChatPage() {
   const [message, setMessage] = useState('');
   // Local copy so Chat still renders if context setter is missing/stale
   const [localInstructions, setLocalInstructions] = useState(null);
+  const [localPullRequest, setLocalPullRequest] = useState(null);
   // Spike: which message should show the navigator preview under it (latest CloudPilot reply after a scan/action)
   const [previewMessageID, setPreviewMessageID] = useState(null);
   const [showPreviewFallback, setShowPreviewFallback] = useState(false);
@@ -136,10 +147,17 @@ function ChatPage() {
         }
       }
 
+      if (isPullRequestPayload(atlasResponse)) {
+        setLocalPullRequest(atlasResponse);
+      } else {
+        setLocalPullRequest(null);
+      }
+
       // Helpful while wiring Mode 1 — remove once stable
       console.log('[Chat] message response atlasResponse', {
         type: atlasResponse?.type || null,
         stepCount: atlasResponse?.stepCount || 0,
+        pullRequestUrl: atlasResponse?.pullRequestUrl || null,
         keys: atlasResponse ? Object.keys(atlasResponse) : [],
       });
 
@@ -406,6 +424,11 @@ function ChatPage() {
               {selectedConversationID != null && walkthrough && (
                 <div className="mb-3 text-start w-100">
                   <ChatInstructionsPanel instructions={walkthrough} />
+                </div>
+              )}
+              {selectedConversationID != null && localPullRequest && (
+                <div className="mb-3 text-start w-100">
+                  <ChatPullRequestPanel pullRequest={localPullRequest} />
                 </div>
               )}
               {selectedFinding && selectedConversationID != null && (
