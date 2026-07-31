@@ -1,6 +1,7 @@
 import axios from 'axios'
 import functions from "./functions";
 
+
 function getAPI() {
     const axiosRequest = axios.create({
         withCredentials: true
