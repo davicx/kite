@@ -23,6 +23,7 @@ import ChatConversationSidebar from '../components/chat/ChatConversationSidebar'
 import ChatNavigatorPreview from '../components/chat/ChatNavigatorPreview';
 import ChatInstructionsPanel from '../components/chat/ChatInstructionsPanel';
 import ChatPullRequestPanel from '../components/chat/ChatPullRequestPanel';
+import ChatMessage from '../components/chat/ChatMessage';
 
 const api = apiFunctions.getAPI();
 
@@ -353,6 +354,7 @@ function ChatPage() {
               className="bg-white rounded-3 shadow-sm flex-grow-1 overflow-auto p-4 mb-3"
               style={{ minHeight: 0, flex: 1 }}
             >
+              <div className="chat-thread">
               {selectedConversationID == null && (
                 <p className="text-muted small">
                   Choose a conversation on the left or create a new one.
@@ -385,23 +387,11 @@ function ChatPage() {
                   Number(m.messageID) === Number(previewMessageID);
 
                 return (
-                  <div
-                    key={m.messageID}
-                    className={`mb-3 ${mine ? 'text-end' : 'text-start'}`}
-                  >
-                    <div
-                      className={`d-inline-block rounded-3 px-3 py-2 ${
-                        mine
-                          ? 'bg-primary text-white shadow-sm'
-                          : 'bg-body-secondary text-dark border border-secondary'
-                      }`}
-                    >
-                      <small>{m.messageCaption}</small>
-                    </div>
-                    <div className="small text-muted mt-1">
-                      {mine ? 'You' : m.messageFrom} · {m.messageTime || ''}{' '}
-                      {m.timeMessage ? `(${m.timeMessage})` : ''}
-                    </div>
+                  <div key={m.messageID}>
+                    <ChatMessage
+                      message={m}
+                      isMine={Boolean(mine)}
+                    />
                     {showPreviewUnderThis && (
                       <ChatNavigatorPreview
                         navigatorData={navigatorData}
@@ -444,6 +434,7 @@ function ChatPage() {
                   </div>
                 </div>
               )}
+              </div>
             </div>
 
             <form

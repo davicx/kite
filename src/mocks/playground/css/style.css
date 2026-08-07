@@ -1,0 +1,54 @@
+:root {
+	/* MASTER COLORS */
+	--color-background: #ffffff;
+	--color-border: #dddddd;
+
+	/* MASTER FONTS */
+	--font-main: Arial, sans-serif;
+	--font-main-bold: Arial, sans-serif;
+
+	/* COMPONENT MEANINGS */
+	--card-background: var(--color-background);
+	--card-border: var(--color-border);
+
+	--card-normal-font: var(--font-main);
+	--card-bold-font: var(--font-main-bold);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: var(--font-main);
+	padding: 40px;
+	background: #f5f5f5;
+}
+
+.card {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 140px;
+	height: 40px;
+	padding: 0 8px;
+
+	background: var(--card-background);
+	border: 1px solid var(--card-border);
+}
+
+.card-normal {
+	font-family: var(--card-normal-font);
+	font-weight: 400;
+	font-size: 12px;
+}
+
+.card-bold {
+	font-family: var(--card-bold-font);
+	font-weight: 700;
+	font-size: 12px;
+}

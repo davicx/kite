@@ -8,6 +8,7 @@ import { sendMessageAPI } from '../functions/api/chatAPI';
 import { toSelectedFinding } from '../functions/findings/selectedFinding';
 import NavigatorDataRenderer from '../components/navigator/NavigatorDataRenderer';
 import ChatInstructionsPanel from '../components/chat/ChatInstructionsPanel';
+import AiUsageCard from '../components/dashboard/AiUsageCard';
 
 const api = apiFunctions.getAPI();
 
@@ -190,6 +191,8 @@ function DashboardPage() {
             className="bg-white rounded-3 shadow-sm flex-grow-1 overflow-auto p-4 mb-3"
             style={{ minHeight: 0, flex: 1 }}
           >
+            <AiUsageCard />
+
             {hasInstructions && (
               <div className="mb-4">
                 <ChatInstructionsPanel instructions={instructionsData} />
