@@ -20,6 +20,7 @@ import {
 } from '../functions/api/chatAPI';
 import { formatYouSelectedMessage } from '../functions/findings/selectedFinding';
 import ChatConversationSidebar from '../components/chat/ChatConversationSidebar';
+import ChatCloudPilotSidebar from '../components/chat/ChatCloudPilotSidebar';
 import ChatNavigatorPreview from '../components/chat/ChatNavigatorPreview';
 import ChatInstructionsPanel from '../components/chat/ChatInstructionsPanel';
 import ChatPullRequestPanel from '../components/chat/ChatPullRequestPanel';
@@ -29,6 +30,9 @@ const api = apiFunctions.getAPI();
 
 const DEMO_GROUP_ID = 70;
 const POLL_MS = 4000;
+
+// true = new Bootstrap Cloud Pilot sidebar; false = original ChatConversationSidebar
+const USE_CLOUD_PILOT_SIDEBAR = false;
 
 function isInstructionsPayload(atlasResponse) {
   return (
@@ -297,13 +301,23 @@ function ChatPage() {
         className="d-flex flex-grow-1 overflow-hidden align-items-stretch"
         style={{ flex: 1, minHeight: 0, minWidth: 0 }}
       >
-        <ChatConversationSidebar
-          groupID={DEMO_GROUP_ID}
-          api={api}
-          currentUser={currentUser}
-          selectedConversationID={selectedConversationID}
-          onSelectConversation={handleSelectConversation}
-        />
+        {USE_CLOUD_PILOT_SIDEBAR ? (
+          <ChatCloudPilotSidebar
+            groupID={DEMO_GROUP_ID}
+            api={api}
+            currentUser={currentUser}
+            selectedConversationID={selectedConversationID}
+            onSelectConversation={handleSelectConversation}
+          />
+        ) : (
+          <ChatConversationSidebar
+            groupID={DEMO_GROUP_ID}
+            api={api}
+            currentUser={currentUser}
+            selectedConversationID={selectedConversationID}
+            onSelectConversation={handleSelectConversation}
+          />
+        )}
 
         <main
           className="d-flex flex-column flex-grow-1 bg-light mx-auto overflow-hidden"
