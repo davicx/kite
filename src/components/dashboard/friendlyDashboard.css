@@ -1,0 +1,176 @@
+/* Dedicated styles for the new friendly Dashboard tables.
+   Do not apply to Navigator / original admin tables. */
+
+.friendly-section {
+  margin-bottom: 2.25rem;
+}
+
+.friendly-section__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #111;
+  margin: 0 0 0.85rem;
+}
+
+.friendly-section__group-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0 0 0.35rem;
+}
+
+.friendly-summary__headline {
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: #111;
+  margin: 0 0 0.4rem;
+}
+
+.friendly-summary__detail {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #4b5563;
+  margin: 0 0 0.75rem;
+  max-width: 42rem;
+}
+
+.friendly-action {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #111;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.friendly-action:hover,
+.friendly-action:focus {
+  color: #111;
+  text-decoration: underline;
+}
+
+.friendly-original-toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.friendly-original-toggle:hover {
+  color: #374151;
+  text-decoration: underline;
+}
+
+.friendly-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin: 0 0 1.5rem;
+}
+
+.friendly-table thead th {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #9ca3af;
+  text-align: left;
+  padding: 0.7rem 1.1rem 0.55rem 0;
+  border: 0;
+  border-bottom: 1px solid #ececec;
+  white-space: nowrap;
+}
+
+.friendly-table thead th:last-child {
+  text-align: right;
+  padding-right: 0;
+}
+
+.friendly-table tbody td {
+  padding: 1.05rem 1.1rem 1.05rem 0;
+  border: 0;
+  border-bottom: 1px solid #ececec;
+  vertical-align: top;
+  font-size: 0.95rem;
+  color: #374151;
+  background: #fff;
+}
+
+.friendly-table tbody td:last-child {
+  text-align: right;
+  padding-right: 0;
+  white-space: nowrap;
+}
+
+.friendly-table tbody tr:hover td {
+  background: #fff;
+}
+
+.friendly-table__finding {
+  font-weight: 700;
+  color: #111;
+}
+
+.friendly-table__resource {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.86rem;
+  color: #4b5563;
+  background: none;
+  padding: 0;
+}
+
+.friendly-table__meaning {
+  color: #4b5563;
+  line-height: 1.45;
+}
+
+.friendly-table__priority {
+  white-space: nowrap;
+  color: #374151;
+}
+
+.friendly-bucket-detail {
+  padding: 1rem 0 1.5rem;
+  border-bottom: 1px solid #ececec;
+  margin-bottom: 1.25rem;
+}
+
+.friendly-bucket-detail h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 0.65rem;
+}
+
+.friendly-bucket-detail p {
+  margin: 0 0 0.25rem;
+  font-size: 0.92rem;
+  color: #374151;
+}
+
+.friendly-empty p {
+  color: #4b5563;
+  margin: 0 0 0.85rem;
+}
+
+.friendly-empty__button {
+  appearance: none;
+  border: 0;
+  background: #111;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.friendly-empty__button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

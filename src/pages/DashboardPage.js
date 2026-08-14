@@ -1,39 +1,102 @@
-import React, { useContext, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState, useCallback, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import apiFunctions from '../functions/apiFunctions';
+import { LoginContext } from '../functions/context/LoginContext';
 import { AtlasFindingsContext } from '../functions/context/AtlasFindingsContext';
 import { sendMessageAPI } from '../functions/api/chatAPI';
 import { toSelectedFinding } from '../functions/findings/selectedFinding';
+import {
+  groupFriendlyS3FindingsByBucket,
+  collectS3FindingsFromScan,
+  buildS3EnvironmentSummary,
+  buildFriendlyS3Buckets,
+} from '../functions/findings/s3FindingDisplay';
+import {
+  collectEC2FindingsFromScan,
+  groupFriendlyEC2FindingsByInstance,
+  buildFriendlyEC2Instances,
+} from '../functions/findings/ec2FindingDisplay';
+import {
+  getCurrentScanKind,
+  getNavigatorScanMeta,
+  buildScanCompleteCopy,
+} from '../functions/findings/currentScan';
 import NavigatorDataRenderer from '../components/navigator/NavigatorDataRenderer';
-import ChatInstructionsPanel from '../components/chat/ChatInstructionsPanel';
-import AiUsageCard from '../components/dashboard/AiUsageCard';
+import FriendlyFindingsTable from '../components/dashboard/FriendlyFindingsTable';
+import S3EnvironmentSummary from '../components/dashboard/S3EnvironmentSummary';
+import S3ScanEmptyState from '../components/dashboard/S3ScanEmptyState';
+import FriendlyS3BucketsTable from '../components/dashboard/FriendlyS3BucketsTable';
+import FriendlyEC2InstancesTable from '../components/dashboard/FriendlyEC2InstancesTable';
+import FriendlyScanComplete from '../components/dashboard/FriendlyScanComplete';
+import '../components/dashboard/friendlyDashboard.css';
 
 const api = apiFunctions.getAPI();
+const DEMO_GROUP_ID = 70;
 
 function extractNavigatorData(response) {
   return response?.data?.atlasResponse?.navigatorResponse?.data || null;
 }
 
 function DashboardPage() {
+  const { currentUser: contextUser } = useContext(LoginContext);
   const {
     findings: findingsFromContext,
+    setFindings,
     navigatorData,
     setNavigatorData,
-    instructionsData,
     selectedFinding,
     setSelectedFinding,
     chatContext,
   } = useContext(AtlasFindingsContext) || {};
   const findings = findingsFromContext ?? [];
   const [undoLoading, setUndoLoading] = useState(false);
-
-  const hasInstructions =
-    instructionsData &&
-    instructionsData.type === 'instructions' &&
-    Array.isArray(instructionsData.steps) &&
-    instructionsData.steps.length > 0;
+  const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
+  const [scanLoading, setScanLoading] = useState(false);
+  const navigate = useNavigate();
+  const s3Findings = useMemo(
+    () => collectS3FindingsFromScan({ findings, navigatorData }),
+    [findings, navigatorData]
+  );
+  const s3FindingGroups = useMemo(
+    () => groupFriendlyS3FindingsByBucket(s3Findings),
+    [s3Findings]
+  );
+  const s3Summary = useMemo(
+    () => buildS3EnvironmentSummary(s3FindingGroups),
+    [s3FindingGroups]
+  );
+  const s3Buckets = useMemo(
+    () => buildFriendlyS3Buckets({ navigatorData, findingGroups: s3FindingGroups }),
+    [navigatorData, s3FindingGroups]
+  );
+  const hasS3Findings = s3FindingGroups.length > 0;
+  const ec2Findings = useMemo(
+    () => collectEC2FindingsFromScan({ findings, navigatorData }),
+    [findings, navigatorData]
+  );
+  const ec2FindingGroups = useMemo(
+    () => groupFriendlyEC2FindingsByInstance(ec2Findings),
+    [ec2Findings]
+  );
+  const hasEC2Findings = ec2FindingGroups.length > 0;
+  const ec2Instances = useMemo(
+    () => buildFriendlyEC2Instances({ navigatorData, findingGroups: ec2FindingGroups }),
+    [navigatorData, ec2FindingGroups]
+  );
+  const currentScanKind = useMemo(
+    () => getCurrentScanKind(navigatorData),
+    [navigatorData]
+  );
+  const scanMeta = useMemo(
+    () => getNavigatorScanMeta(navigatorData),
+    [navigatorData]
+  );
+  const scanCompleteCopy = useMemo(
+    () => buildScanCompleteCopy(currentScanKind, scanMeta),
+    [currentScanKind, scanMeta]
+  );
 
   const hasNavigatorData =
     navigatorData &&
@@ -74,6 +137,67 @@ function DashboardPage() {
     },
     [setSelectedFinding, findings]
   );
+
+  const handleFriendlyFindingAction = useCallback(
+    (finding) => {
+      handleSelectFinding({
+        ...finding,
+        title: finding.friendlyTitle || finding.title,
+        service: finding.service || 's3',
+      });
+      navigate('/chat');
+    },
+    [handleSelectFinding, navigate]
+  );
+
+  const handleReviewFindings = useCallback(() => {
+    const findingsSection = document.getElementById('s3-findings');
+    if (findingsSection && typeof findingsSection.scrollIntoView === 'function') {
+      findingsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
+
+  const handleScanAws = useCallback(async () => {
+    const stored = localStorage.getItem('localStorageCurrentUser');
+    const storedUser = stored ? JSON.parse(stored) : null;
+    const username =
+      (contextUser && contextUser !== 'null' ? contextUser : null) ||
+      chatContext?.username ||
+      storedUser ||
+      'anonymous';
+    const groupID = chatContext?.groupID || DEMO_GROUP_ID;
+    const conversationID = chatContext?.conversationID || 0;
+
+    setScanLoading(true);
+    try {
+      const response = await sendMessageAPI({
+        api,
+        payload: {
+          username,
+          groupID,
+          conversationID,
+          message: 'scan s3',
+        },
+      });
+      const atlasResponse = response?.data?.atlasResponse || null;
+      const navigatorFromScan = atlasResponse?.navigatorResponse?.data || null;
+
+      if (typeof setNavigatorData === 'function' && navigatorFromScan) {
+        setNavigatorData(navigatorFromScan);
+      }
+      if (typeof setFindings === 'function') {
+        if (Array.isArray(atlasResponse?.findings)) {
+          setFindings(atlasResponse.findings);
+        } else if (navigatorFromScan) {
+          setFindings([]);
+        }
+      }
+    } catch (error) {
+      window.alert('S3 scan failed. Check that you are logged in and the API is running.');
+    } finally {
+      setScanLoading(false);
+    }
+  }, [chatContext, contextUser, setFindings, setNavigatorData]);
 
   const handleUndoLatest = useCallback(
     async (confirmMessage) => {
@@ -120,9 +244,6 @@ function DashboardPage() {
     },
     [chatContext, setNavigatorData]
   );
-
-  const selectedInstanceId = selectedFinding?.instanceId || null;
-  const selectedTitle = selectedFinding?.title || null;
 
   return (
     <div
@@ -191,15 +312,67 @@ function DashboardPage() {
             className="bg-white rounded-3 shadow-sm flex-grow-1 overflow-auto p-4 mb-3"
             style={{ minHeight: 0, flex: 1 }}
           >
-            <AiUsageCard />
-
-            {hasInstructions && (
-              <div className="mb-4">
-                <ChatInstructionsPanel instructions={instructionsData} />
-              </div>
+            {!currentScanKind && (
+              <S3ScanEmptyState onScan={handleScanAws} scanning={scanLoading} />
             )}
 
-            {hasNavigatorData ? (
+            {currentScanKind === 's3' && (
+              <>
+                <FriendlyS3BucketsTable buckets={s3Buckets} />
+                {hasS3Findings ? (
+                  <>
+                    <S3EnvironmentSummary
+                      summary={s3Summary}
+                      onReviewFindings={handleReviewFindings}
+                    />
+                    <FriendlyFindingsTable
+                      groups={s3FindingGroups}
+                      onFindingAction={handleFriendlyFindingAction}
+                      sectionId="s3-findings"
+                      title="Findings"
+                    />
+                  </>
+                ) : (
+                  <FriendlyScanComplete
+                    title={scanCompleteCopy.title}
+                    headline={scanCompleteCopy.headline}
+                    detail={scanCompleteCopy.detail}
+                  />
+                )}
+              </>
+            )}
+
+            {currentScanKind === 'ec2' && (
+              <>
+                <FriendlyEC2InstancesTable instances={ec2Instances} />
+                {hasEC2Findings ? (
+                  <FriendlyFindingsTable
+                    groups={ec2FindingGroups}
+                    onFindingAction={handleFriendlyFindingAction}
+                    sectionId="ec2-findings"
+                    title="Findings"
+                  />
+                ) : (
+                  <FriendlyScanComplete
+                    title={scanCompleteCopy.title}
+                    headline={scanCompleteCopy.headline}
+                    detail={scanCompleteCopy.detail}
+                  />
+                )}
+              </>
+            )}
+
+            {hasNavigatorData && (
+              <button
+                type="button"
+                className="friendly-original-toggle"
+                onClick={() => setShowTechnicalDetails((current) => !current)}
+              >
+                {showTechnicalDetails ? 'Hide original tables' : 'View original tables'}
+              </button>
+            )}
+
+            {showTechnicalDetails && hasNavigatorData && (
               <NavigatorDataRenderer
                 navigatorData={navigatorData}
                 onUndoLatest={handleUndoLatest}
@@ -207,53 +380,6 @@ function DashboardPage() {
                 onSelectFinding={handleSelectFinding}
                 selectedFinding={selectedFinding}
               />
-            ) : (
-              <>
-                <p className="text-muted small mb-2">
-                  Click a finding row to ask about it in Chat.
-                </p>
-                <table className="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">Severity</th>
-                      <th scope="col">Resource</th>
-                      <th scope="col">Issue</th>
-                      <th scope="col">Recommendation</th>
-                      <th scope="col">Savings</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {findings.map((finding) => {
-                      const isSelected =
-                        selectedInstanceId &&
-                        finding.resourceID === selectedInstanceId &&
-                        (!selectedTitle || finding.title === selectedTitle);
-
-                      return (
-                        <tr
-                          key={finding.findingID}
-                          role="button"
-                          className={isSelected ? 'table-primary' : undefined}
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => handleSelectFinding(finding)}
-                        >
-                          <td>{finding.severity}</td>
-                          <td>{finding.resourceName}</td>
-                          <td>{finding.title}</td>
-                          <td>{finding.recommendation}</td>
-                          <td>{`$${finding.estimatedMonthlySavings}`}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-                {findings.length === 0 && !hasInstructions && (
-                  <p className="text-muted small mb-0">
-                    Run an EC2 scan or type &quot;show my recent history&quot; in Chat to populate this view.
-                    Choose Instructions (1) in Chat to show a walkthrough here.
-                  </p>
-                )}
-              </>
             )}
           </div>
         </div>

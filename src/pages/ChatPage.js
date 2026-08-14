@@ -19,6 +19,7 @@ import {
   fetchConversationsForGroup,
 } from '../functions/api/chatAPI';
 import { formatYouSelectedMessage } from '../functions/findings/selectedFinding';
+import { isS3SelectedFinding } from '../functions/findings/s3FindingDisplay';
 import ChatConversationSidebar from '../components/chat/ChatConversationSidebar';
 import ChatCloudPilotSidebar from '../components/chat/ChatCloudPilotSidebar';
 import ChatNavigatorPreview from '../components/chat/ChatNavigatorPreview';
@@ -101,7 +102,7 @@ function ChatPage() {
 
   const handleMessageResponse = useCallback(
     (data) => {
-      const atlasResponse = data?.data?.atlasResponse || null;
+      const atlasResponse = data?.data?.atlasResponse || data?.atlasResponse || null;
       const navigatorDataFromResponse =
         atlasResponse?.navigatorResponse?.data || null;
 
@@ -109,12 +110,12 @@ function ChatPage() {
         setNavigatorData(navigatorDataFromResponse);
       }
 
-      if (
-        typeof setFindings === 'function' &&
-        atlasResponse &&
-        Array.isArray(atlasResponse.findings)
-      ) {
-        setFindings(atlasResponse.findings);
+      if (typeof setFindings === 'function') {
+        if (Array.isArray(atlasResponse?.findings)) {
+          setFindings(atlasResponse.findings);
+        } else if (navigatorDataFromResponse) {
+          setFindings([]);
+        }
       }
 
       const cloudPilotMessage =
@@ -344,7 +345,9 @@ function ChatPage() {
                     {formatYouSelectedMessage(selectedFinding)}
                   </div>
                   <div className="text-muted">
-                    Ask about this finding below (e.g. “why is this bad?”)
+                    {isS3SelectedFinding(selectedFinding)
+                      ? 'Fixing this finding is coming soon. CloudPilot found the issue, but automatic remediation for this S3 finding isn\'t available yet.'
+                      : 'Ask about this finding below (e.g. “why is this bad?”)'}
                   </div>
                 </div>
                 {typeof setSelectedFinding === 'function' && (

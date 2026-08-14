@@ -1,5 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  collectS3FindingsFromScan,
+  getS3FindingDisplay,
+} from '../../functions/findings/s3FindingDisplay';
+import {
+  collectEC2FindingsFromScan,
+  getEC2FindingDisplay,
+} from '../../functions/findings/ec2FindingDisplay';
+import {
+  getCurrentScanKind,
+  getNavigatorScanMeta,
+  buildScanCompleteCopy,
+} from '../../functions/findings/currentScan';
 
 /**
  * Compact Navigator preview under the latest CloudPilot reply.
@@ -12,6 +25,15 @@ function ChatNavigatorPreview({ navigatorData, findings }) {
   const cards = Array.isArray(navigatorData?.cards) ? navigatorData.cards : [];
   const stats = Array.isArray(navigatorData?.stats) ? navigatorData.stats : [];
   const findingsList = Array.isArray(findings) ? findings : [];
+  const s3Findings = collectS3FindingsFromScan({ findings, navigatorData });
+  const ec2Findings = collectEC2FindingsFromScan({ findings, navigatorData });
+  const friendlyPreviewFindings = s3Findings.length > 0 ? s3Findings : ec2Findings;
+  const getFriendlyDisplay = s3Findings.length > 0 ? getS3FindingDisplay : getEC2FindingDisplay;
+  const currentScanKind = getCurrentScanKind(navigatorData);
+  const scanCompleteCopy = buildScanCompleteCopy(
+    currentScanKind,
+    getNavigatorScanMeta(navigatorData)
+  );
 
   const previewTable = tables[0] || null;
   const previewColumns = Array.isArray(previewTable?.columns)
@@ -21,7 +43,11 @@ function ChatNavigatorPreview({ navigatorData, findings }) {
     ? previewTable.rows.slice(0, 4)
     : [];
   const previewCard = cards[0] || null;
+  const hasFriendlyPreview = friendlyPreviewFindings.length > 0;
+  const hasCompletedScanWithNoFindings = Boolean(currentScanKind) && !hasFriendlyPreview;
   const hasAnything =
+    hasFriendlyPreview ||
+    hasCompletedScanWithNoFindings ||
     previewTable ||
     previewCard ||
     stats.length > 0 ||
@@ -51,7 +77,34 @@ function ChatNavigatorPreview({ navigatorData, findings }) {
           <span className="small text-primary">Open Dashboard →</span>
         </div>
 
-        {previewCard && (
+        {hasFriendlyPreview && (
+          <div className="px-3 py-2 border-bottom">
+            <div className="small fw-semibold mb-1">
+              {friendlyPreviewFindings.length} finding{friendlyPreviewFindings.length === 1 ? '' : 's'} worth looking at
+            </div>
+            <ul className="small text-muted mb-0 ps-3">
+              {friendlyPreviewFindings.slice(0, 3).map((finding, index) => {
+                const display = getFriendlyDisplay(finding);
+                const resourceName = finding.resourceName || finding.resource_name || finding.name || '';
+                return (
+                  <li key={finding.findingID || finding.row_id || index}>
+                    {display.title}
+                    {resourceName ? ` · ${resourceName}` : ''}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+
+        {hasCompletedScanWithNoFindings && (
+          <div className="px-3 py-2 border-bottom">
+            <div className="small fw-semibold mb-1">{scanCompleteCopy.headline}</div>
+            <div className="small text-muted mb-0">{scanCompleteCopy.detail}</div>
+          </div>
+        )}
+
+        {previewCard && !hasFriendlyPreview && !hasCompletedScanWithNoFindings && (
           <div className="px-3 py-2 border-bottom">
             {previewCard.title && (
               <div className="small fw-semibold mb-1">{previewCard.title}</div>
@@ -62,7 +115,7 @@ function ChatNavigatorPreview({ navigatorData, findings }) {
           </div>
         )}
 
-        {!previewCard && findingsList.length > 0 && (
+        {!previewCard && !hasFriendlyPreview && findingsList.length > 0 && (
           <div className="px-3 py-2 border-bottom">
             <div className="small fw-semibold mb-1">
               {findingsList.length} recommendation{findingsList.length === 1 ? '' : 's'}
@@ -78,7 +131,7 @@ function ChatNavigatorPreview({ navigatorData, findings }) {
           </div>
         )}
 
-        {stats.length > 0 && (
+        {stats.length > 0 && !hasFriendlyPreview && !hasCompletedScanWithNoFindings && (
           <div className="d-flex flex-wrap gap-2 px-3 py-2 border-bottom">
             {stats.slice(0, 4).map((stat) => (
               <div
@@ -95,7 +148,7 @@ function ChatNavigatorPreview({ navigatorData, findings }) {
           </div>
         )}
 
-        {previewTable && previewColumns.length > 0 && (
+        {previewTable && previewColumns.length > 0 && !hasFriendlyPreview && !hasCompletedScanWithNoFindings && (
           <div className="table-responsive">
             <table className="table table-sm mb-0 align-middle bg-white">
               <thead>

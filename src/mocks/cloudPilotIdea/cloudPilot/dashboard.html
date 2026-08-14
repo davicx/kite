@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CloudPilot Dashboard</title>
+
+    <link rel="stylesheet" href="style/style.css" />
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- ============================= -->
+    <!-- SIDEBAR -->
+    <!-- ============================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img class="logo-icon" src="images/cloud.png" alt="CloudPilot">
+            <div class="logo-text">CloudPilot</div>
+        </div>
+
+
+        <nav class="nav">
+
+            <a class="nav-item" href="index.html">
+                <span class="nav-icon">⌂</span>
+                Home
+            </a>
+
+            <a class="nav-item active" href="dashboard.html">
+                <span class="nav-icon">▤</span>
+                Dashboard
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">♢</span>
+                Notifications
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">▤</span>
+                Friends
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">⌁</span>
+                To Do
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">▣</span>
+                New Chat
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">□</span>
+                History
+            </a>
+
+
+            <div class="nav-divider"></div>
+
+            <div class="nav-label">
+                PROJECTS
+            </div>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">♢</span>
+                Kite
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">▤</span>
+                API
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">▥</span>
+                Atlas
+            </a>
+
+
+            <div class="nav-label nav-label-space">
+                RECENT
+            </div>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">♙</span>
+                S3 Scan
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">⌘</span>
+                Pause EC2
+            </a>
+
+            <a class="nav-item" href="#">
+                <span class="nav-icon">▣</span>
+                AI Spend
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="engine-card">
+                <div class="engine-title">
+                    Engine Status
+                </div>
+
+                <div class="status-row">
+                    <span class="status-dot green"></span>
+                    Healthy
+                </div>
+            </div>
+
+            <div class="version">
+                Version 1.0.0
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ============================= -->
+    <!-- MAIN -->
+    <!-- ============================= -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <button class="menu-button">
+                ☰
+            </button>
+
+            <div class="header-search">
+                <input type="search" placeholder="Search...">
+            </div>
+
+            <div class="topbar-right">
+
+                <button class="notification-button">
+                    ♢
+                    <span class="notification-count">3</span>
+                </button>
+
+                <div class="user-profile">
+
+                    <div class="avatar">
+                        <img src="images/profile.jpg" alt="Frodo Baggins">
+                    </div>
+
+                    <div class="user-info">
+                        <div class="user-name">Frodo Baggins</div>
+                        <div class="user-role">Admin</div>
+                    </div>
+
+                    <div class="chevron">⌄</div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE -->
+
+        <div class="page-content">
+
+            <div class="page-heading">
+
+                <div>
+                    <h1>Dashboard</h1>
+
+                    <p>
+                        Overview of your cloud infrastructure and remediation activity.
+                    </p>
+                </div>
+
+                <button class="primary-button">
+                    + New Remediation
+                </button>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- KPI CARDS -->
+            <!-- ============================= -->
+
+            <section class="stat-grid">
+
+                <div class="card stat-card">
+
+                    <div class="stat-icon blue">
+                        ▤
+                    </div>
+
+                    <div class="stat-content">
+
+                        <div class="stat-label">
+                            Total Nodes
+                        </div>
+
+                        <div class="stat-value">
+                            12
+                        </div>
+
+                        <div class="stat-meta danger">
+                            2 offline
+                        </div>
+
+                    </div>
+
+                    <div class="sparkline blue-line">
+                        ╱╲╱╲╱
+                    </div>
+
+                </div>
+
+
+                <div class="card stat-card">
+
+                    <div class="stat-icon green-bg">
+                        ♢
+                    </div>
+
+                    <div class="stat-content">
+
+                        <div class="stat-label">
+                            Successful Remediations
+                        </div>
+
+                        <div class="stat-value">
+                            47
+                        </div>
+
+                        <div class="stat-meta success">
+                            ↑ 12% this week
+                        </div>
+
+                    </div>
+
+                    <div class="sparkline green-line">
+                        ╱╲╱╲╱
+                    </div>
+
+                </div>
+
+
+                <div class="card stat-card">
+
+                    <div class="stat-icon orange">
+                        ◷
+                    </div>
+
+                    <div class="stat-content">
+
+                        <div class="stat-label">
+                            Failed Remediations
+                        </div>
+
+                        <div class="stat-value">
+                            3
+                        </div>
+
+                        <div class="stat-meta success">
+                            ↓ 25% this week
+                        </div>
+
+                    </div>
+
+                    <div class="sparkline orange-line">
+                        ╱╱╲╱
+                    </div>
+
+                </div>
+
+
+                <div class="card stat-card">
+
+                    <div class="stat-icon purple">
+                        □
+                    </div>
+
+                    <div class="stat-content">
+
+                        <div class="stat-label">
+                            Scheduled Jobs
+                        </div>
+
+                        <div class="stat-value">
+                            8
+                        </div>
+
+                        <div class="stat-meta blue-text">
+                            2 running
+                        </div>
+
+                    </div>
+
+                    <div class="sparkline purple-line">
+                        ╱╲╱╲
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ============================= -->
+            <!-- MIDDLE -->
+            <!-- ============================= -->
+
+            <section class="dashboard-grid">
+
+                <!-- REMEDIATIONS -->
+
+                <div class="card recent-card">
+
+                    <div class="card-header">
+                        <h2>Recent Remediations</h2>
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>Remediation</th>
+                                    <th>Node</th>
+                                    <th>Status</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td><span class="row-status success-circle">✓</span></td>
+                                    <td>#1024</td>
+                                    <td>EC2 Primary → Secondary</td>
+                                    <td>
+                                        <strong>ip-10-0-1-25</strong>
+                                        <span class="table-subtitle">(Web Server 1)</span>
+                                    </td>
+                                    <td><span class="badge success-badge">Success</span></td>
+                                    <td>2m ago</td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="row-status success-circle">✓</span></td>
+                                    <td>#1023</td>
+                                    <td>S3 Bucket Policy Fix</td>
+                                    <td>
+                                        <strong>ip-10-0-2-15</strong>
+                                        <span class="table-subtitle">(Storage Node)</span>
+                                    </td>
+                                    <td><span class="badge success-badge">Success</span></td>
+                                    <td>15m ago</td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="row-status error-circle">×</span></td>
+                                    <td>#1022</td>
+                                    <td>RDS Failover</td>
+                                    <td>
+                                        <strong>ip-10-0-3-45</strong>
+                                        <span class="table-subtitle">(DB Node)</span>
+                                    </td>
+                                    <td><span class="badge error-badge">Failed</span></td>
+                                    <td>45m ago</td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="row-status success-circle">✓</span></td>
+                                    <td>#1021</td>
+                                    <td>EC2 Primary → Secondary</td>
+                                    <td>
+                                        <strong>ip-10-0-1-25</strong>
+                                        <span class="table-subtitle">(Web Server 1)</span>
+                                    </td>
+                                    <td><span class="badge success-badge">Success</span></td>
+                                    <td>1h ago</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <a href="#" class="card-link">
+                        View all executions →
+                    </a>
+
+                </div>
+
+
+                <!-- INFRASTRUCTURE -->
+
+                <div class="card infrastructure-card">
+
+                    <div class="card-header">
+                        <h2>Infrastructure Overview</h2>
+                    </div>
+
+                    <div class="tier-title">
+                        Web Tier
+                    </div>
+
+                    <div class="web-tier">
+
+                        <div class="resource-box">
+
+                            <div class="resource-icon orange-text">
+                                ▣
+                            </div>
+
+                            <div>
+                                <strong>Primary</strong>
+                                <div class="resource-id">
+                                    i-0abc123def456
+                                </div>
+
+                                <div class="resource-state">
+                                    Stopped
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="connection-arrow">
+                            →
+                        </div>
+
+                        <div class="resource-box">
+
+                            <div class="resource-icon green-text">
+                                ◇
+                            </div>
+
+                            <div>
+                                <strong>Secondary</strong>
+
+                                <div class="resource-id">
+                                    i-0def456abc789
+                                </div>
+
+                                <div class="resource-state running">
+                                    Running
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tier-title">
+                        Database Tier
+                    </div>
+
+                    <div class="resource-box centered-resource">
+
+                        <div class="resource-icon blue-text">
+                            ▤
+                        </div>
+
+                        <div>
+                            <strong>RDS Instance</strong>
+
+                            <div class="resource-id">
+                                db-0abc123def456
+                            </div>
+
+                            <div class="resource-state running">
+                                Available
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="tier-title">
+                        Storage Tier
+                    </div>
+
+                    <div class="resource-box centered-resource">
+
+                        <div class="resource-icon green-text">
+                            ♢
+                        </div>
+
+                        <div>
+                            <strong>S3 Bucket</strong>
+
+                            <div class="resource-id">
+                                cloudpilot-data
+                            </div>
+
+                            <div class="resource-state running">
+                                Accessible
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT COLUMN -->
+
+                <div class="right-column">
+
+                    <div class="card health-card">
+
+                        <div class="card-header">
+                            <h2>System Health</h2>
+                        </div>
+
+                        <div class="health-heading">
+
+                            <strong>Engine Status</strong>
+
+                            <span class="health-status">
+                                <span class="status-dot green"></span>
+                                Healthy
+                            </span>
+
+                        </div>
+
+
+                        <div class="health-row">
+                            <span>Uptime</span>
+                            <span>7d 14h 32m</span>
+                        </div>
+
+                        <div class="health-row">
+                            <span>Version</span>
+                            <span>1.0.0</span>
+                        </div>
+
+
+                        <div class="health-metric">
+
+                            <div class="health-row">
+                                <span>Connected Nodes</span>
+                                <strong>10 / 12</strong>
+                            </div>
+
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 83%"></div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-metric">
+
+                            <div class="health-row">
+                                <span>Active Schedules</span>
+                                <strong>6 / 8</strong>
+                            </div>
+
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-metric">
+
+                            <div class="health-row">
+                                <span>Success Rate (7d)</span>
+                                <strong class="success">94.2%</strong>
+                            </div>
+
+                            <div class="progress green-progress">
+                                <div class="progress-bar" style="width: 94%"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card schedule-card">
+
+                        <div class="card-header">
+                            <h2>Upcoming Schedules</h2>
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>◷ EC2 Health Check</span>
+                            <span>in 15m</span>
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>◷ Database Backup</span>
+                            <span>in 1h</span>
+                        </div>
+
+                        <div class="schedule-row">
+                            <span>◷ Security Scan</span>
+                            <span>in 2h</span>
+                        </div>
+
+                        <a href="#" class="card-link">
+                            View all schedules →
+                        </a>
+
+                    </div>
+
+
+                    <div class="card quick-card">
+
+                        <div class="card-header">
+                            <h2>Quick Actions</h2>
+                        </div>
+
+                        <button class="quick-action">
+
+                            <span class="quick-icon">⚡</span>
+
+                            <span>
+                                <strong>Run Remediation</strong>
+                                <small>Execute a remediation now</small>
+                            </span>
+
+                            <span>›</span>
+
+                        </button>
+
+
+                        <button class="quick-action">
+
+                            <span class="quick-icon">▤</span>
+
+                            <span>
+                                <strong>View Templates</strong>
+                                <small>Browse remediation templates</small>
+                            </span>
+
+                            <span>›</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ============================= -->
+            <!-- ACTIVITY -->
+            <!-- ============================= -->
+
+            <section class="card activity-card">
+
+                <div class="activity-header">
+
+                    <div>
+                        <h2>Remediation Activity (7 Days)</h2>
+
+                        <div class="chart-legend">
+                            <span><span class="legend-dot success-dot"></span> Success</span>
+                            <span><span class="legend-dot failed-dot"></span> Failed</span>
+                        </div>
+                    </div>
+
+                    <select class="date-select">
+                        <option>7 Days</option>
+                        <option>30 Days</option>
+                    </select>
+
+                </div>
+
+
+                <div class="chart">
+
+                    <div class="chart-grid-line line-1"></div>
+                    <div class="chart-grid-line line-2"></div>
+                    <div class="chart-grid-line line-3"></div>
+
+
+                    <svg viewBox="0 0 1000 230" preserveAspectRatio="none">
+
+                        <polyline
+                            class="success-chart"
+                            points="
+                            0,180
+                            140,120
+                            280,70
+                            420,145
+                            560,80
+                            700,145
+                            840,45
+                            1000,130
+                            "
+                        />
+
+                        <polyline
+                            class="failed-chart"
+                            points="
+                            0,210
+                            140,204
+                            280,198
+                            420,201
+                            560,205
+                            700,207
+                            840,201
+                            1000,203
+                            "
+                        />
+
+                    </svg>
+
+                    <div class="chart-days">
+                        <span>May 13</span>
+                        <span>May 14</span>
+                        <span>May 15</span>
+                        <span>May 16</span>
+                        <span>May 17</span>
+                        <span>May 18</span>
+                        <span>May 19</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
