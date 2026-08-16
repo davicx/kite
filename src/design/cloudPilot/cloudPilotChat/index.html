@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudPilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-cloud"><i class="fa-solid fa-cloud"></i></div>
+        <span>CloudPilot</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" href="#"><i class="fa-regular fa-house"></i><span>Home</span></a>
+        <a class="nav-item" href="#"><i class="fa-regular fa-message"></i><span>Chat</span></a>
+        <a class="nav-item" href="#"><i class="fa-solid fa-wrench"></i><span>Remediations</span></a>
+        <a class="nav-item" href="#"><i class="fa-solid fa-layer-group"></i><span>Infrastructure</span></a>
+        <a class="nav-item" href="#"><i class="fa-solid fa-robot"></i><span>Agents</span></a>
+        <a class="nav-item" href="#"><i class="fa-regular fa-file-lines"></i><span>Logs</span></a>
+        <a class="nav-item" href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="mascot-card">
+          <div class="mascot">☁️</div>
+          <h3>Smarter cloud<br>operations, together.</h3>
+          <p>CloudPilot turns<br>complex cloud problems<br>into simple actions.</p>
+        </div>
+        <div class="system-card">
+          <span class="status-dot"></span>
+          <span>All systems operational</span>
+        </div>
+        <div class="version">CloudPilot v0.1.0</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="greeting">
+          <h1>Good morning, Alex <span>👋</span></h1>
+          <p>Let’s keep your cloud running smoothly.</p>
+        </div>
+
+        <div class="topbar-actions">
+          <label class="search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search..." />
+            <kbd>⌘K</kbd>
+          </label>
+          <button class="icon-button notification" aria-label="Notifications">
+            <i class="fa-regular fa-bell"></i>
+            <span></span>
+          </button>
+          <button class="profile-button">
+            <div class="profile-avatar">A</div>
+            <strong>Alex</strong>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <section class="chat-panel">
+          <div class="chat-brand">
+            <div class="assistant-avatar"><i class="fa-solid fa-cloud"></i></div>
+            <div>
+              <h2>CloudPilot</h2>
+              <p>Your AI cloud operations partner</p>
+            </div>
+          </div>
+
+          <div class="conversation">
+            <div class="user-row">
+              <div>
+                <div class="user-bubble">
+                  I think our primary web server is unhealthy. Can you switch traffic<br class="desktop-br">
+                  to the secondary instance?
+                </div>
+                <div class="user-time">9:24 AM</div>
+              </div>
+              <div class="small-avatar">A</div>
+            </div>
+
+            <div class="assistant-row">
+              <div class="assistant-avatar large"><i class="fa-solid fa-cloud"></i></div>
+              <div>
+                <div class="assistant-bubble">
+                  <p>Got it! I’ll help you switch traffic from the primary to the secondary<br class="desktop-br"> web server.</p>
+
+                  <div class="steps">
+                    <div><span class="check">✓</span><b>1.</b> Finding instances with tag `cloudpilot-role`...</div>
+                    <div><span class="check">✓</span><b>2.</b> Stopping primary instance (i-0123abcd)...</div>
+                    <div><span class="check">✓</span><b>3.</b> Starting secondary instance (i-0456efgh)...</div>
+                    <div><span class="check">✓</span><b>4.</b> Verifying the secondary instance is now running...</div>
+                  </div>
+
+                  <div class="done-line"><span class="check">✓</span>Done! Traffic has been switched to the secondary instance.</div>
+
+                  <div class="result-card">
+                    <div class="result-row">
+                      <div>
+                        <small>Primary instance</small>
+                        <strong>i-0123abcd</strong>
+                      </div>
+                      <span class="pill stopped">stopped</span>
+                    </div>
+                    <div class="result-row">
+                      <div>
+                        <small>Secondary instance</small>
+                        <strong>i-0456efgh</strong>
+                      </div>
+                      <span class="pill running">running</span>
+                    </div>
+                    <div class="result-row result-final">
+                      <div>
+                        <small>Result</small>
+                        <strong class="success-text">Switched successfully 🎉</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="assistant-time">9:24 AM</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="composer-wrap">
+            <div class="composer">
+              <button class="paperclip"><i class="fa-solid fa-paperclip"></i></button>
+              <input type="text" placeholder="Ask CloudPilot anything..." />
+              <button class="send-button"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div class="suggestions">
+              <button>Fix an unhealthy instance</button>
+              <button>Check my Kubernetes cluster</button>
+              <button>What’s running in my account?</button>
+              <button>Help me with a cost issue</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="right-rail">
+          <section class="right-card health-card">
+            <div class="health-title">
+              <div class="big-check">✓</div>
+              <div>
+                <h3>Your cloud is healthy</h3>
+                <p>All systems operational</p>
+              </div>
+            </div>
+
+            <div class="health-list">
+              <div><span>AWS</span><span class="healthy"><i></i>Healthy</span></div>
+              <div><span>Kubernetes</span><span class="healthy"><i></i>Healthy</span></div>
+              <div><span>OpenShift</span><span class="healthy"><i></i>Healthy</span></div>
+              <div><span>Other Services</span><span class="healthy"><i></i>Healthy</span></div>
+            </div>
+          </section>
+
+          <section class="right-card quick-card">
+            <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
+
+            <button class="quick-action blue">
+              <span class="quick-icon"><i class="fa-solid fa-wrench"></i></span>
+              <span><strong>Run a remediation</strong><small>Fix issues automatically</small></span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <button class="quick-action purple">
+              <span class="quick-icon"><i class="fa-solid fa-layer-group"></i></span>
+              <span><strong>Check infrastructure</strong><small>View your resources</small></span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <button class="quick-action green">
+              <span class="quick-icon"><i class="fa-regular fa-message"></i></span>
+              <span><strong>Ask a question</strong><small>Get help from CloudPilot</small></span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <button class="quick-action orange">
+              <span class="quick-icon"><i class="fa-regular fa-file-lines"></i></span>
+              <span><strong>View logs</strong><small>See recent activity</small></span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </section>
+
+          <section class="right-card activity-card">
+            <div class="activity-heading">
+              <h3><i class="fa-regular fa-clock"></i> Recent Activity</h3>
+              <a href="#">View all <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="activity-dot green-dot"></span>
+                <div><strong>Switched traffic (EC2)</strong><small>Primary → Secondary</small></div>
+                <time>9:24 AM</time>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot green-dot"></span>
+                <div><strong>Checked cluster status</strong><small>EKS cluster healthy</small></div>
+                <time>9:12 AM</time>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot orange-dot"></span>
+                <div><strong>Detected high CPU</strong><small>RDS instance</small></div>
+                <time>8:47 AM</time>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot green-dot"></span>
+                <div><strong>Ran cleanup</strong><small>Removed 3 old snapshots</small></div>
+                <time>8:20 AM</time>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
