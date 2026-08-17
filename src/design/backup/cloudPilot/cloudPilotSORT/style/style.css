@@ -1,0 +1,1327 @@
+/*TOC*/
+/*
+Global
+SECTION 1: Global Styles
+SECTION 2: App Layout
+
+Header
+SECTION 3A: Header Structure
+SECTION 3B: Header Search
+SECTION 3C: Profile Button
+
+Sidebar
+SECTION 4A: Sidebar Structure
+SECTION 4B: Sidebar Navigation
+SECTION 4C: Sidebar Sections (Monitoring, System)
+SECTION 4D: Sidebar Footer
+
+Main Content
+SECTION 5A: Main Structure
+SECTION 5B: Page Heading
+SECTION 5C: KPI Cards
+SECTION 5D: Dashboard Grid
+SECTION 5E: Remediations Table
+SECTION 5F: Infrastructure
+SECTION 5G: Right Column (Health, Schedules, Quick Actions)
+SECTION 5H: Activity Chart
+
+Appendix
+APPENDIX A: CSS Defaults / Responsive
+APPENDIX B: Colors
+*/
+
+
+/****************************************************
+SECTION 1: Global Styles
+*****************************************************/
+
+
+/* ==================================================
+   CLOUDPILOT DESIGN TOKENS
+   ================================================== */
+
+:root {
+
+    --background: #f5f7fa;
+    --surface: #ffffff;
+
+    --sidebar-background: #152332;
+    --sidebar-background-dark: #101c28;
+
+    --primary: #1877e8;
+    --primary-hover: #1068d1;
+
+    --text-main: #16202d;
+    --text-secondary: #657184;
+    --text-light: #a4afbc;
+
+    --border: #e3e8ef;
+
+    --success: #1ebd63;
+    --success-light: #e7f8ed;
+
+    --danger: #ee4242;
+    --danger-light: #fdeaea;
+
+    --warning: #f39a1e;
+    --warning-light: #fff2dc;
+
+    --purple: #8b3df0;
+    --purple-light: #f2eaff;
+
+    --blue-light: #e5f0ff;
+
+    --radius-small: 8px;
+    --radius: 12px;
+    --radius-large: 16px;
+
+    --shadow:
+        0 2px 5px rgba(20, 35, 50, 0.04),
+        0 8px 20px rgba(20, 35, 50, 0.04);
+
+    --sidebar-width: 248px;
+
+    --font:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+
+/* ==================================================
+   RESET
+   ================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    min-height: 100%;
+
+    font-family: var(--font);
+
+    background: var(--background);
+    color: var(--text-main);
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/****************************************************
+SECTION 2: App Layout
+*****************************************************/
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/****************************************************
+SECTION 3A: Header Structure
+*****************************************************/
+
+.topbar {
+    height: 64px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding:
+        0
+        25px;
+
+    border-bottom: 1px solid var(--border);
+
+    background: white;
+}
+
+.menu-button,
+.notification-button {
+    border: none;
+
+    background: transparent;
+
+    color: #42576d;
+}
+
+.menu-button {
+    font-size: 20px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    flex-shrink: 0;
+}
+
+.notification-button {
+    position: relative;
+
+    font-size: 18px;
+}
+
+.notification-count {
+    position: absolute;
+
+    top: -7px;
+    right: -8px;
+
+    width: 16px;
+    height: 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 9px;
+}
+
+
+/****************************************************
+SECTION 3B: Header Search
+*****************************************************/
+
+.header-search {
+    flex: 1;
+
+    max-width: 420px;
+}
+
+.header-search input {
+    width: 100%;
+
+    height: 36px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: #f7f9fc;
+
+    color: var(--text-main);
+
+    font-size: 13px;
+}
+
+.header-search input::placeholder {
+    color: var(--text-light);
+}
+
+.header-search input:focus {
+    outline: none;
+
+    border-color: var(--primary);
+
+    background: white;
+}
+
+
+/****************************************************
+SECTION 3C: Profile Button
+*****************************************************/
+
+.user-profile {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background: #d6e1eb;
+
+    flex-shrink: 0;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.user-name {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.user-role {
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    color: var(--text-secondary);
+}
+
+.chevron {
+    color: var(--text-secondary);
+}
+
+
+/****************************************************
+SECTION 4A: Sidebar Structure
+*****************************************************/
+
+.sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--sidebar-background),
+            var(--sidebar-background-dark)
+        );
+
+    color: white;
+}
+
+
+/* LOGO */
+
+.logo {
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 18px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.logo-icon {
+    width: 28px;
+    height: 28px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/****************************************************
+SECTION 4B: Sidebar Navigation
+*****************************************************/
+
+.nav {
+    flex: 1;
+
+    padding:
+        14px
+        8px;
+}
+
+.nav-item {
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 13px;
+
+    margin-bottom: 2px;
+
+    border-radius: 6px;
+
+    color: rgba(255,255,255,0.88);
+
+    font-size: 13px;
+
+    transition: background 0.15s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.07);
+}
+
+.nav-item.active {
+    background: var(--primary);
+
+    color: white;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 100, 230, 0.25);
+}
+
+.nav-icon {
+    width: 18px;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+/****************************************************
+SECTION 4C: Sidebar Sections (Monitoring, System)
+*****************************************************/
+
+.nav-divider {
+    height: 1px;
+
+    margin: 16px 8px;
+
+    background: rgba(255,255,255,0.08);
+}
+
+.nav-label {
+    margin:
+        14px
+        12px
+        6px;
+
+    font-size: 10px;
+    letter-spacing: 0.06em;
+
+    color: #8998a8;
+}
+
+.nav-label-space {
+    margin-top: 26px;
+}
+
+
+/****************************************************
+SECTION 4D: Sidebar Footer
+*****************************************************/
+
+.sidebar-footer {
+    padding: 14px;
+}
+
+.engine-card {
+    padding: 11px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    border-radius: 8px;
+
+    background: rgba(255,255,255,0.025);
+}
+
+.engine-title {
+    margin-bottom: 8px;
+
+    font-size: 11px;
+
+    color: #c7d1db;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 11px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+}
+
+.status-dot.green {
+    background: var(--success);
+}
+
+.version {
+    margin-top: 10px;
+
+    font-size: 9px;
+
+    color: #8391a0;
+}
+
+
+/****************************************************
+SECTION 5A: Main Structure
+*****************************************************/
+
+.main {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.page-content {
+    padding: 22px;
+}
+
+
+/****************************************************
+SECTION 5B: Page Heading
+*****************************************************/
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+.page-heading h1 {
+    margin: 0;
+
+    font-size: 22px;
+}
+
+.page-heading p {
+    margin:
+        6px
+        0
+        0;
+
+    font-size: 12px;
+
+    color: var(--text-secondary);
+}
+
+.primary-button {
+    padding:
+        10px
+        15px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.primary-button:hover {
+    background: var(--primary-hover);
+}
+
+
+/****************************************************
+SECTION 5A: Main Structure — Cards
+*****************************************************/
+
+.card {
+    border:
+        1px
+        solid
+        var(--border);
+
+    border-radius: var(--radius);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow);
+}
+
+.card-header {
+    padding:
+        16px
+        16px
+        10px;
+}
+
+.card-header h2,
+.activity-header h2 {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+
+/****************************************************
+SECTION 5C: KPI Cards
+*****************************************************/
+
+.stat-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    min-height: 125px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 18px;
+}
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+
+    font-size: 23px;
+}
+
+.stat-icon.blue {
+    background: var(--blue-light);
+    color: var(--primary);
+}
+
+.stat-icon.green-bg {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.stat-icon.orange {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.stat-icon.purple {
+    background: var(--purple-light);
+    color: var(--purple);
+}
+
+.stat-content {
+    min-width: 0;
+}
+
+.stat-label {
+    font-size: 11px;
+
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    margin: 6px 0;
+
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.stat-meta {
+    font-size: 10px;
+}
+
+.success {
+    color: var(--success);
+}
+
+.danger {
+    color: var(--danger);
+}
+
+.blue-text {
+    color: var(--primary);
+}
+
+.sparkline {
+    margin-left: auto;
+
+    font-size: 18px;
+
+    white-space: nowrap;
+}
+
+.blue-line {
+    color: var(--primary);
+}
+
+.green-line {
+    color: var(--success);
+}
+
+.orange-line {
+    color: var(--warning);
+}
+
+.purple-line {
+    color: var(--purple);
+}
+
+
+/****************************************************
+SECTION 5D: Dashboard Grid
+*****************************************************/
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(470px, 1.7fr)
+        minmax(300px, 1fr)
+        270px;
+
+    gap: 15px;
+}
+
+
+/****************************************************
+SECTION 5E: Remediations Table
+*****************************************************/
+
+.recent-card {
+    overflow: hidden;
+}
+
+.table-wrapper {
+    padding: 0 16px;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    font-size: 10px;
+}
+
+thead {
+    background: #f6f8fb;
+}
+
+th {
+    padding: 10px;
+
+    text-align: left;
+
+    font-size: 9px;
+    font-weight: 500;
+
+    color: #647185;
+}
+
+td {
+    padding: 11px 10px;
+
+    border-top: 1px solid var(--border);
+}
+
+.table-subtitle {
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--text-secondary);
+}
+
+.row-status {
+    width: 16px;
+    height: 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    color: white;
+
+    font-size: 9px;
+}
+
+.success-circle {
+    background: var(--success);
+}
+
+.error-circle {
+    background: var(--danger);
+}
+
+.badge {
+    display: inline-flex;
+
+    padding:
+        4px
+        7px;
+
+    border-radius: 5px;
+
+    font-size: 9px;
+}
+
+.success-badge {
+    background: var(--success-light);
+    color: #108640;
+}
+
+.error-badge {
+    background: var(--danger-light);
+    color: #b72929;
+}
+
+.card-link {
+    display: inline-block;
+
+    margin: 16px;
+
+    color: var(--primary);
+
+    font-size: 10px;
+}
+
+
+/****************************************************
+SECTION 5F: Infrastructure
+*****************************************************/
+
+.infrastructure-card {
+    padding-bottom: 16px;
+}
+
+.tier-title {
+    margin:
+        8px
+        0
+        10px;
+
+    text-align: center;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.web-tier {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 13px;
+}
+
+.resource-box {
+    min-width: 125px;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    padding: 12px;
+
+    border:
+        1px
+        solid
+        #dbe2ea;
+
+    border-radius: 7px;
+
+    background: #f9fafc;
+
+    font-size: 10px;
+}
+
+.resource-icon {
+    font-size: 20px;
+}
+
+.orange-text {
+    color: var(--warning);
+}
+
+.green-text {
+    color: var(--success);
+}
+
+.resource-id {
+    margin-top: 3px;
+
+    color: var(--text-secondary);
+
+    font-size: 8px;
+}
+
+.resource-state {
+    margin-top: 6px;
+
+    font-size: 9px;
+
+    color: var(--text-secondary);
+}
+
+.resource-state.running {
+    color: var(--success);
+}
+
+.connection-arrow {
+    color: #8ba0b5;
+}
+
+.centered-resource {
+    width: 150px;
+
+    margin:
+        0
+        auto
+        15px;
+}
+
+
+/****************************************************
+SECTION 5G: Right Column (Health, Schedules, Quick Actions)
+*****************************************************/
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.health-card,
+.schedule-card,
+.quick-card {
+    padding-bottom: 10px;
+}
+
+
+/* HEALTH */
+
+.health-heading,
+.health-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.health-heading {
+    padding:
+        5px
+        16px
+        12px;
+
+    font-size: 10px;
+}
+
+.health-status {
+    color: var(--success);
+}
+
+.health-row {
+    padding:
+        7px
+        16px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+.health-metric {
+    margin-top: 4px;
+}
+
+.progress {
+    height: 5px;
+
+    margin:
+        0
+        16px
+        8px;
+
+    overflow: hidden;
+
+    border-radius: 100px;
+
+    background: #edf0f4;
+}
+
+.progress-bar {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: var(--primary);
+}
+
+.green-progress .progress-bar {
+    background: var(--success);
+}
+
+
+/* SCHEDULE */
+
+.schedule-row {
+    display: flex;
+    justify-content: space-between;
+
+    padding:
+        10px
+        16px;
+
+    font-size: 10px;
+
+    color: #293b51;
+}
+
+
+/* QUICK */
+
+.quick-action {
+    width: calc(100% - 30px);
+
+    display: grid;
+
+    grid-template-columns:
+        25px
+        1fr
+        auto;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin:
+        7px
+        15px;
+
+    padding: 10px;
+
+    text-align: left;
+
+    border:
+        1px
+        solid
+        var(--border);
+
+    border-radius: 7px;
+
+    background: white;
+
+    color: var(--text-main);
+}
+
+.quick-action:hover {
+    background: #f7f9fc;
+}
+
+.quick-action strong {
+    display: block;
+
+    font-size: 10px;
+}
+
+.quick-action small {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 8px;
+
+    color: var(--text-secondary);
+}
+
+.quick-icon {
+    color: var(--primary);
+
+    font-size: 17px;
+}
+
+
+/****************************************************
+SECTION 5H: Activity Chart
+*****************************************************/
+
+.activity-card {
+    margin-top: 16px;
+
+    padding: 16px;
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.chart-legend {
+    display: flex;
+
+    gap: 14px;
+
+    margin-top: 14px;
+
+    font-size: 9px;
+}
+
+.legend-dot {
+    width: 7px;
+    height: 7px;
+
+    display: inline-block;
+
+    margin-right: 4px;
+
+    border-radius: 50%;
+}
+
+.success-dot {
+    background: var(--success);
+}
+
+.failed-dot {
+    background: var(--danger);
+}
+
+.date-select {
+    padding:
+        7px
+        10px;
+
+    border:
+        1px
+        solid
+        var(--border);
+
+    border-radius: 7px;
+
+    background: white;
+
+    font-size: 10px;
+}
+
+.chart {
+    height: 230px;
+
+    position: relative;
+
+    margin-top: 15px;
+}
+
+.chart svg {
+    width: 100%;
+    height: 190px;
+
+    overflow: visible;
+}
+
+.success-chart,
+.failed-chart {
+    fill: none;
+
+    stroke-width: 2;
+}
+
+.success-chart {
+    stroke: var(--success);
+}
+
+.failed-chart {
+    stroke: var(--danger);
+}
+
+.chart-grid-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background: #e9edf2;
+}
+
+.line-1 {
+    top: 30px;
+}
+
+.line-2 {
+    top: 90px;
+}
+
+.line-3 {
+    top: 150px;
+}
+
+.chart-days {
+    display: flex;
+    justify-content: space-between;
+
+    padding:
+        0
+        10px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+
+/****************************************************
+APPENDIX A: CSS Defaults / Responsive
+*****************************************************/
+
+@media (max-width: 1200px) {
+
+    .dashboard-grid {
+        grid-template-columns:
+            minmax(450px, 2fr)
+            minmax(280px, 1fr);
+    }
+
+    .right-column {
+        grid-column: 1 / -1;
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 950px) {
+
+    .stat-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .right-column {
+        grid-column: auto;
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .page-content {
+        padding: 14px;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+
+        gap: 15px;
+
+        flex-direction: column;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 600px;
+    }
+
+}
+
+
+/****************************************************
+APPENDIX B: Colors
+*****************************************************/
+
+/*
+Tokens are defined in :root (SECTION 1).
+
+--background            #f5f7fa
+--surface               #ffffff
+--sidebar-background    #152332
+--sidebar-background-dark #101c28
+--primary               #1877e8
+--primary-hover         #1068d1
+--text-main             #16202d
+--text-secondary        #657184
+--text-light            #a4afbc
+--border                #e3e8ef
+--success               #1ebd63
+--danger                #ee4242
+--warning               #f39a1e
+--purple                #8b3df0
+*/

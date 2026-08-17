@@ -1,0 +1,583 @@
+/* ==========================================================
+   CLOUDPILOT THEME 01 — PROFESSIONAL AI SAAS
+   ========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+
+/* ==========================================================
+   SECTION 1: THEME TOKENS
+   ========================================================== */
+
+:root {
+	--header-background: rgba(255, 255, 255, 0.96);
+	--chat-background: #f7f9fc;
+
+	--header-logo-background: transparent;
+	--header-search-background: transparent;
+	--header-user-background: transparent;
+
+	--menu-pages-background: #ffffff;
+	--menu-projects-background: #ffffff;
+	--menu-recent-background: #ffffff;
+
+	--cloud-blue: #1d9bf0;
+	--cloud-blue-dark: #147dcc;
+	--cloud-blue-soft: #e8f5fe;
+	--ink: #162033;
+	--muted: #697386;
+	--soft-muted: #98a2b3;
+	--line: #e5e9f0;
+	--surface: #ffffff;
+	--canvas: #f7f9fc;
+	--success: #19a974;
+
+	--shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.04);
+	--shadow-card: 0 10px 30px rgba(31, 50, 81, 0.07);
+}
+
+
+/* ==========================================================
+   SECTION 2: GLOBAL FINISH
+   ========================================================== */
+
+body {
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-weight: 400;
+	color: var(--ink);
+	background: var(--canvas);
+	-webkit-font-smoothing: antialiased;
+}
+
+.cloudpilot-layout {
+	background: var(--canvas);
+}
+
+
+/* ==========================================================
+   SECTION 3: HEADER
+   ========================================================== */
+
+.header {
+	position: relative;
+	z-index: 2;
+	align-items: center;
+	border-bottom: 1px solid var(--line);
+	box-shadow: var(--shadow-soft);
+	backdrop-filter: blur(14px);
+}
+
+.header-logo,
+.header-search,
+.header-user {
+	height: 100%;
+	background: transparent;
+}
+
+.header-logo {
+	justify-content: flex-start;
+	gap: 11px;
+	padding-left: 22px;
+}
+
+.logo-image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	border-radius: 12px;
+	color: #ffffff;
+	background-color: var(--cloud-blue);
+	background-image: url("../../images/cloud.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 25px 25px;
+	box-shadow: 0 6px 14px rgba(29, 155, 240, 0.22);
+}
+
+.logo-image i {
+	font-size: 19px;
+}
+
+.logo-copy {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.logo-name {
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: -0.025em;
+}
+
+.logo-tagline {
+	font-size: 10px;
+	font-weight: 500;
+	color: var(--soft-muted);
+	white-space: nowrap;
+}
+
+.header-search {
+	padding: 0 8%;
+}
+
+.search-box {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: min(100%, 620px);
+	height: 42px;
+	padding: 0 10px 0 15px;
+	color: var(--muted);
+	background: #f5f7fa;
+	border: 1px solid #e1e6ed;
+	border-radius: 22px;
+	box-shadow: inset 0 1px 1px rgba(16, 24, 40, 0.02);
+}
+
+.search-box > i {
+	font-size: 15px;
+	color: #7d899a;
+}
+
+.search-box > span {
+	flex: 1;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+.search-box kbd {
+	padding: 3px 7px;
+	color: #7c8798;
+	background: #ffffff;
+	border: 1px solid #dfe4eb;
+	border-bottom-width: 2px;
+	border-radius: 6px;
+	font-family: inherit;
+	font-size: 10px;
+	font-weight: 600;
+}
+
+.header-user {
+	justify-content: center;
+}
+
+.user-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	color: #ffffff;
+	background: linear-gradient(145deg, #318fd4, #176fb1);
+	border: 3px solid #e7f4fc;
+	border-radius: 50%;
+	box-shadow: 0 2px 8px rgba(29, 112, 177, 0.2);
+}
+
+.user-button i {
+	font-size: 17px;
+}
+
+
+/* ==========================================================
+   SECTION 4: MENU
+   ========================================================== */
+
+.menu {
+	background: var(--surface);
+	border-right: 1px solid var(--line);
+	box-shadow: 2px 0 12px rgba(31, 50, 81, 0.025);
+}
+
+.menu-pages,
+.menu-projects,
+.menu-recent {
+	padding: 16px 14px 10px;
+	background: var(--surface);
+}
+
+.menu-pages,
+.menu-projects {
+	border-bottom: 1px solid #edf0f4;
+}
+
+.menu-section-title {
+	margin: 0 8px 8px;
+	padding: 0;
+	color: var(--soft-muted);
+	border: 0;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.09em;
+}
+
+.menu-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-height: 31px;
+	margin: 1px 0;
+	padding: 6px 10px;
+	color: #515d70;
+	border-radius: 9px;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1;
+}
+
+.menu-item i {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	color: #7c899b;
+	font-size: 15px;
+}
+
+.menu-item-active {
+	color: #0879c9;
+	background: var(--cloud-blue-soft);
+	font-weight: 600;
+}
+
+.menu-item-active i {
+	color: var(--cloud-blue);
+}
+
+
+/* ==========================================================
+   SECTION 5: CHAT SHELL
+   ========================================================== */
+
+.chat {
+	align-items: stretch;
+	justify-content: center;
+	padding: 0 32px;
+	background:
+		radial-gradient(circle at 80% 8%, rgba(29, 155, 240, 0.045), transparent 25%),
+		var(--canvas);
+	overflow: hidden;
+}
+
+.chat-shell {
+	display: flex;
+	flex-direction: column;
+	width: min(100%, 920px);
+	height: 100%;
+	min-height: 0;
+	padding: 30px 0 18px;
+}
+
+.chat-heading {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 24px;
+	margin-bottom: 25px;
+	padding: 0 6px;
+}
+
+.eyebrow {
+	display: block;
+	margin-bottom: 7px;
+	color: var(--cloud-blue-dark);
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.11em;
+}
+
+.chat-heading h1 {
+	margin: 0 0 7px;
+	color: var(--ink);
+	font-size: 28px;
+	font-weight: 650;
+	line-height: 1.15;
+	letter-spacing: -0.035em;
+}
+
+.chat-heading p {
+	margin: 0;
+	color: var(--muted);
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+.environment-badge {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	margin-top: 5px;
+	padding: 7px 10px;
+	color: #536073;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	box-shadow: var(--shadow-soft);
+	font-size: 11px;
+	font-weight: 600;
+}
+
+.status-dot {
+	width: 7px;
+	height: 7px;
+	background: var(--success);
+	border-radius: 50%;
+	box-shadow: 0 0 0 3px rgba(25, 169, 116, 0.11);
+}
+
+
+/* ==========================================================
+   SECTION 6: CONVERSATION
+   ========================================================== */
+
+.conversation {
+	flex: 1;
+	min-height: 0;
+	padding: 2px 6px 18px;
+	overflow-y: auto;
+}
+
+.message {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	margin-bottom: 24px;
+}
+
+.message-user {
+	flex-direction: row-reverse;
+}
+
+.message-avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	flex-shrink: 0;
+	border-radius: 10px;
+	font-size: 14px;
+}
+
+.user-message-avatar {
+	color: #ffffff;
+	background: #27364d;
+}
+
+.cloud-message-avatar {
+	color: #ffffff;
+	background: var(--cloud-blue);
+	box-shadow: 0 5px 12px rgba(29, 155, 240, 0.18);
+}
+
+.message-content {
+	max-width: min(80%, 700px);
+}
+
+.message-user .message-content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.message-author {
+	margin: 0 2px 7px;
+	color: #344054;
+	font-size: 11px;
+	font-weight: 650;
+}
+
+.message-author span {
+	margin-left: 5px;
+	color: var(--soft-muted);
+	font-weight: 400;
+}
+
+.message-bubble {
+	padding: 14px 16px;
+	color: #344054;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 5px 17px 17px 17px;
+	box-shadow: 0 4px 15px rgba(31, 50, 81, 0.045);
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.58;
+}
+
+.message-user .message-bubble {
+	color: #ffffff;
+	background: #258bd2;
+	border-color: #258bd2;
+	border-radius: 17px 5px 17px 17px;
+	box-shadow: 0 5px 14px rgba(29, 126, 194, 0.13);
+}
+
+.message-bubble p {
+	margin: 0;
+}
+
+.message-bubble code {
+	padding: 2px 5px;
+	color: #39536e;
+	background: #eef4f8;
+	border-radius: 4px;
+	font-family: "SFMono-Regular", Consolas, monospace;
+	font-size: 11px;
+}
+
+.finding-row {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 8px;
+	margin: 14px 0;
+}
+
+.finding {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 10px 11px;
+	background: #f8fafc;
+	border: 1px solid #e8edf3;
+	border-radius: 10px;
+}
+
+.finding span {
+	color: var(--muted);
+	font-size: 9px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.035em;
+}
+
+.finding strong {
+	color: #26364c;
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.message-note {
+	display: flex;
+	align-items: flex-start;
+	gap: 7px;
+	padding-top: 1px;
+	color: var(--muted);
+	font-size: 12px;
+}
+
+.message-note i {
+	color: #e79a18;
+}
+
+
+/* ==========================================================
+   SECTION 7: COMPOSER
+   ========================================================== */
+
+.chat-composer {
+	flex-shrink: 0;
+	padding: 0 6px;
+}
+
+.composer-box {
+	min-height: 92px;
+	padding: 15px 14px 11px 17px;
+	background: var(--surface);
+	border: 1px solid #dce2ea;
+	border-radius: 18px;
+	box-shadow: var(--shadow-card);
+}
+
+.composer-placeholder {
+	display: block;
+	color: #8a95a5;
+	font-size: 13px;
+	font-weight: 400;
+}
+
+.composer-actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 21px;
+}
+
+.composer-tools {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+}
+
+.composer-tools span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	color: #657286;
+	border-radius: 8px;
+	font-size: 14px;
+}
+
+.send-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	color: #ffffff;
+	background: var(--cloud-blue);
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(29, 155, 240, 0.2);
+	font-size: 16px;
+}
+
+.chat-composer > p {
+	margin: 8px 0 0;
+	color: var(--soft-muted);
+	font-size: 9px;
+	font-weight: 400;
+	text-align: center;
+}
+
+
+/* ==========================================================
+   SECTION 8: RESPONSIVE POLISH
+   ========================================================== */
+
+@media (max-width: 900px) {
+	.logo-copy {
+		display: none;
+	}
+
+	.header-search {
+		padding: 0 24px;
+	}
+
+	.chat {
+		padding: 0 20px;
+	}
+
+	.finding-row {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-height: 720px) {
+	.chat-shell {
+		padding-top: 20px;
+	}
+
+	.chat-heading {
+		margin-bottom: 17px;
+	}
+
+	.message {
+		margin-bottom: 16px;
+	}
+}

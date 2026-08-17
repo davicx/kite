@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CloudPilot</title>
+	<link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+<div id="app">
+
+	<!-- SIDEBAR -->
+	<aside id="sidebar">
+
+		<div class="sidebar-header">
+			<div class="brand-mark">
+				<span class="brand-icon">CP</span>
+				<span class="brand-name">CloudPilot</span>
+			</div>
+			<span class="sidebar-collapse" aria-hidden="true">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+				</svg>
+			</span>
+		</div>
+
+		<div class="sidebar-section">
+			<div class="sidebar-item sidebar-item--active">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+				</svg>
+				<span>Chat</span>
+			</div>
+			<div class="sidebar-item">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+				</svg>
+				<span>Dashboard</span>
+			</div>
+			<div class="sidebar-item">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+				</svg>
+				<span>Accounts</span>
+			</div>
+		</div>
+
+		<div class="sidebar-section">
+			<div class="sidebar-section-title">Recommended Scans</div>
+
+			<div class="scan-item">
+				<div class="scan-thumb scan-thumb--ec2"></div>
+				<div class="scan-info">
+					<div class="scan-name">EC2 Idle Check</div>
+					<div class="scan-tag">Compute</div>
+				</div>
+				<div class="scan-count"><span class="live-dot"></span>12</div>
+			</div>
+
+			<div class="scan-item">
+				<div class="scan-thumb scan-thumb--rds"></div>
+				<div class="scan-info">
+					<div class="scan-name">RDS Rightsizing</div>
+					<div class="scan-tag">Database</div>
+				</div>
+				<div class="scan-count"><span class="live-dot"></span>5</div>
+			</div>
+
+			<div class="scan-item">
+				<div class="scan-thumb scan-thumb--s3"></div>
+				<div class="scan-info">
+					<div class="scan-name">S3 Lifecycle</div>
+					<div class="scan-tag">Storage</div>
+				</div>
+				<div class="scan-count"><span class="live-dot"></span>8</div>
+			</div>
+
+			<div class="show-more">Show More</div>
+		</div>
+
+		<div class="sidebar-section sidebar-section--grow">
+			<div class="sidebar-section-title">Conversations</div>
+
+			<div class="conv-item conv-item--active">
+				<div class="conv-avatar conv-avatar--ec2"></div>
+				<div class="conv-info">
+					<div class="conv-name">EC2 Production Scan</div>
+					<div class="conv-meta">us-east-1 · 12 findings</div>
+				</div>
+				<span class="live-badge">LIVE</span>
+			</div>
+
+			<div class="conv-item">
+				<div class="conv-avatar conv-avatar--rds"></div>
+				<div class="conv-info">
+					<div class="conv-name">Staging RDS Review</div>
+					<div class="conv-meta">us-west-2 · 5 findings</div>
+				</div>
+			</div>
+
+			<div class="conv-item">
+				<div class="conv-avatar conv-avatar--s3"></div>
+				<div class="conv-info">
+					<div class="conv-name">S3 Bucket Audit</div>
+					<div class="conv-meta">Global · 3 findings</div>
+				</div>
+			</div>
+
+			<div class="conv-item">
+				<div class="conv-avatar conv-avatar--lambda"></div>
+				<div class="conv-info">
+					<div class="conv-name">Lambda Cost Check</div>
+					<div class="conv-meta">us-east-1 · 2 findings</div>
+				</div>
+			</div>
+
+			<div class="conv-item">
+				<div class="conv-avatar conv-avatar--iam"></div>
+				<div class="conv-info">
+					<div class="conv-name">IAM Policy Review</div>
+					<div class="conv-meta">Org-wide · 7 findings</div>
+				</div>
+			</div>
+
+			<div class="show-more">Show More</div>
+		</div>
+
+		<div class="sidebar-footer">
+			<div class="new-conversation">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+				</svg>
+				<span>New conversation</span>
+			</div>
+			<div class="user-profile">
+				<div class="user-avatar">DC</div>
+				<div class="user-info">
+					<div class="user-name">david charles</div>
+					<div class="user-plan">Pro · us-east-1</div>
+				</div>
+			</div>
+		</div>
+
+	</aside>
+
+	<!-- RIGHT PANE -->
+	<div id="right-pane">
+
+		<header id="header">
+			<div class="header-left">
+				<nav class="header-nav">
+					<span class="header-nav-link header-nav-link--active">Chat</span>
+					<span class="header-nav-link">Dashboard</span>
+					<span class="header-nav-link">Accounts</span>
+				</nav>
+			</div>
+
+			<div class="header-center">
+				<div class="search-group">
+					<div class="search-bar">
+						<span class="search-placeholder">Search conversations, resources…</span>
+					</div>
+					<span class="search-button" aria-hidden="true">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+						</svg>
+					</span>
+				</div>
+			</div>
+
+			<div class="header-right">
+				<span class="header-icon header-icon--badge" aria-hidden="true">
+					<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+					</svg>
+					<span class="notif-badge">3</span>
+				</span>
+				<span class="upgrade-btn">Upgrade to Pro</span>
+				<span class="user-avatar user-avatar--header">D</span>
+			</div>
+		</header>
+
+		<main id="main">
+
+			<div class="chip-bar">
+				<div class="chip chip--active">All</div>
+				<div class="chip">EC2</div>
+				<div class="chip">RDS</div>
+				<div class="chip">S3</div>
+				<div class="chip">Lambda</div>
+				<div class="chip">IAM</div>
+				<div class="chip">Cost</div>
+				<div class="chip">Security</div>
+			</div>
+
+			<div class="main-inner">
+
+				<div class="thread-header">
+					<div class="thread-header-top">
+						<div>
+							<p class="thread-meta">Group 70 · conversation #142</p>
+							<h1 class="thread-title">EC2 Production Scan</h1>
+						</div>
+						<span class="section-link">View dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></span>
+					</div>
+					<p class="thread-sub">Signed in as <strong>david</strong> · Atlas refreshes every 4s</p>
+					<div class="thread-tags">
+						<span class="tag">us-east-1</span>
+						<span class="tag">Production</span>
+						<span class="tag tag--live">Scanning</span>
+					</div>
+				</div>
+
+				<div class="message-panel">
+
+					<div class="message message--user">
+						<div class="message-bubble">Run an EC2 scan on production — focus on idle instances and oversized types.</div>
+						<div class="message-meta">You · 2:14 PM</div>
+					</div>
+
+					<div class="message message--assistant">
+						<div class="message-bubble">
+							<p class="message-lead">Scan complete across <strong>34 instances</strong> in <code>us-east-1</code>.</p>
+							<div class="finding-summary">
+								<div class="finding-stat finding-stat--high">
+									<span class="finding-count">3</span>
+									<span class="finding-label">High</span>
+								</div>
+								<div class="finding-stat finding-stat--medium">
+									<span class="finding-count">5</span>
+									<span class="finding-label">Medium</span>
+								</div>
+								<div class="finding-stat finding-stat--low">
+									<span class="finding-count">4</span>
+									<span class="finding-label">Low</span>
+								</div>
+								<div class="finding-stat finding-stat--savings">
+									<span class="finding-count">$847</span>
+									<span class="finding-label">/mo savings</span>
+								</div>
+							</div>
+							<p class="message-detail">Top finding: <strong>i-0a8f2c91</strong> (m5.2xlarge) has averaged 4% CPU over 14 days. Consider downsizing to m5.large.</p>
+							<div class="message-tags">
+								<span class="tag">EC2</span>
+								<span class="tag">Rightsizing</span>
+								<span class="tag">Cost</span>
+							</div>
+						</div>
+						<div class="message-meta">CloudPilot <span class="verified">✓</span> · 2:14 PM</div>
+					</div>
+
+					<div class="message message--user">
+						<div class="message-bubble">Show me the full findings table on the dashboard.</div>
+						<div class="message-meta">You · 2:15 PM</div>
+					</div>
+
+					<div class="message message--assistant">
+						<div class="message-bubble message-bubble--compact">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+							</svg>
+							<span>12 findings pushed to Dashboard. Open the <strong>Dashboard</strong> tab to review severity, resources, and recommendations.</span>
+						</div>
+						<div class="message-meta">CloudPilot <span class="verified">✓</span> · 2:15 PM</div>
+					</div>
+
+				</div>
+
+				<div class="composer">
+					<div class="composer-bar">
+						<span class="composer-icon" aria-hidden="true">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+							</svg>
+						</span>
+						<span class="composer-placeholder">Ask CloudPilot to scan, analyze, or explain…</span>
+						<span class="composer-send" aria-hidden="true">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"/>
+							</svg>
+						</span>
+					</div>
+					<div class="quick-actions">
+						<div class="quick-action">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+							</svg>
+							<span>Scan EC2</span>
+						</div>
+						<div class="quick-action">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+							</svg>
+							<span>Review findings</span>
+						</div>
+						<div class="quick-action">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+							</svg>
+							<span>Cost report</span>
+						</div>
+						<div class="quick-action">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+							</svg>
+							<span>Security audit</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</main>
+
+	</div>
+
+</div>
+
+</body>
+</html>

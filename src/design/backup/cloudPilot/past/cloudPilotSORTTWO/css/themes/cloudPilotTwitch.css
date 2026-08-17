@@ -1,0 +1,325 @@
+/* ==========================================================
+   CLOUDPILOT THEME 02 — TWITCH-INSPIRED
+   ==========================================================
+
+   The first CloudPilot theme supplies shared component polish.
+   This file changes the visual identity without changing layout.
+*/
+
+@import url("./cloudPilot.css");
+
+
+/* ==========================================================
+   SECTION 1: THEME TOKENS
+   ========================================================== */
+
+:root {
+	--header-background: #ffffff;
+	--chat-background: #fafafa;
+
+	--menu-pages-background: #f7f7f8;
+	--menu-projects-background: #f7f7f8;
+	--menu-recent-background: #f7f7f8;
+
+	--cloud-blue: #9146ff;
+	--cloud-blue-dark: #772ce8;
+	--cloud-blue-soft: #f0e7ff;
+	--ink: #0e0e10;
+	--muted: #53535f;
+	--soft-muted: #7b7b8b;
+	--line: #dedee3;
+	--surface: #ffffff;
+	--canvas: #fafafa;
+	--success: #00a865;
+
+	--shadow-soft: 0 1px 2px rgba(14, 14, 16, 0.08);
+	--shadow-card: 0 4px 14px rgba(14, 14, 16, 0.1);
+}
+
+
+/* ==========================================================
+   SECTION 2: GLOBAL FINISH
+   ========================================================== */
+
+body {
+	color: var(--ink);
+	background: var(--canvas);
+}
+
+
+/* ==========================================================
+   SECTION 3: HEADER
+   ========================================================== */
+
+.header {
+	border-bottom-color: #d9d9df;
+	box-shadow: 0 1px 4px rgba(14, 14, 16, 0.12);
+	backdrop-filter: none;
+}
+
+.logo-image {
+	border-radius: 5px;
+	background-color: #9146ff;
+	box-shadow: 4px 4px 0 #d7bfff;
+}
+
+.logo-name {
+	color: #18181b;
+	font-weight: 700;
+}
+
+.logo-tagline {
+	color: #70707d;
+}
+
+.search-box {
+	height: 40px;
+	background: #ffffff;
+	border: 2px solid #adadb8;
+	border-radius: 6px 0 0 6px;
+	box-shadow: none;
+}
+
+.search-box > i {
+	color: #53535f;
+}
+
+.search-box kbd {
+	display: none;
+}
+
+.header-search {
+	position: relative;
+	padding-right: calc(8% + 42px);
+}
+
+.header-search::after {
+	display: flex;
+	position: absolute;
+	right: 8%;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	height: 40px;
+	color: #18181b;
+	background: #efeff1;
+	border: 1px solid #dedee3;
+	border-radius: 0 6px 6px 0;
+	font-family: "bootstrap-icons";
+	font-size: 17px;
+	content: "\f52a";
+}
+
+.user-button {
+	background: #9146ff;
+	border: 0;
+	box-shadow: none;
+}
+
+
+/* ==========================================================
+   SECTION 4: MENU
+   ========================================================== */
+
+.menu {
+	background: #f7f7f8;
+	border-right-color: #dedee3;
+	box-shadow: none;
+}
+
+.menu-pages,
+.menu-projects,
+.menu-recent {
+	background: #f7f7f8;
+}
+
+.menu-pages,
+.menu-projects {
+	border-bottom-color: #dedee3;
+}
+
+.menu-section-title {
+	color: #53535f;
+	font-size: 11px;
+	letter-spacing: 0;
+}
+
+.menu-item {
+	color: #1f1f23;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+.menu-item i {
+	color: #53535f;
+}
+
+.menu-item-active {
+	color: #ffffff;
+	background: #9146ff;
+	font-weight: 600;
+}
+
+.menu-item-active i {
+	color: #ffffff;
+}
+
+
+/* ==========================================================
+   SECTION 5: CHAT SHELL
+   ========================================================== */
+
+.chat {
+	background:
+		linear-gradient(rgba(145, 70, 255, 0.018) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(145, 70, 255, 0.018) 1px, transparent 1px),
+		#fafafa;
+	background-size: 32px 32px;
+}
+
+.eyebrow {
+	color: #772ce8;
+}
+
+.chat-heading h1 {
+	color: #18181b;
+	font-weight: 700;
+}
+
+.environment-badge {
+	color: #3f3f46;
+	border-radius: 5px;
+	box-shadow: none;
+}
+
+.status-dot {
+	background: #eb0400;
+	box-shadow: 0 0 0 3px rgba(235, 4, 0, 0.1);
+}
+
+
+/* ==========================================================
+   SECTION 6: CONVERSATION
+   ========================================================== */
+
+.message-avatar {
+	border-radius: 50%;
+}
+
+.cloud-message-avatar {
+	background: #9146ff;
+	box-shadow: none;
+}
+
+.user-message-avatar {
+	background: #3b3b44;
+}
+
+.message-author {
+	color: #1f1f23;
+}
+
+.message-bubble {
+	border-color: #dedee3;
+	border-radius: 4px;
+	box-shadow: 0 2px 6px rgba(14, 14, 16, 0.06);
+}
+
+.message-assistant .message-bubble {
+	border-left: 3px solid #9146ff;
+}
+
+.message-user .message-bubble {
+	color: #ffffff;
+	background: #772ce8;
+	border-color: #772ce8;
+	border-radius: 4px;
+	box-shadow: none;
+}
+
+.message-bubble code {
+	color: #6332a8;
+	background: #f2eaff;
+}
+
+.finding-row {
+	gap: 7px;
+}
+
+.finding {
+	background: #f7f7f8;
+	border-color: #dedee3;
+	border-radius: 4px;
+}
+
+.finding span {
+	color: #53535f;
+}
+
+.finding strong {
+	color: #18181b;
+}
+
+.finding:first-child strong {
+	color: #772ce8;
+}
+
+.message-note i {
+	color: #9146ff;
+}
+
+
+/* ==========================================================
+   SECTION 7: COMPOSER
+   ========================================================== */
+
+.composer-box {
+	background: #ffffff;
+	border: 2px solid #adadb8;
+	border-radius: 6px;
+	box-shadow: 0 3px 10px rgba(14, 14, 16, 0.09);
+}
+
+.composer-placeholder {
+	color: #65656f;
+}
+
+.composer-tools span {
+	color: #53535f;
+	border-radius: 4px;
+}
+
+.send-button {
+	background: #9146ff;
+	border-radius: 4px;
+	box-shadow: none;
+}
+
+.chat-composer > p {
+	color: #7b7b8b;
+}
+
+
+/* ==========================================================
+   SECTION 8: SMALL TWITCH DETAILS
+   ========================================================== */
+
+.environment-badge::before {
+	padding: 2px 4px;
+	color: #ffffff;
+	background: #eb0400;
+	border-radius: 3px;
+	font-size: 8px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	content: "LIVE";
+}
+
+.environment-badge .status-dot {
+	display: none;
+}
+
+::selection {
+	color: #ffffff;
+	background: #9146ff;
+}

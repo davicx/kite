@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudPilot</title>
+  <style>
+    :root {
+      --bg-main: #f4f6f9;
+      --bg-white: #ffffff;
+      --sidebar-bg: #1e4273;
+      --sidebar-hover: #29558c;
+      --primary-blue: #0066ff;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --border-color: #e5e7eb;
+      --bubble-user: #e0edff;
+      --bubble-ai: #f3f4f6;
+      --radius-lg: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* --- Primary Navigation Sidebar --- */
+    .sidebar {
+      width: 220px;
+      background-color: var(--sidebar-bg);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 12px;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 8px 24px 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-icon {
+      font-size: 1.5rem;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      color: #d1d5db;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-item a:hover,
+    .nav-item.active a {
+      background-color: var(--sidebar-hover);
+      color: #ffffff;
+    }
+
+    /* --- Secondary Panel (Threads) --- */
+    .thread-panel {
+      width: 260px;
+      background-color: var(--bg-white);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .thread-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .new-chat-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .new-chat-btn:hover {
+      background-color: var(--bg-main);
+    }
+
+    .thread-list {
+      padding: 8px;
+      overflow-y: auto;
+    }
+
+    .thread-item {
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      margin-bottom: 4px;
+      background-color: var(--bg-main);
+    }
+
+    .thread-item .title {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+
+    .thread-item .date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* --- Main Content Area --- */
+    .main-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-white);
+    }
+
+    /* --- Top Header --- */
+    .header {
+      height: 60px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .search-bar {
+      width: 320px;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 8px 12px 8px 36px;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      outline: none;
+      font-size: 0.85rem;
+      background-color: var(--bg-main);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #f59e0b;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    /* --- Chat Body --- */
+    .chat-area {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chat-bubble {
+      max-width: 70%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background-color: var(--bubble-user);
+      color: var(--text-dark);
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-bubble.ai {
+      align-self: flex-start;
+      background-color: var(--bubble-ai);
+      color: var(--text-dark);
+      border-bottom-left-radius: 4px;
+    }
+
+    .action-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn-action {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-action:hover {
+      background-color: var(--bg-main);
+    }
+
+    /* --- Chat Input --- */
+    .input-container {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      outline: none;
+      font-size: 0.9rem;
+      background-color: var(--bg-main);
+    }
+
+    .send-btn {
+      background-color: var(--sidebar-bg);
+      color: #fff;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .send-btn:hover {
+      background-color: var(--sidebar-hover);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">✈️</span>
+      <span>CLOUD PILOT</span>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#">📊 Dashboard</a></li>
+      <li class="nav-item active"><a href="#">💬 Chat</a></li>
+      <li class="nav-item"><a href="#">📁 Projects</a></li>
+      <li class="nav-item"><a href="#">🔧 Integrations</a></li>
+      <li class="nav-item"><a href="#">☁️ Infrastructure</a></li>
+      <li class="nav-item"><a href="#">⚙️ Settings</a></li>
+    </ul>
+  </aside>
+
+  <!-- Thread Navigation -->
+  <div class="thread-panel">
+    <div class="thread-header">
+      <span>Thread</span>
+      <button class="new-chat-btn" title="New Chat">+</button>
+    </div>
+    <div class="thread-list">
+      <div class="thread-item">
+        <div class="title">Optimizing AWS Costs</div>
+        <div class="date">Today, 10:15 AM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Chat Content -->
+  <main class="main-container">
+    <header class="header">
+      <h2>Cloud Pilot</h2>
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Ask Cloud Pilot anything...">
+      </div>
+      <div class="user-profile">
+        <span>Sarah Jones</span>
+        <div class="avatar">SJ</div>
+      </div>
+    </header>
+
+    <div class="chat-area">
+      <div class="chat-bubble user">
+        Hey Cloud Pilot! How can we optimize our current AWS infrastructure to save costs this month?
+      </div>
+
+      <div class="chat-bubble ai">
+        Hi Sarah! I've analyzed your AWS usage. For optimization, I suggest starting with reviewing unutilized EC2 instances and right-sizing underutilized ones. Check the 'Recommendations' tab for details. 😊
+      </div>
+
+      <div class="chat-bubble user">
+        Okay, can you show me the Top 5 recommendations?
+      </div>
+
+      <div class="chat-bubble ai">
+        Of course! Here are the top actions to save costs:
+        <ol style="margin-left: 20px; margin-top: 8px;">
+          <li>Terminate 4 idle t3.medium instances (Est. Savings: $145/mo)</li>
+          <li>Migrate database to Aurora Serverless (Est. Savings: $210/mo)</li>
+          <li>Purchase Reserved Instances for core services</li>
+          <li>Clean up unused snapshots</li>
+          <li>Upgrade legacy storage (gp2 to gp3)</li>
+        </ol>
+        <div class="action-group">
+          <button class="btn-action">Review Recommendations</button>
+          <button class="btn-action">View Savings Report</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <input type="text" class="chat-input" placeholder="Type a message...">
+      <button class="send-btn">➤</button>
+    </div>
+  </main>
+
+</body>
+</html>

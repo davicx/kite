@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CloudPilot — AWS cost copilot</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cloud:#FAFBF7;
+    --mist:#EEF3EC;
+    --mist-line:#DEE7DC;
+    --ink:#1C2321;
+    --ink-soft:#5B655C;
+    --meadow:#2F9E7D;
+    --meadow-deep:#227A62;
+    --sky:#5B9BD5;
+    --amber:#F5A623;
+    --amber-soft:#FDF2DE;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--cloud);
+    height:100vh;
+    overflow:hidden;
+  }
+  .app{
+    display:grid;
+    grid-template-columns:264px 1fr;
+    grid-template-rows:56px 1fr;
+    grid-template-areas:
+      "sidebar header"
+      "sidebar main";
+    height:100vh;
+  }
+
+  /* HEADER */
+  .header{
+    grid-area:header;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 24px;
+    border-bottom:1px solid var(--mist-line);
+    background:var(--white);
+  }
+  .header-left{display:flex; align-items:center; gap:28px;}
+  .crumb{font-size:14px; color:var(--ink-soft); font-weight:500;}
+  .crumb b{color:var(--ink); font-weight:600;}
+  .header-nav{display:flex; gap:4px;}
+  .header-nav a{
+    font-size:13.5px; font-weight:500; color:var(--ink-soft);
+    padding:7px 12px; border-radius:7px; text-decoration:none;
+  }
+  .header-nav a.active{background:var(--mist); color:var(--ink);}
+  .header-right{display:flex; align-items:center; gap:12px;}
+  .btn-connect{
+    display:flex; align-items:center; gap:7px;
+    background:var(--ink); color:var(--white);
+    font-size:13px; font-weight:600;
+    padding:8px 14px; border-radius:8px; border:none; cursor:pointer;
+  }
+  .dot-live{width:7px; height:7px; border-radius:50%; background:#7CE0B8; box-shadow:0 0 0 2px rgba(124,224,184,.35);}
+  .avatar{
+    width:30px; height:30px; border-radius:50%;
+    background:linear-gradient(135deg, var(--sky), var(--meadow));
+    display:flex; align-items:center; justify-content:center;
+    color:white; font-size:12px; font-weight:700;
+  }
+
+  /* SIDEBAR */
+  .sidebar{
+    grid-area:sidebar;
+    background:var(--mist);
+    border-right:1px solid var(--mist-line);
+    display:flex; flex-direction:column;
+    padding:16px 14px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:9px;
+    padding:2px 4px 18px 4px;
+  }
+  .brand-mark{
+    width:26px; height:26px; border-radius:8px;
+    background:var(--meadow);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .brand-name{
+    font-family:'Fraunces', serif;
+    font-size:18px; font-weight:600; letter-spacing:-0.01em;
+  }
+  .new-chat{
+    display:flex; align-items:center; gap:8px;
+    background:var(--white); border:1px solid var(--mist-line);
+    padding:10px 12px; border-radius:9px;
+    font-size:13.5px; font-weight:600; color:var(--ink);
+    cursor:pointer; margin-bottom:14px;
+  }
+  .new-chat:hover{border-color:var(--meadow);}
+  .search{
+    font-size:13px; color:var(--ink-soft);
+    padding:8px 10px; margin-bottom:16px;
+    border:1px solid transparent;
+  }
+  .nav-label{
+    font-size:11px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--ink-soft); font-weight:600;
+    padding:6px 10px 6px;
+  }
+  .conv-item{
+    display:flex; align-items:center; gap:9px;
+    padding:8px 10px; border-radius:8px;
+    font-size:13.5px; color:var(--ink); cursor:pointer;
+    line-height:1.3;
+  }
+  .conv-item:hover{background:rgba(0,0,0,.035);}
+  .conv-item.active{background:var(--white); box-shadow:0 1px 2px rgba(0,0,0,.05);}
+  .conv-icon{font-size:14px; width:16px; text-align:center; flex-shrink:0;}
+  .conv-title{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .conv-badge{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px; color:var(--meadow-deep); font-weight:600;
+  }
+  .sidebar-spacer{flex:1;}
+  .trust-card{
+    background:var(--white); border:1px solid var(--mist-line);
+    border-radius:10px; padding:11px 12px; margin-bottom:10px;
+  }
+  .trust-card-title{font-size:12px; font-weight:600; display:flex; align-items:center; gap:6px; margin-bottom:3px;}
+  .trust-card-sub{font-size:11.5px; color:var(--ink-soft); line-height:1.4;}
+  .sidebar-profile{
+    display:flex; align-items:center; gap:9px;
+    padding:8px 8px; border-radius:9px; cursor:pointer;
+  }
+  .sidebar-profile:hover{background:rgba(0,0,0,.035);}
+  .sidebar-profile-name{font-size:13px; font-weight:600;}
+  .sidebar-profile-sub{font-size:11.5px; color:var(--ink-soft);}
+
+  /* MAIN */
+  .main{
+    grid-area:main;
+    display:flex; flex-direction:column;
+    overflow:hidden;
+    position:relative;
+  }
+  .ticker{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--amber-soft);
+    color:#8A5A00;
+    font-size:12.5px; font-weight:600;
+    padding:8px 0;
+    border-bottom:1px solid #F3E3BC;
+  }
+  .chat-scroll{
+    flex:1; overflow-y:auto;
+    padding:32px 0 20px;
+  }
+  .chat-col{
+    max-width:720px; margin:0 auto; padding:0 24px;
+    display:flex; flex-direction:column; gap:26px;
+  }
+  .msg-row{display:flex; gap:12px; align-items:flex-start;}
+  .msg-row.user{flex-direction:row-reverse;}
+  .msg-avatar{
+    width:30px; height:30px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px;
+  }
+  .msg-avatar.bot{background:var(--meadow); color:white;}
+  .msg-avatar.user{background:var(--mist-line); color:var(--ink);}
+  .bubble{
+    font-size:14.5px; line-height:1.55;
+    max-width:520px;
+  }
+  .bubble.user{
+    background:var(--mist); padding:10px 14px; border-radius:14px 14px 3px 14px;
+  }
+  .bubble.bot p{margin-bottom:10px;}
+  .bubble.bot p:last-child{margin-bottom:0;}
+
+  /* Recommendation card — signature element */
+  .rec-card{
+    border:1px solid var(--mist-line);
+    border-radius:14px;
+    padding:16px 16px 14px;
+    margin-top:12px;
+    background:var(--white);
+    box-shadow:0 1px 3px rgba(28,35,33,.04);
+  }
+  .rec-top{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .rec-icon{
+    width:34px; height:34px; border-radius:9px;
+    background:var(--mist);
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; flex-shrink:0;
+  }
+  .rec-name{font-size:13.5px; font-weight:600;}
+  .rec-sub{font-size:12px; color:var(--ink-soft);}
+  .rec-tier{
+    margin-left:auto;
+    font-size:10.5px; font-weight:600;
+    padding:3px 8px; border-radius:20px;
+    background:#EAF2FB; color:var(--sky);
+    white-space:nowrap;
+  }
+  .rec-figures{
+    display:flex; gap:22px;
+    padding:11px 0; border-top:1px dashed var(--mist-line); border-bottom:1px dashed var(--mist-line);
+    margin-bottom:12px;
+  }
+  .rec-figure-label{font-size:10.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px;}
+  .rec-figure-value{font-family:'JetBrains Mono', monospace; font-size:15px; font-weight:600;}
+  .rec-figure-value.save{color:var(--meadow-deep);}
+  .rec-actions{display:flex; gap:8px;}
+  .rec-btn{
+    font-size:12.5px; font-weight:600;
+    padding:7px 13px; border-radius:8px;
+    cursor:pointer; border:1px solid var(--mist-line);
+    background:var(--white); color:var(--ink);
+  }
+  .rec-btn.primary{
+    background:var(--meadow); color:white; border-color:var(--meadow);
+  }
+
+  /* input */
+  .composer-wrap{
+    padding:14px 24px 22px;
+    background:linear-gradient(var(--cloud), var(--cloud));
+  }
+  .composer{
+    max-width:720px; margin:0 auto;
+    border:1px solid var(--mist-line);
+    background:var(--white);
+    border-radius:16px;
+    padding:12px 12px 10px 16px;
+    box-shadow:0 2px 10px rgba(28,35,33,.05);
+  }
+  .composer-input{
+    font-size:14px; color:var(--ink-soft); margin-bottom:10px;
+  }
+  .composer-row{display:flex; align-items:center; justify-content:space-between;}
+  .composer-tools{display:flex; gap:8px;}
+  .chip{
+    font-size:11.5px; font-weight:500; color:var(--ink-soft);
+    border:1px solid var(--mist-line); border-radius:20px;
+    padding:5px 10px; display:flex; align-items:center; gap:5px;
+  }
+  .send-btn{
+    width:32px; height:32px; border-radius:50%;
+    background:var(--ink); color:white; border:none;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 18a5 5 0 0 1-.6-9.97A6 6 0 0 1 17.9 9.1 4.5 4.5 0 0 1 17 18H7Z" fill="white"/></svg>
+      </div>
+      <div class="brand-name">CloudPilot</div>
+    </div>
+
+    <div class="new-chat">
+      <span>＋</span> New investigation
+    </div>
+    <div class="search">🔍 Search chats</div>
+
+    <div class="nav-label">Today</div>
+    <div class="conv-item active">
+      <span class="conv-icon">💬</span>
+      <span class="conv-title">Idle RDS instances review</span>
+      <span class="conv-badge">$2.3k</span>
+    </div>
+    <div class="conv-item">
+      <span class="conv-icon">💬</span>
+      <span class="conv-title">S3 lifecycle rules</span>
+    </div>
+
+    <div class="nav-label">This week</div>
+    <div class="conv-item">
+      <span class="conv-icon">💬</span>
+      <span class="conv-title">EC2 rightsizing — staging</span>
+      <span class="conv-badge">$640</span>
+    </div>
+    <div class="conv-item">
+      <span class="conv-icon">💬</span>
+      <span class="conv-title">Unused Elastic IPs</span>
+    </div>
+    <div class="conv-item">
+      <span class="conv-icon">💬</span>
+      <span class="conv-title">Cert expiry sweep</span>
+    </div>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="trust-card">
+      <div class="trust-card-title">🔒 Read-only by default</div>
+      <div class="trust-card-sub">Connected via scoped IAM role · nothing changes without your confirm.</div>
+    </div>
+
+    <div class="sidebar-profile">
+      <div class="avatar">DK</div>
+      <div>
+        <div class="sidebar-profile-name">David</div>
+        <div class="sidebar-profile-sub">prod-account · us-east-1</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="crumb">prod-account &nbsp;/&nbsp; <b>Idle RDS instances review</b></div>
+      <div class="header-nav">
+        <a class="active" href="#">Chat</a>
+        <a href="#">Insights</a>
+        <a href="#">Resources</a>
+        <a href="#">History</a>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="btn-connect"><span class="dot-live"></span> AWS connected</div>
+      <div class="avatar">DK</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="ticker">💰 &nbsp;This session so far: <span style="font-family:'JetBrains Mono',monospace;">$2,340/mo</span> in potential savings found</div>
+
+    <div class="chat-scroll">
+      <div class="chat-col">
+
+        <div class="msg-row user">
+          <div class="msg-avatar user">DK</div>
+          <div class="bubble user">Why is our bill up again this month? Feels like it creeps every quarter.</div>
+        </div>
+
+        <div class="msg-row">
+          <div class="msg-avatar bot">☁️</div>
+          <div class="bubble bot">
+            <p>Took a look — most of the jump is three RDS instances in <b>prod-account</b> that haven't had a connection in 14+ days, plus one that's sized way above what it's actually using. Here's the first one:</p>
+
+            <div class="rec-card">
+              <div class="rec-top">
+                <div class="rec-icon">🗄️</div>
+                <div>
+                  <div class="rec-name">db-analytics-replica-2</div>
+                  <div class="rec-sub">RDS · db.r5.xlarge · idle 17 days</div>
+                </div>
+                <div class="rec-tier">Tier 2 · CLI script</div>
+              </div>
+              <div class="rec-figures">
+                <div>
+                  <div class="rec-figure-label">Current cost</div>
+                  <div class="rec-figure-value">$412/mo</div>
+                </div>
+                <div>
+                  <div class="rec-figure-label">Projected saving</div>
+                  <div class="rec-figure-value save">$412/mo</div>
+                </div>
+              </div>
+              <div class="rec-actions">
+                <button class="rec-btn primary">Apply fix →</button>
+                <button class="rec-btn">View details</button>
+                <button class="rec-btn">Not now</button>
+              </div>
+            </div>
+
+            <p style="margin-top:14px;">I flagged this one as safe to stop rather than delete — nothing here looks like a DR standby, but you tell me if that's wrong and I'll remember it for next time.</p>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <div class="msg-avatar user">DK</div>
+          <div class="bubble user">That one's fine to stop. What about the oversized one?</div>
+        </div>
+
+        <div class="msg-row">
+          <div class="msg-avatar bot">☁️</div>
+          <div class="bubble bot">
+            <p>Here's that one — it's a bigger lift since it's actively serving traffic, so I'd want a PR you can review rather than an auto-apply.</p>
+            <div class="rec-card">
+              <div class="rec-top">
+                <div class="rec-icon">🗄️</div>
+                <div>
+                  <div class="rec-name">db-orders-prod</div>
+                  <div class="rec-sub">RDS · db.r5.2xlarge → db.r5.xlarge</div>
+                </div>
+                <div class="rec-tier">Tier 3 · GitHub PR</div>
+              </div>
+              <div class="rec-figures">
+                <div>
+                  <div class="rec-figure-label">Current cost</div>
+                  <div class="rec-figure-value">$1,180/mo</div>
+                </div>
+                <div>
+                  <div class="rec-figure-label">Projected saving</div>
+                  <div class="rec-figure-value save">$590/mo</div>
+                </div>
+              </div>
+              <div class="rec-actions">
+                <button class="rec-btn primary">Open PR →</button>
+                <button class="rec-btn">View details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="composer-wrap">
+      <div class="composer">
+        <div class="composer-input">Ask CloudPilot about your AWS spend…</div>
+        <div class="composer-row">
+          <div class="composer-tools">
+            <div class="chip">📎 Attach</div>
+            <div class="chip">🔗 prod-account</div>
+          </div>
+          <button class="send-btn">↑</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

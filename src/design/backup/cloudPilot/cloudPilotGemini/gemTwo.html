@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudPilot — Enterprise AI Infrastructure Assistant</title>
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-white: #ffffff;
+      --primary-navy: #1e4273;
+      --primary-blue: #0066ff;
+      --accent-light: #e0edff;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+      --radius-lg: 16px;
+      --radius-md: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* --- Navigation --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--primary-navy);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-navy);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-blue);
+      color: white;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background-color: #0052cc;
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      padding: 80px 8% 60px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--primary-navy);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--primary-navy);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-white);
+      color: var(--primary-navy);
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* --- App Preview Mockup --- */
+    .preview-container {
+      max-width: 1100px;
+      margin: 0 auto 100px;
+      padding: 0 4%;
+    }
+
+    .mockup-window {
+      background: var(--bg-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .window-header {
+      background: #f1f5f9;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .window-body {
+      padding: 30px;
+      background: #f8fafc;
+      display: flex;
+      gap: 20px;
+    }
+
+    .mock-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      flex: 1;
+    }
+
+    /* --- Features Grid --- */
+    .features {
+      padding: 80px 8%;
+      background: var(--bg-white);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      color: var(--primary-navy);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      background: var(--bg-main);
+      transition: transform 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: var(--primary-navy);
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* --- CTA Section --- */
+    .cta-section {
+      padding: 80px 8%;
+      text-align: center;
+      background: var(--primary-navy);
+      color: white;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 32px;
+    }
+
+    .cta-section .btn-primary {
+      background-color: var(--primary-blue);
+      font-size: 1.05rem;
+      padding: 14px 28px;
+    }
+
+    /* --- Footer --- */
+    footer {
+      padding: 40px 8%;
+      background: #0f172a;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="brand">
+      <span>✈️</span>
+      <span>CloudPilot</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#enterprise">Enterprise</a></li>
+      <li><a href="#docs">Documentation</a></li>
+      <li><a href="#login">Log In</a></li>
+      <li><a href="#demo" class="btn-primary">Book Demo</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <span class="badge">✨ Introducing CloudPilot 2.0</span>
+    <h1>Your enterprise cloud, managed through conversational AI.</h1>
+    <p>Empower your engineering teams to optimize costs, inspect AWS infrastructure, and automate ops—just by asking.</p>
+    <div class="hero-buttons">
+      <a href="#demo" class="btn-primary">Request Enterprise Trial</a>
+      <a href="#watch" class="btn-secondary">Watch 2-Min Tour ➔</a>
+    </div>
+  </header>
+
+  <!-- Preview Container -->
+  <div class="preview-container">
+    <div class="mockup-window">
+      <div class="window-header">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+      </div>
+      <div class="window-body">
+        <div class="mock-card">
+          <strong>💬 Natural Conversation</strong>
+          <p style="font-size: 0.85rem; color: #64748b; margin-top: 8px;">
+            "How much can we save on idle EC2 clusters across our enterprise accounts this quarter?"
+          </p>
+        </div>
+        <div class="mock-card">
+          <strong>⚡ Actionable Execution</strong>
+          <p style="font-size: 0.85rem; color: #64748b; margin-top: 8px;">
+            "Found 14 idle instances. Estimated monthly savings: $2,450. [Click to apply execution blueprint]"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="section-title">
+      <h2>Built for Complex Enterprise Environments</h2>
+      <p style="color: var(--text-muted);">Secure, compliant, and deeply integrated with your existing AWS architecture.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Real-time FinOps Audit</h3>
+        <p>Instantly spot underutilized resources, orphan snapshots, and cost anomalies through plain English queries.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Enterprise Guardrails</h3>
+        <p>Set strict permission scopes so team members can query and optimize safely without breaking production infrastructure.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Automated Workflows</h3>
+        <p>Turn recommendations into one-click remediation actions using integrated python engines and safe dry-runs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" id="enterprise">
+    <h2>Ready to simplify your cloud operations?</h2>
+    <p>Join leading enterprise engineering teams managing their infrastructure faster with CloudPilot.</p>
+    <a href="#demo" class="btn-primary">Schedule an Executive Demo</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div>© 2026 CloudPilot Technologies Inc. All rights reserved.</div>
+    <div>Privacy Policy | Terms of Service | Security</div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+/* ==========================================================
+   CLOUDPILOT DESIGN PLAYGROUND
+   ========================================================== */
+
+
+/* ==========================================================
+   SECTION 0: DESIGN CONTROLS
+   ========================================================== */
+
+:root {
+	--header-background: #d9e8ff;
+	--chat-background: #f5f5f5;
+
+	--header-logo-background: #90caf9;
+	--header-search-background: #bbdefb;
+	--header-user-background: #64b5f6;
+
+	--menu-pages-background: #c8e6c9;
+	--menu-projects-background: #ffe0b2;
+	--menu-recent-background: #e1bee7;
+
+	--header-height: 80px;
+	--menu-width: 280px;
+	--menu-pages-height: 180px;
+	--menu-projects-height: 180px;
+}
+
+
+/* ==========================================================
+   SECTION 1: RESET
+   ========================================================== */
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	color: #222222;
+}
+
+
+/* ==========================================================
+   SECTION 2: PAGE LAYOUT
+   ========================================================== */
+
+.cloudpilot-layout {
+	display: grid;
+
+	grid-template-columns: var(--menu-width) 1fr;
+	grid-template-rows: var(--header-height) 1fr;
+
+	grid-template-areas:
+		"header header"
+		"menu chat";
+
+	width: 100%;
+	height: 100vh;
+}
+
+
+/* ==========================================================
+   SECTION 3: HEADER
+   ========================================================== */
+
+.header {
+	grid-area: header;
+	display: flex;
+	align-items: stretch;
+	background-color: var(--header-background);
+}
+
+.header-logo,
+.header-search,
+.header-user {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.header-logo {
+	width: 220px;
+	flex-shrink: 0;
+	background-color: var(--header-logo-background);
+}
+
+.header-search {
+	flex: 1;
+	background-color: var(--header-search-background);
+}
+
+.header-user {
+	width: 120px;
+	flex-shrink: 0;
+	background-color: var(--header-user-background);
+}
+
+
+/* ==========================================================
+   SECTION 4: MENU
+   ========================================================== */
+
+.menu {
+	grid-area: menu;
+	display: flex;
+	flex-direction: column;
+}
+
+.menu-pages,
+.menu-projects,
+.menu-recent {
+	display: flex;
+	flex-direction: column;
+	padding: 12px 16px;
+	overflow: hidden;
+}
+
+.menu-pages {
+	height: var(--menu-pages-height);
+	flex-shrink: 0;
+	background-color: var(--menu-pages-background);
+}
+
+.menu-projects {
+	height: var(--menu-projects-height);
+	flex-shrink: 0;
+	background-color: var(--menu-projects-background);
+}
+
+.menu-recent {
+	flex: 1;
+	min-height: 0;
+	background-color: var(--menu-recent-background);
+}
+
+.menu-section-title {
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	margin-bottom: 8px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.menu-item {
+	font-size: 14px;
+	font-weight: 500;
+	padding: 4px 0;
+}
+
+
+/* ==========================================================
+   SECTION 5: CHAT
+   ========================================================== */
+
+.chat {
+	grid-area: chat;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--chat-background);
+}
