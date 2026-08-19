@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloudPilot — Fly your AWS bill on autopilot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B1220;
+    --panel: #121B2E;
+    --panel-line: #223050;
+    --ink: #E8ECF1;
+    --ink-dim: #93A1B7;
+    --amber: #F5A623;
+    --amber-dim: #B9791A;
+    --teal: #4FD1C5;
+    --red: #E2574C;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+
+  /* subtle grid texture like a nav chart */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--panel-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--panel-line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.06;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,18,32,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--panel-line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px; max-width:1120px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:18px; letter-spacing:0.01em;
+  }
+  .logo-mark{
+    width:22px; height:22px; position:relative;
+  }
+  .logo-mark svg{width:100%; height:100%;}
+  .navlinks{display:flex; gap:32px; font-size:14px; color:var(--ink-dim);}
+  .navlinks a{text-decoration:none; transition:color .2s;}
+  .navlinks a:hover{color:var(--amber);}
+  .nav-cta{
+    font-size:13px; font-weight:600; padding:9px 18px;
+    border:1px solid var(--amber); color:var(--amber);
+    border-radius:3px; text-decoration:none; letter-spacing:0.02em;
+    transition:all .2s;
+  }
+  .nav-cta:hover{background:var(--amber); color:#0B1220;}
+  @media (max-width:760px){ .navlinks{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; z-index:1;
+    padding:96px 28px 72px;
+    max-width:1120px; margin:0 auto;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--teal);
+    letter-spacing:0.08em; text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:""; width:6px; height:6px; border-radius:50%;
+    background:var(--teal); box-shadow:0 0 8px var(--teal);
+    animation:blink 2s ease-in-out infinite;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  .hero h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:clamp(36px, 5.5vw, 62px);
+    line-height:1.05;
+    letter-spacing:-0.02em;
+    max-width:900px;
+  }
+  .hero h1 .accent{color:var(--amber);}
+  .hero p.sub{
+    margin-top:24px;
+    font-size:19px;
+    color:var(--ink-dim);
+    max-width:560px;
+    line-height:1.6;
+  }
+  .hero-ctas{
+    display:flex; gap:14px; margin-top:36px; flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--amber); color:#0B1220;
+    font-weight:600; font-size:14.5px;
+    padding:14px 26px; border-radius:3px;
+    text-decoration:none; letter-spacing:0.01em;
+    transition:transform .15s, box-shadow .15s;
+    display:inline-block;
+  }
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 8px 24px -8px rgba(245,166,35,0.5);}
+  .btn-ghost{
+    color:var(--ink); font-weight:500; font-size:14.5px;
+    padding:14px 22px; border:1px solid var(--panel-line); border-radius:3px;
+    text-decoration:none; transition:border-color .2s;
+  }
+  .btn-ghost:hover{border-color:var(--ink-dim);}
+
+  /* ---------- INSTRUMENT PANEL (signature element) ---------- */
+  .panel{
+    margin-top:64px;
+    background:linear-gradient(180deg, #141F36, #0F1728);
+    border:1px solid var(--panel-line);
+    border-radius:8px;
+    padding:0;
+    overflow:hidden;
+    box-shadow:0 40px 80px -40px rgba(0,0,0,0.6);
+  }
+  .panel-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 22px;
+    border-bottom:1px solid var(--panel-line);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--ink-dim);
+  }
+  .panel-dots{display:flex; gap:6px;}
+  .panel-dots span{width:8px; height:8px; border-radius:50%; background:var(--panel-line);}
+  .panel-body{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:0;
+  }
+  @media (max-width:820px){ .panel-body{grid-template-columns:1fr;} }
+
+  .altimeter{
+    padding:32px 32px 20px;
+    border-right:1px solid var(--panel-line);
+  }
+  .altimeter-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.08em;
+    margin-bottom:6px;
+  }
+  .altimeter-value{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:42px; font-weight:600; color:var(--ink);
+    display:flex; align-items:baseline; gap:10px;
+  }
+  .altimeter-value .delta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px; font-weight:500; color:var(--teal);
+  }
+  .trace{ margin-top:18px; height:70px; }
+  .trace svg{width:100%; height:100%; display:block;}
+  .trace path.line{
+    fill:none; stroke:var(--teal); stroke-width:2;
+    stroke-dasharray:400; stroke-dashoffset:400;
+    animation:draw 1.8s ease-out forwards .3s;
+  }
+  .trace path.area{ fill:url(#tealFade); opacity:0; animation:fadein 1s ease-out forwards 1.4s; }
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+  @keyframes fadein{ to{opacity:1;} }
+
+  .console{
+    padding:22px 24px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+  }
+  .console-label{
+    font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.08em;
+    margin-bottom:14px;
+  }
+  .log-line{
+    display:flex; gap:10px; padding:9px 0;
+    border-top:1px solid var(--panel-line);
+    color:var(--ink-dim);
+    opacity:0; animation:rise .5s ease-out forwards;
+  }
+  .log-line:first-of-type{border-top:none;}
+  .log-line:nth-child(2){animation-delay:.6s;}
+  .log-line:nth-child(3){animation-delay:.9s;}
+  .log-line:nth-child(4){animation-delay:1.2s;}
+  .log-line:nth-child(5){animation-delay:1.5s;}
+  @keyframes rise{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
+  .log-tag{
+    flex-shrink:0; font-weight:600;
+    padding:1px 6px; border-radius:2px; font-size:10.5px;
+    height:fit-content;
+  }
+  .log-tag.idle{background:rgba(147,161,183,0.12); color:var(--ink-dim);}
+  .log-tag.save{background:rgba(79,209,197,0.12); color:var(--teal);}
+  .log-tag.review{background:rgba(245,166,35,0.12); color:var(--amber);}
+  .log-text{color:var(--ink);}
+
+  /* ---------- SECTION SCAFFOLDING ---------- */
+  section{position:relative; z-index:1; padding:88px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .kicker{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--amber);
+    text-transform:uppercase; letter-spacing:0.08em;
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:clamp(26px,3.4vw,36px);
+    letter-spacing:-0.01em; line-height:1.15;
+  }
+  .section-head p{margin-top:16px; color:var(--ink-dim); font-size:16px; line-height:1.6;}
+
+  /* ---------- DUAL BUYER ---------- */
+  .split{
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--panel-line); border:1px solid var(--panel-line); border-radius:8px; overflow:hidden;
+  }
+  @media (max-width:720px){ .split{grid-template-columns:1fr;} }
+  .split-col{background:var(--panel); padding:36px 32px;}
+  .split-col .role{
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim);
+    text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;
+  }
+  .split-col h3{font-family:'Space Grotesk', sans-serif; font-size:22px; font-weight:600; margin-bottom:12px;}
+  .split-col p{color:var(--ink-dim); font-size:15px; line-height:1.6;}
+  .split-col.eng .role{color:var(--teal);}
+  .split-col.mgr .role{color:var(--amber);}
+
+  /* ---------- FEATURES ---------- */
+  .features{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:1px;
+    background:var(--panel-line); border:1px solid var(--panel-line); border-radius:8px; overflow:hidden;
+  }
+  @media (max-width:720px){ .features{grid-template-columns:1fr;} }
+  .feature{
+    background:var(--panel); padding:34px 30px;
+    transition:background .2s;
+  }
+  .feature:hover{background:#16213A;}
+  .feature .num{
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--amber);
+    margin-bottom:16px; display:block;
+  }
+  .feature h3{
+    font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:600;
+    margin-bottom:10px;
+  }
+  .feature p{color:var(--ink-dim); font-size:14.5px; line-height:1.6;}
+
+  /* ---------- REMEDIATION MODES ---------- */
+  .modes{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+  }
+  @media (max-width:900px){ .modes{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .modes{grid-template-columns:1fr;} }
+  .mode{
+    border:1px solid var(--panel-line); border-radius:8px; padding:24px 20px;
+    background:var(--panel);
+  }
+  .mode-icon{
+    width:32px; height:32px; margin-bottom:16px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--panel-line); border-radius:6px; color:var(--teal);
+  }
+  .mode h4{font-family:'Space Grotesk', sans-serif; font-size:15.5px; font-weight:600; margin-bottom:8px;}
+  .mode p{font-size:13.5px; color:var(--ink-dim); line-height:1.55;}
+  .undo-note{
+    margin-top:24px; display:flex; gap:12px; align-items:flex-start;
+    padding:18px 20px; border:1px dashed var(--panel-line); border-radius:8px;
+  }
+  .undo-note svg{flex-shrink:0; margin-top:2px; color:var(--amber);}
+  .undo-note p{font-size:14px; color:var(--ink-dim); line-height:1.6;}
+  .undo-note strong{color:var(--ink); font-weight:600;}
+
+  /* ---------- VISION / ROADMAP ---------- */
+  .vision-list{ display:flex; flex-direction:column; }
+  .vision-item{
+    display:grid; grid-template-columns:120px 1fr; gap:28px;
+    padding:26px 0; border-top:1px solid var(--panel-line);
+  }
+  .vision-item:last-child{border-bottom:1px solid var(--panel-line);}
+  @media (max-width:640px){ .vision-item{grid-template-columns:1fr; gap:6px;} }
+  .vision-phase{
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-dim);
+    text-transform:uppercase; letter-spacing:0.06em; padding-top:3px;
+  }
+  .vision-item h4{font-family:'Space Grotesk', sans-serif; font-size:17px; font-weight:600; margin-bottom:6px;}
+  .vision-item p{color:var(--ink-dim); font-size:14.5px; line-height:1.6; max-width:560px;}
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust{
+    text-align:center; max-width:680px; margin:0 auto;
+  }
+  .trust h2{margin-bottom:18px;}
+  .trust p{color:var(--ink-dim); font-size:16.5px; line-height:1.7;}
+
+  /* ---------- CTA ---------- */
+  .cta-band{
+    border:1px solid var(--panel-line); border-radius:10px;
+    background:linear-gradient(135deg, #141F36, #0F1728);
+    padding:56px 40px; text-align:center;
+  }
+  .cta-band h2{margin-bottom:14px;}
+  .cta-band p{color:var(--ink-dim); font-size:16px; max-width:480px; margin:0 auto 30px;}
+
+  footer{
+    border-top:1px solid var(--panel-line);
+    padding:32px 28px; font-size:13px; color:var(--ink-dim);
+  }
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L4 14h5l-2 8 9-13h-6l2-7z" stroke="#F5A623" stroke-width="1.6" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      CloudPilot
+    </div>
+    <div class="navlinks">
+      <a href="#features">Features</a>
+      <a href="#vision">Vision</a>
+      <a href="#trust">How it works</a>
+    </div>
+    <a href="#cta" class="nav-cta">Become a design partner</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Live AWS scan · engineering + finance in one view</div>
+  <h1>Your AWS bill has a <span class="accent">flight recorder</span> now.</h1>
+  <p class="sub">CloudPilot watches your infrastructure, explains what's burning money in plain language, and fixes it the way you'd want a co-pilot to — never behind your back.</p>
+  <div class="hero-ctas">
+    <a href="#cta" class="btn-primary">Get early access</a>
+    <a href="#features" class="btn-ghost">See how it works</a>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <span>cloudpilot · account-prod-us-east-1</span>
+      <div class="panel-dots"><span></span><span></span><span></span></div>
+    </div>
+    <div class="panel-body">
+      <div class="altimeter">
+        <div class="altimeter-label">Monthly spend trajectory</div>
+        <div class="altimeter-value">$18,240 <span class="delta">↓ 23% vs. last mo.</span></div>
+        <div class="trace">
+          <svg viewBox="0 0 300 70" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="tealFade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4FD1C5" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#4FD1C5" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="area" d="M0,20 L40,26 L80,18 L120,34 L160,30 L200,46 L240,40 L300,58 L300,70 L0,70 Z"/>
+            <path class="line" d="M0,20 L40,26 L80,18 L120,34 L160,30 L200,46 L240,40 L300,58"/>
+          </svg>
+        </div>
+      </div>
+      <div class="console">
+        <div class="console-label">Recommendation feed</div>
+        <div class="log-line"><span class="log-tag save">SAVE</span><span class="log-text">3 idle EBS volumes, unattached 40+ days — $412/mo</span></div>
+        <div class="log-line"><span class="log-tag review">REVIEW</span><span class="log-text">Right-size m5.4xlarge → m5.xlarge on api-worker</span></div>
+        <div class="log-line"><span class="log-tag save">SAVE</span><span class="log-text">RDS snapshot older than retention policy — $58/mo</span></div>
+        <div class="log-line"><span class="log-tag idle">IDLE</span><span class="log-text">Dev cluster running nights/weekends, 0% traffic</span></div>
+        <div class="log-line"><span class="log-tag review">REVIEW</span><span class="log-text">NAT gateway redundant with existing VPC peer</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="who">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Built for two people in the same Slack channel</div>
+      <h2>The engineer wants less toil. The manager wants a number for the board deck. CloudPilot gives both a reason to open it.</h2>
+    </div>
+    <div class="split">
+      <div class="split-col eng">
+        <div class="role">For the engineer</div>
+        <h3>Stop firefighting cost tickets</h3>
+        <p>No dashboards to babysit. CloudPilot flags waste as it happens, explains the "why" in the same terms you'd use in a PR review, and drops a fix into your workflow — not a support queue.</p>
+      </div>
+      <div class="split-col mgr">
+        <div class="role">For the manager</div>
+        <h3>A number you can defend</h3>
+        <p>A running total of savings, verified and timestamped, in language that survives a budget review. No more "we think we saved something" going into the all-hands.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">What's running today</div>
+      <h2>Four things CloudPilot does before you've had your coffee</h2>
+      <p>These aren't roadmap slides — this is the MVP, scanning real accounts right now.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <span class="num">01</span>
+        <h3>Continuous EC2 scanning</h3>
+        <p>CloudPilot reads your running instances, volumes, and traffic patterns on a schedule — no manual exports, no CSV wrangling in a spreadsheet.</p>
+      </div>
+      <div class="feature">
+        <span class="num">02</span>
+        <h3>AI-generated recommendations</h3>
+        <p>Every finding comes with a plain-English explanation of the waste, the blast radius of fixing it, and the expected dollar impact — not just a red flag.</p>
+      </div>
+      <div class="feature">
+        <span class="num">03</span>
+        <h3>One-click remediation</h3>
+        <p>Apply a fix in the same interface you found it in. No context-switching into the AWS console to hunt down the resource again.</p>
+      </div>
+      <div class="feature">
+        <span class="num">04</span>
+        <h3>Built-in undo</h3>
+        <p>Every remediation is reversible by default. If a fix turns out to be wrong for your setup, you're one click from exactly where you started.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="remediation">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Trust is the feature</div>
+      <h2>You choose how hands-off CloudPilot gets</h2>
+      <p>Every recommendation can be actioned four different ways — pick per-resource, per-team, or set a default and move on.</p>
+    </div>
+    <div class="modes">
+      <div class="mode">
+        <div class="mode-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h4>Step-by-step instructions</h4>
+        <p>Read exactly what to click in the AWS console. You stay fully in control, CloudPilot just does the research.</p>
+      </div>
+      <div class="mode">
+        <div class="mode-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h4>PR to your infra repo</h4>
+        <p>Get a pull request against your Terraform or CDK, reviewed and merged the same way as any other change.</p>
+      </div>
+      <div class="mode">
+        <div class="mode-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h4>Auto-approve execution</h4>
+        <p>For the fixes your team trusts every time — like clearing orphaned snapshots — let CloudPilot just handle it.</p>
+      </div>
+      <div class="mode">
+        <div class="mode-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M8 3v4M16 3v4M4 9h16M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <h4>Runnable script</h4>
+        <p>Grab a standalone script to run in your own CI, on your own schedule, with your own approvals gating it.</p>
+      </div>
+    </div>
+    <div class="undo-note">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p><strong>Nothing is permanent by accident.</strong> Every path — even auto-approve — writes to an audit trail with a one-click undo. Handing an AI access to your AWS account only works if reversing it is as easy as granting it.</p>
+    </div>
+  </div>
+</section>
+
+<section id="vision">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Where this is going</div>
+      <h2>The MVP finds waste. The vision is an autopilot for infrastructure decisions.</h2>
+      <p>Scanning EC2 is the first instrument on the panel. Here's the rest of the dashboard we're building toward.</p>
+    </div>
+    <div class="vision-list">
+      <div class="vision-item">
+        <div class="vision-phase">Next</div>
+        <div>
+          <h4>Multi-service, multi-cloud coverage</h4>
+          <p>Beyond EC2 into RDS, S3, Lambda, and load balancers — then GCP and Azure, so the same panel works regardless of where a team landed.</p>
+        </div>
+      </div>
+      <div class="vision-item">
+        <div class="vision-phase">Next</div>
+        <div>
+          <h4>A policy engine, not just a queue of suggestions</h4>
+          <p>Set standing rules — "auto-approve anything under $50/mo," "always PR, never auto-execute in prod" — and CloudPilot enforces them without you re-deciding every time.</p>
+        </div>
+      </div>
+      <div class="vision-item">
+        <div class="vision-phase">Later</div>
+        <div>
+          <h4>The manager's report writes itself</h4>
+          <p>A scheduled, board-ready summary of verified savings, trends, and forecasted spend — delivered to Slack or email, no dashboard login required.</p>
+        </div>
+      </div>
+      <div class="vision-item">
+        <div class="vision-phase">Later</div>
+        <div>
+          <h4>Cost review, built into code review</h4>
+          <p>CloudPilot comments directly on infrastructure pull requests before they merge — catching the oversized instance or forgotten dev resource before it ever hits the bill.</p>
+        </div>
+      </div>
+      <div class="vision-item">
+        <div class="vision-phase">North star</div>
+        <div>
+          <h4>An infrastructure co-pilot lean teams actually trust</h4>
+          <p>Not a bot that touches your AWS account and hopes for the best — a system that earns the right to act autonomously, one reversible decision at a time, until "autopilot" stops sounding like a leap of faith.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trust">
+  <div class="wrap trust">
+    <div class="kicker" style="justify-content:center; display:flex;">Why access is earned, not assumed</div>
+    <h2>We know handing over AWS credentials to an early-stage tool is a real ask.</h2>
+    <p>That's why CloudPilot starts read-only. See the recommendations, see the dollar impact, see exactly what would change — before granting anything more. Trust builds one correct, undoable action at a time, not on day one.</p>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>We're looking for 2–3 design partners</h2>
+      <p>Get hands-on input into what CloudPilot builds next, in exchange for early access and a direct line to shape the roadmap above.</p>
+      <a href="#" class="btn-primary">Become a design partner</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>CloudPilot — AI-powered AWS cost optimization for lean engineering teams.</span>
+    <span class="mono">status: pre-launch · MVP live</span>
+  </div>
+</footer>
+
+</body>
+</html>

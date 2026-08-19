@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CloudPilot — your infrastructure finally has someone you can talk to</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,680&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M7 18a5 5 0 0 1-.6-9.97A6 6 0 0 1 17.9 9.1 4.5 4.5 0 0 1 17 18H7Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="brand-name">CloudPilot</div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#knowledge">Knowledge</a>
+      <a href="#safety">Safety</a>
+      <a href="#pricing">Early access</a>
+    </div>
+
+    <div class="nav-right">
+      <a class="nav-signin" href="#">Log in</a>
+      <a class="btn btn-primary" href="#pricing">Connect AWS, free</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+
+    <div>
+      <div class="eyebrow">AI for engineering operations</div>
+
+      <h1>
+        Your infrastructure finally has
+        <span class="accent">someone you can talk to.</span>
+      </h1>
+
+      <p class="hero-sub">
+        CloudPilot understands your systems, remembers how your organization works,
+        and helps you investigate problems, control costs, and safely make changes —
+        through conversation.
+      </p>
+
+      <div class="hero-starting">
+        <b>Starting with AWS.</b> Understand what you have, why it exists, what needs attention,
+        and what you can safely do about it.
+      </div>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#pricing">Connect AWS, free</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+
+      <div class="hero-trust">
+        🔒 Start read-only · no card required · you approve changes
+      </div>
+    </div>
+
+    <div class="hero-visual">
+
+      <div class="chat-row">
+        <div class="chat-label">You</div>
+        <div class="user-message">
+          Why did our AWS bill jump this month?
+        </div>
+      </div>
+
+      <div class="chat-row">
+        <div class="chat-label">CloudPilot</div>
+        <div class="pilot-message">
+          Most of the increase is coming from <strong>analytics-prod</strong>.
+          Two EC2 instances were added 18 days ago and are contributing roughly
+          <span class="pilot-highlight">$340/month</span>.
+        </div>
+      </div>
+
+      <div class="chat-row">
+        <div class="chat-label">You</div>
+        <div class="user-message">
+          Do we still need both?
+        </div>
+      </div>
+
+      <div class="chat-row">
+        <div class="chat-label">CloudPilot</div>
+        <div class="pilot-message">
+          The secondary instance looks intentional. Your team previously identified it
+          as part of the production recovery setup, so I wouldn't remove it.
+          <br><br>
+          The primary instance is running continuously but has very low utilization.
+          I can investigate that one instead.
+        </div>
+      </div>
+
+      <div class="pilot-actions">
+        <button class="rec-btn primary">Investigate primary →</button>
+        <button class="rec-btn">Show me the account</button>
+      </div>
+
+      <div class="memory-note">
+        ✦ Using AWS data + organizational knowledge
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<div class="founder">
+  <div class="wrap">
+    <div class="founder-badge"></div>
+
+    <p>
+      <b>CloudPilot starts with AWS, but it isn't another AWS dashboard.</b>
+      The goal is an intelligent layer between engineers and everything their software
+      depends on — infrastructure, operational context, organizational knowledge,
+      and eventually the tools around it.
+    </p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="eyebrow">The problem</div>
+
+      <h2>Your systems have plenty of data. They don't understand why anything exists.</h2>
+
+      <p>
+        Engineers spend too much time piecing together infrastructure data,
+        billing information, documentation, tags, old decisions, and tribal knowledge
+        before they can answer a simple question or safely make a change.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+
+      <div class="problem-card">
+        <div class="glyph">☁️</div>
+
+        <h3>Your tools know data, not intent</h3>
+
+        <p>
+          AWS can tell you CPU utilization and monthly spend.
+          It can't tell you why an instance exists, who depends on it,
+          or whether low utilization is intentional.
+        </p>
+      </div>
+
+      <div class="problem-card">
+        <div class="glyph">🕵️</div>
+
+        <h3>Every answer becomes detective work</h3>
+
+        <p>
+          CloudWatch, billing, Terraform, tags, docs, tickets, and conversations
+          all hold part of the answer. Engineers have to reconstruct the story.
+        </p>
+      </div>
+
+      <div class="problem-card">
+        <div class="glyph">🧠</div>
+
+        <h3>Your organization forgets</h3>
+
+        <p>
+          Why was this bucket created? Who owns this instance?
+          Why can't this service be stopped? Important context lives in people's heads
+          and disappears when teams change.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section how" id="how">
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="eyebrow">How CloudPilot works</div>
+
+      <h2>Understand your systems. Remember the context. Help when you ask. Act when you approve.</h2>
+
+      <p>
+        CloudPilot combines live infrastructure information with the knowledge your
+        organization builds over time.
+      </p>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">01</div>
+
+        <h3>Understand</h3>
+
+        <p>
+          CloudPilot connects to the systems your software runs on and understands
+          what is actually there — resources, configuration, usage, spend, and relationships.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02</div>
+
+        <h3>Remember</h3>
+
+        <p>
+          It builds organizational knowledge over time: ownership, purpose,
+          infrastructure relationships, important decisions, and things your team tells it.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">03</div>
+
+        <h3>Help</h3>
+
+        <p>
+          Ask naturally: Why is this expensive? What is this bucket for?
+          What's running in production? What needs my attention?
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">04</div>
+
+        <h3>Act</h3>
+
+        <p>
+          When you want something changed, CloudPilot can guide you, generate the change,
+          open a pull request, or execute it — with confirmation and safeguards.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="knowledge">
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="eyebrow">Organizational knowledge</div>
+
+      <h2>The more CloudPilot understands your organization, the more useful it becomes.</h2>
+
+      <p>
+        Infrastructure data tells CloudPilot what exists.
+        Organizational knowledge helps it understand what those resources mean to you.
+      </p>
+    </div>
+
+    <div class="knowledge-grid">
+
+      <div class="knowledge-col">
+        <div class="knowledge-tag">What exists</div>
+
+        <h3>Live infrastructure</h3>
+
+        <p>
+          Resources, regions, tags, configuration, usage, cost,
+          and relationships pulled from the systems you actually use.
+        </p>
+      </div>
+
+      <div class="knowledge-col mid">
+        <div class="knowledge-tag">What it means</div>
+
+        <h3>Organizational context</h3>
+
+        <p>
+          This bucket stores customer uploads. That EC2 instance is a failover server.
+          This resource belongs to production. This service shouldn't be stopped overnight.
+        </p>
+      </div>
+
+      <div class="knowledge-col">
+        <div class="knowledge-tag">What you've learned</div>
+
+        <h3>Team knowledge</h3>
+
+        <p>
+          CloudPilot can remember useful context your team has already provided,
+          so the next question doesn't start from zero.
+        </p>
+      </div>
+
+    </div>
+
+    <p class="knowledge-note">
+      <b>That's the difference between finding an idle resource and understanding one.</b>
+      CloudPilot should know enough context to recognize that something can look wasteful
+      without actually being unnecessary.
+    </p>
+
+  </div>
+</section>
+
+<section class="section" id="safety">
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="eyebrow">From answer to action</div>
+
+      <h2>Conversation doesn't mean giving AI unrestricted access to production.</h2>
+
+      <p>
+        CloudPilot separates understanding from execution.
+        It can inspect, explain, and recommend before anything is changed.
+      </p>
+    </div>
+
+    <div class="safety-callout">
+
+      <div>
+        <h3>You stay in control</h3>
+
+        <p>
+          CloudPilot can start read-only. When a change is requested,
+          it explains what will happen and waits for the appropriate approval
+          before execution.
+        </p>
+      </div>
+
+      <div>
+        <h3>Different changes can use different paths</h3>
+
+        <p>
+          A simple operational action might be performed directly.
+          Infrastructure changes can become CLI instructions or a pull request
+          you review before anything touches production.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="cta" id="pricing">
+
+  <div class="eyebrow eyebrow--center">
+    Early access
+  </div>
+
+  <h2>
+    Start by asking CloudPilot what it knows about your AWS environment.
+  </h2>
+
+  <p>
+    Connect your account, ask questions about your infrastructure,
+    investigate waste, and start giving CloudPilot the context that normally
+    lives only inside your team's heads.
+  </p>
+
+  <div class="cta-actions">
+    <a class="btn btn-primary" href="#">Connect AWS, free</a>
+    <a class="btn btn-ghost" href="#">Talk to the founder</a>
+  </div>
+
+  <div class="cta-fine">
+    Start read-only · no credit card · you approve changes
+  </div>
+
+</section>
+
+<footer>
+  <div class="wrap">
+
+    <div class="brand-name footer-brand-name">
+      CloudPilot
+    </div>
+
+    <div>
+      © 2026 CloudPilot · Intelligence for everything around your code
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
+
+
+<!--
+FUTURE TEXT
+
+
+Yes — and I think **Organizational Knowledge may actually be the piece that makes the long-term CloudPilot vision click for a non-engineer**.
+
+I wouldn't explain it as “organizational knowledge” immediately, though. That's your internal/product term. On the landing page, I'd explain the *experience* first:
+
+### The simple idea
+
+**CloudPilot doesn't just understand your cloud. It understands your organization.**
+
+Over time, CloudPilot learns what your infrastructure is for, who owns it, what projects depend on it, what your team is working on, and what has happened before.
+
+That changes CloudPilot from:
+
+> “AI that can operate AWS”
+
+into:
+
+> **“AI that understands what's going on across your technology organization.”**
+
+That's much bigger.
+
+### What does “knows your organization” actually mean?
+
+I'd probably show concrete examples rather than technical architecture:
+
+* **Your infrastructure** — what's running, what it costs, what depends on what, what's healthy, and what's being wasted.
+* **Your projects** — what your team is building, deploying, fixing, and planning.
+* **Your people** — who owns a service, who worked on something recently, and who might know about a problem.
+* **Your conversations** — important context from tools like Slack and email, when connected and authorized.
+* **Your work** — tickets, incidents, tasks, deployments, pull requests, and decisions from tools such as Jira.
+* **Your history** — what changed, why it changed, what CloudPilot did, and what happened afterward.
+
+And then the really compelling sentence is something like:
+
+> **CloudPilot connects the dots between all of them.**
+
+That's the part I'd emphasize.
+
+Because lots of software can search Slack. Lots can read Jira. Lots can inspect AWS.
+
+The interesting CloudPilot vision is **understanding the relationships between those systems.**
+
+For example, imagine asking:
+
+> **“Why is our AWS bill higher this month?”**
+
+A basic cloud tool might say:
+
+> EC2 spending increased by $1,240.
+
+CloudPilot's long-term answer could be closer to:
+
+> EC2 spending increased after the team launched the new image-processing service two weeks ago. The additional servers belong to the Kite project. Based on the Jira launch ticket and recent activity, three were created for load testing but are still running. Sarah's team owns them. Turning those three off could save approximately $620/month.
+
+**That's Organizational Knowledge.**
+
+It's not merely retrieving information. It's understanding that:
+
+**AWS resource → belongs to service → belongs to project → owned by team → created because of work → discussed somewhere → costs money → may now be unnecessary.**
+
+That is a *fantastic* thing to communicate visually on the site eventually.
+
+---
+
+### Then the four remediation types fit naturally
+
+I absolutely think you can explain the four types. They're surprisingly understandable even to a non-engineer because they're really about **how much control you want CloudPilot to have**.
+
+I might avoid calling the section “Remediation Types” on the public page and instead call it something like:
+
+## You decide how CloudPilot helps.
+
+Then:
+
+**Instructions**
+*Show me how.*
+CloudPilot explains exactly what needs to be changed and walks your team through it.
+
+**CLI**
+*Give me the command.*
+For technical teams that want a quick, ready-to-run solution.
+
+**Pull Request**
+*Prepare the change for my team.*
+CloudPilot creates the infrastructure change so your team can review and approve it through their normal process.
+
+**Automatic**
+*Take care of it for me.*
+For approved actions, CloudPilot can safely make the change directly.
+
+That communicates something important beyond features:
+
+> **CloudPilot can meet a company at whatever level of automation they're comfortable with.**
+
+A small developer might say **“just fix it.”**
+
+A larger company might say **“absolutely not — create a PR and let our engineers approve it.”**
+
+Both can use the same product.
+
+---
+
+And this gives your landing page a really nice progression.
+
+You don't have to cram everything into the hero. I'd keep the beginning we already have extremely simple:
+
+**Your cloud shouldn't require a team of experts.**
+
+Then as someone scrolls, CloudPilot gets progressively bigger:
+
+**1. Understand**
+CloudPilot understands what's running in your cloud.
+
+**2. Discover**
+It finds waste, problems, and opportunities.
+
+**3. Ask**
+Talk to it instead of digging through complicated tools.
+
+**4. Act**
+Choose Instructions → CLI → Pull Request → Automatic.
+
+**5. Remember**
+CloudPilot builds knowledge about your infrastructure and organization over time.
+
+**6. Connect**
+AWS is only the beginning. Connect the tools where your company already works.
+
+**7. Understand the whole picture**
+CloudPilot connects infrastructure, projects, people, conversations, work, and history.
+
+And *then* you can land the big vision:
+
+> ### One place that understands what's happening across your technology organization.
+>
+> Your cloud. Your projects. Your tools. Your team's knowledge. CloudPilot brings the context together so you can ask what's happening, understand why it matters, and decide what to do next.
+
+That last concept is where I think CloudPilot stops sounding like **“an AWS cost optimization startup”** and starts sounding like a much larger company.
+
+AWS is the first place CloudPilot develops deep understanding. Organizational Knowledge is what potentially allows that understanding to expand far beyond AWS.
+
+
+-->

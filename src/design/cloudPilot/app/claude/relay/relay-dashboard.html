@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relay — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EEF1EC;
+    --ink: #1C2321;
+    --ink-soft: #5B655F;
+    --card: #FFFFFF;
+    --border: #DDE3DC;
+    --amber: #E2A33D;
+    --amber-soft: #FBF0DC;
+    --sage: #4F7869;
+    --sage-soft: #E4EEE9;
+    --slate: #5B7C99;
+    --slate-soft: #E7EDF2;
+    --danger: #C1543F;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .brand { font-family: 'Space Grotesk', sans-serif; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- Layout shell ---------- */
+  .app {
+    display: grid;
+    grid-template-columns: 232px 1fr;
+    grid-template-rows: 64px 1fr;
+    grid-template-areas:
+      "topbar topbar"
+      "sidebar main";
+    min-height: 100vh;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    grid-area: topbar;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+  }
+
+  .brand-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: linear-gradient(135deg, var(--amber) 0%, var(--sage) 100%);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .brand-mark::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 10px; height: 2px;
+    background: var(--card);
+    transform: translate(-50%, -50%) rotate(-35deg);
+    border-radius: 2px;
+    box-shadow: 4px 3px 0 var(--card);
+  }
+
+  .search {
+    flex: 1;
+    max-width: 420px;
+    margin: 0 32px;
+    position: relative;
+  }
+  .search input {
+    width: 100%;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 14px 9px 34px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+  .search input::placeholder { color: var(--ink-soft); }
+  .search::before {
+    content: "";
+    position: absolute;
+    left: 12px; top: 50%;
+    width: 13px; height: 13px;
+    transform: translateY(-50%);
+    border: 1.5px solid var(--ink-soft);
+    border-radius: 50%;
+  }
+  .search::after {
+    content: "";
+    position: absolute;
+    left: 21px; top: 60%;
+    width: 6px; height: 1.5px;
+    background: var(--ink-soft);
+    transform: rotate(45deg);
+  }
+
+  .topbar-right { display: flex; align-items: center; gap: 18px; }
+
+  .bell {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    font-size: 15px;
+  }
+  .bell .dot {
+    position: absolute;
+    top: -3px; right: -3px;
+    width: 9px; height: 9px;
+    background: var(--danger);
+    border-radius: 50%;
+    border: 2px solid var(--card);
+  }
+
+  .avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--slate);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12.5px; font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    grid-area: sidebar;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .nav-group-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    padding: 0 10px 8px;
+    font-weight: 500;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+  .nav-item .left { display: flex; align-items: center; gap: 10px; }
+  .nav-item .ico {
+    width: 16px; height: 16px;
+    display: inline-block;
+    border-radius: 4px;
+    background: var(--border);
+  }
+  .nav-item.active {
+    background: var(--sage-soft);
+    color: var(--sage);
+  }
+  .nav-item.active .ico { background: var(--sage); }
+  .nav-item:hover:not(.active) { background: var(--paper); color: var(--ink); }
+
+  .badge {
+    background: var(--amber);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 5px;
+  }
+
+  .list-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .new-list-btn {
+    margin-top: 4px;
+    border: 1px dashed var(--border);
+    border-radius: 7px;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: left;
+    background: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .new-list-btn:hover { border-color: var(--sage); color: var(--sage); }
+
+  /* ---------- Main ---------- */
+  .main {
+    grid-area: main;
+    padding: 32px 40px 60px;
+    max-width: 980px;
+  }
+
+  .page-head {
+    margin-bottom: 28px;
+  }
+  .page-head .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .page-head h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-top: 4px;
+  }
+
+  section { margin-bottom: 38px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .section-head h2 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .section-head .count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Request cards (the signature element) ---------- */
+  .requests {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .request-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .req-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--slate-soft);
+    color: var(--slate);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    flex-shrink: 0;
+  }
+
+  .req-body { flex: 1; min-width: 0; }
+  .req-body .from {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+  .req-body .from strong { color: var(--ink); font-weight: 600; }
+  .req-body .task-text {
+    font-size: 14.5px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .req-meta {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .tag {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: var(--paper);
+    color: var(--ink-soft);
+  }
+  .tag.due { color: var(--danger); background: #FBEAE6; }
+
+  .stamp-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .stamp {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.12s ease;
+  }
+  .stamp:hover { transform: translateY(-1px); }
+  .stamp.accept { color: var(--sage); border-color: var(--sage); }
+  .stamp.accept:hover { background: var(--sage-soft); }
+  .stamp.decline { color: var(--danger); border-color: #E8C3BB; }
+  .stamp.decline:hover { background: #FBEAE6; }
+
+  /* ---------- Today list ---------- */
+  .task-list {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .task-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .task-row:last-child { border-bottom: none; }
+
+  .checkbox {
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .checkbox.done {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: white;
+    font-size: 11px;
+  }
+
+  .task-row .label {
+    flex: 1;
+    font-size: 14px;
+  }
+  .task-row.done .label {
+    color: var(--ink-soft);
+    text-decoration: line-through;
+  }
+
+  .from-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    background: var(--paper);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+  .from-pill .mini-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--slate);
+  }
+
+  .list-pill {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  /* ---------- Two column lower ---------- */
+  .lower {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .panel h3 {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .activity-item {
+    display: flex;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .activity-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .activity-item .a-avatar {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--sage-soft);
+    color: var(--sage);
+    font-size: 10px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .activity-item .a-text { color: var(--ink-soft); line-height: 1.5; }
+  .activity-item .a-text strong { color: var(--ink); font-weight: 600; }
+  .activity-item .a-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    margin-left: auto;
+    padding-top: 2px;
+    white-space: nowrap;
+  }
+
+  .status-chip {
+    font-size: 10.5px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .status-chip.accepted { background: var(--sage-soft); color: var(--sage); }
+  .status-chip.declined { background: #FBEAE6; color: var(--danger); }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      Relay
+    </div>
+    <div class="search">
+      <input type="text" placeholder="Search tasks, people, lists...">
+    </div>
+    <div class="topbar-right">
+      <div class="bell">🔔<span class="dot"></span></div>
+      <div class="avatar">DK</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div>
+      <div class="nav-group-label">Menu</div>
+      <div class="nav-item active">
+        <span class="left"><span class="ico"></span>Inbox</span>
+        <span class="badge">3</span>
+      </div>
+      <div class="nav-item">
+        <span class="left"><span class="ico"></span>My Tasks</span>
+      </div>
+      <div class="nav-item">
+        <span class="left"><span class="ico"></span>Sent</span>
+      </div>
+      <div class="nav-item">
+        <span class="left"><span class="ico"></span>Team</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="nav-group-label">Lists</div>
+      <div class="nav-item">
+        <span class="left"><span class="list-dot" style="background:var(--slate)"></span>Personal</span>
+      </div>
+      <div class="nav-item">
+        <span class="left"><span class="list-dot" style="background:var(--sage)"></span>Platform Team</span>
+      </div>
+      <div class="nav-item">
+        <span class="left"><span class="list-dot" style="background:var(--amber)"></span>Sprint Cleanup</span>
+      </div>
+      <button class="new-list-btn">+ New list</button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <div class="page-head">
+      <div class="eyebrow">MONDAY, AUGUST 17</div>
+      <h1>Good morning, David</h1>
+    </div>
+
+    <!-- Needs your response -->
+    <section>
+      <div class="section-head">
+        <h2>Needs your response</h2>
+        <span class="count">3 pending</span>
+      </div>
+      <div class="requests">
+
+        <div class="request-card">
+          <div class="req-avatar">SP</div>
+          <div class="req-body">
+            <div class="from">From <strong>Sarah Park</strong> · Platform Team</div>
+            <div class="task-text">Rotate the staging DB credentials before Thursday's audit</div>
+            <div class="req-meta">
+              <span class="tag due">Due Thu</span>
+              <span class="tag">Platform Team</span>
+            </div>
+          </div>
+          <div class="stamp-actions">
+            <div class="stamp accept">✓</div>
+            <div class="stamp decline">✕</div>
+          </div>
+        </div>
+
+        <div class="request-card">
+          <div class="req-avatar">JL</div>
+          <div class="req-body">
+            <div class="from">From <strong>Jordan Lee</strong> · you</div>
+            <div class="task-text">Take a first pass on the onboarding email copy</div>
+            <div class="req-meta">
+              <span class="tag">No due date</span>
+            </div>
+          </div>
+          <div class="stamp-actions">
+            <div class="stamp accept">✓</div>
+            <div class="stamp decline">✕</div>
+          </div>
+        </div>
+
+        <div class="request-card">
+          <div class="req-avatar">MT</div>
+          <div class="req-body">
+            <div class="from">From <strong>Maya Torres</strong> · Sprint Cleanup</div>
+            <div class="task-text">Close out the stale tickets in the EC2 remediation backlog</div>
+            <div class="req-meta">
+              <span class="tag due">Due tomorrow</span>
+              <span class="tag">Sprint Cleanup</span>
+            </div>
+          </div>
+          <div class="stamp-actions">
+            <div class="stamp accept">✓</div>
+            <div class="stamp decline">✕</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Today -->
+    <section>
+      <div class="section-head">
+        <h2>Today</h2>
+        <span class="count">2 of 5 done</span>
+      </div>
+      <div class="task-list">
+        <div class="task-row done">
+          <div class="checkbox done">✓</div>
+          <div class="label">Push the anomaly-detection fix to staging</div>
+          <span class="list-pill">Personal</span>
+        </div>
+        <div class="task-row done">
+          <div class="checkbox done">✓</div>
+          <div class="label">Reply to Sarah re: audit checklist</div>
+          <span class="from-pill"><span class="mini-dot"></span>Sarah Park</span>
+        </div>
+        <div class="task-row">
+          <div class="checkbox"></div>
+          <div class="label">Draft outreach message for 3 new DevOps leads</div>
+          <span class="list-pill">Personal</span>
+        </div>
+        <div class="task-row">
+          <div class="checkbox"></div>
+          <div class="label">Rotate the staging DB credentials</div>
+          <span class="from-pill"><span class="mini-dot"></span>Sarah Park</span>
+        </div>
+        <div class="task-row">
+          <div class="checkbox"></div>
+          <div class="label">Review Maya's remediation PR</div>
+          <span class="list-pill">Sprint Cleanup</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lower two-column -->
+    <div class="lower">
+
+      <div class="panel">
+        <h3>This week</h3>
+        <div class="task-list" style="border:none;">
+          <div class="task-row">
+            <div class="checkbox"></div>
+            <div class="label">Write CloudPilot changelog for v0.4</div>
+            <span class="list-pill">Personal</span>
+          </div>
+          <div class="task-row">
+            <div class="checkbox"></div>
+            <div class="label">Set up 1:1 with Jordan re: onboarding flow</div>
+            <span class="list-pill">Platform Team</span>
+          </div>
+          <div class="task-row">
+            <div class="checkbox"></div>
+            <div class="label">Follow up with 5 discovery-call no-shows</div>
+            <span class="list-pill">Personal</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Team activity</h3>
+        <div class="activity-item">
+          <div class="a-avatar">JL</div>
+          <div class="a-text"><strong>Jordan</strong> accepted "Update the status page copy" <span class="status-chip accepted">accepted</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="a-avatar">MT</div>
+          <div class="a-text"><strong>Maya</strong> declined "Own the Q3 vendor review" <span class="status-chip declined">declined</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="a-avatar">SP</div>
+          <div class="a-text"><strong>Sarah</strong> sent you a new request</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
