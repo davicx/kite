@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 //import  functions from "../../functions/functions";
 //import useHello from '../../functions/hooks/useHello';
 
+const DEFAULT_GROUP_DESCRIPTION = "this is my new group so cool";
+
 async function getGroups(currentUser, api) {
   if(currentUser && currentUser != null) {
     //console.log("getGroups: " + currentUser)
@@ -11,8 +13,12 @@ async function getGroups(currentUser, api) {
    
   const groupURL = "http://localhost:3003/groups/user/" + currentUser; 
   const { data } = await api.get(groupURL)
+  const groups = data?.groups ?? data?.data ?? [];
 
-  return data
+  return groups.map((group) => ({
+    ...group,
+    groupDescription: group.groupDescription || DEFAULT_GROUP_DESCRIPTION
+  }))
 } 
 
 
@@ -25,7 +31,7 @@ const GroupList = (props) => {
     { refetchInterval: 10000000 }
   )
 
-  const groupList = data?.groups ?? [];
+  const groupList = data ?? [];
 
   return (
   <div className="groups">

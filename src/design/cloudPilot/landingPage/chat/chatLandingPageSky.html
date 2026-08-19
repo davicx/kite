@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudPilot — Your cloud, looked after.</title>
+  <style>
+    :root{
+      --sky:#dff3f4;
+      --sky-deep:#b9e1e4;
+      --cream:#fffaf0;
+      --paper:#fffdf7;
+      --leaf:#55785a;
+      --leaf-dark:#294a38;
+      --moss:#78966a;
+      --sage:#dce8d4;
+      --peach:#ef9c79;
+      --sun:#f2cf73;
+      --ink:#26332d;
+      --muted:#68756e;
+      --line:rgba(41,74,56,.14);
+      --shadow:0 22px 60px rgba(45,72,58,.12);
+      --radius:28px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 3%, rgba(120,150,106,.18), transparent 23rem),
+        linear-gradient(180deg,var(--sky) 0 640px,var(--cream) 640px 100%);
+    }
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+
+    .nav{
+      width:min(calc(100% - 40px),var(--max));
+      margin:auto;
+      height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:relative;
+      z-index:10;
+    }
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.03em;font-size:20px}
+    .brand-mark{
+      width:35px;height:35px;border-radius:13px 13px 17px 17px;
+      background:var(--leaf-dark);position:relative;box-shadow:inset 0 -5px 0 rgba(0,0,0,.08);
+    }
+    .brand-mark:before{
+      content:"";position:absolute;width:13px;height:8px;border:3px solid var(--sun);
+      border-top:0;border-radius:0 0 12px 12px;left:8px;top:9px;
+    }
+    .nav-links{display:flex;gap:30px;font-size:14px;color:#4d6258}
+    .nav-actions{display:flex;gap:10px;align-items:center}
+    .button{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      min-height:46px;padding:0 19px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.65);font-weight:700;font-size:14px;cursor:pointer;
+    }
+    .button.primary{background:var(--leaf-dark);color:white;border-color:var(--leaf-dark);box-shadow:0 9px 20px rgba(41,74,56,.18)}
+    .button.peach{background:var(--peach);color:#3d2c26;border-color:transparent}
+
+    .hero{
+      width:min(calc(100% - 40px),var(--max));
+      margin:45px auto 0;
+      display:grid;grid-template-columns:1.02fr .98fr;gap:70px;align-items:center;
+      min-height:500px;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.8);
+      color:var(--leaf-dark);font-size:13px;font-weight:750;
+    }
+    .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--moss)}
+    h1{
+      font-family:Georgia, "Times New Roman", serif;
+      font-size:clamp(54px,6vw,84px);line-height:.98;letter-spacing:-.055em;
+      margin:22px 0 22px;font-weight:500;max-width:720px;
+    }
+    h1 em{font-style:normal;color:var(--leaf)}
+    .hero-copy{font-size:19px;line-height:1.65;color:#53655d;max-width:600px}
+    .hero-actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+    .trust{display:flex;gap:18px;margin-top:20px;color:#66776f;font-size:12px;flex-wrap:wrap}
+    .trust span:before{content:"✓";color:var(--leaf);font-weight:900;margin-right:6px}
+
+    .scene{
+      position:relative;height:470px;border-radius:46% 46% 34% 34% / 36% 36% 20% 20%;
+      background:
+        radial-gradient(circle at 50% 20%,rgba(255,255,255,.9),transparent 18rem),
+        linear-gradient(180deg,#dff5f2,#d7ead1);
+      border:1px solid rgba(255,255,255,.85);
+      overflow:hidden;box-shadow:var(--shadow);
+    }
+    .scene:before,.scene:after{
+      content:"";position:absolute;border-radius:50%;background:rgba(83,120,87,.17);filter:blur(1px)
+    }
+    .scene:before{width:340px;height:220px;left:-110px;bottom:-40px}
+    .scene:after{width:400px;height:270px;right:-140px;bottom:-65px}
+    .vine{position:absolute;top:-20px;width:150px;height:220px;border-left:4px solid rgba(72,108,68,.38);border-radius:50%}
+    .vine.one{left:25px;transform:rotate(-12deg)} .vine.two{right:-10px;transform:rotate(17deg)}
+    .leaf-dot{position:absolute;width:52px;height:26px;border-radius:80% 10% 80% 10%;background:#6f966b;opacity:.72;transform:rotate(25deg)}
+    .ld1{top:30px;left:18px}.ld2{top:88px;left:55px;transform:rotate(-20deg)}.ld3{top:36px;right:18px}.ld4{top:110px;right:52px;transform:rotate(-18deg)}
+
+    .pilot{
+      position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+      width:210px;height:255px;border-radius:90px 90px 70px 70px;
+      background:#6a5749;border:5px solid #4e433b;box-shadow:0 24px 30px rgba(54,67,56,.16);
+    }
+    .pilot-head{
+      position:absolute;width:125px;height:105px;left:50%;top:-60px;transform:translateX(-50%);
+      background:#695449;border:5px solid #493d37;border-radius:58% 58% 44% 44%;
+    }
+    .pilot-face{
+      position:absolute;left:17px;right:17px;top:25px;height:49px;border-radius:25px;
+      background:#e8c690;border:4px solid #493d37;
+    }
+    .pilot-face:before,.pilot-face:after{content:"";position:absolute;top:15px;width:9px;height:9px;border-radius:50%;background:#332d2a}
+    .pilot-face:before{left:22px}.pilot-face:after{right:22px}
+    .pilot-moss{
+      position:absolute;left:-8px;right:-8px;top:5px;height:55px;border-radius:80% 60% 45% 55%;
+      background:#78906a;clip-path:polygon(0 18%,15% 5%,28% 18%,40% 4%,52% 17%,66% 2%,80% 14%,100% 4%,100% 60%,0 72%);
+    }
+    .pilot-badge{position:absolute;left:50%;top:78px;transform:translateX(-50%);width:25px;height:25px;border-radius:9px;background:#b86c51;border:3px solid #4e433b}
+    .arm{position:absolute;width:78px;height:145px;background:#6a5749;border:5px solid #4e433b;border-radius:38px;top:72px}
+    .arm.left{left:-42px;transform:rotate(18deg)}.arm.right{right:-42px;transform:rotate(-18deg)}
+    .hand{position:absolute;width:72px;height:72px;border-radius:28px;background:#756252;border:5px solid #4e433b;top:5px}
+    .left .hand{left:-28px}.right .hand{right:-28px}
+    .bird{position:absolute;font-size:30px;filter:grayscale(1);opacity:.75}.bird.b1{top:75px;left:100px}.bird.b2{top:55px;right:95px;font-size:22px}
+
+    .section{width:min(calc(100% - 40px),var(--max));margin:110px auto}
+    .section-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf);font-weight:850}
+    h2{font-family:Georgia,serif;font-size:clamp(38px,4vw,58px);line-height:1.05;letter-spacing:-.04em;font-weight:500;margin:12px 0 18px}
+    .section-intro{font-size:17px;line-height:1.65;color:var(--muted);max-width:680px}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+    .card{
+      background:rgba(255,253,247,.84);border:1px solid var(--line);border-radius:24px;padding:26px;
+      box-shadow:0 10px 30px rgba(58,82,67,.05);
+    }
+    .card-icon{width:46px;height:46px;border-radius:16px;background:var(--sage);display:grid;place-items:center;font-size:21px;margin-bottom:22px}
+    .card h3{margin:0 0 10px;font-size:18px}.card p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+
+    .conversation{
+      display:grid;grid-template-columns:.82fr 1.18fr;gap:55px;align-items:center;
+      background:#edf2e7;border:1px solid var(--line);border-radius:34px;padding:50px;
+    }
+    .chat{
+      background:var(--paper);border-radius:26px;padding:22px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.9)
+    }
+    .chat-top{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--line);font-weight:750;font-size:14px}
+    .avatar{width:31px;height:31px;border-radius:11px;background:var(--leaf-dark);display:grid;place-items:center;color:white}
+    .bubble{max-width:86%;padding:13px 15px;border-radius:16px;margin-top:15px;font-size:13px;line-height:1.5}
+    .bubble.user{margin-left:auto;background:#e3eef0;border-bottom-right-radius:5px}
+    .bubble.ai{background:#f2eee4;border-bottom-left-radius:5px}
+    .finding{margin-top:14px;padding:15px;border-radius:16px;background:#fff8e7;border:1px solid #eadcb6}
+    .finding strong{display:block;font-size:13px;margin-bottom:5px}.finding p{font-size:12px;color:#6c6657;margin:0 0 12px;line-height:1.5}
+    .mini-actions{display:flex;gap:7px}.mini{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:white;font-size:11px;font-weight:700}
+
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:38px}
+    .step{padding:24px;border-top:1px solid var(--line)}
+    .num{font-family:Georgia,serif;font-size:32px;color:var(--peach)}.step h3{font-size:16px;margin:12px 0 8px}.step p{font-size:13px;color:var(--muted);line-height:1.55;margin:0}
+
+    .modes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+    .mode{background:white;border:1px solid var(--line);border-radius:20px;padding:20px}
+    .mode small{color:var(--leaf);font-weight:800}.mode h3{margin:8px 0;font-size:16px}.mode p{font-size:13px;color:var(--muted);line-height:1.5;margin:0}
+
+    .future{
+      background:var(--leaf-dark);color:#f9f7ec;border-radius:34px;padding:52px;position:relative;overflow:hidden;
+    }
+    .future:after{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.05);right:-90px;top:-120px}
+    .future .section-label{color:#b9d4ae}.future h2{max-width:700px}.future p{color:#cbd8d0;max-width:700px;line-height:1.7}
+    .chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:26px}.chip{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:13px}
+
+    footer{width:min(calc(100% - 40px),var(--max));margin:50px auto 30px;padding:25px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+
+    @media(max-width:850px){
+      .nav-links{display:none}.hero{grid-template-columns:1fr;margin-top:25px}.scene{height:390px}.cards,.modes{grid-template-columns:1fr 1fr}.conversation{grid-template-columns:1fr;padding:28px}.steps{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:560px){
+      body{background:linear-gradient(180deg,var(--sky) 0 860px,var(--cream) 860px)}
+      .nav{width:min(calc(100% - 26px),var(--max))}.nav-actions .button:first-child{display:none}
+      .hero,.section,footer{width:min(calc(100% - 26px),var(--max))}
+      h1{font-size:53px}.hero{gap:35px}.scene{height:340px}.pilot{transform:translate(-50%,-50%) scale(.8)}
+      .cards,.modes,.steps{grid-template-columns:1fr}.conversation{padding:22px}.future{padding:30px 24px}footer{gap:20px;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="#"><span class="brand-mark"></span>CloudPilot</a>
+    <div class="nav-links">
+      <a href="#product">Product</a>
+      <a href="#how">How it works</a>
+      <a href="#remediation">Remediation</a>
+      <a href="#vision">Vision</a>
+    </div>
+    <div class="nav-actions">
+      <a class="button" href="#how">See how it works</a>
+      <a class="button primary" href="#try">Try CloudPilot</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><i></i> Built for AWS first</div>
+        <h1>Your cloud,<br><em>looked after.</em></h1>
+        <p class="hero-copy">
+          CloudPilot understands what's happening in your AWS environment, finds waste and risky configurations,
+          explains what matters in plain English, and helps you safely fix it.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#try">Try CloudPilot →</a>
+          <a class="button" href="#product">Explore the product</a>
+        </div>
+        <div class="trust">
+          <span>Read-only to start</span><span>No card required</span><span>Setup in minutes</span>
+        </div>
+      </div>
+
+      <div class="scene" aria-label="Friendly CloudPilot garden illustration">
+        <span class="vine one"></span><span class="vine two"></span>
+        <span class="leaf-dot ld1"></span><span class="leaf-dot ld2"></span><span class="leaf-dot ld3"></span><span class="leaf-dot ld4"></span>
+        <span class="bird b1">⌁</span><span class="bird b2">⌁</span>
+        <div class="pilot">
+          <div class="pilot-moss"></div>
+          <div class="pilot-head"><div class="pilot-face"></div></div>
+          <div class="pilot-badge"></div>
+          <div class="arm left"><div class="hand"></div></div>
+          <div class="arm right"><div class="hand"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="product">
+      <div class="section-label">A calmer way to manage AWS</div>
+      <h2>Know what needs your attention.</h2>
+      <p class="section-intro">Instead of another wall of cloud metrics, CloudPilot turns infrastructure into a short list of things you can understand and act on.</p>
+      <div class="cards">
+        <article class="card"><div class="card-icon">⌁</div><h3>Find unnecessary spend</h3><p>Spot idle or oversized resources and understand where your AWS bill changed.</p></article>
+        <article class="card"><div class="card-icon">◇</div><h3>Catch configuration issues</h3><p>Look for settings that may be risky, forgotten, or inconsistent with how your team works.</p></article>
+        <article class="card"><div class="card-icon">✦</div><h3>Understand before you act</h3><p>CloudPilot explains what it found, why it matters, and what it recommends before anything changes.</p></article>
+      </div>
+    </section>
+
+    <section class="section conversation" id="how">
+      <div>
+        <div class="section-label">Ask your cloud</div>
+        <h2>Talk to AWS like a teammate.</h2>
+        <p class="section-intro">CloudPilot combines live infrastructure data with what it learns about your organization, so recommendations have context—not just rules.</p>
+      </div>
+      <div class="chat">
+        <div class="chat-top"><span class="avatar">C</span> CloudPilot <span style="margin-left:auto;color:#78966a;font-size:11px">● connected to AWS</span></div>
+        <div class="bubble user">Why did our AWS bill jump this month?</div>
+        <div class="bubble ai">Most of the increase is coming from <strong>analytics-prod</strong>. Two EC2 instances were added 18 days ago and are contributing roughly $340/month.</div>
+        <div class="bubble user">Do we still need both?</div>
+        <div class="bubble ai">The secondary instance looks intentional—it’s part of your production recovery setup. I wouldn’t remove it. The primary has very low utilization, so I’d investigate that one instead.</div>
+        <div class="finding">
+          <strong>Potential savings found</strong>
+          <p>Primary analytics instance is running continuously with low utilization.</p>
+          <div class="mini-actions"><button class="mini">Investigate primary</button><button class="mini">Show account</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Simple by design</div>
+      <h2>From problem to safe next step.</h2>
+      <div class="steps">
+        <div class="step"><div class="num">01</div><h3>Detect</h3><p>CloudPilot scans for cost, configuration, and operational issues.</p></div>
+        <div class="step"><div class="num">02</div><h3>Explain</h3><p>See what happened and why it matters without digging through AWS consoles.</p></div>
+        <div class="step"><div class="num">03</div><h3>Confirm</h3><p>You stay in control. Review the recommendation before deciding what happens next.</p></div>
+        <div class="step"><div class="num">04</div><h3>Backup & verify</h3><p>Changes are tracked so you can see what happened and safely recover when supported.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="remediation">
+      <div class="section-label">You choose how changes happen</div>
+      <h2>Four ways to fix something.</h2>
+      <p class="section-intro">Different teams want different levels of control. CloudPilot can meet you where you are.</p>
+      <div class="modes">
+        <div class="mode"><small>01</small><h3>Instructions</h3><p>Get clear steps and make the change yourself.</p></div>
+        <div class="mode"><small>02</small><h3>CLI</h3><p>Get the AWS command ready to review and run.</p></div>
+        <div class="mode"><small>03</small><h3>Pull Request</h3><p>Prepare an infrastructure change for your normal review process.</p></div>
+        <div class="mode"><small>04</small><h3>Automatic</h3><p>Let CloudPilot make approved changes directly when you want it to.</p></div>
+      </div>
+    </section>
+
+    <section class="section future" id="vision">
+      <div class="section-label">Where CloudPilot is going</div>
+      <h2>Your team's operational knowledge, in one place.</h2>
+      <p>Today starts with AWS. Over time, CloudPilot can connect the systems your team already uses so it understands not only what your infrastructure is doing, but why it exists and what your team is working on.</p>
+      <div class="chips"><span class="chip">AWS</span><span class="chip">Jira</span><span class="chip">Gmail</span><span class="chip">Slack</span><span class="chip">Docker</span><span class="chip">GitHub</span><span class="chip">More over time</span></div>
+    </section>
+
+    <section class="section" id="try" style="text-align:center;max-width:800px">
+      <div class="section-label">Start small</div>
+      <h2>See what CloudPilot finds in your AWS account.</h2>
+      <p class="section-intro" style="margin:0 auto 26px">Connect a read-only role, run your first scan, and get a clearer picture of what deserves attention.</p>
+      <a class="button primary" href="#">Try CloudPilot →</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand"><span class="brand-mark"></span>CloudPilot</div>
+    <div>Start with AWS. Build toward the whole operational picture.</div>
+  </footer>
+</body>
+</html>
