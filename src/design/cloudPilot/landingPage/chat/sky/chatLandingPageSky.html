@@ -189,6 +189,23 @@
       h1{font-size:53px}.hero{gap:35px}.scene{height:340px}.pilot{transform:translate(-50%,-50%) scale(.8)}
       .cards,.modes,.steps{grid-template-columns:1fr}.conversation{padding:22px}.future{padding:30px 24px}footer{gap:20px;flex-direction:column}
     }
+
+    /* TEMP */
+    .finding-amount {
+  margin-top: 10px;
+    margin-bottom: 4px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.finding-amount span {
+  margin-left: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+    /* TEMP */
   </style>
 </head>
 <body>
@@ -261,11 +278,29 @@
         <div class="bubble ai">Most of the increase is coming from <strong>analytics-prod</strong>. Two EC2 instances were added 18 days ago and are contributing roughly $340/month.</div>
         <div class="bubble user">Do we still need both?</div>
         <div class="bubble ai">The secondary instance looks intentional—it’s part of your production recovery setup. I wouldn’t remove it. The primary has very low utilization, so I’d investigate that one instead.</div>
+        
+        <!-- 
         <div class="finding">
           <strong>Potential savings found</strong>
           <p>Primary analytics instance is running continuously with low utilization.</p>
           <div class="mini-actions"><button class="mini">Investigate primary</button><button class="mini">Show account</button></div>
         </div>
+
+-->
+        <!-- TEMP -->
+        <div class="finding">
+          <strong>Potential savings found</strong>
+
+          <div class="finding-amount">$180<span>/month</span></div>
+
+          <p>Primary analytics instance is running continuously with low utilization.</p>
+
+          <div class="mini-actions">
+            <button class="mini">Investigate primary</button>
+            <button class="mini">Show account</button>
+          </div>
+        </div>
+            <!-- TEMP -->
       </div>
     </section>
 
@@ -276,7 +311,7 @@
         <div class="step"><div class="num">01</div><h3>Detect</h3><p>CloudPilot scans for cost, configuration, and operational issues.</p></div>
         <div class="step"><div class="num">02</div><h3>Explain</h3><p>See what happened and why it matters without digging through AWS consoles.</p></div>
         <div class="step"><div class="num">03</div><h3>Confirm</h3><p>You stay in control. Review the recommendation before deciding what happens next.</p></div>
-        <div class="step"><div class="num">04</div><h3>Backup & verify</h3><p>Changes are tracked so you can see what happened and safely recover when supported.</p></div>
+        <div class="step"><div class="num">04</div><h3>Backup & verify</h3><p>Changes are tracked so you can see what happened and safely recover with the click of a button.</p></div>
       </div>
     </section>
 
