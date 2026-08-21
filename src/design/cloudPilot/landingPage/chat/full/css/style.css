@@ -167,7 +167,7 @@ SECTION 3A: Header
 SECTION 4A: Hero
 *****************************************************/
 .hero {
-	padding: 96px 0 90px;
+	padding: 96px 0 0;
 	text-align: center;
 	overflow: hidden;
 }
@@ -251,8 +251,11 @@ SECTION 4A: Hero
 /****************************************************
 SECTION 4B: Product Preview
 *****************************************************/
+
+/* Preview shell */
 .product-preview {
 	margin-top: 75px;
+	padding-bottom: 90px;
 	position: relative;
 }
 
@@ -274,8 +277,9 @@ SECTION 4B: Product Preview
 	z-index: -1;
 }
 
+/* App window */
 .app-window {
-	max-width: 1000px;
+	max-width: 1040px;
 	margin: auto;
 
 	background: white;
@@ -289,7 +293,7 @@ SECTION 4B: Product Preview
 	text-align: left;
 }
 
-.window-bar {
+.app-window-bar {
 	height: 54px;
 
 	display: flex;
@@ -301,7 +305,7 @@ SECTION 4B: Product Preview
 	border-bottom: 1px solid var(--border-light);
 }
 
-.window-dot {
+.app-window-dot {
 	width: 9px;
 	height: 9px;
 
@@ -315,19 +319,27 @@ SECTION 4B: Product Preview
 	min-height: 460px;
 }
 
+/* Sidebar */
 .app-sidebar {
 	padding: 25px 18px;
 	border-right: 1px solid var(--border-light);
 	background: #fbfcfb;
 }
 
-.sidebar-brand {
+.app-sidebar-brand {
 	font-weight: 700;
 	font-size: 14px;
 	margin-bottom: 28px;
 }
 
-.sidebar-item {
+.app-sidebar-menu {
+	display: flex;
+	flex-direction: column;
+}
+
+.app-sidebar-item {
+	display: block;
+
 	padding: 9px 11px;
 	margin-bottom: 5px;
 
@@ -337,116 +349,149 @@ SECTION 4B: Product Preview
 	font-size: 12px;
 }
 
-.sidebar-item.active {
+.app-sidebar-item:hover {
+	background: var(--surface-soft);
+	color: var(--text);
+}
+
+.app-sidebar-item.active {
 	background: var(--green-light);
 	color: var(--green-dark);
 	font-weight: 600;
 }
 
+/* Main chat */
 .app-main {
-	padding: 42px 52px;
+	padding: 0;
+	min-width: 0;
 }
 
-.app-label {
-	color: var(--text-light);
-	font-size: 11px;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	font-weight: 600;
+.chat-body {
+	padding: 38px;
 }
 
-.app-main h3 {
-	margin-top: 5px;
-
-	font-family: var(--font-heading);
-	font-size: 24px;
+.message {
+	max-width: 690px;
+	margin-bottom: 24px;
 }
 
-.chat {
-	margin-top: 35px;
-}
-
-.chat-user {
-	max-width: 430px;
+.message-user {
 	margin-left: auto;
-
 	padding: 13px 17px;
-
-	background: #f0f2f0;
-	border-radius: 16px 16px 4px 16px;
-
+	border-radius: 15px 15px 4px 15px;
+	background: #f0f3ef;
 	font-size: 14px;
 }
 
-.pilot-response {
-	margin-top: 25px;
-	max-width: 570px;
-}
-
-.pilot-name {
+.assistant-row {
 	display: flex;
-	align-items: center;
-	gap: 8px;
-
-	margin-bottom: 10px;
-
-	font-size: 13px;
-	font-weight: 700;
+	align-items: flex-start;
+	gap: 13px;
 }
 
-.pilot-icon {
-	width: 24px;
-	height: 24px;
+.assistant-icon {
+	flex: 0 0 auto;
 
+	width: 30px;
+	height: 30px;
 	display: grid;
 	place-items: center;
 
-	border-radius: 7px;
-
+	border-radius: 9px;
 	background: var(--green);
 	color: white;
 
-	font-size: 11px;
-}
-
-.pilot-response p {
-	color: #4d5751;
+	font-family: var(--font-heading);
 	font-size: 14px;
-}
-
-.finding-card {
-	margin-top: 18px;
-	padding: 18px;
-
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-
-	border: 1px solid var(--border);
-	border-radius: 13px;
-
-	background: white;
-	box-shadow: var(--shadow-small);
-}
-
-.finding-title {
-	font-size: 13px;
 	font-weight: 700;
 }
 
-.finding-description {
-	margin-top: 3px;
+.assistant-content {
+	padding-top: 2px;
+	color: #354039;
+	font-size: 14px;
+	line-height: 1.7;
+}
+
+.assistant-content strong {
+	color: var(--text);
+}
+
+.finding {
+	margin: 19px 0 19px 43px;
+	padding: 17px 18px;
+
+	border: 1px solid #dfe9df;
+	border-radius: 12px;
+	background: var(--green-pale);
+}
+
+.finding-label {
+	margin-bottom: 7px;
+	color: var(--green-dark);
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.finding-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 18px;
+}
+
+.finding-copy {
+	min-width: 0;
+}
+
+.finding-title {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.finding-meta {
+	margin-top: 4px;
 	color: var(--text-secondary);
 	font-size: 12px;
 }
 
-.saving {
+.finding-saving {
+	flex-shrink: 0;
 	color: var(--green-dark);
 	font-size: 13px;
 	font-weight: 700;
+	white-space: nowrap;
+	transform: translateY(-12px);
+}
+
+.chat-actions {
+	display: flex;
+	gap: 9px;
+	margin: 18px 0 0 43px;
+	flex-wrap: wrap;
+}
+
+.mini-button {
+	padding: 8px 12px;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: white;
+	color: var(--text-secondary);
+	font-size: 12px;
+	font-weight: 600;
+	cursor: default;
+}
+
+.mini-button.primary {
+	border-color: var(--green);
+	background: var(--green);
+	color: white;
 }
 
 @media (max-width: 850px) {
+
 	.app-layout {
 		grid-template-columns: 1fr;
 	}
@@ -455,9 +500,15 @@ SECTION 4B: Product Preview
 		display: none;
 	}
 
-	.app-main {
+	.chat-body {
 		padding: 30px 24px;
 	}
+
+	.finding,
+	.chat-actions {
+		margin-left: 0;
+	}
+
 }
 
 

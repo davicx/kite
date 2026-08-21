@@ -79,5 +79,118 @@
 
 </section>
 
+
+<!-- =========================================================
+     CLOUDPILOT APP PREVIEW
+     ========================================================= -->
+
+<section class="product-preview" id="product">
+
+	<div class="container">
+
+		<div class="app-window">
+
+			<div class="app-window-bar">
+				<span class="app-window-dot"></span>
+				<span class="app-window-dot"></span>
+				<span class="app-window-dot"></span>
+			</div>
+
+			<div class="app-layout">
+
+				<aside class="app-sidebar">
+
+					<div class="app-sidebar-brand">
+						CloudPilot
+					</div>
+
+					<nav class="app-sidebar-menu">
+						<a href="#" class="app-sidebar-item active">Chat</a>
+						<a href="#" class="app-sidebar-item">Cloud</a>
+						<a href="#" class="app-sidebar-item">Findings</a>
+						<a href="#" class="app-sidebar-item">History</a>
+					</nav>
+
+				</aside>
+
+				<main class="app-main">
+
+					<div class="chat-body">
+
+						<div class="message message-user">
+							Why did our AWS bill jump this month?
+						</div>
+
+						<div class="message assistant-row">
+
+							<div class="assistant-icon">C</div>
+
+							<div class="assistant-content">
+								Most of the increase is coming from
+								<strong>analytics-prod</strong>. Two EC2 instances were
+								added 18 days ago and are contributing roughly
+								<strong>$340/month</strong>.
+							</div>
+
+						</div>
+
+						<div class="message message-user">
+							Do we still need both?
+						</div>
+
+						<div class="message assistant-row">
+
+							<div class="assistant-icon">C</div>
+
+							<div class="assistant-content">
+								The secondary instance looks intentional, so I wouldn't
+								remove it. The primary instance is running continuously
+								but has very low utilization.
+								<strong>I can investigate that one instead.</strong>
+							</div>
+
+						</div>
+
+						<div class="finding">
+							<div class="finding-label">Finding</div>
+
+							<div class="finding-row">
+								<div class="finding-copy">
+									<div class="finding-title">
+										EC2 instance appears underutilized
+									</div>
+									<div class="finding-meta">
+										analytics-primary · us-west-2 · estimated $168/month
+									</div>
+								</div>
+
+								<div class="finding-saving">
+									Save ~$42/mo
+								</div>
+							</div>
+						</div>
+
+						<div class="chat-actions">
+							<button class="mini-button primary">
+								Investigate primary
+							</button>
+
+							<button class="mini-button">
+								Show me the account
+							</button>
+						</div>
+
+					</div>
+
+				</main>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+
 </body>
 </html>
