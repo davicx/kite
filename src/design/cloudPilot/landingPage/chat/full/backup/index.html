@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>CloudPilot — Your AI Teammate for the Cloud</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+
+	<div class="container header-inner">
+
+		<a class="logo" href="#">
+			<span class="logo-mark">C</span>
+			CloudPilot
+		</a>
+
+		<div class="nav-links">
+			<a href="#product">Product</a>
+			<a href="#how">How it works</a>
+			<a href="#vision">Vision</a>
+		</div>
+
+		<div class="nav-actions">
+			<a href="#" class="button button-primary">
+				Try CloudPilot
+			</a>
+		</div>
+
+	</div>
+
+</header>
+
+
+<!-- CLOUDPILOT: Hero Section -->
+
+<section class="hero">
+
+	<div class="container">
+
+		<div class="eyebrow">
+			<span class="eyebrow-dot"></span>
+			Meet your AI cloud teammate
+		</div>
+
+		<h1>
+			Your cloud shouldn't require
+			<span>a team of experts.</span>
+		</h1>
+
+		<p class="hero-description">
+			CloudPilot understands your cloud, watches for problems,
+			finds ways to save money, and helps you make changes —
+			simply by talking to it.
+		</p>
+
+		<div class="hero-actions">
+
+			<a href="#" class="button button-primary">
+				Try CloudPilot →
+			</a>
+
+			<a href="#how" class="button button-secondary">
+				See how it works
+			</a>
+
+		</div>
+
+		<div class="hero-note">
+			Connect your cloud. Ask questions. Get useful answers.
+		</div>
+
+	</div>
+
+</section>
+
+<!-- CLOUDPILOT: Chat Preview -->
+<section class="product-preview" id="product">
+
+	<div class="container">
+
+		<div class="app-window">
+
+			<div class="app-window-bar">
+				<span class="app-window-dot"></span>
+				<span class="app-window-dot"></span>
+				<span class="app-window-dot"></span>
+			</div>
+
+			<div class="app-layout">
+
+				<aside class="app-sidebar">
+
+					<div class="app-sidebar-brand">
+						CloudPilot
+					</div>
+
+					<nav class="app-sidebar-menu">
+						<a href="#" class="app-sidebar-item active">Chat</a>
+						<a href="#" class="app-sidebar-item">Cloud</a>
+						<a href="#" class="app-sidebar-item">Findings</a>
+						<a href="#" class="app-sidebar-item">History</a>
+					</nav>
+
+				</aside>
+
+				<main class="app-main">
+
+					<div class="chat-body">
+
+						<div class="message message-user">
+							Why did our AWS bill jump this month?
+						</div>
+
+						<div class="message assistant-row">
+
+							<div class="assistant-icon">C</div>
+
+							<div class="assistant-content">
+								Most of the increase is coming from
+								<strong>analytics-prod</strong>. Two EC2 instances were
+								added 18 days ago and are contributing roughly
+								<strong>$340/month</strong>.
+							</div>
+
+						</div>
+
+						<div class="message message-user">
+							Do we still need both?
+						</div>
+
+						<div class="message assistant-row">
+
+							<div class="assistant-icon">C</div>
+
+							<div class="assistant-content">
+								The secondary instance looks intentional, so I wouldn't
+								remove it. The primary instance is running continuously
+								but has very low utilization.
+								<strong>I can investigate that one instead.</strong>
+							</div>
+
+						</div>
+
+						<div class="finding">
+							<div class="finding-label">Finding</div>
+
+							<div class="finding-row">
+								<div class="finding-copy">
+									<div class="finding-title">
+										EC2 instance appears underutilized
+									</div>
+									<div class="finding-meta">
+										analytics-primary · us-west-2 · estimated $168/month
+									</div>
+								</div>
+
+								<div class="finding-saving">
+									Save ~$42/mo
+								</div>
+							</div>
+						</div>
+
+						<div class="chat-actions">
+							<button class="mini-button primary">
+								Investigate primary
+							</button>
+
+							<button class="mini-button">
+								Show me the account
+							</button>
+						</div>
+
+					</div>
+
+				</main>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+
+<!-- CLOUDPILOT: What Cloud Pilot Does -->
+
+<section class="section" id="product-features">
+
+	<div class="container section-center">
+
+		<div class="section-label">
+			What CloudPilot does
+		</div>
+
+		<h2 class="section-title">
+			CloudPilot helps you understand what's actually happening in your cloud.
+		</h2>
+
+		<p class="section-description">
+			Instead of digging through dashboards, logs, billing pages, and configuration screens, ask CloudPilot what you want to know — and get clear answers about what's happening and what to do next.
+		</p>
+
+
+		<div class="features">
+
+
+			<article class="feature-card">
+
+				<div class="feature-icon green">
+					◎
+				</div>
+
+				<h3>
+					Understand what you have
+				</h3>
+
+				<p>
+					CloudPilot brings together your infrastructure and the context around it, so you can understand what's running, how it fits together, and what's happening across your environment.
+				</p>
+
+			</article>
+
+
+			<article class="feature-card">
+
+				<div class="feature-icon blue">
+					↓
+				</div>
+
+				<h3>
+					Find waste and problems
+				</h3>
+
+				<p>
+					Find unnecessary spending, risky configurations, forgotten resources, and the frustrating issues behind crashes, slowdowns, timeouts, and other problems.
+				</p>
+
+			</article>
+
+
+			<article class="feature-card">
+
+				<div class="feature-icon orange">
+					✦
+				</div>
+
+				<h3>
+					Help you take action
+				</h3>
+
+				<p>
+					Understand what should change and why, then let CloudPilot guide the fix or safely handle supported changes for you.
+				</p>
+
+			</article>
+
+
+		</div>
+
+	</div>
+
+</section>
+
+
+<!-- CLOUDPILOT: How It Works -->
+
+<section class="section how-it-works" id="how">
+
+	<div class="container section-center">
+
+		<div class="section-label">
+			How it works
+		</div>
+
+		<h2 class="section-title">
+			Talk to your infrastructure like you would talk to a teammate.
+		</h2>
+
+		<p class="section-description">
+			Ask CloudPilot what you need. It investigates the systems and context behind your question, explains what it finds, and helps you decide what happens next.
+		</p>
+
+
+		<div class="steps">
+
+
+			<div class="step">
+
+				<div class="step-number">
+					1
+				</div>
+
+				<h3>
+					Ask
+				</h3>
+
+				<p>
+					Ask CloudPilot about your infrastructure, costs, a problem you're investigating, or something you want to change.
+				</p>
+
+			</div>
+
+
+			<div class="step">
+
+				<div class="step-number">
+					2
+				</div>
+
+				<h3>
+					Investigate and Understand
+				</h3>
+
+				<p>
+					CloudPilot pulls together infrastructure, logs, configurations, history, and organizational context to understand what's happening then explains what it found and why it matters.
+				</p>
+
+			</div>
+
+
+			<div class="step">
+
+				<div class="step-number">
+					3
+				</div>
+
+				<h3>
+					Act
+				</h3>
+
+				<p>
+					Decide what happens next, and let CloudPilot help you safely carry it out.
+				</p>
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+</section>
+
+
+<!-- CLOUDPILOT: Remediation -->
+<!-- 
+<section class="section remediation" id="remediation">
+
+	<div class="container">
+
+		<div class="eyebrow">
+			<span class="eyebrow-dot"></span>
+			You stay in control
+		</div>
+
+		<h2 class="section-title">
+			Find the problem once.<br>
+			Fix it your way.
+		</h2>
+
+		<p class="section-copy">
+			CloudPilot gives your team control over how changes happen. Choose the approach that fits the task, your workflow, and the level of control you want.
+		</p>
+
+
+		<div class="remediation-grid">
+
+			<article class="remediation-card">
+
+				<div class="remediation-top">
+					<span class="remediation-number">01</span>
+				</div>
+
+				<h3>Automatic</h3>
+
+				<p>
+					Let CloudPilot safely perform an approved change directly and verify the result.
+				</p>
+
+				<div class="remediation-example">
+					CloudPilot → change → verify
+				</div>
+
+			</article>
+
+
+			<article class="remediation-card">
+
+				<div class="remediation-top">
+					<span class="remediation-number">02</span>
+				</div>
+
+				<h3>CLI</h3>
+
+				<p>
+					Prefer to make the change yourself? Get the exact command you need, with an explanation of what it will do.
+				</p>
+
+				<div class="remediation-example">
+					$ aws ec2 stop-instances ...
+				</div>
+
+			</article>
+
+
+			<article class="remediation-card">
+
+				<div class="remediation-top">
+					<span class="remediation-number">03</span>
+				</div>
+
+				<h3>Pull Request</h3>
+
+				<p>
+					Turn a recommendation into an infrastructure change your team can review, approve, and deploy through its normal workflow.
+				</p>
+
+				<div class="remediation-example">
+					CloudPilot → Terraform → Pull Request
+				</div>
+
+			</article>
+
+
+			<article class="remediation-card">
+
+				<div class="remediation-top">
+					<span class="remediation-number">04</span>
+				</div>
+
+				<h3>Instructions</h3>
+
+				<p>
+					Walk through the change step by step in the tools you already use, with CloudPilot guiding you along the way.
+				</p>
+
+				<div class="remediation-example">
+					1. Open EC2 → 2. Select instance → 3. ...
+				</div>
+
+			</article>
+
+		</div>
+
+	</div>
+
+</section>
+-->
+
+</body>
+</html>
