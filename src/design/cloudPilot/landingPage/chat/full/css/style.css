@@ -15,6 +15,7 @@ SECTION 4C: Trust
 SECTION 4D: Section Global
 SECTION 4E: Features
 SECTION 4F: How It Works
+SECTION 4F2: Remediation
 SECTION 4G: Examples
 SECTION 4H: Big Idea
 SECTION 4I: CTA
@@ -34,6 +35,8 @@ SECTION 1A: Fonts
 :root {
 	--font-heading: "Manrope", sans-serif;
 	--font-body: "DM Sans", sans-serif;
+	--font-display: "Fraunces", serif;
+	--font-mono: "DM Mono", monospace;
 }
 
 
@@ -77,6 +80,7 @@ SECTION 1C: Anything else
 
 	--radius-small: 10px;
 	--radius: 16px;
+	--radius-md: 16px;
 	--radius-large: 24px;
 	--radius-pill: 999px;
 
@@ -254,7 +258,7 @@ SECTION 4B: Product Preview
 
 /* Preview shell */
 .product-preview {
-	margin-top: 75px;
+	margin-top: 55px;
 	padding-bottom: 90px;
 	position: relative;
 }
@@ -549,6 +553,10 @@ SECTION 4D: Section Global
 	padding: 105px 0;
 }
 
+#product-features {
+	padding-top: 85px;
+}
+
 .section-center {
 	text-align: center;
 }
@@ -707,6 +715,116 @@ SECTION 4F: How It Works
 
 @media (max-width: 850px) {
 	.steps {
+		grid-template-columns: 1fr;
+	}
+}
+
+
+/****************************************************
+SECTION 4F2: Remediation
+*****************************************************/
+.remediation {
+	background: #1d2822;
+	color: white;
+}
+
+.remediation .eyebrow {
+	padding: 0;
+	margin-bottom: 18px;
+
+	border: none;
+	border-radius: 0;
+
+	background: transparent;
+	color: #83c7a9;
+
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.remediation .eyebrow-dot {
+	background: #83c7a9;
+}
+
+.remediation .section-title {
+	max-width: 700px;
+	margin: 0;
+
+	font-family: var(--font-display);
+	font-size: clamp(38px, 5vw, 58px);
+	font-weight: 500;
+	letter-spacing: -0.035em;
+	line-height: 1.06;
+}
+
+.remediation .section-copy {
+	max-width: 640px;
+	margin-top: 20px;
+
+	color: #aebbb3;
+	font-size: 18px;
+	line-height: 1.7;
+}
+
+.remediation-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 14px;
+	margin-top: 55px;
+}
+
+.remediation-card {
+	padding: 27px;
+
+	border: 1px solid #34443b;
+	border-radius: var(--radius-md);
+	background: #222f28;
+}
+
+.remediation-top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	margin-bottom: 25px;
+}
+
+.remediation-number {
+	color: #6e8075;
+	font-family: var(--font-mono);
+	font-size: 11px;
+}
+
+.remediation-card h3 {
+	margin-bottom: 8px;
+	font-size: 19px;
+}
+
+.remediation-card p {
+	max-width: 440px;
+
+	color: #aebbb3;
+	font-size: 14px;
+	line-height: 1.7;
+}
+
+.remediation-example {
+	margin-top: 22px;
+	padding: 12px 14px;
+
+	border: 1px solid #394b40;
+	border-radius: 9px;
+	background: #1a241f;
+
+	color: #9bc8b2;
+	font-family: var(--font-mono);
+	font-size: 11px;
+}
+
+@media (max-width: 900px) {
+	.remediation-grid {
 		grid-template-columns: 1fr;
 	}
 }
