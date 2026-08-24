@@ -44,7 +44,8 @@ SECTION 1A: Fonts
 SECTION 1B: Colors
 *****************************************************/
 :root {
-	--background: #f8faf7;
+	/* --background: #f8faf7; */
+	--background: #f8faf6;
 	--surface: #ffffff;
 	--surface-soft: #f0f5ef;
 
@@ -103,7 +104,8 @@ SECTION 3A: Header
 	display: flex;
 	align-items: center;
 	border-bottom: 1px solid rgba(220, 228, 222, 0.7);
-	background: rgba(248, 250, 247, 0.9);
+	/* background: rgba(248, 250, 247, 0.9); */
+	background: rgba(248, 250, 246, 0.9);
 	backdrop-filter: blur(16px);
 	position: sticky;
 	top: 0;
@@ -555,6 +557,8 @@ SECTION 4D: Section Global
 
 #product-features {
 	padding-top: 85px;
+	background: var(--surface);
+	border-top: 1px solid var(--border);
 }
 
 .section-center {
@@ -661,6 +665,8 @@ SECTION 4E: Features
 /****************************************************
 SECTION 4F: How It Works
 *****************************************************/
+/*
+DARK (previous)
 .how-it-works {
 	background: #17221d;
 	color: white;
@@ -670,6 +676,35 @@ SECTION 4F: How It Works
 	color: #aebbb3;
 }
 
+.step-number {
+	background: #294238;
+	color: #9ee0c3;
+}
+
+.step p {
+	color: #aebbb3;
+}
+*/
+
+.how-it-works {
+	background: var(--background);
+	color: var(--text);
+	border-top: 1px solid var(--border);
+}
+
+.how-it-works .section-title {
+	margin: 12px 0 0;
+	text-align: left;
+}
+
+.how-it-works .section-description {
+	margin: 18px 0 0;
+	color: var(--text-secondary);
+	text-align: left;
+}
+
+/*
+THREE-COLUMN (previous)
 .steps {
 	margin-top: 65px;
 
@@ -693,8 +728,8 @@ SECTION 4F: How It Works
 
 	border-radius: 50%;
 
-	background: #294238;
-	color: #9ee0c3;
+	background: var(--green-light);
+	color: var(--green-dark);
 
 	font-weight: 700;
 	font-size: 13px;
@@ -703,12 +738,13 @@ SECTION 4F: How It Works
 .step h3 {
 	font-family: var(--font-heading);
 	font-size: 20px;
+	color: var(--text);
 }
 
 .step p {
 	margin-top: 10px;
 
-	color: #aebbb3;
+	color: var(--text-secondary);
 	font-size: 14px;
 	line-height: 1.7;
 }
@@ -718,11 +754,142 @@ SECTION 4F: How It Works
 		grid-template-columns: 1fr;
 	}
 }
+*/
+
+.how-grid {
+	display: grid;
+	grid-template-columns: 0.8fr 1.2fr;
+	gap: 90px;
+	align-items: center;
+}
+
+.steps {
+	display: flex;
+	flex-direction: column;
+}
+
+.step {
+	display: grid;
+	grid-template-columns: 45px 1fr;
+	gap: 18px;
+	position: relative;
+	padding-bottom: 33px;
+	text-align: left;
+}
+
+.step:last-child {
+	padding-bottom: 0;
+}
+
+.step:not(:last-child)::before {
+	content: "";
+	position: absolute;
+	left: 21px;
+	top: 43px;
+	bottom: 0;
+	width: 1px;
+	background: var(--border);
+}
+
+.step-number {
+	position: relative;
+	z-index: 2;
+
+	width: 43px;
+	height: 43px;
+
+	display: grid;
+	place-items: center;
+
+	border: 1px solid var(--border);
+	border-radius: 50%;
+	background: var(--background);
+
+	color: var(--green);
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.step h3 {
+	margin: 2px 0 5px;
+
+	font-family: var(--font-heading);
+	font-size: 16px;
+	color: var(--text);
+}
+
+.step p {
+	margin-top: 0;
+
+	color: var(--text-secondary);
+	font-size: 14px;
+	line-height: 1.7;
+}
+
+@media (max-width: 850px) {
+	.how-grid {
+		grid-template-columns: 1fr;
+		gap: 50px;
+	}
+}
 
 
 /****************************************************
 SECTION 4F2: Remediation
 *****************************************************/
+/*
+LIGHT (previous pass)
+.remediation {
+	background: var(--surface);
+	color: var(--text);
+	border-top: 1px solid var(--border);
+}
+
+.remediation .eyebrow {
+	color: var(--green);
+}
+
+.remediation .eyebrow-dot {
+	background: var(--green);
+}
+
+.remediation .section-title {
+	color: var(--text);
+}
+
+.remediation .section-copy {
+	color: var(--text-secondary);
+}
+
+.remediation-card {
+	border: 1px solid var(--border);
+	background: var(--background);
+}
+
+.remediation-number {
+	color: var(--text-light);
+}
+
+.remediation-badge {
+	background: var(--green-light);
+	color: var(--green-dark);
+}
+
+.remediation-card h3 {
+	color: var(--text);
+}
+
+.remediation-card p {
+	color: var(--text-secondary);
+}
+
+.remediation-example {
+	border: 1px solid var(--border);
+	background: var(--surface);
+	color: var(--green-dark);
+}
+*/
+
 .remediation {
 	background: #1d2822;
 	color: white;
@@ -757,6 +924,7 @@ SECTION 4F2: Remediation
 	font-weight: 500;
 	letter-spacing: -0.035em;
 	line-height: 1.06;
+	color: white;
 }
 
 .remediation .section-copy {
@@ -797,9 +965,21 @@ SECTION 4F2: Remediation
 	font-size: 11px;
 }
 
+.remediation-badge {
+	padding: 5px 8px;
+	border-radius: 6px;
+	background: #2d3c34;
+	color: #aebbb3;
+	font-size: 10px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
 .remediation-card h3 {
 	margin-bottom: 8px;
 	font-size: 19px;
+	color: white;
 }
 
 .remediation-card p {
@@ -833,6 +1013,11 @@ SECTION 4F2: Remediation
 /****************************************************
 SECTION 4G: Examples
 *****************************************************/
+.ask-cloudpilot {
+	background: var(--background);
+	border-top: 1px solid var(--border);
+}
+
 .example-grid {
 	margin-top: 55px;
 
@@ -897,6 +1082,9 @@ SECTION 4H: Big Idea
 *****************************************************/
 .big-idea {
 	padding: 120px 0;
+	background: var(--surface);
+	border-top: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
 }
 
 .big-idea-card {
@@ -984,6 +1172,8 @@ SECTION 4I: CTA
 /****************************************************
 SECTION 4J: Footer
 *****************************************************/
+/*
+LOGO FOOTER (previous)
 footer {
 	padding: 32px 0;
 
@@ -997,6 +1187,36 @@ footer {
 
 	color: var(--text-light);
 	font-size: 13px;
+}
+*/
+
+footer {
+	padding: 35px 0;
+
+	background: var(--surface);
+	border-top: 1px solid var(--border);
+}
+
+.footer-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 30px;
+
+	color: var(--text-light);
+	font-size: 12px;
+}
+
+.footer-brand {
+	color: var(--text);
+	font-weight: 700;
+}
+
+@media (max-width: 850px) {
+	.footer-inner {
+		align-items: flex-start;
+		flex-direction: column;
+	}
 }
 
 
