@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CloudPilot — S3 Scan</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<header class="header">
+
+	<div class="header-inner">
+
+		<div class="logo">
+			<div class="logo-mark">C</div>
+			CloudPilot
+		</div>
+
+		<div class="header-right">
+			<span class="status-dot"></span>
+			AWS connected
+		</div>
+
+	</div>
+
+</header>
+
+
+<main class="main">
+
+	<div class="back">
+		← Cloud
+	</div>
+
+
+	<div class="scan-heading">
+
+		<div class="scan-title-area">
+
+			<div class="s3-icon">
+				S3
+			</div>
+
+			<div>
+
+				<h1>S3 Scan</h1>
+
+				<div class="subtitle">
+					We checked your S3 buckets for security, configuration, and cost issues.
+				</div>
+
+			</div>
+
+		</div>
+
+		<button class="scan-button">
+			Scan again
+		</button>
+
+	</div>
+
+
+	<div class="summary">
+
+		<div class="summary-item">
+			<div class="summary-value">24</div>
+			<div class="summary-label">Buckets scanned</div>
+		</div>
+
+		<div class="summary-item">
+			<div class="summary-value">3</div>
+			<div class="summary-label">Findings</div>
+		</div>
+
+		<div class="summary-item">
+			<div class="summary-value">Just now</div>
+			<div class="summary-label">Last scanned</div>
+		</div>
+
+	</div>
+
+
+	<div class="findings-header">
+
+		<div>
+			<h2>Findings</h2>
+			<p>Things CloudPilot thinks deserve your attention.</p>
+		</div>
+
+		<div class="findings-count">
+			3 open
+		</div>
+
+	</div>
+
+
+	<div class="findings">
+
+
+		<!-- FINDING 1 -->
+
+		<div class="finding">
+
+			<div class="finding-icon high">
+				!
+			</div>
+
+			<div class="finding-content">
+
+				<div class="finding-top">
+					<span class="severity high">High</span>
+					<span class="resource">customer-uploads-prod</span>
+				</div>
+
+				<div class="finding-title">
+					Bucket allows public access
+				</div>
+
+				<div class="finding-description">
+					This bucket can currently be accessed publicly. CloudPilot recommends blocking public access unless this is intentional.
+				</div>
+
+			</div>
+
+			<button class="fix-button">
+				Fix →
+			</button>
+
+		</div>
+
+
+		<!-- FINDING 2 -->
+
+		<div class="finding">
+
+			<div class="finding-icon medium">
+				!
+			</div>
+
+			<div class="finding-content">
+
+				<div class="finding-top">
+					<span class="severity medium">Medium</span>
+					<span class="resource">analytics-archive</span>
+				</div>
+
+				<div class="finding-title">
+					Versioning is disabled
+				</div>
+
+				<div class="finding-description">
+					Deleted or overwritten files cannot be recovered through S3 version history. Enabling versioning would provide additional protection.
+				</div>
+
+			</div>
+
+			<button class="fix-button">
+				Fix →
+			</button>
+
+		</div>
+
+
+		<!-- FINDING 3 -->
+
+		<div class="finding">
+
+			<div class="finding-icon low">
+				$
+			</div>
+
+			<div class="finding-content">
+
+				<div class="finding-top">
+					<span class="severity low">Cost</span>
+					<span class="resource">app-backups</span>
+				</div>
+
+				<div class="finding-title">
+					Old backups could use cheaper storage
+				</div>
+
+				<div class="finding-description">
+					About 480 GB of backups haven't been accessed in over 90 days. Moving older objects to a lower-cost storage class could reduce your bill.
+				</div>
+
+			</div>
+
+			<button class="fix-button">
+				Fix →
+			</button>
+
+		</div>
+
+
+	</div>
+
+
+	<div class="scan-footer">
+
+		<div class="safe-icon">✓</div>
+
+		Nothing changes until you approve a fix.
+
+	</div>
+
+</main>
+
+</body>
+</html>

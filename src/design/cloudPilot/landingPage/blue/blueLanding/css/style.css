@@ -1,0 +1,461 @@
+:root {
+	--background: #f7f9fc;
+	--surface: #ffffff;
+
+	--text: #18202b;
+	--secondary: #687486;
+	--light: #929cab;
+
+	--blue: #5f86c9;
+	--blue-dark: #476da9;
+	--blue-light: #e8f0fb;
+	--blue-pale: #f2f6fc;
+
+	--red: #c45d5d;
+	--red-light: #fff0f0;
+
+	--orange: #bd7c3d;
+	--orange-light: #fff5e9;
+
+	--yellow: #a98231;
+	--yellow-light: #fff8e7;
+
+	--border: #dde4ed;
+	--border-light: #e9edf3;
+
+	--heading: "Manrope", sans-serif;
+	--body: "DM Sans", sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: var(--background);
+	color: var(--text);
+	font-family: var(--body);
+}
+
+button {
+	font: inherit;
+}
+
+/* =========================================
+   APP HEADER
+========================================= */
+
+.header {
+	height: 72px;
+	background: white;
+	border-bottom: 1px solid var(--border);
+
+	display: flex;
+	align-items: center;
+}
+
+.header-inner {
+	width: min(calc(100% - 48px), 1180px);
+	margin: auto;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+	font-family: var(--heading);
+	font-weight: 800;
+	font-size: 19px;
+}
+
+.logo-mark {
+	width: 33px;
+	height: 33px;
+
+	display: grid;
+	place-items: center;
+
+	border-radius: 9px;
+
+	background: var(--blue);
+	color: white;
+
+	font-size: 16px;
+}
+
+.header-right {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+	color: var(--secondary);
+	font-size: 13px;
+}
+
+.status-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #58a47f;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.main {
+	width: min(calc(100% - 48px), 1040px);
+	margin: auto;
+	padding: 65px 0 100px;
+}
+
+
+/* =========================================
+   TOP
+========================================= */
+
+.back {
+	color: var(--blue-dark);
+	font-size: 13px;
+	font-weight: 600;
+
+	margin-bottom: 22px;
+}
+
+.scan-heading {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 40px;
+}
+
+.scan-title-area {
+	display: flex;
+	gap: 18px;
+	align-items: flex-start;
+}
+
+.s3-icon {
+	width: 50px;
+	height: 50px;
+	flex: 0 0 50px;
+
+	display: grid;
+	place-items: center;
+
+	background: var(--blue-light);
+	color: var(--blue-dark);
+
+	border-radius: 14px;
+
+	font-family: var(--heading);
+	font-weight: 800;
+	font-size: 14px;
+}
+
+h1 {
+	font-family: var(--heading);
+	font-size: 32px;
+	letter-spacing: -1px;
+	line-height: 1.2;
+}
+
+.subtitle {
+	margin-top: 7px;
+	color: var(--secondary);
+	font-size: 14px;
+}
+
+.scan-button {
+	height: 42px;
+	padding: 0 17px;
+
+	border: 1px solid var(--border);
+	border-radius: 10px;
+
+	background: white;
+	color: var(--text);
+
+	font-weight: 600;
+	font-size: 13px;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summary {
+	margin-top: 38px;
+
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+
+	border: 1px solid var(--border);
+	border-radius: 16px;
+
+	background: white;
+
+	overflow: hidden;
+}
+
+.summary-item {
+	padding: 21px 24px;
+}
+
+.summary-item + .summary-item {
+	border-left: 1px solid var(--border-light);
+}
+
+.summary-value {
+	font-family: var(--heading);
+	font-size: 22px;
+	font-weight: 700;
+}
+
+.summary-label {
+	margin-top: 2px;
+	color: var(--secondary);
+	font-size: 12px;
+}
+
+
+/* =========================================
+   FINDINGS HEADER
+========================================= */
+
+.findings-header {
+	margin-top: 54px;
+	margin-bottom: 17px;
+
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+
+.findings-header h2 {
+	font-family: var(--heading);
+	font-size: 21px;
+}
+
+.findings-header p {
+	margin-top: 3px;
+
+	color: var(--secondary);
+	font-size: 13px;
+}
+
+.findings-count {
+	color: var(--light);
+	font-size: 12px;
+}
+
+
+/* =========================================
+   FINDINGS
+========================================= */
+
+.findings {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.finding {
+	min-height: 120px;
+	padding: 23px 22px;
+
+	display: grid;
+	grid-template-columns: 42px minmax(0, 1fr) auto;
+	gap: 18px;
+	align-items: center;
+
+	background: white;
+
+	border: 1px solid var(--border);
+	border-radius: 15px;
+
+	transition: 0.18s ease;
+}
+
+.finding:hover {
+	border-color: #cbd6e5;
+	box-shadow: 0 7px 24px rgba(38, 58, 87, 0.05);
+}
+
+
+/* Finding icon */
+
+.finding-icon {
+	width: 40px;
+	height: 40px;
+
+	display: grid;
+	place-items: center;
+
+	border-radius: 11px;
+
+	font-weight: 700;
+	font-size: 15px;
+}
+
+.finding-icon.high {
+	background: var(--red-light);
+	color: var(--red);
+}
+
+.finding-icon.medium {
+	background: var(--orange-light);
+	color: var(--orange);
+}
+
+.finding-icon.low {
+	background: var(--yellow-light);
+	color: var(--yellow);
+}
+
+
+/* Finding content */
+
+.finding-top {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	margin-bottom: 5px;
+}
+
+.severity {
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+}
+
+.severity.high {
+	color: var(--red);
+}
+
+.severity.medium {
+	color: var(--orange);
+}
+
+.severity.low {
+	color: var(--yellow);
+}
+
+.resource {
+	color: var(--light);
+	font-size: 11px;
+}
+
+.finding-title {
+	font-family: var(--heading);
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.finding-description {
+	max-width: 680px;
+	margin-top: 5px;
+
+	color: var(--secondary);
+	font-size: 13px;
+	line-height: 1.55;
+}
+
+
+/* FIX BUTTON */
+
+.fix-button {
+	min-width: 88px;
+	height: 39px;
+	padding: 0 16px;
+
+	border: 0;
+	border-radius: 9px;
+
+	background: var(--blue);
+	color: white;
+
+	font-weight: 600;
+	font-size: 12px;
+
+	cursor: pointer;
+
+	transition: .18s ease;
+}
+
+.fix-button:hover {
+	background: var(--blue-dark);
+	transform: translateY(-1px);
+}
+
+
+/* =========================================
+   FOOT NOTE
+========================================= */
+
+.scan-footer {
+	margin-top: 20px;
+
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	color: var(--light);
+	font-size: 11px;
+}
+
+.safe-icon {
+	width: 18px;
+	height: 18px;
+
+	display: grid;
+	place-items: center;
+
+	border-radius: 50%;
+
+	background: var(--blue-light);
+	color: var(--blue-dark);
+
+	font-size: 10px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width: 700px) {
+
+	.scan-heading {
+		flex-direction: column;
+	}
+
+	.summary {
+		grid-template-columns: 1fr;
+	}
+
+	.summary-item + .summary-item {
+		border-left: 0;
+		border-top: 1px solid var(--border-light);
+	}
+
+	.finding {
+		grid-template-columns: 42px 1fr;
+	}
+
+	.fix-button {
+		grid-column: 2;
+		justify-self: start;
+	}
+
+}
