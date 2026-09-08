@@ -9,6 +9,7 @@ Install:
 - Navigate to the root project directory 
 - Type and run from Terminal: npm install
 
+
 Run: 
 - Type and run from Terminal: npm start
 - You must have the front and backend both running for the front end to work 
