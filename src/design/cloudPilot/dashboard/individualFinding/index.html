@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CloudPilot — S3 Findings</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<header class="header">
+
+	<div class="brand">
+		<div class="logo">C</div>
+		CloudPilot
+	</div>
+
+	<nav class="topnav">
+		<a href="../../chat/index.html">Chat</a>
+		<a class="active" href="#">Cloud</a>
+		<a href="../findings/index.html">Findings</a>
+	</nav>
+
+	<div class="header-right">
+		<input class="search" placeholder="Search CloudPilot...">
+		<div class="avatar">DC</div>
+	</div>
+
+</header>
+
+
+<aside class="sidebar">
+
+	<div class="side-title">Cloud</div>
+
+	<nav class="side">
+		<a href="#"><span class="icon">⌂</span>Overview</a>
+		<a href="#"><span class="icon">▣</span>EC2</a>
+		<a class="active" href="#"><span class="icon">◫</span>S3</a>
+	</nav>
+
+	<div class="divider"></div>
+
+	<div class="side-title">CloudPilot</div>
+
+	<nav class="side">
+		<a href="#"><span class="icon">!</span>Findings</a>
+		<a href="#"><span class="icon">↺</span>History</a>
+	</nav>
+
+</aside>
+
+
+<main class="main">
+
+	<div class="content">
+
+		<div class="breadcrumb">
+			<a href="../findings/index.html">S3 Buckets</a>
+			<span>/</span>
+			<span>Bucket details</span>
+		</div>
+
+		<div class="eyebrow">S3 Bucket</div>
+
+		<h1>codepipeline-us-west-2-e2cd1e5051c6-4c05-97be-fe8e1f9c1a7e</h1>
+
+		<p class="description">
+			us-west-2 · 6 findings need attention
+		</p>
+
+
+		<section class="summary">
+
+			<div class="summary-icon">!</div>
+
+			<div>
+				<strong>6 things are worth looking at</strong>
+				<p>
+					CloudPilot found security and configuration issues with this bucket.
+					I'd start with the high-priority findings.
+				</p>
+			</div>
+
+		</section>
+
+
+		<section class="card">
+
+			<div class="card-head">
+				<div>
+					<div class="card-title">Findings</div>
+					<div class="card-sub">6 findings for this bucket</div>
+				</div>
+			</div>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Finding</th>
+						<th>Priority</th>
+						<th>What this means</th>
+						<th class="action-head">Action</th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+					<tr>
+						<td class="finding">Encryption is off</td>
+						<td>
+							<span class="priority high">
+								<span class="dot"></span>High
+							</span>
+						</td>
+						<td class="meaning">
+							New files aren't encrypted by default.
+						</td>
+						<td class="fix-cell">
+							<button class="fix" type="button">Fix</button>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="finding">Public access isn't fully blocked</td>
+						<td>
+							<span class="priority high">
+								<span class="dot"></span>High
+							</span>
+						</td>
+						<td class="meaning">
+							Public access settings may allow this bucket to be exposed.
+						</td>
+						<td class="fix-cell">
+							<button class="fix" type="button">Fix</button>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="finding">Versioning is disabled</td>
+						<td>
+							<span class="priority medium">
+								<span class="dot"></span>Medium
+							</span>
+						</td>
+						<td class="meaning">
+							Deleted or overwritten files may be difficult to recover.
+						</td>
+						<td class="fix-cell">
+							<button class="fix" type="button">Fix</button>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="finding">Access logging is disabled</td>
+						<td>
+							<span class="priority medium">
+								<span class="dot"></span>Medium
+							</span>
+						</td>
+						<td class="meaning">
+							Requests to this bucket aren't being recorded.
+						</td>
+						<td class="fix-cell">
+							<button class="fix" type="button">Fix</button>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="finding">Lifecycle rules aren't configured</td>
+						<td>
+							<span class="priority low">
+								<span class="dot"></span>Low
+							</span>
+						</td>
+						<td class="meaning">
+							Older files may remain in expensive storage longer than needed.
+						</td>
+						<td class="fix-cell">
+							<button class="fix" type="button">Fix</button>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="finding">No cost allocation tags</td>
+						<td>
+							<span class="priority low">
+								<span class="dot"></span>Low
+							</span>
+						</td>
+						<td class="meaning">
+							This bucket may be harder to identify in cost reports.
+						</td>
+						<td class="fix-cell">
+							<button class="fix" type="button">Fix</button>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+		</section>
+
+	</div>
+
+</main>
+
+
+<div id="toast" class="toast">
+	Fix selected — this would open the CloudPilot remediation flow.
+</div>
+
+
+<script>
+document.querySelectorAll('.fix').forEach(function (btn) {
+	btn.addEventListener('click', function () {
+		var toast = document.getElementById('toast');
+		toast.classList.add('show');
+		clearTimeout(window.toastTimer);
+		window.toastTimer = setTimeout(function () {
+			toast.classList.remove('show');
+		}, 2200);
+	});
+});
+</script>
+
+
+</body>
+</html>

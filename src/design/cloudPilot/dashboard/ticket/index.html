@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CloudPilot — Production Incident</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<header class="header">
+
+	<div class="brand">
+		<div class="logo">C</div>
+		CloudPilot
+	</div>
+
+	<nav class="topnav">
+		<a href="../../chat/index.html">Chat</a>
+		<a href="#">Systems</a>
+		<a class="active" href="#">Incidents</a>
+	</nav>
+
+	<div class="header-right">
+		<input class="search" placeholder="Search CloudPilot...">
+		<div class="avatar">DC</div>
+	</div>
+
+</header>
+
+
+<aside class="sidebar">
+
+	<div class="side-title">Operations</div>
+
+	<nav class="side">
+		<a href="#"><span class="icon">⌂</span>Overview</a>
+		<a href="#"><span class="icon">◉</span>Systems</a>
+		<a class="active" href="#"><span class="icon">!</span>Incidents</a>
+		<a href="#"><span class="icon">✓</span>Changes</a>
+	</nav>
+
+	<div class="divider"></div>
+
+	<div class="side-title">CloudPilot</div>
+
+	<nav class="side">
+		<a href="#"><span class="icon">⌕</span>Investigations</a>
+		<a href="#"><span class="icon">↺</span>History</a>
+	</nav>
+
+</aside>
+
+
+<main class="main">
+
+	<div class="content">
+
+		<div class="breadcrumb">
+			<a href="#">Incidents</a>
+			<span>/</span>
+			<span>INC-1842</span>
+		</div>
+
+
+		<div class="incident-top">
+
+			<div>
+				<div class="eyebrow">Production incident · SEV-2</div>
+				<h1>Checkout requests are failing after today's release</h1>
+				<p class="description">
+					Reported by Support · Ticket INC-1842 · Started 18 minutes ago
+				</p>
+			</div>
+
+			<div class="status">
+				<span class="status-dot"></span>
+				Active incident
+			</div>
+
+		</div>
+
+
+		<section class="metrics">
+
+			<div class="metric">
+				<div class="metric-label">Checkout errors</div>
+				<div class="metric-value">18.7%</div>
+				<div class="metric-sub">was 0.3% before deploy</div>
+			</div>
+
+			<div class="metric">
+				<div class="metric-label">Affected service</div>
+				<div class="metric-value">checkout-api</div>
+				<div class="metric-sub">production</div>
+			</div>
+
+			<div class="metric">
+				<div class="metric-label">Started</div>
+				<div class="metric-value">2:41 PM</div>
+				<div class="metric-sub">3 min after release</div>
+			</div>
+
+			<div class="metric">
+				<div class="metric-label">Customers affected</div>
+				<div class="metric-value">~312</div>
+				<div class="metric-sub">estimated failed checkouts</div>
+			</div>
+
+		</section>
+
+
+		<section class="diagnosis">
+
+			<div class="diag-icon">C</div>
+
+			<div>
+				<div class="diag-label">CloudPilot diagnosis</div>
+				<h2>The new checkout release is exhausting database connections.</h2>
+				<p>
+					Release <strong>checkout-api v2.18.4</strong> changed the payment retry path.
+					Since deployment, each failed payment attempt is holding a database connection while retrying.
+					Connection usage rose from 42% to 96%, followed by request timeouts.
+					The previous release does not show this behavior.
+					<span class="confidence">High confidence.</span>
+				</p>
+			</div>
+
+		</section>
+
+
+		<div class="grid">
+
+			<section class="card">
+
+				<div class="card-head">
+					<div>
+						<div class="card-title">What CloudPilot found</div>
+						<div class="card-sub">Evidence correlated across the incident</div>
+					</div>
+					<div class="card-sub">5 signals</div>
+				</div>
+
+				<div class="evidence">
+
+					<div class="e-row">
+						<div class="time">2:38 PM</div>
+						<div>
+							<div class="e-title">checkout-api v2.18.4 deployed</div>
+							<div class="e-desc">
+								Release completed successfully. The payment retry implementation changed in this version.
+							</div>
+						</div>
+						<div class="source">
+							<span class="source-pill">Deploy</span>
+						</div>
+					</div>
+
+					<div class="e-row">
+						<div class="time">2:41 PM</div>
+						<div>
+							<div class="e-title">Database connections began climbing</div>
+							<div class="e-desc">
+								Active connections moved from a normal 38–45% range to 82% in under four minutes.
+							</div>
+						</div>
+						<div class="source">
+							<span class="source-pill">Metrics</span>
+						</div>
+					</div>
+
+					<div class="e-row">
+						<div class="time">2:44 PM</div>
+						<div>
+							<div class="e-title">First timeout spike</div>
+							<div class="e-desc">
+								checkout-api began logging “connection pool exhausted” immediately before HTTP 500s increased.
+							</div>
+						</div>
+						<div class="source">
+							<span class="source-pill">Logs</span>
+						</div>
+					</div>
+
+					<div class="e-row">
+						<div class="time">2:47 PM</div>
+						<div>
+							<div class="e-title">Support opened INC-1842</div>
+							<div class="e-desc">
+								Customers reported payment spinning and returning “Unable to complete checkout.”
+							</div>
+						</div>
+						<div class="source">
+							<span class="source-pill">Ticket</span>
+						</div>
+					</div>
+
+					<div class="e-row">
+						<div class="time">Now</div>
+						<div>
+							<div class="e-title">Previous release remains healthy</div>
+							<div class="e-desc">
+								Comparison with v2.18.3 shows normal connection release behavior under equivalent traffic.
+							</div>
+						</div>
+						<div class="source">
+							<span class="source-pill">Compare</span>
+						</div>
+					</div>
+
+				</div>
+
+			</section>
+
+
+			<div>
+
+				<section class="card">
+
+					<div class="card-head">
+						<div>
+							<div class="card-title">Recommended recovery</div>
+							<div class="card-sub">Safest path to restore checkout</div>
+						</div>
+					</div>
+
+					<div class="plan">
+
+						<div class="plan-step">
+							<div class="step-num">1</div>
+							<div>
+								<div class="step-title">Roll back to v2.18.3</div>
+								<div class="step-desc">Restore the last healthy release of checkout-api.</div>
+							</div>
+						</div>
+
+						<div class="plan-step">
+							<div class="step-num">2</div>
+							<div>
+								<div class="step-title">Verify recovery</div>
+								<div class="step-desc">Watch error rate and database connections for 5 minutes.</div>
+							</div>
+						</div>
+
+						<div class="plan-step">
+							<div class="step-num">3</div>
+							<div>
+								<div class="step-title">Open a follow-up fix</div>
+								<div class="step-desc">Create an engineering task with the retry-path evidence attached.</div>
+							</div>
+						</div>
+
+					</div>
+
+				</section>
+
+
+				<section class="action-box">
+
+					<div class="action-label">Ready to help</div>
+					<h3>Restore checkout</h3>
+					<p>
+						CloudPilot can prepare the rollback to v2.18.3.
+						You'll see exactly what will change before anything runs.
+					</p>
+
+					<div class="buttons">
+						<button
+							class="primary"
+							type="button"
+							data-msg="Rollback prepared. CloudPilot would now show the exact change and ask for confirmation before execution."
+						>
+							Prepare rollback
+						</button>
+						<button
+							class="secondary"
+							type="button"
+							data-msg="Opening the investigation view with correlated logs, metrics, deployment changes, and ticket context."
+						>
+							Investigate more
+						</button>
+					</div>
+
+				</section>
+
+
+				<section class="ticket">
+					<div class="ticket-row">
+						<span class="ticket-key">Incident</span>
+						<span class="ticket-value">INC-1842</span>
+					</div>
+					<div class="ticket-row">
+						<span class="ticket-key">Owner</span>
+						<span class="ticket-value">Platform Engineering</span>
+					</div>
+					<div class="ticket-row">
+						<span class="ticket-key">Service</span>
+						<span class="ticket-value">checkout-api</span>
+					</div>
+					<div class="ticket-row">
+						<span class="ticket-key">Last healthy</span>
+						<span class="ticket-value">v2.18.3</span>
+					</div>
+				</section>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</main>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+document.querySelectorAll('button[data-msg]').forEach(function (btn) {
+	btn.addEventListener('click', function () {
+		var toast = document.getElementById('toast');
+		toast.textContent = btn.dataset.msg;
+		toast.classList.add('show');
+		clearTimeout(window.toastTimer);
+		window.toastTimer = setTimeout(function () {
+			toast.classList.remove('show');
+		}, 3000);
+	});
+});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,622 @@
+/*
+CloudPilot Chat
+
+FUNCTIONS A: Base
+FUNCTIONS B: Header
+FUNCTIONS C: Page Structure
+FUNCTIONS D: Sidebar
+FUNCTIONS E: Chat Shell
+FUNCTIONS F: Messages
+FUNCTIONS G: Finding Card
+FUNCTIONS H: Compose
+FUNCTIONS I: Responsive
+*/
+
+:root {
+	--green: #2f9874;
+	--green-dark: #23775b;
+	--green-soft: #eef8f4;
+
+	--background: #fbfcfb;
+	--surface: #ffffff;
+	--sidebar: #fbfcfb;
+
+	--text: #17201d;
+	--text-secondary: #5f6b67;
+	--text-muted: #8a9691;
+
+	--border: #e4e9e6;
+	--border-dark: #d8dfdb;
+
+	--danger: #d92d3a;
+	--danger-soft: #fff5f5;
+	--danger-border: #f0d3d5;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family:
+		Inter,
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		sans-serif;
+
+	color: var(--text);
+	background: var(--background);
+	min-height: 100vh;
+}
+
+button,
+input {
+	font: inherit;
+}
+
+/* =========================================
+   FUNCTIONS B: HEADER
+========================================= */
+
+.header {
+	height: 72px;
+	width: 100%;
+
+	display: flex;
+	align-items: center;
+
+	padding: 0 28px;
+
+	background: #ffffff;
+	border-bottom: 1px solid var(--border);
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.brand-logo {
+	width: 34px;
+	height: 34px;
+
+	border-radius: 9px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: var(--green);
+	color: white;
+
+	font-weight: 700;
+}
+
+.header-nav {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	margin-left: 60px;
+}
+
+.header-nav a {
+	text-decoration: none;
+	color: var(--text-secondary);
+
+	font-size: 14px;
+	font-weight: 500;
+
+	padding: 9px 13px;
+	border-radius: 8px;
+}
+
+.header-nav a:hover,
+.header-nav a.active {
+	background: var(--green-soft);
+	color: var(--green-dark);
+}
+
+.header-right {
+	margin-left: auto;
+
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.search {
+	width: 230px;
+	height: 38px;
+
+	padding: 0 14px;
+
+	border: 1px solid var(--border);
+	border-radius: 10px;
+
+	background: #f8faf9;
+
+	font-size: 14px;
+	outline: none;
+}
+
+.search:focus {
+	border-color: #a8cbbb;
+	background: white;
+}
+
+.avatar {
+	width: 36px;
+	height: 36px;
+
+	border-radius: 50%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: var(--green);
+	color: white;
+
+	font-size: 13px;
+	font-weight: 700;
+}
+
+/* =========================================
+   FUNCTIONS C: PAGE STRUCTURE
+========================================= */
+
+.app {
+	display: flex;
+	padding-top: 72px;
+	min-height: 100vh;
+}
+
+/* =========================================
+   FUNCTIONS D: SIDEBAR
+========================================= */
+
+.sidebar {
+	width: 250px;
+	min-height: calc(100vh - 72px);
+
+	position: fixed;
+	top: 72px;
+	left: 0;
+
+	padding: 28px 18px;
+
+	background: var(--sidebar);
+	border-right: 1px solid var(--border);
+}
+
+.sidebar-title {
+	padding: 0 12px;
+	margin-bottom: 12px;
+
+	color: var(--text-muted);
+
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.sidebar-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.sidebar-link {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+
+	height: 42px;
+	padding: 0 12px;
+
+	border-radius: 9px;
+
+	text-decoration: none;
+
+	color: var(--text-secondary);
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.sidebar-link:hover {
+	background: #f1f4f2;
+}
+
+.sidebar-link.active {
+	background: var(--green-soft);
+	color: var(--green-dark);
+	font-weight: 600;
+}
+
+.sidebar-icon {
+	width: 18px;
+	text-align: center;
+}
+
+.sidebar-divider {
+	height: 1px;
+	background: var(--border);
+
+	margin: 22px 10px;
+}
+
+/* =========================================
+   FUNCTIONS E: CHAT SHELL
+========================================= */
+
+.main {
+	width: calc(100% - 250px);
+	margin-left: 250px;
+	min-height: calc(100vh - 72px);
+}
+
+.chat {
+	max-width: 850px;
+	margin: 0 auto;
+	padding: 0 22px;
+}
+
+.chat-header {
+	height: 72px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	position: sticky;
+	top: 72px;
+	z-index: 2;
+
+	background: var(--background);
+}
+
+.chat-header strong {
+	font-size: 14px;
+}
+
+.chat-header small {
+	display: block;
+	margin-top: 3px;
+	color: var(--text-muted);
+	font-size: 12px;
+}
+
+.btn-new-chat {
+	border: 1px solid var(--border);
+	background: var(--surface);
+	border-radius: 9px;
+	padding: 8px 11px;
+
+	color: var(--text-secondary);
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.btn-new-chat:hover {
+	background: var(--green-soft);
+	color: var(--green-dark);
+}
+
+/* =========================================
+   FUNCTIONS F: MESSAGES
+========================================= */
+
+.messages {
+	padding: 28px 0 190px;
+}
+
+.welcome {
+	text-align: center;
+	margin: 10px 0 34px;
+}
+
+.welcome .brand-logo {
+	margin: 0 auto;
+}
+
+.welcome h1 {
+	font-size: 25px;
+	margin: 12px 0 6px;
+}
+
+.welcome p {
+	font-size: 13px;
+	color: var(--text-muted);
+}
+
+.msg {
+	margin-bottom: 28px;
+}
+
+.msg.user {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.bubble {
+	max-width: 690px;
+
+	background: #f1f3f1;
+	padding: 13px 17px;
+	border-radius: 15px;
+
+	font-size: 14px;
+	line-height: 1.55;
+}
+
+.msg.ai {
+	display: grid;
+	grid-template-columns: 32px 1fr;
+	gap: 12px;
+}
+
+.bot-avatar {
+	width: 30px;
+	height: 30px;
+
+	border-radius: 8px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: var(--green);
+	color: white;
+
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.answer {
+	font-size: 14px;
+	line-height: 1.65;
+	color: #26312d;
+}
+
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 13px;
+}
+
+.chip {
+	border: 1px solid var(--border);
+	background: var(--surface);
+	border-radius: 8px;
+	padding: 7px 10px;
+
+	color: var(--text-secondary);
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.chip:hover {
+	background: var(--green-soft);
+	color: var(--green-dark);
+}
+
+/* =========================================
+   FUNCTIONS G: FINDING CARD
+========================================= */
+
+.finding-card {
+	margin-top: 15px;
+
+	border: 1px solid #d8e8e1;
+	border-radius: 13px;
+	overflow: hidden;
+
+	background: var(--surface);
+}
+
+.finding-card-top {
+	padding: 15px 17px;
+
+	background: var(--green-soft);
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.finding-eyebrow {
+	font-size: 10px;
+	font-weight: 800;
+	color: var(--green-dark);
+	letter-spacing: 0.07em;
+}
+
+.finding-title {
+	font-size: 14px;
+	font-weight: 700;
+	margin-top: 4px;
+}
+
+.finding-badge {
+	font-size: 11px;
+	font-weight: 700;
+
+	color: #a92430;
+	background: var(--danger-soft);
+	border: 1px solid var(--danger-border);
+	border-radius: 7px;
+	padding: 5px 8px;
+}
+
+.finding-row {
+	padding: 16px 17px;
+
+	display: grid;
+	grid-template-columns: 1fr 120px 70px;
+	gap: 18px;
+	align-items: center;
+}
+
+.finding-name {
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.finding-desc {
+	font-size: 12px;
+	color: var(--text-secondary);
+	margin-top: 3px;
+}
+
+.finding-priority {
+	font-size: 12px;
+}
+
+.priority-dot {
+	display: inline-block;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--danger);
+	margin-right: 6px;
+}
+
+.btn-fix {
+	border: 1px solid #b8d8ca;
+	background: var(--surface);
+	border-radius: 8px;
+	padding: 7px 12px;
+
+	color: var(--green-dark);
+	font-size: 12px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.btn-fix:hover {
+	background: var(--green);
+	color: white;
+}
+
+/* =========================================
+   FUNCTIONS H: COMPOSE
+========================================= */
+
+.compose-wrap {
+	position: fixed;
+	left: 250px;
+	right: 0;
+	bottom: 0;
+
+	padding: 45px 22px 24px;
+
+	background: linear-gradient(transparent, var(--background) 30%);
+}
+
+.compose {
+	max-width: 800px;
+	margin: 0 auto;
+
+	background: var(--surface);
+	border: 1px solid #dfe5e2;
+	border-radius: 18px;
+	box-shadow: 0 10px 30px rgba(23, 32, 29, 0.07);
+	padding: 12px;
+}
+
+.compose-input {
+	width: 100%;
+	border: 0;
+	outline: 0;
+	padding: 5px 4px 13px;
+	font-size: 14px;
+	background: transparent;
+}
+
+.compose-tools {
+	display: flex;
+	align-items: center;
+}
+
+.compose-plus {
+	border: 0;
+	background: transparent;
+	font-size: 23px;
+	color: var(--text-secondary);
+	cursor: pointer;
+}
+
+.compose-mode {
+	margin-left: auto;
+	border: 0;
+	background: transparent;
+	color: var(--text-muted);
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.compose-send {
+	width: 32px;
+	height: 32px;
+
+	border: 0;
+	border-radius: 50%;
+
+	background: var(--green);
+	color: white;
+
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.compose-note {
+	text-align: center;
+	font-size: 10px;
+	color: #a0aaa6;
+	margin-top: 8px;
+}
+
+/* =========================================
+   FUNCTIONS I: RESPONSIVE
+========================================= */
+
+@media (max-width: 800px) {
+	.sidebar {
+		display: none;
+	}
+
+	.main {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.compose-wrap {
+		left: 0;
+	}
+
+	.header-nav,
+	.search {
+		display: none;
+	}
+
+	.finding-row {
+		grid-template-columns: 1fr;
+		gap: 10px;
+	}
+}

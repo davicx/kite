@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CloudPilot — Chat</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<header class="header">
+
+	<div class="brand">
+		<div class="brand-logo">C</div>
+		CloudPilot
+	</div>
+
+	<nav class="header-nav">
+		<a href="../chat/index.html" class="active">Chat</a>
+		<a href="../dashboard/findings/index.html">Cloud</a>
+		<a href="../dashboard/findings/index.html">Findings</a>
+	</nav>
+
+	<div class="header-right">
+		<input
+			class="search"
+			type="text"
+			placeholder="Search CloudPilot..."
+		>
+
+		<div class="avatar">DC</div>
+	</div>
+
+</header>
+
+
+<div class="app">
+
+	<aside class="sidebar">
+
+		<div class="sidebar-title">Cloud Pilot</div>
+
+		<nav class="sidebar-nav">
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">⌂</span>
+				Home
+			</a>
+
+			<a class="sidebar-link" href="../dashboard/findings/index.html">
+				<span class="sidebar-icon">▣</span>
+				Dashboard
+			</a>
+
+			<a class="sidebar-link active" href="../chat/index.html" id="sideNew">
+				<span class="sidebar-icon">＋</span>
+				New Chat
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">☑</span>
+				To Do
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">◎</span>
+				Team
+			</a>
+
+		</nav>
+
+		<div class="sidebar-divider"></div>
+
+		<div class="sidebar-title">Projects</div>
+
+		<nav class="sidebar-nav">
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">◫</span>
+				Kite
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">◫</span>
+				Wishlist
+			</a>
+
+		</nav>
+
+		<div class="sidebar-divider"></div>
+
+		<div class="sidebar-title">Recent</div>
+
+		<nav class="sidebar-nav">
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">↺</span>
+				Kite deployment
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">↺</span>
+				S3 security scan
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">↺</span>
+				Create EC2 instance
+			</a>
+
+		</nav>
+
+	</aside>
+
+
+	<main class="main">
+
+		<div class="chat">
+
+			<div class="chat-header">
+				<div>
+					<strong>CloudPilot</strong>
+					<small>Your engineering workspace</small>
+				</div>
+				<button class="btn-new-chat" type="button" id="new">＋ New chat</button>
+			</div>
+
+			<section class="messages" id="messages">
+
+				<div class="welcome">
+					<div class="brand-logo">C</div>
+					<h1>What can I help with?</h1>
+					<p>Ask about your infrastructure, projects, incidents, or engineering work.</p>
+				</div>
+
+				<div class="msg user">
+					<div class="bubble">What needs my attention?</div>
+				</div>
+
+				<div class="msg ai">
+					<div class="bot-avatar">C</div>
+					<div class="answer">
+						<strong>There are 3 things I'd look at today.</strong>
+						The most important is an S3 security issue. Your latest Kite deployment looks healthy, and there are no open production incidents.
+
+						<div class="finding-card">
+							<div class="finding-card-top">
+								<div>
+									<div class="finding-eyebrow">NEEDS ATTENTION</div>
+									<div class="finding-title">S3 bucket has 6 security and configuration findings</div>
+								</div>
+								<div class="finding-badge">High priority</div>
+							</div>
+
+							<div class="finding-row">
+								<div>
+									<div class="finding-name">Encryption is off</div>
+									<div class="finding-desc">New files aren't encrypted by default on codepipeline-us-west-2...</div>
+								</div>
+								<div class="finding-priority">
+									<span class="priority-dot"></span>High
+								</div>
+								<button class="btn-fix" type="button" id="fix">Fix</button>
+							</div>
+						</div>
+
+						<div class="chips">
+							<button class="chip" type="button" data-p="Show me all 6 findings">Show all 6 findings</button>
+							<button class="chip" type="button" data-p="How is Kite doing?">Check Kite</button>
+							<button class="chip" type="button" data-p="What changed recently?">Recent changes</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="msg user">
+					<div class="bubble">Why is encryption being off a problem?</div>
+				</div>
+
+				<div class="msg ai">
+					<div class="bot-avatar">C</div>
+					<div class="answer">
+						Without default encryption, new objects can be stored without server-side encryption. For this bucket, I'd enable <strong>S3-managed encryption</strong> so new files are encrypted automatically.
+						<br><br>
+						I can walk you through the change first, or prepare the fix and show you exactly what would change before anything runs.
+
+						<div class="chips">
+							<button class="chip" type="button" data-p="Show me the change first">Show me the change</button>
+							<button class="chip" type="button" data-p="Prepare the encryption fix">Prepare fix</button>
+						</div>
+					</div>
+				</div>
+
+			</section>
+
+		</div>
+
+	</main>
+
+</div>
+
+
+<div class="compose-wrap">
+	<div class="compose">
+		<input
+			class="compose-input"
+			id="input"
+			type="text"
+			placeholder="Ask CloudPilot..."
+			autocomplete="off"
+		>
+		<div class="compose-tools">
+			<button class="compose-plus" type="button">+</button>
+			<button class="compose-mode" type="button">CloudPilot ▾</button>
+			<button class="compose-send" type="button" id="send">↑</button>
+		</div>
+	</div>
+	<div class="compose-note">CloudPilot can make mistakes. Review changes before applying them.</div>
+</div>
+
+
+<script>
+const input = document.getElementById('input');
+const msgs = document.getElementById('messages');
+
+function add(t) {
+	if (!t.trim()) return;
+
+	const u = document.createElement('div');
+	u.className = 'msg user';
+	u.innerHTML = '<div class="bubble"></div>';
+	u.firstChild.textContent = t;
+	msgs.appendChild(u);
+
+	const a = document.createElement('div');
+	a.className = 'msg ai';
+	a.innerHTML = '<div class="bot-avatar">C</div><div class="answer"><strong>Got it.</strong> In the real CloudPilot app, this would run through your grounded chat pipeline and respond with the relevant engineering context.</div>';
+	msgs.appendChild(a);
+
+	input.value = '';
+	window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+document.getElementById('send').onclick = () => add(input.value);
+input.onkeydown = (e) => {
+	if (e.key === 'Enter') add(input.value);
+};
+
+document.querySelectorAll('[data-p]').forEach((b) => {
+	b.onclick = () => {
+		input.value = b.dataset.p;
+		input.focus();
+	};
+});
+
+document.getElementById('fix').onclick = () => {
+	input.value = 'Help me fix the S3 encryption finding';
+	input.focus();
+};
+
+function fresh() {
+	input.value = '';
+	input.focus();
+}
+
+document.getElementById('new').onclick = fresh;
+document.getElementById('sideNew').onclick = (e) => {
+	e.preventDefault();
+	fresh();
+};
+</script>
+
+</body>
+</html>

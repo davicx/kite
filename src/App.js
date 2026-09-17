@@ -25,6 +25,7 @@ import OpenAIPage from './pages/openAI/OpenAIPage';
 import DashboardPage from './pages/DashboardPage';
 import TodoPage from './pages/TodoPage';
 import SystemDesignPage from './pages/SystemDesignPage/SystemDesignPage';
+import DesignPage from './pages/DesignPage';
 import NewGroup from './pages/NewGroupPage';
 import Profile from './pages/ProfilePage';
 import Posts from './pages/PostsPage';
@@ -98,13 +99,11 @@ function App() {
                   <Link className="navLink" to="/login">Login </Link>
                   <Link className="navLink" to="/groups"> Groups </Link>
                   <Link className="navLink" to="/chat"> Chat </Link>
-                  {/* <Link className="navLink" to="/chat-two"> Chat Two </Link> */}
-                  <Link className="navLink" to="/openai"> Open AI </Link>
                   <Link className="navLink" to="/dashboard"> Dashboard </Link>
-                  <Link className="navLink" to="/todos"> To Dos </Link>
-                  <Link className="navLink" to="/system-design"> System Design </Link>
                   <Link className="navLink" to="/profile"> Profile </Link>
                   <Link className="navLink" to="/posts"> Posts </Link>
+                  <Link className="navLink" to="/design"> Design </Link>
+                  {/* <Link className="navLink" to="/chat-two"> Chat Two </Link> */}
                   {/* <Link className="navLink" to="/users"> Users </Link> */}
                   {/* <Link className="navLink" to="/playground"> Playground </Link> */}
 
@@ -136,6 +135,7 @@ function App() {
                     <Route path="/dashboard" element={<DashboardPage/>} />
                     <Route path="/todos" element={<TodoPage/>} />
                     <Route path="/system-design" element={<SystemDesignPage/>} />
+                    <Route path="/design" element={<DesignPage/>} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </div>

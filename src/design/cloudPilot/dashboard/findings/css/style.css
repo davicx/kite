@@ -1,0 +1,594 @@
+/*
+CloudPilot Dashboard — S3 / Findings
+
+FUNCTIONS A: Base
+FUNCTIONS B: Header
+FUNCTIONS C: Page Structure
+FUNCTIONS D: Sidebar
+FUNCTIONS E: Main + Page Header
+FUNCTIONS F: Table Card
+FUNCTIONS G: Health + Links
+FUNCTIONS H: Summary
+FUNCTIONS I: Findings
+FUNCTIONS J: Responsive
+*/
+
+:root {
+	--green: #2f9874;
+	--green-dark: #23775b;
+	--green-soft: #eef8f4;
+
+	--background: #f8faf9;
+	--surface: #ffffff;
+	--sidebar: #fbfcfb;
+
+	--text: #17201d;
+	--text-secondary: #5f6b67;
+	--text-muted: #8a9691;
+
+	--border: #e4e9e6;
+	--border-dark: #d8dfdb;
+
+	--danger: #d92d3a;
+	--danger-soft: #fff4f4;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family:
+		Inter,
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		sans-serif;
+
+	color: var(--text);
+	background: var(--background);
+	min-height: 100vh;
+}
+
+button {
+	font: inherit;
+}
+
+/* =========================================
+   FUNCTIONS B: HEADER
+========================================= */
+
+.header {
+	height: 72px;
+	width: 100%;
+
+	display: flex;
+	align-items: center;
+
+	padding: 0 28px;
+
+	background: #ffffff;
+	border-bottom: 1px solid var(--border);
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.brand-logo {
+	width: 34px;
+	height: 34px;
+
+	border-radius: 9px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: var(--green);
+	color: white;
+
+	font-weight: 700;
+}
+
+.header-nav {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	margin-left: 60px;
+}
+
+.header-nav a {
+	text-decoration: none;
+	color: var(--text-secondary);
+
+	font-size: 14px;
+	font-weight: 500;
+
+	padding: 9px 13px;
+	border-radius: 8px;
+}
+
+.header-nav a:hover,
+.header-nav a.active {
+	background: var(--green-soft);
+	color: var(--green-dark);
+}
+
+.header-right {
+	margin-left: auto;
+
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.search {
+	width: 230px;
+	height: 38px;
+
+	padding: 0 14px;
+
+	border: 1px solid var(--border);
+	border-radius: 10px;
+
+	background: #f8faf9;
+
+	font-size: 14px;
+	outline: none;
+}
+
+.search:focus {
+	border-color: #a8cbbb;
+	background: white;
+}
+
+.avatar {
+	width: 36px;
+	height: 36px;
+
+	border-radius: 50%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: var(--green);
+	color: white;
+
+	font-size: 13px;
+	font-weight: 700;
+}
+
+/* =========================================
+   FUNCTIONS C: PAGE STRUCTURE
+========================================= */
+
+.app {
+	display: flex;
+	padding-top: 72px;
+	min-height: 100vh;
+}
+
+/* =========================================
+   FUNCTIONS D: SIDEBAR
+========================================= */
+
+.sidebar {
+	width: 250px;
+	min-height: calc(100vh - 72px);
+
+	position: fixed;
+	top: 72px;
+	left: 0;
+
+	padding: 28px 18px;
+
+	background: var(--sidebar);
+	border-right: 1px solid var(--border);
+}
+
+.sidebar-title {
+	padding: 0 12px;
+	margin-bottom: 12px;
+
+	color: var(--text-muted);
+
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.sidebar-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.sidebar-link {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+
+	height: 42px;
+	padding: 0 12px;
+
+	border-radius: 9px;
+
+	text-decoration: none;
+
+	color: var(--text-secondary);
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.sidebar-link:hover {
+	background: #f1f4f2;
+}
+
+.sidebar-link.active {
+	background: var(--green-soft);
+	color: var(--green-dark);
+	font-weight: 600;
+}
+
+.sidebar-icon {
+	width: 18px;
+	text-align: center;
+}
+
+.sidebar-divider {
+	height: 1px;
+	background: var(--border);
+
+	margin: 22px 10px;
+}
+
+/* =========================================
+   FUNCTIONS E: MAIN + PAGE HEADER
+========================================= */
+
+.main {
+	width: calc(100% - 250px);
+	margin-left: 250px;
+
+	padding: 48px 56px 80px;
+}
+
+.content {
+	max-width: 1180px;
+	margin: 0 auto;
+}
+
+.page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+
+	margin-bottom: 28px;
+}
+
+.eyebrow {
+	color: var(--green-dark);
+
+	font-size: 12px;
+	font-weight: 700;
+
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+
+	margin-bottom: 8px;
+}
+
+h1 {
+	font-size: 30px;
+	line-height: 1.2;
+
+	letter-spacing: -0.025em;
+}
+
+.page-description {
+	color: var(--text-secondary);
+	font-size: 14px;
+
+	margin-top: 8px;
+}
+
+.scan-button {
+	border: 0;
+	border-radius: 9px;
+
+	background: var(--green);
+	color: white;
+
+	padding: 11px 17px;
+
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.scan-button:hover {
+	background: var(--green-dark);
+}
+
+/* =========================================
+   FUNCTIONS F: TABLE CARD
+========================================= */
+
+.card {
+	background: var(--surface);
+
+	border: 1px solid var(--border);
+	border-radius: 14px;
+
+	overflow: hidden;
+}
+
+.card-header {
+	padding: 20px 22px;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	border-bottom: 1px solid var(--border);
+}
+
+.card-title {
+	font-size: 15px;
+	font-weight: 650;
+}
+
+.card-meta {
+	color: var(--text-muted);
+	font-size: 13px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th {
+	padding: 13px 20px;
+
+	text-align: left;
+
+	color: var(--text-muted);
+
+	font-size: 11px;
+	font-weight: 650;
+
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+
+	background: #fbfcfb;
+}
+
+td {
+	padding: 18px 20px;
+
+	border-top: 1px solid var(--border);
+
+	font-size: 14px;
+	vertical-align: middle;
+}
+
+tbody tr {
+	transition: background 0.15s;
+}
+
+tbody tr:hover {
+	background: #fafcfb;
+}
+
+.bucket-name {
+	font-weight: 600;
+	color: #29342f;
+
+	max-width: 400px;
+}
+
+.region {
+	color: var(--text-secondary);
+}
+
+/* =========================================
+   FUNCTIONS G: HEALTH + LINKS
+========================================= */
+
+.health {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+
+	white-space: nowrap;
+}
+
+.health-dot {
+	width: 8px;
+	height: 8px;
+
+	border-radius: 50%;
+	background: var(--danger);
+}
+
+.finding-count {
+	font-weight: 600;
+}
+
+.tags {
+	color: var(--text-secondary);
+}
+
+.action {
+	color: var(--green-dark);
+
+	font-weight: 650;
+	text-decoration: none;
+}
+
+.action:hover {
+	text-decoration: underline;
+}
+
+/* =========================================
+   FUNCTIONS H: SUMMARY
+========================================= */
+
+.summary {
+	margin-top: 32px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: 24px 26px;
+
+	background: var(--green-soft);
+
+	border: 1px solid #d9ebe3;
+	border-radius: 14px;
+}
+
+.summary-label {
+	color: var(--green-dark);
+
+	font-size: 11px;
+	font-weight: 700;
+
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+
+	margin-bottom: 6px;
+}
+
+.summary h2 {
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+
+.summary p {
+	color: var(--text-secondary);
+	font-size: 14px;
+}
+
+/* =========================================
+   FUNCTIONS I: FINDINGS
+========================================= */
+
+.section-header {
+	margin-top: 42px;
+	margin-bottom: 16px;
+}
+
+.section-header h2 {
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.section-header p {
+	color: var(--text-secondary);
+	font-size: 14px;
+}
+
+.finding-card {
+	display: grid;
+	grid-template-columns: 1fr 140px 110px;
+
+	align-items: center;
+	gap: 24px;
+
+	padding: 20px 22px;
+
+	background: white;
+
+	border: 1px solid var(--border);
+	border-radius: 12px;
+
+	margin-bottom: 10px;
+}
+
+.priority {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+
+	color: var(--danger);
+
+	font-size: 11px;
+	font-weight: 700;
+
+	text-transform: uppercase;
+
+	margin-bottom: 7px;
+}
+
+.finding-title {
+	font-size: 15px;
+	font-weight: 650;
+
+	margin-bottom: 6px;
+}
+
+.finding-description {
+	color: var(--text-secondary);
+	font-size: 13px;
+}
+
+.finding-resource {
+	color: var(--text-secondary);
+	font-size: 13px;
+
+	overflow-wrap: anywhere;
+}
+
+.finding-action {
+	text-align: right;
+}
+
+/* =========================================
+   FUNCTIONS J: RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+	.sidebar {
+		display: none;
+	}
+
+	.main {
+		width: 100%;
+		margin-left: 0;
+		padding: 32px 20px;
+	}
+
+	.header-nav {
+		display: none;
+	}
+
+	.search {
+		display: none;
+	}
+
+	.finding-card {
+		grid-template-columns: 1fr;
+	}
+
+	.finding-action {
+		text-align: left;
+	}
+}

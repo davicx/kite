@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CloudPilot — S3</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<header class="header">
+
+	<div class="brand">
+		<div class="brand-logo">C</div>
+		CloudPilot
+	</div>
+
+	<nav class="header-nav">
+		<a href="../../chat/index.html">Chat</a>
+		<a href="#" class="active">Cloud</a>
+		<a href="#">Findings</a>
+	</nav>
+
+	<div class="header-right">
+		<input
+			class="search"
+			type="text"
+			placeholder="Search CloudPilot..."
+		>
+
+		<div class="avatar">DC</div>
+	</div>
+
+</header>
+
+
+<div class="app">
+
+	<aside class="sidebar">
+
+		<!-- ORIGINAL SIDEBAR (revert if needed)
+		<div class="sidebar-title">Cloud</div>
+
+		<nav class="sidebar-nav">
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">⌂</span>
+				Overview
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">▣</span>
+				EC2
+			</a>
+
+			<a class="sidebar-link active" href="#">
+				<span class="sidebar-icon">◫</span>
+				S3
+			</a>
+
+		</nav>
+
+		<div class="sidebar-divider"></div>
+
+		<div class="sidebar-title">CloudPilot</div>
+
+		<nav class="sidebar-nav">
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">!</span>
+				Findings
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">↺</span>
+				History
+			</a>
+
+		</nav>
+		-->
+
+		<div class="sidebar-title">Cloud Pilot</div>
+
+		<nav class="sidebar-nav">
+
+			<a class="sidebar-link" href="../../chat/index.html">
+				<span class="sidebar-icon">⌂</span>
+				Home
+			</a>
+
+			<a class="sidebar-link active" href="../findings/index.html">
+				<span class="sidebar-icon">▣</span>
+				Dashboard
+			</a>
+
+			<a class="sidebar-link" href="../../chat/index.html">
+				<span class="sidebar-icon">＋</span>
+				New Chat
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">☑</span>
+				To Do
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">◎</span>
+				Team
+			</a>
+
+		</nav>
+
+		<div class="sidebar-divider"></div>
+
+		<div class="sidebar-title">Projects</div>
+
+		<nav class="sidebar-nav">
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">◫</span>
+				Kite
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">◫</span>
+				Wishlist
+			</a>
+
+		</nav>
+
+		<div class="sidebar-divider"></div>
+
+		<div class="sidebar-title">Recent</div>
+
+		<nav class="sidebar-nav">
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">↺</span>
+				Kite deployment
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">↺</span>
+				S3 security scan
+			</a>
+
+			<a class="sidebar-link" href="#">
+				<span class="sidebar-icon">↺</span>
+				Create EC2 instance
+			</a>
+
+		</nav>
+
+	</aside>
+
+
+	<main class="main">
+
+		<div class="content">
+
+			<div class="page-header">
+
+				<div>
+					<div class="eyebrow">AWS Environment</div>
+
+					<h1>S3 Buckets</h1>
+
+					<p class="page-description">
+						Your S3 resources and anything CloudPilot thinks is worth looking at.
+					</p>
+				</div>
+
+				<button class="scan-button">
+					Scan S3
+				</button>
+
+			</div>
+
+
+			<section class="card">
+
+				<div class="card-header">
+
+					<div class="card-title">
+						3 buckets
+					</div>
+
+					<div class="card-meta">
+						Last scanned just now
+					</div>
+
+				</div>
+
+
+				<table>
+
+					<thead>
+						<tr>
+							<th>Bucket</th>
+							<th>Region</th>
+							<th>Health</th>
+							<th>Findings</th>
+							<th>Tags</th>
+							<th></th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+						<tr>
+							<td class="bucket-name">
+								codepipeline-us-west-2-e2cd1e5051c6-4c05-97be-fe8e1f9c1a7e
+							</td>
+
+							<td class="region">
+								us-west-2
+							</td>
+
+							<td>
+								<span class="health">
+									<span class="health-dot"></span>
+									Needs attention
+								</span>
+							</td>
+
+							<td class="finding-count">
+								6
+							</td>
+
+							<td class="tags">
+								0
+							</td>
+
+							<td>
+								<a class="action" href="#">
+									View →
+								</a>
+							</td>
+						</tr>
+
+
+						<tr>
+							<td class="bucket-name">
+								elasticbeanstalk-us-west-2-631447262459
+							</td>
+
+							<td class="region">
+								us-west-2
+							</td>
+
+							<td>
+								<span class="health">
+									<span class="health-dot"></span>
+									Needs attention
+								</span>
+							</td>
+
+							<td class="finding-count">
+								6
+							</td>
+
+							<td class="tags">
+								0
+							</td>
+
+							<td>
+								<a class="action" href="#">
+									View →
+								</a>
+							</td>
+						</tr>
+
+
+						<tr>
+							<td class="bucket-name">
+								insta-app-bucket-tutorial-two
+							</td>
+
+							<td class="region">
+								us-east-1
+							</td>
+
+							<td>
+								<span class="health">
+									<span class="health-dot"></span>
+									Needs attention
+								</span>
+							</td>
+
+							<td class="finding-count">
+								6
+							</td>
+
+							<td class="tags">
+								0
+							</td>
+
+							<td>
+								<a class="action" href="#">
+									View →
+								</a>
+							</td>
+						</tr>
+
+					</tbody>
+
+				</table>
+
+			</section>
+
+
+			<section class="summary">
+
+				<div>
+
+					<div class="summary-label">
+						Your AWS Environment
+					</div>
+
+					<h2>3 resources need attention</h2>
+
+					<p>
+						CloudPilot found 18 things worth looking at.
+						6 are security-related, so I'd start there.
+					</p>
+
+				</div>
+
+				<a class="action" href="#">
+					Review all findings →
+				</a>
+
+			</section>
+
+
+			<div class="section-header">
+
+				<h2>Findings</h2>
+
+				<p>
+					codepipeline-us-west-2-e2cd1e5051c6-4c05-97be-fe8e1f9c1a7e
+				</p>
+
+			</div>
+
+
+			<article class="finding-card">
+
+				<div>
+
+					<div class="priority">
+						● High
+					</div>
+
+					<div class="finding-title">
+						Encryption is off
+					</div>
+
+					<div class="finding-description">
+						New files aren't encrypted by default.
+					</div>
+
+				</div>
+
+
+				<div class="finding-resource">
+					codepipeline-us-west-2-e2cd1e5051c6-4c05-97be-fe8e1f9c1a7e
+				</div>
+
+
+				<div class="finding-action">
+					<a class="action" href="#">
+						Review →
+					</a>
+				</div>
+
+			</article>
+
+		</div>
+
+	</main>
+
+</div>
+
+
+</body>
+</html>
