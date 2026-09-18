@@ -1,0 +1,8 @@
+{
+  "short_name": "Atlas",
+  "name": "Atlas CloudPilot",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0b1220",
+  "background_color": "#ffffff"
+}
