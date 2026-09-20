@@ -128,7 +128,7 @@ function ConnectionPage() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 12px;
-          margin-bottom: -8px;
+          margin-bottom: 0;
         }
         .connection-page .stat {
           background: #fff;
@@ -150,14 +150,15 @@ function ConnectionPage() {
         .connection-page .stat small {
           color: #5f6b67;
         }
-        .connection-page .section {
-          margin-bottom: -27px;
+        .connection-page .connections-services {
+          margin-top: 60px;
+          margin-bottom: 24px;
         }
-        .connection-page .section h2 {
+        .connection-page .connections-services h2 {
           font-size: 18px;
           margin: 0;
         }
-        .connection-page .section p {
+        .connection-page .connections-services p {
           font-size: 12px;
           color: #8a9691;
           margin: 4px 0 0;
@@ -375,7 +376,7 @@ function ConnectionPage() {
           </div>
         </div>
 
-        <div className="section">
+        <div className="connections-services">
           <h2>Your services</h2>
           <p>Manage what CloudPilot can work with.</p>
         </div>
