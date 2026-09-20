@@ -1,0 +1,41 @@
+.atlas-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f4f7fb;
+  color: #122033;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.atlas-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #d7e0ea;
+  background: #ffffff;
+}
+
+.atlas-brand {
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+}
+
+.atlas-main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.atlas-main h1 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.atlas-main p {
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.atlas-meta {
+  color: #5b6b7c;
+  font-size: 0.95rem;
+}
