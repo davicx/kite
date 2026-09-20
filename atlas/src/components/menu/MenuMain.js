@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import MenuIcon from './MenuIcon';
 
 function TemporaryMenuItem({ icon, label }) {
@@ -12,19 +12,34 @@ function TemporaryMenuItem({ icon, label }) {
 }
 
 function MenuMain() {
+  const location = useLocation();
+  const onChat = location.pathname === '/chat';
+  const onConnections = location.pathname === '/connections';
+
   return (
     <section className="menu-section">
       <h2 className="menu-section-title">Cloud Pilot</h2>
       <nav className="menu-items" aria-label="Cloud Pilot">
         <TemporaryMenuItem icon="home" label="Home" />
         <TemporaryMenuItem icon="dashboard" label="Dashboard" />
-        <Link to="/chat" className="menu-item menu-item-active">
+        <Link
+          to="/chat"
+          className={onChat ? 'menu-item menu-item-active' : 'menu-item'}
+        >
           <MenuIcon name="newChat" />
           <span className="menu-item-label">New Chat</span>
         </Link>
         <TemporaryMenuItem icon="todo" label="To Do" />
         <TemporaryMenuItem icon="team" label="Team" />
-        <TemporaryMenuItem icon="connections" label="Connections" />
+        <Link
+          to="/connections"
+          className={
+            onConnections ? 'menu-item menu-item-active' : 'menu-item'
+          }
+        >
+          <MenuIcon name="connections" />
+          <span className="menu-item-label">Connections</span>
+        </Link>
       </nav>
     </section>
   );

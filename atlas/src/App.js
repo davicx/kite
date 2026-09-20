@@ -3,6 +3,7 @@ import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
+import ConnectionPage from './pages/ConnectionPage';
 import Header from './components/header/Header';
 import Menu from './components/menu/Menu';
 import { LoginContext } from './functions/context/LoginContext';
@@ -35,6 +36,7 @@ function App() {
               <Route path="/" element={<Navigate to="/login" replace />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/chat" element={<ChatPage />} />
+              <Route path="/connections" element={<ConnectionPage />} />
               <Route path="/dashboard" element={<div className="chat-page" />} />
               <Route path="/findings" element={<div className="chat-page" />} />
             </Routes>
