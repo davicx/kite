@@ -440,12 +440,7 @@ SECTION 5A: Chat Page Input
 	border: 0;
 	outline: 0;
 	padding: 5px 4px 13px;
-	font-size: 14px;
-	background: transparent;
-	color: var(--text);
-}
-
-.cloudpilot-chat .compose-input:disabled {
+	font-size: 15px;
 	color: var(--text-muted);
 }
 
@@ -467,7 +462,7 @@ SECTION 5A: Chat Page Input
 	border: 0;
 	background: transparent;
 	color: var(--text-muted);
-	font-size: 12px;
+	font-size: 13px;
 	cursor: pointer;
 }
 
@@ -517,7 +512,7 @@ SECTION 5B: Cloud Pilot Chat Bubble
 }
 
 .cloudpilot-chat .answer {
-	font-size: 14px;
+	font-size: 15px;
 	line-height: 1.65;
 	color: #26312d;
 	white-space: pre-wrap;
@@ -540,7 +535,7 @@ SECTION 5C: User Chat Bubble
 	background: #f1f3f1;
 	padding: 13px 17px;
 	border-radius: 15px;
-	font-size: 14px;
+	font-size: 15px;
 	line-height: 1.55;
 	white-space: pre-wrap;
 }

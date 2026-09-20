@@ -13,6 +13,17 @@ const SERVICES = [
     actionClass: 'manage',
   },
   {
+    id: 'OpenAI',
+    mark: 'AI',
+    icoClass: 'openai',
+    name: 'OpenAI',
+    type: 'AI & language models',
+    desc: 'CloudPilot uses OpenAI to understand your questions and generate grounded replies for your workspace.',
+    connected: 'Connected · API key configured',
+    action: 'Manage',
+    actionClass: 'manage',
+  },
+  {
     id: 'Gmail',
     mark: 'M',
     icoClass: 'gmail',
@@ -194,6 +205,7 @@ function ConnectionPage() {
           font-weight: 800;
         }
         .connection-page .ico.aws { background: #fff8eb; color: #8a5b00; }
+        .connection-page .ico.openai { background: #f0faf4; color: #0d6b4c; }
         .connection-page .ico.gmail { background: #fff5f5; color: #b43b3b; }
         .connection-page .ico.jira { background: #f2f7ff; color: #3469a7; }
         .connection-page .ico.slack { background: #fbf5ff; color: #75518a; }
@@ -361,12 +373,12 @@ function ConnectionPage() {
         <div className="summary">
           <div className="stat">
             <label>Connected</label>
-            <b>1 service</b>
-            <small>AWS is ready to use</small>
+            <b>2 services</b>
+            <small>AWS and OpenAI are ready to use</small>
           </div>
           <div className="stat">
             <label>Available</label>
-            <b>6 services</b>
+            <b>5 services</b>
             <small>More integrations can be added</small>
           </div>
           <div className="stat">

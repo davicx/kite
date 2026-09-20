@@ -33,6 +33,17 @@ export async function sendMessageAPI({ api, payload }) {
 /**
  * @param {Object} params
  * @param {import('axios').AxiosInstance} params.api
+ * @param {number} params.conversationID
+ */
+export async function fetchConversationMessages({ api, conversationID }) {
+  const url = `${CHAT_API_BASE}/messages/conversation/${conversationID}`;
+  const { data } = await api.get(url);
+  return data;
+}
+
+/**
+ * @param {Object} params
+ * @param {import('axios').AxiosInstance} params.api
  * @param {number} params.groupID
  */
 export async function fetchConversationsForGroup({ api, groupID }) {

@@ -1,85 +1,72 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext, useMemo, useEffect } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
 
 import ChatMessages from '../components/chat/ChatMessages';
 import ChatInput from '../components/chat/ChatInput';
 import { LoginContext } from '../functions/context/LoginContext';
+import { ChatConversationContext } from '../functions/context/ChatConversationContext';
 import apiFunctions from '../functions/apiFunctions';
 import {
   sendMessageAPI,
-  fetchConversationsForGroup,
+  fetchConversationMessages,
 } from '../functions/api/chatAPI';
+import { normalizeScanResult } from '../functions/scan/normalizeScanResult';
 
 const api = apiFunctions.getAPI();
 
 /** Same demo group as kite workshop chat (localhost:3000/chat). */
 const DEMO_GROUP_ID = 70;
-
-const startingMessages = [
-  {
-    id: 'welcome-user',
-    role: 'user',
-    content: 'Why is encryption being off a problem?',
-  },
-  {
-    id: 'welcome-assistant',
-    role: 'assistant',
-    content:
-      "Without default encryption, new objects can be stored without server-side encryption. For this bucket, I'd enable S3-managed encryption so new files are encrypted automatically.\n\nI can walk you through the change first, or prepare the fix and show you exactly what would change before anything runs.",
-  },
-];
-
-function createMessageId() {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return crypto.randomUUID();
-  }
-  return `message-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-}
+const POLL_MS = 4000;
 
 function ChatPage() {
   const { currentUser } = useContext(LoginContext);
-  const [messages, setMessages] = useState(startingMessages);
+  const { conversationID } = useContext(ChatConversationContext);
+  const queryClient = useQueryClient();
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState('');
-  const [conversationID, setConversationID] = useState(null);
+  const [scanCard, setScanCard] = useState(null);
+
+  const displayName =
+    currentUser && currentUser !== 'null' ? currentUser : 'anonymous';
 
   useEffect(() => {
-    let cancelled = false;
+    setScanCard(null);
+  }, [conversationID]);
 
-    async function loadConversation() {
-      try {
-        const result = await fetchConversationsForGroup({
-          api,
-          groupID: DEMO_GROUP_ID,
-        });
-        const list = Array.isArray(result?.data) ? result.data : [];
-        const first = list[0];
-        const id = first?.conversationID ?? first?.conversation_id ?? null;
-
-        if (!cancelled) {
-          if (id != null && Number(id) > 0) {
-            setConversationID(Number(id));
-          } else {
-            setError(
-              'No conversation found for the demo group. Open kite chat once to create one, then try again.'
-            );
-          }
-        }
-      } catch (loadError) {
-        if (!cancelled) {
-          setError(
-            loadError.message ||
-              'Could not load a CloudPilot conversation for this session.'
-          );
-        }
-      }
+  const {
+    data: messagesRes,
+    isLoading: messagesLoading,
+    isError: messagesError,
+    error: messagesErr,
+  } = useQuery(
+    ['chat-messages', DEMO_GROUP_ID, conversationID],
+    () =>
+      fetchConversationMessages({
+        api,
+        conversationID,
+      }),
+    {
+      enabled: conversationID != null && conversationID > 0,
+      refetchInterval: POLL_MS,
+      refetchOnWindowFocus: true,
     }
+  );
 
-    loadConversation();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const messages = useMemo(() => {
+    const rows = Array.isArray(messagesRes?.data) ? messagesRes.data : [];
+    return rows.map((row) => {
+      const from = row?.messageFrom != null ? String(row.messageFrom) : '';
+      const isUser = Boolean(from) && from === displayName;
+      return {
+        id:
+          row?.messageID != null
+            ? String(row.messageID)
+            : `row-${from}-${row?.messageCaption ?? ''}`,
+        role: isUser ? 'user' : 'assistant',
+        content: String(row?.messageCaption ?? ''),
+      };
+    });
+  }, [messagesRes, displayName]);
 
   async function sendMessage(messageText) {
     const cleanedMessage = messageText.trim();
@@ -93,24 +80,14 @@ function ChatPage() {
       return;
     }
 
-    const userMessage = {
-      id: createMessageId(),
-      role: 'user',
-      content: cleanedMessage,
-    };
-
-    setMessages((currentMessages) => [...currentMessages, userMessage]);
     setIsSending(true);
     setError('');
 
     try {
-      const resolvedUsername =
-        currentUser && currentUser !== 'null' ? currentUser : 'anonymous';
-
       const response = await sendMessageAPI({
         api,
         payload: {
-          username: resolvedUsername,
+          username: displayName,
           message: cleanedMessage,
           groupID: DEMO_GROUP_ID,
           conversationID,
@@ -123,32 +100,28 @@ function ChatPage() {
         );
       }
 
+      const atlasResponse =
+        response?.data?.atlasResponse || response?.atlasResponse || null;
       const cloudPilotRow =
         response?.data?.CloudPilotResponseMessage ||
         response?.data?.cloudPilotResponseMessage ||
         null;
+      const normalized = normalizeScanResult(atlasResponse);
 
-      const assistantText =
-        (cloudPilotRow && cloudPilotRow.messageCaption) ||
-        response?.data?.atlasResponse?.message ||
-        '';
-
-      if (!String(assistantText).trim()) {
-        throw new Error('CloudPilot returned an empty response.');
+      if (normalized) {
+        setScanCard({
+          messageId:
+            cloudPilotRow?.messageID != null
+              ? String(cloudPilotRow.messageID)
+              : null,
+          scanResult: normalized,
+        });
       }
 
-      const cloudPilotMessage = {
-        id:
-          cloudPilotRow?.messageID != null
-            ? String(cloudPilotRow.messageID)
-            : createMessageId(),
-        role: 'assistant',
-        content: String(assistantText),
-      };
-
-      setMessages((currentMessages) => [
-        ...currentMessages,
-        cloudPilotMessage,
+      await queryClient.invalidateQueries([
+        'chat-messages',
+        DEMO_GROUP_ID,
+        conversationID,
       ]);
     } catch (requestError) {
       setError(
@@ -170,7 +143,25 @@ function ChatPage() {
           </div>
         </div>
 
-        <ChatMessages messages={messages} isSending={isSending} />
+        {conversationID == null ? (
+          <p className="chat-status">Select a project to open a conversation.</p>
+        ) : null}
+        {conversationID != null && messagesLoading ? (
+          <p className="chat-status">Loading messages…</p>
+        ) : null}
+        {conversationID != null && messagesError ? (
+          <p className="chat-error" role="alert">
+            Could not load messages (
+            {messagesErr?.message || 'error'}
+            ). Are you logged in?
+          </p>
+        ) : null}
+
+        <ChatMessages
+          messages={messages}
+          isSending={isSending}
+          scanCard={scanCard}
+        />
       </div>
 
       <ChatInput onSendMessage={sendMessage} isSending={isSending} />

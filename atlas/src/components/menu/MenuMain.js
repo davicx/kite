@@ -20,7 +20,13 @@ function MenuMain() {
     <section className="menu-section">
       <h2 className="menu-section-title">Cloud Pilot</h2>
       <nav className="menu-items" aria-label="Cloud Pilot">
-        <TemporaryMenuItem icon="home" label="Home" />
+        <Link
+          to="/chat"
+          className={onChat ? 'menu-item menu-item-active' : 'menu-item'}
+        >
+          <MenuIcon name="home" />
+          <span className="menu-item-label">Home</span>
+        </Link>
         <TemporaryMenuItem icon="dashboard" label="Dashboard" />
         <Link
           to="/chat"
