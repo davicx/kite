@@ -14,6 +14,8 @@ const DEMO_GROUP_ID = 70;
 const DEMO_PROJECTS = [
   { path: '/findings', label: 'S3 Findings' },
   { path: '/individual-finding', label: 'Bucket details' },
+  { path: '/dashboard-chat', label: 'Dashboard' },
+  { path: '/recents', label: 'Recents' },
   { path: '/ticket', label: 'Incident ticket' },
   { path: '/simple', label: 'Landing (sky)' },
 ];

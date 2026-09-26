@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ScanSummary from './ScanSummary';
 import ScanTopFinding from './ScanTopFinding';
+import { AtlasFindingsContext } from '../../../functions/context/AtlasFindingsContext';
 
-function ScanResultCard({ scanResult }) {
+function ScanResultCard({ scanResult, onShowAll }) {
+  const navigate = useNavigate();
+  const { openResourceList } = useContext(AtlasFindingsContext) || {};
+
   if (!scanResult || !scanResult.topFinding) {
     return null;
   }
@@ -15,7 +20,12 @@ function ScanResultCard({ scanResult }) {
   }`;
 
   function handleShowAll() {
-    // TODO: Open all-findings view when Dashboard / findings list is ready.
+    if (typeof onShowAll === 'function') {
+      onShowAll();
+    } else if (typeof openResourceList === 'function') {
+      openResourceList();
+    }
+    navigate('/dashboard');
   }
 
   return (

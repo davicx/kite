@@ -1,13 +1,32 @@
 import React, { useEffect, useRef } from 'react';
 import UserMessage from './UserMessage';
 import CloudPilotMessage from './CloudPilotMessage';
+import { splitFixOptionsMessage } from './FixOptionsCard';
 
-function ChatMessages({ messages, isSending, scanCard = null }) {
+function ChatMessages({
+  messages,
+  isSending,
+  scanCard = null,
+  onShowAll,
+  onSelectFixOption,
+}) {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({
+    const end = messagesEndRef.current;
+    if (!end || end.closest('.chat-closed')) {
+      return;
+    }
+
+    const panel = end.closest('.dcp-chat-messages');
+    if (panel) {
+      panel.scrollTop = panel.scrollHeight;
+      return;
+    }
+
+    end.scrollIntoView({
       behavior: 'smooth',
+      block: 'end',
     });
   }, [messages, isSending, scanCard]);
 
@@ -47,11 +66,19 @@ function ChatMessages({ messages, isSending, scanCard = null }) {
           }
         }
 
+        const fixOptions = splitFixOptionsMessage(message.content);
+        const showFixOptions =
+          fixOptions.showFixOptions && index === messages.length - 1;
+
         return (
           <CloudPilotMessage
             key={message.id}
             message={message}
             scanResult={scanResult}
+            onShowAll={onShowAll}
+            showFixOptions={showFixOptions}
+            fixOptionsDisabled={isSending}
+            onSelectFixOption={onSelectFixOption}
           />
         );
       })}

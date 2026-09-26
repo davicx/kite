@@ -13,7 +13,7 @@ function HeaderPages() {
         Chat
       </NavLink>
       <NavLink
-        to="/dashboard"
+        to="/chat"
         className={({ isActive }) =>
           isActive ? 'header-page-link header-page-link-active' : 'header-page-link'
         }

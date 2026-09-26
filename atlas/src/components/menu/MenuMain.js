@@ -14,6 +14,7 @@ function TemporaryMenuItem({ icon, label }) {
 function MenuMain() {
   const location = useLocation();
   const onChat = location.pathname === '/chat';
+  const onDashboard = location.pathname === '/dashboard';
   const onConnections = location.pathname === '/connections';
 
   return (
@@ -27,7 +28,15 @@ function MenuMain() {
           <MenuIcon name="home" />
           <span className="menu-item-label">Home</span>
         </Link>
-        <TemporaryMenuItem icon="dashboard" label="Dashboard" />
+        <Link
+          to="/dashboard"
+          className={
+            onDashboard ? 'menu-item menu-item-active' : 'menu-item'
+          }
+        >
+          <MenuIcon name="dashboard" />
+          <span className="menu-item-label">Dashboard</span>
+        </Link>
         <Link
           to="/chat"
           className={onChat ? 'menu-item menu-item-active' : 'menu-item'}

@@ -11,12 +11,12 @@ export const S3_FINDING_DISPLAY = {
   ENABLE_PUBLIC_ACCESS_BLOCK: {
     title: 'Public access protection is off',
     meaning: 'This bucket could be more exposed than intended.',
-    action: 'Fix',
+    action: 'Review',
   },
   ENABLE_DEFAULT_ENCRYPTION: {
     title: 'Encryption is off',
     meaning: "New files aren't encrypted by default.",
-    action: 'Fix',
+    action: 'Review',
   },
   REVIEW_BUCKET_POLICY: {
     title: 'Bucket may allow public access',
@@ -26,7 +26,7 @@ export const S3_FINDING_DISPLAY = {
   REMOVE_PUBLIC_ACL: {
     title: 'Public file permissions found',
     meaning: 'Some files may be publicly accessible.',
-    action: 'Fix',
+    action: 'Review',
   },
   ENABLE_VERSIONING: {
     title: 'Versioning is off',
@@ -36,17 +36,17 @@ export const S3_FINDING_DISPLAY = {
   ADD_LIFECYCLE_POLICY: {
     title: 'No lifecycle policy',
     meaning: 'Old files may be costing more than necessary.',
-    action: 'Fix',
+    action: 'Review',
   },
   ENABLE_ACCESS_LOGGING: {
     title: 'Access logging is off',
     meaning: 'You have less visibility into who accesses this bucket.',
-    action: 'Fix',
+    action: 'Review',
   },
   ADD_NAME_TAG: {
     title: 'Missing Name tag',
     meaning: 'This bucket is harder to identify and organize.',
-    action: 'Fix',
+    action: 'Review',
   },
 };
 

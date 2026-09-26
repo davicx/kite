@@ -5,12 +5,14 @@ import ChatMessages from '../components/chat/ChatMessages';
 import ChatInput from '../components/chat/ChatInput';
 import { LoginContext } from '../functions/context/LoginContext';
 import { ChatConversationContext } from '../functions/context/ChatConversationContext';
+import { AtlasFindingsContext } from '../functions/context/AtlasFindingsContext';
 import apiFunctions from '../functions/apiFunctions';
 import {
   sendMessageAPI,
   fetchConversationMessages,
 } from '../functions/api/chatAPI';
 import { normalizeScanResult } from '../functions/scan/normalizeScanResult';
+import { readAtlasScan } from '../functions/scan/readAtlasScan';
 
 const api = apiFunctions.getAPI();
 
@@ -21,6 +23,7 @@ const POLL_MS = 4000;
 function ChatPage() {
   const { currentUser } = useContext(LoginContext);
   const { conversationID } = useContext(ChatConversationContext);
+  const { scan, setScan } = useContext(AtlasFindingsContext) || {};
   const queryClient = useQueryClient();
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState('');
@@ -32,6 +35,18 @@ function ChatPage() {
   useEffect(() => {
     setScanCard(null);
   }, [conversationID]);
+
+  useEffect(() => {
+    if (
+      scan?.scanResult &&
+      Number(scan.conversationID) === Number(conversationID)
+    ) {
+      setScanCard({
+        messageId: scan.cloudPilotMessageID || null,
+        scanResult: scan.scanResult,
+      });
+    }
+  }, [scan, conversationID]);
 
   const {
     data: messagesRes,
@@ -107,6 +122,32 @@ function ChatPage() {
         response?.data?.cloudPilotResponseMessage ||
         null;
       const normalized = normalizeScanResult(atlasResponse);
+      const storedScan = readAtlasScan(atlasResponse);
+
+      if (storedScan && typeof setScan === 'function') {
+        setScan({
+          ...storedScan,
+          conversationID,
+          scanResult: normalized,
+          snapshotID: response?.data?.scanSnapshotID || null,
+          snapshotSaved: response?.data?.snapshotSaved,
+          cloudPilotMessageID:
+            cloudPilotRow?.messageID || cloudPilotRow?.message_id || null,
+        });
+      }
+
+      if (storedScan && response?.data?.snapshotSaved === false) {
+        setError(
+          'Scan completed, but this result could not be saved. It will not survive a refresh.'
+        );
+      }
+
+      if (storedScan && response?.data?.snapshotSaved === true) {
+        await Promise.all([
+          queryClient.invalidateQueries(['scan-latest', conversationID]),
+          queryClient.invalidateQueries(['scan-recents', conversationID]),
+        ]);
+      }
 
       if (normalized) {
         setScanCard({
@@ -161,6 +202,7 @@ function ChatPage() {
           messages={messages}
           isSending={isSending}
           scanCard={scanCard}
+          onSelectFixOption={sendMessage}
         />
       </div>
 

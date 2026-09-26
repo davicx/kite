@@ -5,14 +5,18 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
 import ConnectionPage from './pages/ConnectionPage';
-import FindingsPage from './pages/FindingsPage';
-import IndividualFindingPage from './pages/IndividualFindingPage';
-import TicketPage from './pages/TicketPage';
-import SimplePage from './pages/SimplePage';
+import RecentsPage from './pages/design/RecentsPage';
+import FindingsPage from './pages/design/FindingsPage';
+import IndividualFindingPage from './pages/design/IndividualFindingPage';
+import TicketPage from './pages/design/TicketPage';
+import SimplePage from './pages/design/SimplePage';
+import DashboardChatPage from './pages/DashboardChatPage';
+import DashboardPage from './pages/DashboardPage';
 import Header from './components/header/Header';
 import Menu from './components/menu/Menu';
 import { LoginContext } from './functions/context/LoginContext';
 import { ChatConversationContext } from './functions/context/ChatConversationContext';
+import AtlasFindingsProvider from './functions/context/AtlasFindingsProvider';
 
 import './style/style.css';
 
@@ -41,6 +45,7 @@ function App() {
           <ChatConversationContext.Provider
             value={{ conversationID, setConversationID }}
           >
+            <AtlasFindingsProvider>
             {showAppChrome ? <Header /> : null}
             <div className={showAppChrome ? 'app-shell' : undefined}>
               {showAppChrome ? <Menu /> : null}
@@ -50,7 +55,8 @@ function App() {
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/chat" element={<ChatPage />} />
                   <Route path="/connections" element={<ConnectionPage />} />
-                  <Route path="/dashboard" element={<div className="chat-page" />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/recents" element={<RecentsPage />} />
                   <Route path="/findings" element={<FindingsPage />} />
                   <Route
                     path="/individual-finding"
@@ -58,9 +64,11 @@ function App() {
                   />
                   <Route path="/ticket" element={<TicketPage />} />
                   <Route path="/simple" element={<SimplePage />} />
+                  <Route path="/dashboard-chat" element={<DashboardChatPage />} />
                 </Routes>
               </div>
             </div>
+            </AtlasFindingsProvider>
           </ChatConversationContext.Provider>
         </LoginContext.Provider>
       </QueryClientProvider>
