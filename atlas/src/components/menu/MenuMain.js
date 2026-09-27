@@ -2,20 +2,14 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import MenuIcon from './MenuIcon';
 
-function TemporaryMenuItem({ icon, label }) {
-  return (
-    <button type="button" className="menu-item">
-      <MenuIcon name={icon} />
-      <span className="menu-item-label">{label}</span>
-    </button>
-  );
-}
-
 function MenuMain() {
   const location = useLocation();
   const onChat = location.pathname === '/chat';
   const onDashboard = location.pathname === '/dashboard';
   const onConnections = location.pathname === '/connections';
+  const onTodo = location.pathname === '/todo';
+  const onRecents = location.pathname === '/recents';
+  const onTeam = location.pathname === '/team';
 
   return (
     <section className="menu-section">
@@ -44,8 +38,27 @@ function MenuMain() {
           <MenuIcon name="newChat" />
           <span className="menu-item-label">New Chat</span>
         </Link>
-        <TemporaryMenuItem icon="todo" label="To Do" />
-        <TemporaryMenuItem icon="team" label="Team" />
+        <Link
+          to="/todo"
+          className={onTodo ? 'menu-item menu-item-active' : 'menu-item'}
+        >
+          <MenuIcon name="todo" />
+          <span className="menu-item-label">To Do</span>
+        </Link>
+        <Link
+          to="/recents"
+          className={onRecents ? 'menu-item menu-item-active' : 'menu-item'}
+        >
+          <MenuIcon name="recent" />
+          <span className="menu-item-label">Recents</span>
+        </Link>
+        <Link
+          to="/team"
+          className={onTeam ? 'menu-item menu-item-active' : 'menu-item'}
+        >
+          <MenuIcon name="team" />
+          <span className="menu-item-label">Team</span>
+        </Link>
         <Link
           to="/connections"
           className={

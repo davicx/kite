@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
@@ -10,12 +10,21 @@ import FindingsPage from './pages/design/FindingsPage';
 import IndividualFindingPage from './pages/design/IndividualFindingPage';
 import TicketPage from './pages/design/TicketPage';
 import SimplePage from './pages/design/SimplePage';
+import CostsPage from './pages/design/CostsPage';
+import ToDoPage from './pages/design/ToDoPage';
+import HistoryPage from './pages/design/HistoryPage';
+import TeamPage from './pages/design/TeamPage';
 import DashboardChatPage from './pages/DashboardChatPage';
 import DashboardPage from './pages/DashboardPage';
+import AboutPage from './pages/AboutPage';
 import Header from './components/header/Header';
 import Menu from './components/menu/Menu';
 import { LoginContext } from './functions/context/LoginContext';
 import { ChatConversationContext } from './functions/context/ChatConversationContext';
+import {
+  readStoredConversationID,
+  writeStoredConversationID,
+} from './functions/context/storedConversation';
 import AtlasFindingsProvider from './functions/context/AtlasFindingsProvider';
 
 import './style/style.css';
@@ -27,7 +36,14 @@ const queryClient = new QueryClient();
 
 function App() {
   const [currentUser, setLoginState] = useState('null');
-  const [conversationID, setConversationID] = useState(null);
+  const [conversationID, setConversationIDState] = useState(
+    readStoredConversationID
+  );
+  const setConversationID = useCallback((id) => {
+    const next = id == null || Number(id) <= 0 ? null : Number(id);
+    setConversationIDState(next);
+    writeStoredConversationID(next);
+  }, []);
   const location = useLocation();
   const showAppChrome =
     location.pathname !== '/login' && location.pathname !== '/';
@@ -56,6 +72,7 @@ function App() {
                   <Route path="/chat" element={<ChatPage />} />
                   <Route path="/connections" element={<ConnectionPage />} />
                   <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/about" element={<AboutPage />} />
                   <Route path="/recents" element={<RecentsPage />} />
                   <Route path="/findings" element={<FindingsPage />} />
                   <Route
@@ -64,6 +81,10 @@ function App() {
                   />
                   <Route path="/ticket" element={<TicketPage />} />
                   <Route path="/simple" element={<SimplePage />} />
+                  <Route path="/costs" element={<CostsPage />} />
+                  <Route path="/todo" element={<ToDoPage />} />
+                  <Route path="/history" element={<HistoryPage />} />
+                  <Route path="/team" element={<TeamPage />} />
                   <Route path="/dashboard-chat" element={<DashboardChatPage />} />
                 </Routes>
               </div>

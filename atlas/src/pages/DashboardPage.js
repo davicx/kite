@@ -1,4 +1,5 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from 'react-query';
 
 import ChatMessages from '../components/chat/ChatMessages';
@@ -99,6 +100,7 @@ function FindingsTable({ findings, resourceName, onReview }) {
  * Level 1 is the resource list. Level 2 is one bucket or instance.
  */
 function DashboardPage() {
+  const navigate = useNavigate();
   const { currentUser } = useContext(LoginContext);
   const { conversationID } = useContext(ChatConversationContext);
   const {
@@ -283,6 +285,14 @@ function DashboardPage() {
   function openResource(resource) {
     setPath([resource]);
     setChatClosed(false);
+  }
+
+  function openAbout(resource) {
+    navigate('/about', { state: resource });
+  }
+
+  function openHistory() {
+    navigate('/history');
   }
 
   function reviewAllFindings() {
@@ -485,6 +495,32 @@ function DashboardPage() {
           color: var(--dcp-text-secondary);
           font-size: 14px;
           margin-top: 8px;
+        }
+        .dashboard-page .dcp-resource-meta {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-top: 8px;
+          color: var(--dcp-text-secondary);
+          font-size: 14px;
+        }
+        .dashboard-page .dcp-project-context-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 5px 11px;
+          border: 1px solid #d9e7e1;
+          border-radius: 999px;
+          background: #f7fbf9;
+          color: var(--dcp-green-dark);
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        .dashboard-page .dcp-project-context-button:hover {
+          background: var(--dcp-green-soft);
+          border-color: #b8d8ca;
         }
         .dashboard-page .dcp-page-actions {
           display: flex;
@@ -1154,11 +1190,42 @@ function DashboardPage() {
                 <div>
                   <div className="dcp-eyebrow">S3 Bucket</div>
                   <h1>{selectedBucket.bucketName}</h1>
-                  <p className="dcp-page-description">
-                    {selectedBucket.region || scanMeta.region || 'Unknown region'} ·{' '}
-                    {selectedBucket.findingCount} finding
-                    {selectedBucket.findingCount === 1 ? '' : 's'} need attention
-                  </p>
+                  <div className="dcp-resource-meta">
+                    <span>
+                      {selectedBucket.region || scanMeta.region || 'Unknown region'} ·{' '}
+                      {selectedBucket.findingCount} finding
+                      {selectedBucket.findingCount === 1 ? '' : 's'} need attention
+                    </span>
+                    <button
+                      className="dcp-project-context-button"
+                      type="button"
+                      onClick={() =>
+                        openAbout({
+                          eyebrow: 'S3 Bucket',
+                          name: selectedBucket.bucketName,
+                          meta:
+                            selectedBucket.region ||
+                            scanMeta.region ||
+                            'Unknown region',
+                          backLabel: '← Back to bucket',
+                          contextMeta: `S3 bucket · ${
+                            selectedBucket.region || 'region unknown'
+                          }`,
+                        })
+                      }
+                    >
+                      <span aria-hidden="true">✦</span>
+                      More Info
+                    </button>
+                    <button
+                      className="dcp-project-context-button"
+                      type="button"
+                      onClick={openHistory}
+                    >
+                      <span aria-hidden="true">↶</span>
+                      History
+                    </button>
+                  </div>
                 </div>
                 {renderPageActions('Scan S3')}
               </div>
@@ -1277,12 +1344,44 @@ function DashboardPage() {
                 <div>
                   <div className="dcp-eyebrow">EC2 Instance</div>
                   <h1>{selectedInstance.instanceName}</h1>
-                  <p className="dcp-page-description">
-                    {selectedInstance.region || 'Unknown region'} ·{' '}
-                    {selectedInstance.instanceType || 'Unknown type'} ·{' '}
-                    {selectedInstance.findingCount} finding
-                    {selectedInstance.findingCount === 1 ? '' : 's'}
-                  </p>
+                  <div className="dcp-resource-meta">
+                    <span>
+                      {selectedInstance.region || 'Unknown region'} ·{' '}
+                      {selectedInstance.instanceType || 'Unknown type'} ·{' '}
+                      {selectedInstance.findingCount} finding
+                      {selectedInstance.findingCount === 1 ? '' : 's'}
+                    </span>
+                    <button
+                      className="dcp-project-context-button"
+                      type="button"
+                      onClick={() =>
+                        openAbout({
+                          eyebrow: 'EC2 Instance',
+                          name: selectedInstance.instanceName,
+                          meta: `${
+                            selectedInstance.region || 'Unknown region'
+                          } · ${
+                            selectedInstance.instanceType || 'Unknown type'
+                          }`,
+                          backLabel: '← Back to instance',
+                          contextMeta: `EC2 instance · ${
+                            selectedInstance.region || 'region unknown'
+                          }`,
+                        })
+                      }
+                    >
+                      <span aria-hidden="true">✦</span>
+                      More Info
+                    </button>
+                    <button
+                      className="dcp-project-context-button"
+                      type="button"
+                      onClick={openHistory}
+                    >
+                      <span aria-hidden="true">↶</span>
+                      History
+                    </button>
+                  </div>
                 </div>
                 {renderPageActions('Scan EC2')}
               </div>

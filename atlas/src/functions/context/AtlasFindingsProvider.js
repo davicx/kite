@@ -7,6 +7,34 @@ import { ChatConversationContext } from './ChatConversationContext';
 import { AtlasFindingsContext } from './AtlasFindingsContext';
 
 const api = apiFunctions.getAPI();
+const SCAN_KEY = 'atlasLatestScan';
+
+function readStoredScan(conversationID) {
+  if (conversationID == null || Number(conversationID) <= 0) {
+    return null;
+  }
+
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(SCAN_KEY) || 'null');
+    if (!stored || Number(stored.conversationID) !== Number(conversationID)) {
+      return null;
+    }
+    return stored;
+  } catch (error) {
+    return null;
+  }
+}
+
+function writeStoredScan(scan) {
+  try {
+    if (!scan || scan.conversationID == null) {
+      return;
+    }
+    sessionStorage.setItem(SCAN_KEY, JSON.stringify(scan));
+  } catch (error) {
+    // Session storage can be unavailable or over quota.
+  }
+}
 
 function AtlasFindingsProvider({ children }) {
   const { conversationID } = useContext(ChatConversationContext);
@@ -19,6 +47,7 @@ function AtlasFindingsProvider({ children }) {
   const setScan = useCallback((nextScan) => {
     setScanState(nextScan);
     setScanToken((current) => current + 1);
+    writeStoredScan(nextScan);
   }, []);
 
   const openResourceList = useCallback(() => {
@@ -47,8 +76,9 @@ function AtlasFindingsProvider({ children }) {
 
   useEffect(() => {
     let cancelled = false;
-    setScanState(null);
     setRestoreError('');
+    const cached = readStoredScan(conversationID);
+    setScanState(cached);
 
     if (conversationID == null || Number(conversationID) <= 0) {
       setIsRestoringScan(false);
@@ -57,20 +87,25 @@ function AtlasFindingsProvider({ children }) {
       };
     }
 
-    setIsRestoringScan(true);
+    setIsRestoringScan(!cached);
     fetchLatestScan({ api, conversationID })
       .then((response) => {
         if (cancelled) {
           return;
         }
         const restored = restoreScanResult(response?.data);
-        setScanState(restored);
         if (restored) {
+          setScanState(restored);
+          writeStoredScan(restored);
           setScanToken((current) => current + 1);
+          return;
+        }
+        if (!cached) {
+          setScanState(null);
         }
       })
       .catch((error) => {
-        if (!cancelled) {
+        if (!cancelled && !cached) {
           setScanState(null);
           setRestoreError(error.message || 'Could not restore the latest scan.');
         }

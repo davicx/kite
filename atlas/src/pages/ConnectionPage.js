@@ -5,6 +5,7 @@ const SERVICES = [
     id: 'AWS',
     mark: 'AWS',
     icoClass: 'aws',
+    logo: '/logos/aws.svg',
     name: 'Amazon Web Services',
     type: 'Cloud infrastructure',
     desc: 'EC2 and S3 are connected. CloudPilot can inspect resources, scan for findings, and help with supported changes.',
@@ -16,6 +17,7 @@ const SERVICES = [
     id: 'OpenAI',
     mark: 'AI',
     icoClass: 'openai',
+    logo: '/logos/openai.svg',
     name: 'OpenAI',
     type: 'AI & language models',
     desc: 'CloudPilot uses OpenAI to understand your questions and generate grounded replies for your workspace.',
@@ -27,6 +29,7 @@ const SERVICES = [
     id: 'Gmail',
     mark: 'M',
     icoClass: 'gmail',
+    logo: '/logos/gmail.svg',
     name: 'Gmail',
     type: 'Email & organizational knowledge',
     desc: 'Find engineering decisions, incident context, vendor conversations, and useful information in email.',
@@ -37,6 +40,7 @@ const SERVICES = [
     id: 'Jira',
     mark: 'J',
     icoClass: 'jira',
+    logo: '/logos/jira.svg',
     name: 'Jira',
     type: 'Issues & project work',
     desc: "Bring tickets, bugs, incidents, ownership, and project history into CloudPilot's understanding of your work.",
@@ -47,6 +51,7 @@ const SERVICES = [
     id: 'Slack',
     mark: 'S',
     icoClass: 'slack',
+    logo: '/logos/slack.svg',
     name: 'Slack',
     type: 'Team communication',
     desc: 'Find relevant discussions, decisions, incident conversations, and context shared across your team.',
@@ -57,6 +62,7 @@ const SERVICES = [
     id: 'Azure',
     mark: 'Az',
     icoClass: 'azure',
+    logo: '/logos/azure.svg',
     name: 'Microsoft Azure',
     type: 'Cloud infrastructure',
     desc: 'Connect Azure resources so CloudPilot can understand infrastructure across more than one cloud provider.',
@@ -204,12 +210,25 @@ function ConnectionPage() {
           font-size: 13px;
           font-weight: 800;
         }
-        .connection-page .ico.aws { background: #fff8eb; color: #8a5b00; }
-        .connection-page .ico.openai { background: #f0faf4; color: #0d6b4c; }
-        .connection-page .ico.gmail { background: #fff5f5; color: #b43b3b; }
-        .connection-page .ico.jira { background: #f2f7ff; color: #3469a7; }
-        .connection-page .ico.slack { background: #fbf5ff; color: #75518a; }
-        .connection-page .ico.azure { background: #f1f8ff; color: #3976a8; }
+        .connection-page .ico.aws,
+        .connection-page .ico.openai,
+        .connection-page .ico.gmail,
+        .connection-page .ico.jira,
+        .connection-page .ico.slack,
+        .connection-page .ico.azure {
+          background: #fff;
+        }
+        .connection-page .ico img {
+          width: 26px;
+          height: 26px;
+          object-fit: contain;
+          display: block;
+        }
+        .connection-page .ico.aws img,
+        .connection-page .ico.jira img {
+          width: 34px;
+          height: 20px;
+        }
         .connection-page .ico.team { background: #eef8f4; color: #23775b; }
         .connection-page .name {
           font-size: 14px;
@@ -396,7 +415,13 @@ function ConnectionPage() {
         <div className="services">
           {SERVICES.map((service) => (
             <div className="service" key={service.id}>
-              <div className={`ico ${service.icoClass}`}>{service.mark}</div>
+              <div className={`ico ${service.icoClass}`}>
+                {service.logo ? (
+                  <img src={service.logo} alt="" />
+                ) : (
+                  service.mark
+                )}
+              </div>
               <div>
                 <div className="name">{service.name}</div>
                 <div className="type">{service.type}</div>
