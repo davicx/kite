@@ -11,7 +11,7 @@ function LoginHero() {
 
         <h1>
           Your cloud shouldn't require
-          <span>a team of experts.</span>
+          <span> a team of experts.</span>
         </h1>
 
         <p className="hero-description">

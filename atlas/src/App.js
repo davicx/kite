@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
@@ -35,7 +35,14 @@ import './style/style.css';
 const queryClient = new QueryClient();
 
 function App() {
-  const [currentUser, setLoginState] = useState('null');
+  const [currentUser, setLoginState] = useState(() => {
+    try {
+      const data = localStorage.getItem('localStorageCurrentUser');
+      return data ? JSON.parse(data) : 'null';
+    } catch (error) {
+      return 'null';
+    }
+  });
   const [conversationID, setConversationIDState] = useState(
     readStoredConversationID
   );
@@ -47,12 +54,7 @@ function App() {
   const location = useLocation();
   const showAppChrome =
     location.pathname !== '/login' && location.pathname !== '/';
-
-  useEffect(() => {
-    const data = localStorage.getItem('localStorageCurrentUser');
-    const currentUserLoggedIn = JSON.parse(data);
-    setLoginState(currentUserLoggedIn);
-  }, []);
+  const isLoggedIn = currentUser && currentUser !== 'null';
 
   return (
     <div className="App">
@@ -69,10 +71,38 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Navigate to="/login" replace />} />
                   <Route path="/login" element={<LoginPage />} />
-                  <Route path="/chat" element={<ChatPage />} />
-                  <Route path="/connections" element={<ConnectionPage />} />
-                  <Route path="/dashboard" element={<DashboardPage />} />
-                  <Route path="/about" element={<AboutPage />} />
+                  <Route
+                    path="/chat"
+                    element={
+                      isLoggedIn ? <ChatPage /> : <Navigate to="/login" replace />
+                    }
+                  />
+                  <Route
+                    path="/connections"
+                    element={
+                      isLoggedIn ? (
+                        <ConnectionPage />
+                      ) : (
+                        <Navigate to="/login" replace />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      isLoggedIn ? (
+                        <DashboardPage />
+                      ) : (
+                        <Navigate to="/login" replace />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/about"
+                    element={
+                      isLoggedIn ? <AboutPage /> : <Navigate to="/login" replace />
+                    }
+                  />
                   <Route path="/recents" element={<RecentsPage />} />
                   <Route path="/findings" element={<FindingsPage />} />
                   <Route

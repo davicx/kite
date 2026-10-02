@@ -55,29 +55,42 @@ function sayHello(userName) {
     console.log("hello " + userName)
 }
 
+function clearLoginAndGoToLogin() {
+  localStorage.setItem('localStorageCurrentUser', JSON.stringify('null'));
+  if (window.location.pathname !== '/login') {
+    window.location.href = '/login';
+  }
+}
+
 //Function A4: Request new Refresh Token
 async function refreshToken() {
-  console.log("ATTEMPTING TO REFRESH TOKEN: refreshToken()")
-    const refreshURL = "http://localhost:3003/refresh/tokens"
-      const data = localStorage.getItem("localStorageCurrentUser");
-      const userName = JSON.parse(data);
-      console.log("refreshToken: you are refreshing for" + userName)
+  console.log('ATTEMPTING TO REFRESH TOKEN: refreshToken()');
+  const refreshURL = 'http://localhost:3003/refresh/tokens';
+  const data = localStorage.getItem('localStorageCurrentUser');
+  const userName = JSON.parse(data);
+  console.log('refreshToken: you are refreshing for' + userName);
 
-      //STEP 1: Call Logout API
-      axiosRequest.post(refreshURL, {
-        userName: userName,
-        refreshToken: "dontneedheretoken"
-      })
-      .then(function (response) {
-        console.log("refreshToken(): We got a new access token!")
-        return response.data;
-      })
-      .catch(function (error) {
-        console.log("refreshToken(): We failed to get a new access token!")
-        //console.log(error);
-      });
-  
+  try {
+    const response = await axiosRequest.post(refreshURL, {
+      userName: userName,
+      refreshToken: 'dontneedheretoken',
+      device_id: getDeviceId(),
+    });
+
+    if (response?.data?.success === false) {
+      console.log('refreshToken(): Server refused a new access token');
+      clearLoginAndGoToLogin();
+      return null;
+    }
+
+    console.log('refreshToken(): We got a new access token!');
+    return response.data;
+  } catch (error) {
+    console.log('refreshToken(): We failed to get a new access token!');
+    clearLoginAndGoToLogin();
+    return null;
   }
+}
 
 //FUNCTIONS B: Device ID Functions
 //Function B1: Create a new browser device id
@@ -102,5 +115,13 @@ function getDeviceId() {
   return deviceId;
 }
 
-export default { loginUser, logoutUser, loginStatus, refreshToken, sayHello, getDeviceId };
-export { getDeviceId };
+export default {
+  loginUser,
+  logoutUser,
+  loginStatus,
+  refreshToken,
+  clearLoginAndGoToLogin,
+  sayHello,
+  getDeviceId,
+};
+export { getDeviceId, clearLoginAndGoToLogin };

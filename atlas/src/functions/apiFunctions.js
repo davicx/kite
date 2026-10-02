@@ -26,9 +26,9 @@ function getAPI() {
         functions.refreshToken();
       }
 
-      if (res && res.status === 440) {
-        localStorage.setItem('localStorageCurrentUser', JSON.stringify('null'));
-        window.location.href = '/login';
+      // Session is gone (no refresh cookie, expired refresh, or forced logout).
+      if (res && (res.status === 440 || res.status === 401)) {
+        functions.clearLoginAndGoToLogin();
       }
 
       return Promise.reject(error);

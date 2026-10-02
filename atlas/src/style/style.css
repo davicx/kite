@@ -168,6 +168,23 @@ SECTION 3A: Header and Navigation Bar
 .header-profile {
 	display: flex;
 	align-items: center;
+	gap: 10px;
+}
+
+.header-logout-button {
+	border: 1px solid var(--border);
+	background: white;
+	color: var(--text);
+	border-radius: 999px;
+	padding: 7px 12px;
+	font: inherit;
+	font-size: 13px;
+	font-weight: 650;
+	cursor: pointer;
+}
+
+.header-logout-button:hover {
+	background: var(--green-soft);
 }
 
 .header-profile-button {
@@ -522,10 +539,100 @@ SECTION 5B: Cloud Pilot Chat Bubble
 }
 
 .cloudpilot-chat .answer {
+	color: #26312d;
+	min-width: 0;
+}
+
+.cloudpilot-chat .answer--plain {
 	font-size: 15px;
 	line-height: 1.65;
-	color: #26312d;
 	white-space: pre-wrap;
+}
+
+.cloudpilot-chat .chat-message-content--assistant {
+	width: 100%;
+	max-width: 760px;
+	min-width: 0;
+	font-size: 16px;
+	line-height: 1.6;
+	overflow-wrap: anywhere;
+}
+
+.cloudpilot-chat .chat-message-content--assistant p {
+	margin: 0 0 16px;
+}
+
+.cloudpilot-chat .chat-message-content--assistant > :last-child {
+	margin-bottom: 0;
+}
+
+.cloudpilot-chat .chat-message-content--assistant strong {
+	font-weight: 600;
+}
+
+.cloudpilot-chat .chat-message-content--assistant ul,
+.cloudpilot-chat .chat-message-content--assistant ol {
+	margin: 0 0 16px;
+	padding-left: 24px;
+}
+
+.cloudpilot-chat .chat-message-content--assistant li {
+	margin: 0 0 6px;
+	padding-left: 2px;
+}
+
+.cloudpilot-chat .chat-message-content--assistant li:last-child {
+	margin-bottom: 0;
+}
+
+.cloudpilot-chat .chat-message-content--assistant li > p {
+	margin-bottom: 6px;
+}
+
+.cloudpilot-chat .chat-message-content--assistant :not(pre) > code {
+	padding: 2px 6px;
+	border-radius: 5px;
+	background: #eef2f0;
+	color: #263b33;
+	font-size: 0.9em;
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.cloudpilot-chat .chat-message-content--assistant pre {
+	max-width: 100%;
+	margin: 0 0 16px;
+	padding: 14px 16px;
+	overflow-x: auto;
+	border-radius: 8px;
+	background: #f1f4f2;
+	white-space: pre;
+}
+
+.cloudpilot-chat .chat-message-content--assistant pre code {
+	font-size: 13px;
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.cloudpilot-chat .chat-message-content--assistant h1,
+.cloudpilot-chat .chat-message-content--assistant h2,
+.cloudpilot-chat .chat-message-content--assistant h3,
+.cloudpilot-chat .chat-message-content--assistant h4,
+.cloudpilot-chat .chat-message-content--assistant h5,
+.cloudpilot-chat .chat-message-content--assistant h6 {
+	margin: 20px 0 8px;
+	font-size: 17px;
+	line-height: 1.4;
+	font-weight: 600;
+}
+
+.cloudpilot-chat .chat-message-content--assistant > :first-child {
+	margin-top: 0;
+}
+
+.cloudpilot-chat .chat-message-content--assistant a {
+	color: var(--green);
+	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 .cloudpilot-chat .fix-card {
