@@ -9,6 +9,8 @@ function ChatMessages({
   scanCard = null,
   onShowAll,
   onSelectFixOption,
+  awaitingConfirmation = false,
+  onConfirmRequest,
 }) {
   const messagesEndRef = useRef(null);
 
@@ -79,6 +81,10 @@ function ChatMessages({
             showFixOptions={showFixOptions}
             fixOptionsDisabled={isSending}
             onSelectFixOption={onSelectFixOption}
+            showConfirmActions={
+              awaitingConfirmation && !isSending && index === lastAssistantIndex
+            }
+            onConfirmRequest={onConfirmRequest}
           />
         );
       })}

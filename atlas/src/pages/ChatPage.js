@@ -203,6 +203,10 @@ function ChatPage() {
           isSending={isSending}
           scanCard={scanCard}
           onSelectFixOption={sendMessage}
+          awaitingConfirmation={
+            messagesRes?.openRequestStatus === 'waiting_on_confirmation'
+          }
+          onConfirmRequest={sendMessage}
         />
       </div>
 

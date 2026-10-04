@@ -350,6 +350,10 @@ function AboutPage() {
             onSelectFixOption={(choice) =>
               sendMessage(null, { message: choice })
             }
+            awaitingConfirmation={
+              messagesRes?.openRequestStatus === 'waiting_on_confirmation'
+            }
+            onConfirmRequest={(text) => sendMessage(null, { message: text })}
           />
         </div>
         <div className="dcp-chat-composer">

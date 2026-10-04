@@ -709,6 +709,34 @@ SECTION 5B: Cloud Pilot Chat Bubble
 	padding: 8px 14px;
 }
 
+.cloudpilot-chat .confirm-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 14px;
+}
+
+.cloudpilot-chat .confirm-action {
+	border-radius: 8px;
+	font: inherit;
+	font-size: 14px;
+	font-weight: 650;
+	cursor: pointer;
+	padding: 8px 16px;
+}
+
+.cloudpilot-chat .confirm-action--primary {
+	border: 0;
+	background: var(--green);
+	color: #ffffff;
+}
+
+.cloudpilot-chat .confirm-action--quiet {
+	border: 1px solid #e4e9e6;
+	background: #ffffff;
+	color: #17201d;
+}
+
 .cloudpilot-chat .fix-confirm:disabled,
 .cloudpilot-chat .fix-close:disabled {
 	cursor: default;

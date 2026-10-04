@@ -95,9 +95,60 @@ function FindingsTable({ findings, resourceName, onReview }) {
   );
 }
 
+function findingIdentity(finding) {
+  return String(
+    finding.findingID ||
+      finding.id ||
+      `${finding.friendlyTitle || finding.title || ''}-${finding.ruleID || ''}`
+  );
+}
+
+function FindingDetail({ finding, resourceName, onFix }) {
+  const priority = String(
+    finding.severity || finding.friendlyPriority || 'low'
+  ).toLowerCase();
+  const title = finding.friendlyTitle || finding.title || 'Finding';
+  const meaning = finding.friendlyMeaning || finding.description || '';
+
+  return (
+    <>
+      <div className="dcp-page-header">
+        <div>
+          <div className="dcp-eyebrow">Finding</div>
+          <h1>{title}</h1>
+        </div>
+      </div>
+      <section className="dcp-card dcp-finding-detail">
+        <div className="dcp-finding-field">
+          <div className="dcp-finding-label">Priority</div>
+          <span className={`dcp-priority ${priority}`}>
+            ● {priority.charAt(0).toUpperCase() + priority.slice(1)}
+          </span>
+        </div>
+        <div className="dcp-finding-field">
+          <div className="dcp-finding-label">Resource</div>
+          <div>{resourceName}</div>
+        </div>
+        <div className="dcp-finding-field">
+          <div className="dcp-finding-label">What this means</div>
+          <p>{meaning}</p>
+        </div>
+        <button
+          type="button"
+          className="dcp-scan-button"
+          onClick={() => onFix(finding, resourceName)}
+        >
+          Fix with CloudPilot
+        </button>
+      </section>
+    </>
+  );
+}
+
 /**
  * Live dashboard + real CloudPilot chat on the active project.
  * Level 1 is the resource list. Level 2 is one bucket or instance.
+ * Level 3 is one finding.
  */
 function DashboardPage() {
   const navigate = useNavigate();
@@ -227,6 +278,18 @@ function DashboardPage() {
     (ec2Groups.find((group) => group.groupName === selectedInstance.instanceName)
       ?.findings ||
       []);
+  const selectedFindingId =
+    path[1] && path[1].type === 'finding' ? String(path[1].id) : '';
+  const resourceFindings = selectedBucket
+    ? selectedBucketFindings || []
+    : selectedInstance
+      ? selectedInstanceFindings || []
+      : [];
+  const selectedFinding = selectedFindingId
+    ? resourceFindings.find(
+        (finding) => findingIdentity(finding) === selectedFindingId
+      ) || null
+    : null;
 
   const chatMessages = useMemo(
     () => [...messages, ...localNotes],
@@ -282,9 +345,23 @@ function DashboardPage() {
     setPath([]);
   }
 
+  function showResource() {
+    if (!path[0]) {
+      return;
+    }
+    setPath([path[0]]);
+  }
+
   function openResource(resource) {
     setPath([resource]);
     setChatClosed(false);
+  }
+
+  function openFinding(finding) {
+    if (!path[0]) {
+      return;
+    }
+    setPath([path[0], { type: 'finding', id: findingIdentity(finding) }]);
   }
 
   function openAbout(resource) {
@@ -299,7 +376,7 @@ function DashboardPage() {
     addChatNote('Review all findings is coming soon.');
   }
 
-  async function reviewFinding(finding, resourceName) {
+  async function fixWithCloudPilot(finding, resourceName) {
     const fixContext = buildS3VersioningFixContext({
       finding,
       resourceName,
@@ -977,6 +1054,29 @@ function DashboardPage() {
           color: #5f6b67;
           font-size: 13px;
         }
+        .dashboard-page .dcp-finding-detail {
+          width: 100%;
+          margin-top: 8px;
+          padding: 22px;
+        }
+        .dashboard-page .dcp-finding-field {
+          margin-bottom: 18px;
+        }
+        .dashboard-page .dcp-finding-label {
+          margin-bottom: 4px;
+          color: #8a9691;
+          font-size: 12px;
+          font-weight: 650;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+        .dashboard-page .dcp-finding-detail p {
+          margin: 0;
+          max-width: 640px;
+          color: var(--dcp-text);
+          font-size: 15px;
+          line-height: 1.5;
+        }
         .dashboard-page .dcp-priority.medium {
           color: #d9902d;
         }
@@ -1041,7 +1141,19 @@ function DashboardPage() {
                     EC2 Instances
                   </button>
                   <span>/</span>
-                  <span>{selectedInstance.instanceName}</span>
+                  {selectedFinding ? (
+                    <>
+                      <button type="button" onClick={showResource}>
+                        {selectedInstance.instanceName}
+                      </button>
+                      <span>/</span>
+                      <span>
+                        {selectedFinding.friendlyTitle || selectedFinding.title}
+                      </span>
+                    </>
+                  ) : (
+                    <span>{selectedInstance.instanceName}</span>
+                  )}
                 </>
               ) : (
                 <span>EC2 Instances</span>
@@ -1052,7 +1164,19 @@ function DashboardPage() {
                   S3 Buckets
                 </button>
                 <span>/</span>
-                <span>{selectedBucket.bucketName}</span>
+                {selectedFinding ? (
+                  <>
+                    <button type="button" onClick={showResource}>
+                      {selectedBucket.bucketName}
+                    </button>
+                    <span>/</span>
+                    <span>
+                      {selectedFinding.friendlyTitle || selectedFinding.title}
+                    </span>
+                  </>
+                ) : (
+                  <span>{selectedBucket.bucketName}</span>
+                )}
               </>
             ) : (
               <span>S3 Buckets</span>
@@ -1184,7 +1308,19 @@ function DashboardPage() {
             </>
           ) : null}
 
-          {service === 's3' && selectedBucket ? (
+          {selectedFinding && (selectedBucket || selectedInstance) ? (
+            <FindingDetail
+              finding={selectedFinding}
+              resourceName={
+                selectedBucket
+                  ? selectedBucket.bucketName
+                  : selectedInstance.instanceName
+              }
+              onFix={fixWithCloudPilot}
+            />
+          ) : null}
+
+          {service === 's3' && selectedBucket && !selectedFinding ? (
             <>
               <div className="dcp-page-header">
                 <div>
@@ -1245,7 +1381,7 @@ function DashboardPage() {
               <FindingsTable
                 findings={selectedBucketFindings || []}
                 resourceName={selectedBucket.bucketName}
-                onReview={reviewFinding}
+                onReview={openFinding}
               />
             </>
           ) : null}
@@ -1338,7 +1474,7 @@ function DashboardPage() {
             </>
           ) : null}
 
-          {service === 'ec2' && selectedInstance ? (
+          {service === 'ec2' && selectedInstance && !selectedFinding ? (
             <>
               <div className="dcp-page-header">
                 <div>
@@ -1388,7 +1524,7 @@ function DashboardPage() {
               <FindingsTable
                 findings={selectedInstanceFindings || []}
                 resourceName={selectedInstance.instanceName}
-                onReview={reviewFinding}
+                onReview={openFinding}
               />
             </>
           ) : null}
@@ -1420,13 +1556,15 @@ function DashboardPage() {
             <div className="dcp-context-icon">◫</div>
             <div>
               <div className="dcp-context-name">
-                {selectedBucket
-                  ? selectedBucket.bucketName
-                  : selectedInstance
-                    ? selectedInstance.instanceName
-                    : service === 'ec2'
-                      ? 'EC2 Instances'
-                      : 'S3 Buckets'}
+                {selectedFinding
+                  ? selectedFinding.friendlyTitle || selectedFinding.title
+                  : selectedBucket
+                    ? selectedBucket.bucketName
+                    : selectedInstance
+                      ? selectedInstance.instanceName
+                      : service === 'ec2'
+                        ? 'EC2 Instances'
+                        : 'S3 Buckets'}
               </div>
               <div className="dcp-context-meta">
                 {selectedBucket
@@ -1463,6 +1601,10 @@ function DashboardPage() {
             onSelectFixOption={(choice) =>
               sendMessage(null, { message: choice })
             }
+            awaitingConfirmation={
+              messagesRes?.openRequestStatus === 'waiting_on_confirmation'
+            }
+            onConfirmRequest={(text) => sendMessage(null, { message: text })}
           />
         </div>
 

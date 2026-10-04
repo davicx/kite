@@ -26,6 +26,8 @@ function CloudPilotMessage({
   showFixOptions = false,
   fixOptionsDisabled = false,
   onSelectFixOption,
+  showConfirmActions = false,
+  onConfirmRequest,
 }) {
   const content = splitFixOptionsMessage(message.content);
   const useMarkdown = USE_ASSISTANT_MARKDOWN && !isLoading;
@@ -52,6 +54,24 @@ function CloudPilotMessage({
             disabled={fixOptionsDisabled}
             onSelect={onSelectFixOption}
           />
+        ) : null}
+        {showConfirmActions ? (
+          <div className="confirm-actions">
+            <button
+              type="button"
+              className="confirm-action confirm-action--primary"
+              onClick={() => onConfirmRequest && onConfirmRequest('confirm')}
+            >
+              Confirm
+            </button>
+            <button
+              type="button"
+              className="confirm-action confirm-action--quiet"
+              onClick={() => onConfirmRequest && onConfirmRequest('cancel')}
+            >
+              Cancel
+            </button>
+          </div>
         ) : null}
         {scanResult ? (
           <ScanResultCard scanResult={scanResult} onShowAll={onShowAll} />
