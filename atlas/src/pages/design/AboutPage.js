@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 /*
  * Center content for /about.
  * Header, left menu, and chat stay on the About route.

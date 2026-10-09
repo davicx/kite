@@ -1,5 +1,5 @@
-import React, { useState, useContext, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useMemo, useEffect, useRef } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from 'react-query';
 
 import ChatMessages from '../components/chat/ChatMessages';
@@ -17,7 +17,6 @@ import {
   collectS3FindingsFromScan,
   groupFriendlyS3FindingsByBucket,
   buildFriendlyS3Buckets,
-  buildS3EnvironmentSummary,
 } from '../functions/findings/s3FindingDisplay';
 import {
   collectEC2FindingsFromScan,
@@ -103,6 +102,57 @@ function findingIdentity(finding) {
   );
 }
 
+function serializeDashboardPath(path) {
+  const resource = path && path[0];
+  if (!resource || resource.type !== 'resource' || !resource.id) {
+    return '';
+  }
+  if (resource.service !== 's3' && resource.service !== 'ec2') {
+    return '';
+  }
+  let value = `${resource.service}/${encodeURIComponent(String(resource.id))}`;
+  const finding = path[1];
+  if (finding && finding.type === 'finding' && finding.id) {
+    value += `/${encodeURIComponent(String(finding.id))}`;
+  }
+  return value;
+}
+
+function parseDashboardPath(raw) {
+  const value = String(raw || '').trim();
+  if (!value) {
+    return [];
+  }
+  const parts = value.split('/');
+  const service = parts[0];
+  if ((service !== 's3' && service !== 'ec2') || !parts[1]) {
+    return [];
+  }
+  let id = parts[1];
+  try {
+    id = decodeURIComponent(parts[1]);
+  } catch (error) {
+    id = parts[1];
+  }
+  if (!id) {
+    return [];
+  }
+  const path = [{ type: 'resource', service, id }];
+  if (parts.length > 2) {
+    const encodedFinding = parts.slice(2).join('/');
+    let findingId = encodedFinding;
+    try {
+      findingId = decodeURIComponent(encodedFinding);
+    } catch (error) {
+      findingId = encodedFinding;
+    }
+    if (findingId) {
+      path.push({ type: 'finding', id: findingId });
+    }
+  }
+  return path;
+}
+
 function FindingDetail({ finding, resourceName, onFix }) {
   const priority = String(
     finding.severity || finding.friendlyPriority || 'low'
@@ -152,6 +202,7 @@ function FindingDetail({ finding, resourceName, onFix }) {
  */
 function DashboardPage() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { currentUser } = useContext(LoginContext);
   const { conversationID } = useContext(ChatConversationContext);
   const {
@@ -168,8 +219,11 @@ function DashboardPage() {
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState('');
   const [scanCard, setScanCard] = useState(null);
-  const [path, setPath] = useState([]);
   const [localNotes, setLocalNotes] = useState([]);
+  const path = useMemo(
+    () => parseDashboardPath(searchParams.get('path')),
+    [searchParams]
+  );
 
   const displayName =
     currentUser && currentUser !== 'null' ? currentUser : 'anonymous';
@@ -179,9 +233,37 @@ function DashboardPage() {
     setLocalNotes([]);
   }, [conversationID]);
 
+  const previousConversationID = useRef(conversationID);
   useEffect(() => {
-    setPath([]);
-  }, [scanToken, listToken]);
+    const previous = previousConversationID.current;
+    previousConversationID.current = conversationID;
+    if (previous == null || Number(previous) <= 0) {
+      return;
+    }
+    if (Number(previous) === Number(conversationID)) {
+      return;
+    }
+    const next = new URLSearchParams(window.location.search);
+    if (!next.has('path')) {
+      return;
+    }
+    next.delete('path');
+    setSearchParams(next, { replace: true });
+  }, [conversationID, setSearchParams]);
+
+  const skipScanReset = useRef(true);
+  useEffect(() => {
+    if (skipScanReset.current) {
+      skipScanReset.current = false;
+      return;
+    }
+    const next = new URLSearchParams(window.location.search);
+    if (!next.has('path')) {
+      return;
+    }
+    next.delete('path');
+    setSearchParams(next, { replace: true });
+  }, [scanToken, listToken, setSearchParams]);
 
   const {
     data: messagesRes,
@@ -238,10 +320,6 @@ function DashboardPage() {
     () => buildFriendlyS3Buckets({ navigatorData, findingGroups: s3Groups }),
     [navigatorData, s3Groups]
   );
-  const s3Summary = useMemo(
-    () => buildS3EnvironmentSummary(s3Groups),
-    [s3Groups]
-  );
 
   const ec2Findings = useMemo(
     () => collectEC2FindingsFromScan({ findings, navigatorData }),
@@ -291,13 +369,56 @@ function DashboardPage() {
       ) || null
     : null;
 
+  useEffect(() => {
+    if (path.length === 0 || isRestoringScan || !scan) {
+      return;
+    }
+    if (scan.service !== 's3' && scan.service !== 'ec2') {
+      return;
+    }
+    const resource = path[0];
+    if (!resource || resource.service !== scan.service) {
+      const next = new URLSearchParams(window.location.search);
+      next.delete('path');
+      setSearchParams(next, { replace: true });
+      return;
+    }
+    const resourceExists =
+      resource.service === 's3'
+        ? s3Buckets.some((bucket) => bucket.bucketName === resource.id)
+        : ec2Instances.some(
+            (instance) =>
+              (instance.instanceId || instance.instanceName) === resource.id
+          );
+    if (!resourceExists) {
+      const next = new URLSearchParams(window.location.search);
+      next.delete('path');
+      setSearchParams(next, { replace: true });
+      return;
+    }
+    if (path[1] && !selectedFinding) {
+      const next = new URLSearchParams(window.location.search);
+      next.set('path', serializeDashboardPath([resource]));
+      setSearchParams(next, { replace: true });
+    }
+  }, [
+    path,
+    isRestoringScan,
+    scan,
+    s3Buckets,
+    ec2Instances,
+    selectedFinding,
+    setSearchParams,
+  ]);
+
   const chatMessages = useMemo(
     () => [...messages, ...localNotes],
     [messages, localNotes]
   );
 
-  function openChat() {
+  function startScan(scanLabel) {
     setChatClosed(false);
+    sendMessage(null, { message: scanLabel });
   }
 
   function closeChat() {
@@ -321,7 +442,7 @@ function DashboardPage() {
         <button
           type="button"
           className="dcp-scan-button"
-          onClick={openChat}
+          onClick={() => startScan(scanLabel)}
         >
           {scanLabel}
         </button>
@@ -341,19 +462,30 @@ function DashboardPage() {
     setChatClosed(false);
   }
 
+  function writeDashboardPath(nextPath, replace) {
+    const serialized = serializeDashboardPath(nextPath);
+    const next = new URLSearchParams(window.location.search);
+    if (serialized) {
+      next.set('path', serialized);
+    } else {
+      next.delete('path');
+    }
+    setSearchParams(next, { replace: Boolean(replace) });
+  }
+
   function showAllResources() {
-    setPath([]);
+    writeDashboardPath([]);
   }
 
   function showResource() {
     if (!path[0]) {
       return;
     }
-    setPath([path[0]]);
+    writeDashboardPath([path[0]]);
   }
 
   function openResource(resource) {
-    setPath([resource]);
+    writeDashboardPath([resource]);
     setChatClosed(false);
   }
 
@@ -361,7 +493,10 @@ function DashboardPage() {
     if (!path[0]) {
       return;
     }
-    setPath([path[0], { type: 'finding', id: findingIdentity(finding) }]);
+    writeDashboardPath([
+      path[0],
+      { type: 'finding', id: findingIdentity(finding) },
+    ]);
   }
 
   function openAbout(resource) {
@@ -698,9 +833,6 @@ function DashboardPage() {
         .dashboard-page .dcp-finding-count {
           font-weight: 600;
         }
-        .dashboard-page .dcp-tags {
-          color: var(--dcp-text-secondary);
-        }
         .dashboard-page .dcp-action {
           color: var(--dcp-green-dark);
           font-weight: 650;
@@ -708,34 +840,6 @@ function DashboardPage() {
         }
         .dashboard-page .dcp-action:hover {
           text-decoration: underline;
-        }
-        .dashboard-page .dcp-summary {
-          margin-top: 32px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 30px;
-          padding: 24px 26px;
-          background: var(--dcp-green-soft);
-          border: 1px solid #d9ebe3;
-          border-radius: 14px;
-        }
-        .dashboard-page .dcp-summary-label {
-          color: var(--dcp-green-dark);
-          font-size: 11px;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-          margin-bottom: 6px;
-        }
-        .dashboard-page .dcp-summary h2 {
-          font-size: 18px;
-          margin: 0 0 5px;
-        }
-        .dashboard-page .dcp-summary p {
-          color: var(--dcp-text-secondary);
-          font-size: 14px;
-          margin: 0;
         }
         .dashboard-page .dcp-section-header {
           margin-top: 42px;
@@ -1115,10 +1219,6 @@ function DashboardPage() {
             align-items: flex-start;
             flex-direction: column;
           }
-          .dashboard-page .dcp-summary {
-            align-items: flex-start;
-            flex-direction: column;
-          }
           .dashboard-page .dcp-finding-card {
             grid-template-columns: 1fr;
           }
@@ -1225,16 +1325,11 @@ function DashboardPage() {
                         <th>Region</th>
                         <th>Health</th>
                         <th>Findings</th>
-                        <th>Tags</th>
                         <th />
                       </tr>
                     </thead>
                     <tbody>
-                      {s3Buckets.map((bucket) => {
-                        const tagCount = Array.isArray(bucket.tags)
-                          ? bucket.tags.length
-                          : 0;
-                        return (
+                      {s3Buckets.map((bucket) => (
                           <tr key={bucket.bucketName}>
                             <td className="dcp-bucket-name">{bucket.bucketName}</td>
                             <td className="dcp-region">{bucket.region || '—'}</td>
@@ -1255,7 +1350,6 @@ function DashboardPage() {
                             <td className="dcp-finding-count">
                               {bucket.findingCount}
                             </td>
-                            <td className="dcp-tags">{tagCount}</td>
                             <td>
                               <button
                                 type="button"
@@ -1278,33 +1372,26 @@ function DashboardPage() {
                               </button>
                             </td>
                           </tr>
-                        );
-                      })}
+                      ))}
                     </tbody>
                   </table>
                 </div>
               </section>
 
-              <section className="dcp-summary">
-                <div>
-                  <div className="dcp-summary-label">Your AWS Environment</div>
-                  <h2>{s3Summary.headline}</h2>
-                  <p>{s3Summary.detail}</p>
-                </div>
-                <button
-                  type="button"
-                  className="dcp-action"
-                  style={{
-                    background: 'none',
-                    border: 0,
-                    padding: 0,
-                    cursor: 'pointer',
-                  }}
-                  onClick={reviewAllFindings}
-                >
-                  Review all findings →
-                </button>
-              </section>
+              <button
+                type="button"
+                className="dcp-action"
+                style={{
+                  background: 'none',
+                  border: 0,
+                  padding: 0,
+                  marginTop: 24,
+                  cursor: 'pointer',
+                }}
+                onClick={reviewAllFindings}
+              >
+                Review all findings →
+              </button>
             </>
           ) : null}
 

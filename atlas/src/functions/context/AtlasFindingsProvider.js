@@ -97,7 +97,9 @@ function AtlasFindingsProvider({ children }) {
         if (restored) {
           setScanState(restored);
           writeStoredScan(restored);
-          setScanToken((current) => current + 1);
+          // Leave scanToken unchanged. That token sends the dashboard back to
+          // the resource list after a new scan. Restoring the saved scan on
+          // load must keep ?path= so a refresh stays on the open resource.
           return;
         }
         if (!cached) {

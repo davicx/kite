@@ -14,7 +14,6 @@ import CostsPage from './pages/design/CostsPage';
 import ToDoPage from './pages/design/ToDoPage';
 import HistoryPage from './pages/design/HistoryPage';
 import TeamPage from './pages/design/TeamPage';
-import DashboardChatPage from './pages/DashboardChatPage';
 import DashboardPage from './pages/DashboardPage';
 import AboutPage from './pages/AboutPage';
 import Header from './components/header/Header';
@@ -115,7 +114,6 @@ function App() {
                   <Route path="/todo" element={<ToDoPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/team" element={<TeamPage />} />
-                  <Route path="/dashboard-chat" element={<DashboardChatPage />} />
                 </Routes>
               </div>
             </div>
