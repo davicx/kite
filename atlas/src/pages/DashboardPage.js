@@ -486,7 +486,6 @@ function DashboardPage() {
 
   function openResource(resource) {
     writeDashboardPath([resource]);
-    setChatClosed(false);
   }
 
   function openFinding(finding) {
@@ -507,9 +506,9 @@ function DashboardPage() {
     navigate('/history');
   }
 
-  function reviewAllFindings() {
-    addChatNote('Review all findings is coming soon.');
-  }
+  // function reviewAllFindings() {
+  //   addChatNote('Review all findings is coming soon.');
+  // }
 
   async function fixWithCloudPilot(finding, resourceName) {
     const fixContext = buildS3VersioningFixContext({
@@ -1378,6 +1377,7 @@ function DashboardPage() {
                 </div>
               </section>
 
+              {/*
               <button
                 type="button"
                 className="dcp-action"
@@ -1388,10 +1388,11 @@ function DashboardPage() {
                   marginTop: 24,
                   cursor: 'pointer',
                 }}
-                onClick={reviewAllFindings}
+                onClick={() => {}}
               >
                 Review all findings →
               </button>
+              */}
             </>
           ) : null}
 
