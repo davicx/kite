@@ -441,7 +441,7 @@ function TeamPage() {
                 </div>
                 <div>
                   <div className="person-name">
-                    David
+                    Frodo
                     <span className="you-label">You</span>
                   </div>
                   <div className="person-role">Software Engineer</div>
@@ -456,7 +456,7 @@ function TeamPage() {
                   <span className="info-label">Slack</span>
                   <span className="info-value online">
                     <span className="online-dot" />
-                    @david
+                    @frodo
                   </span>
                 </div>
               </div>
@@ -468,7 +468,7 @@ function TeamPage() {
                   <img src="/user-images/default_2.jpg" alt="" />
                 </div>
                 <div>
-                  <div className="person-name">Sam Kim</div>
+                  <div className="person-name">Sam</div>
                   <div className="person-role">Software Engineer</div>
                 </div>
               </div>
@@ -493,7 +493,7 @@ function TeamPage() {
                   <img src="/user-images/becca.jpg" alt="" />
                 </div>
                 <div>
-                  <div className="person-name">Maya Rivera</div>
+                  <div className="person-name">Pippin</div>
                   <div className="person-role">DevOps Engineer</div>
                 </div>
               </div>
@@ -506,7 +506,7 @@ function TeamPage() {
                   <span className="info-label">Slack</span>
                   <span className="info-value online">
                     <span className="online-dot" />
-                    @maya
+                    @pippin
                   </span>
                 </div>
               </div>
@@ -549,16 +549,16 @@ function TeamPage() {
                         <img src="/user-images/11.jpg" alt="" />
                       </div>
                       <div>
-                        <div className="table-name">Alex Chen</div>
+                        <div className="table-name">Gimli</div>
                         <div className="table-title">Software Engineer</div>
                       </div>
                     </div>
                   </td>
-                  <td>alex@company.com</td>
+                  <td>gimli@company.com</td>
                   <td>
                     <span className="slack">
                       <span className="slack-icon">#</span>
-                      @alex
+                      @gimli
                     </span>
                   </td>
                   <td>
@@ -573,16 +573,16 @@ function TeamPage() {
                         <img src="/user-images/brian.jpg" alt="" />
                       </div>
                       <div>
-                        <div className="table-name">Jordan Patel</div>
+                        <div className="table-name">Aragorn</div>
                         <div className="table-title">Engineering Manager</div>
                       </div>
                     </div>
                   </td>
-                  <td>jordan@company.com</td>
+                  <td>aragorn@company.com</td>
                   <td>
                     <span className="slack">
                       <span className="slack-icon">#</span>
-                      @jordan
+                      @aragorn
                     </span>
                   </td>
                   <td>
@@ -597,16 +597,16 @@ function TeamPage() {
                         <img src="/user-images/galadriel.jpg" alt="" />
                       </div>
                       <div>
-                        <div className="table-name">Lauren Torres</div>
+                        <div className="table-name">Galadriel</div>
                         <div className="table-title">Security Engineer</div>
                       </div>
                     </div>
                   </td>
-                  <td>lauren@company.com</td>
+                  <td>galadriel@company.com</td>
                   <td>
                     <span className="slack">
                       <span className="slack-icon">#</span>
-                      @lauren
+                      @galadriel
                     </span>
                   </td>
                   <td>
@@ -621,16 +621,16 @@ function TeamPage() {
                         <img src="/user-images/124592282_p0.jpg" alt="" />
                       </div>
                       <div>
-                        <div className="table-name">Noah Williams</div>
+                        <div className="table-name">Legolas</div>
                         <div className="table-title">Product Manager</div>
                       </div>
                     </div>
                   </td>
-                  <td>noah@company.com</td>
+                  <td>legolas@company.com</td>
                   <td>
                     <span className="slack">
                       <span className="slack-icon">#</span>
-                      @noah
+                      @legolas
                     </span>
                   </td>
                   <td>
@@ -645,16 +645,16 @@ function TeamPage() {
                         <img src="/user-images/merry.jpg" alt="" />
                       </div>
                       <div>
-                        <div className="table-name">Emma Brooks</div>
+                        <div className="table-name">Merry</div>
                         <div className="table-title">Site Reliability Engineer</div>
                       </div>
                     </div>
                   </td>
-                  <td>emma@company.com</td>
+                  <td>merry@company.com</td>
                   <td>
                     <span className="slack">
                       <span className="slack-icon">#</span>
-                      @emma
+                      @merry
                     </span>
                   </td>
                   <td>
