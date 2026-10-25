@@ -392,7 +392,7 @@ SECTION 4A: Chat Page
 /* Login form controls (from Kite index.css — needed for /login) */
 #login {
   float: left;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   margin-top: 80px;
   margin-left: 30%;
   width: 40%;
